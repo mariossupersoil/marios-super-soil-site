@@ -18,12 +18,12 @@
     },
     "10lb": {
      "label": "10 lb (4.5 kg)",
-     "price": 20.89,
+     "price": null,
      "weight_kg": 4.54
     },
     "20lb": {
      "label": "20 lb (9.1 kg)",
-     "price": 20.89,
+     "price": null,
      "weight_kg": 9.07
     }
    }
@@ -44,12 +44,12 @@
     },
     "10lb": {
      "label": "10 lb (4.5 kg)",
-     "price": 30.79,
+     "price": null,
      "weight_kg": 4.54
     },
     "20lb": {
      "label": "20 lb (9.1 kg)",
-     "price": 30.79,
+     "price": null,
      "weight_kg": 9.07
     }
    }
@@ -70,12 +70,12 @@
     },
     "10lb": {
      "label": "10 lb (4.5 kg)",
-     "price": 24.99,
+     "price": null,
      "weight_kg": 4.54
     },
     "20lb": {
      "label": "20 lb (9.1 kg)",
-     "price": 24.99,
+     "price": null,
      "weight_kg": 9.07
     }
    }
@@ -96,12 +96,12 @@
     },
     "10lb": {
      "label": "10 lb (4.5 kg)",
-     "price": 32.99,
+     "price": null,
      "weight_kg": 4.54
     },
     "20lb": {
      "label": "20 lb (9.1 kg)",
-     "price": 32.99,
+     "price": null,
      "weight_kg": 9.07
     }
    }
@@ -122,12 +122,12 @@
     },
     "10lb": {
      "label": "10 lb (4.5 kg)",
-     "price": 23.99,
+     "price": null,
      "weight_kg": 4.54
     },
     "20lb": {
      "label": "20 lb (9.1 kg)",
-     "price": 23.99,
+     "price": null,
      "weight_kg": 9.07
     }
    }
