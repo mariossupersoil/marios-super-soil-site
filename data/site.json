@@ -1,0 +1,189 @@
+{
+  "name": "Mario's Super Soil",
+  "base_url": "https://mariossupersoil.ca",
+  "staging": true,
+  "store_url": "https://mariossupersoil.ca/sustainable-fertilizers",
+  "email": "mariossupersoil@mariossupersoil.com",
+  "phone": "647-839-7645",
+  "address": {
+    "street": "123 Bristol Rd",
+    "city": "Mississauga",
+    "region": "ON",
+    "country": "CA"
+  },
+  "hours": [
+    [
+      "Monday to Friday",
+      "9 am to 6 pm"
+    ],
+    [
+      "Saturday",
+      "9 am to 4 pm"
+    ],
+    [
+      "Sunday",
+      "Closed"
+    ]
+  ],
+  "social": [
+    [
+      "Instagram",
+      "https://www.instagram.com/mariossupersoil/"
+    ],
+    [
+      "Facebook",
+      "https://www.facebook.com/mariossupersoil1"
+    ],
+    [
+      "X",
+      "https://x.com/mariossupersoil"
+    ],
+    [
+      "LinkedIn",
+      "https://www.linkedin.com/company/marios-super-soil"
+    ]
+  ],
+  "links": {
+    "calculator": "https://mariossupersoil.ca/organic-fertilizer-product-calculator",
+    "newsletter": "https://mariossupersoil.ca/signup-newsletter",
+    "blog": "https://mariossupersoil.ca/super-soil-blogs",
+    "refund": "https://mariossupersoil.ca/marios-super-soil-refund-policy",
+    "privacy": "https://mariossupersoil.ca/privacy-policy"
+  },
+  "home": {
+    "title": "Organic Fertilizer & Soil Amendments | Mario's Super Soil",
+    "description": "Organic dry fertilizers and soil amendments made in Mississauga, Ontario. Bone, crab, feather, kelp and alfalfa meal, worm castings and blends. Ships across Canada.",
+    "h1": "Level up<br>your grow",
+    "lede": "Grow great plants. Skip the guesswork. Organic dry fertilizers and soil amendments from Mississauga, Ontario, with the dose printed on every bag."
+  },
+  "stores": [
+    {
+      "name": "Tru Hydroponics",
+      "address": "285 Midland Ave #3, Midland, ON L4R 1V4",
+      "phone": "249-877-9246",
+      "url": "https://truhydroponics.ca/"
+    },
+    {
+      "name": "The Greenhouse Hydroponics",
+      "address": "1096 Goldstream Ave, Victoria, BC V9B 2Y5",
+      "phone": "250-590-8845",
+      "url": ""
+    }
+  ],
+  "blends": [
+    {
+      "id": "level-up",
+      "a": "Level Up",
+      "b": "3-3-3",
+      "accent": "#7fc46b",
+      "tagline": "A balanced blend for all-purpose growth.",
+      "text": "All-purpose organic fertilizer for vegetables, flowers and herbs. It supports root development, leafy growth and blooming, and comes in a resealable bag.",
+      "rows": [
+        [
+          "Ingredients",
+          "Humic acid, alfalfa meal, kelp (1-0-4), crab (4-3-0), basalt rock dust, bone meal, blood meal, K-mag (langbeinite), oyster shell flour."
+        ],
+        [
+          "How to use",
+          "1 tablespoon per gallon in soil or coco. For heavy feeding on mature plants, use 2 tablespoons per gallon."
+        ],
+        [
+          "Bag sizes",
+          "0.5, 5, 7, 10 and 20 lb"
+        ]
+      ]
+    },
+    {
+      "id": "flower-power",
+      "a": "Flower Power",
+      "b": "2-6-4",
+      "accent": "#e68fb7",
+      "tagline": "Ideal for blooming plants and high-yield flowers.",
+      "text": "Premium organic fertilizer for flowering plants, indoors and outdoors. It supports strong root systems and abundant flower production, and comes in a resealable bag.",
+      "rows": [
+        [
+          "Ingredients",
+          "Alfalfa meal, bone meal, soft rock phosphate, KMS, glacial rock dust, kelp meal, oyster shell flour, gypsum, azomite."
+        ],
+        [
+          "How to use",
+          "1 tablespoon per gallon in soil or coco."
+        ],
+        [
+          "Bag sizes",
+          "0.5, 5, 7, 10 and 20 lb"
+        ]
+      ]
+    },
+    {
+      "id": "starter-pack",
+      "a": "Super Starter",
+      "b": "Pack",
+      "accent": "#d8c98b",
+      "tagline": "Everything you need to have a successful grow.",
+      "text": "A comprehensive organic gardening kit for new gardeners.",
+      "rows": [
+        [
+          "In the kit",
+          "Level Up 3-3-3, Flower Power 2-6-4, Kelp Meal, Alfalfa Meal, Compost and Worm Castings."
+        ],
+        [
+          "Kit sizes",
+          "5, 10 and 20 lb"
+        ]
+      ]
+    }
+  ],
+  "quotes": [
+    [
+      "I made the move to Mario's Super Soil and couldn't be happier. It has made growing so easy! I just top dress with the dry amendments once a month and feed water only!",
+      "Lyn, Brantford, ON"
+    ],
+    [
+      "The products and service is top quality! My plants and the rest of my garden has never looked so good. Happy satisfied customer. I will be using only Mario's soil from now on. Hands down the best soil amendments in Canada!",
+      "Katie, Mississauga, ON"
+    ]
+  ],
+  "faq": [
+    [
+      "What makes your products different?",
+      "Lower usage rates: Level Up 3-3-3 and Flower Power 2-6-4 use 1 tablespoon per gallon, where we say other brands can need up to 4. The bags are recyclable and reusable, and everything is made locally in Mississauga, Ontario."
+    ],
+    [
+      "Are your products organic?",
+      "Yes. All products are made from organic ingredients to improve soil health and plant growth, with no synthetic chemicals."
+    ],
+    [
+      "Can beginners use them?",
+      "Yes. Every bag has clear usage instructions, and the Super Starter Pack is built for new gardeners."
+    ],
+    [
+      "Do they work indoors and outdoors?",
+      "Yes. They work for indoor and outdoor gardens, year-round."
+    ],
+    [
+      "Can I use them in hydroponic systems?",
+      "They work in soil-based systems and coco coir setups that include nutrient amendments. They are not suitable for traditional liquid-only hydroponic systems."
+    ],
+    [
+      "Do they change soil pH?",
+      "Some do. Dolomite lime helps balance pH, while gypsum makes nutrients more available without significantly changing it."
+    ],
+    [
+      "How much of the other amendments should I use?",
+      "Gypsum: 1–2 tablespoons per gallon of soil or coco. Dolomite lime: 5 lb per 100 sq ft to raise pH by one point. Oyster shell flour: 2.5–5 lb per 100 sq ft, mixed into the top 3 inches of soil."
+    ],
+    [
+      "Can I plant in the empty bag?",
+      "Yes. The bags are reusable, so you can fill them with soil and plant directly in them."
+    ],
+    [
+      "Do you ship to the USA?",
+      "Not yet. We currently ship within Canada, and USA shipping is planned."
+    ],
+    [
+      "What is your return policy?",
+      "You have 30 days from receiving an item to request a return. Items must be unused, in their original packaging, with proof of purchase. Email us before sending anything back, because returns without prior authorization are not accepted. Return shipping is paid by the customer. Perishable goods, clearance items and hazardous materials cannot be returned. If an item arrives damaged or incorrect, contact us right away."
+    ]
+  ]
+}

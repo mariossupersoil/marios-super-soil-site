@@ -1,0 +1,300 @@
+[
+  {
+    "slug": "bone-meal",
+    "f": "bone",
+    "a": "Bone",
+    "b": "Meal",
+    "npk": [
+      4,
+      10,
+      0
+    ],
+    "accent": "#d8c98b",
+    "net": "2 lb (907 g)",
+    "grams": 907,
+    "title": "Bone Meal 4-10-0 Organic Fertilizer | Mario's Super Soil",
+    "meta": "Organic bone meal fertilizer (4-10-0) with high organic phosphorus for strong roots, bigger blooms and fruit. 2 lb bag. Made in Mississauga, Ontario.",
+    "desc": [
+      "Bone meal is an organic fertilizer made from ground animal bones, rich in phosphorus to support strong roots & healthy plant growth.",
+      "It also provides calcium, iron, magnesium, and zinc, helping promote healthy stems, leaves, flowers, seeds and fruit production."
+    ],
+    "ben": [
+      "Rich in bio calcium",
+      "Steady slow release",
+      "Strong root networks",
+      "Bigger blooms & fruit",
+      "Ideal for bulbs, veggies & shrubs",
+      "High organic phosphorus"
+    ],
+    "micro": [
+      [
+        "Calcium (Ca)",
+        "Calcium (Ca)",
+        "22%"
+      ]
+    ],
+    "how_en": "Apply 1–2 tablespoons per gallon of soil. Mix in and water lightly. Nutrients release over 4 months.",
+    "how_fr": "Appliquez 1 à 2 cuillères à soupe par gallon de terreau. Mélangez et arrosez légèrement. Les nutriments se libèrent pendant 4 mois.",
+    "when": "1–2 tbsp per gallon of soil. Releases over 4 months."
+  },
+  {
+    "slug": "crab-meal",
+    "f": "crab",
+    "a": "Crab",
+    "b": "Meal",
+    "npk": [
+      4,
+      3,
+      0
+    ],
+    "accent": "#f0603a",
+    "net": "2 lb (907 g)",
+    "grams": 907,
+    "title": "Crab Meal 4-3-0 Organic Fertilizer | Mario's Super Soil",
+    "meta": "Organic crab meal (4-3-0) made from crab and lobster shells. Chitin-rich, high in calcium, with slow-release nitrogen for tomatoes and veggies. 2 lb bag.",
+    "desc": [
+      "Crab meal is an organic fertilizer made from crab & lobster shells, providing nutrients that support healthy soil & flower and vegetable growth.",
+      "The NPK ratio of crab meal is 4-3-0, with a high concentration of nitrogen, phosphorus, and magnesium, and it is particularly rich in chitin."
+    ],
+    "ben": [
+      "Chitin-rich pest shield",
+      "Fights root rot & blight",
+      "High calcium (prevents rot)",
+      "Slow-release nitrogen (4-3-0)",
+      "Supercharges soil microbes",
+      "Essential for tomatoes & veg"
+    ],
+    "micro": [
+      [
+        "Calcium (Ca)",
+        "Calcium (Ca)",
+        "23%"
+      ],
+      [
+        "Chitin",
+        "Chitine",
+        ""
+      ]
+    ],
+    "how_en": "Apply in spring and every 2–3 months. Use 1–2 teaspoons per gallon of soil. Yellow leaves may indicate nitrogen deficiency.",
+    "how_fr": "Appliquer au printemps et tous les 2 à 3 mois. Utiliser 1 à 2 cuillères à café par gallon de terre. Les feuilles jaunes peuvent indiquer une carence en azote.",
+    "when": "1–2 tsp per gallon of soil, in spring and every 2–3 months."
+  },
+  {
+    "slug": "feather-meal",
+    "f": "feather",
+    "a": "Feather",
+    "b": "Meal",
+    "npk": [
+      11,
+      0,
+      0
+    ],
+    "accent": "#d3d7dc",
+    "net": "2 lb (907 g)",
+    "grams": 907,
+    "title": "Feather Meal 11-0-0 Organic Nitrogen | Mario's Super Soil",
+    "meta": "Organic feather meal (11-0-0) for lush leaf and stem growth. 2–4 month slow-release nitrogen, ideal for heavy feeders in soil or coco. 2 lb bag.",
+    "desc": [
+      "Feather meal is an organic fertilizer made from poultry feathers, processed under high heat and pressure, then finely ground into a nutrient-rich powder.",
+      "With an NPK ratio of 11-0-0, it provides essential nitrogen for plant development, particularly during the vegetative stage, through both immediate and slow-release nutrition."
+    ],
+    "ben": [
+      "2–4 month slow release",
+      "Lush leaf & stem growth",
+      "Rich in proteins & aminos",
+      "Sustains soil microbes",
+      "Ideal for heavy feeders",
+      "Ultra-high nitrogen"
+    ],
+    "micro": [
+      [
+        "Minimal trace minerals",
+        "Minéraux traces minimes",
+        ""
+      ]
+    ],
+    "how_en": "Apply 1–2 tablespoons per gallon of soil or coco. Mix in and water thoroughly. Avoid overapplication.",
+    "how_fr": "Appliquez 1 à 2 cuillères à soupe par gallon de terre ou de coco. Mélangez et arrosez abondamment. Évitez le surdosage.",
+    "when": "1–2 tbsp per gallon of soil or coco. Releases over 2–4 months."
+  },
+  {
+    "slug": "kelp-meal",
+    "f": "kelp",
+    "a": "Kelp",
+    "b": "Meal",
+    "npk": [
+      1,
+      0,
+      4
+    ],
+    "accent": "#3f93e6",
+    "net": "2 lb (907 g)",
+    "grams": 907,
+    "title": "Kelp Meal 1-0-4 Organic Potassium | Mario's Super Soil",
+    "meta": "Organic kelp meal (1-0-4) with 70+ ocean minerals. Feeds soil microbes and stimulates strong roots. Ideal for soil, coco and teas. 2 lb bag.",
+    "desc": [
+      "Kelp is a marine algae sourced from nutrient-rich oceans. Often combined with fish products, it promotes healthier plant growth, improves yields, & enhances garden quality.",
+      "With an NPK ratio of 1-0-4, kelp meal releases nutrients quickly and provides over 70 vitamins and minerals, including essential micronutrients and macronutrients."
+    ],
+    "ben": [
+      "70+ ocean minerals",
+      "Heat & drought defense",
+      "Stimulates strong roots",
+      "Organic potassium (1-0-4)",
+      "Feeds soil microbes",
+      "Ideal for soil, coco & teas"
+    ],
+    "micro": [
+      [
+        "Magnesium (Mg)",
+        "Magnésium (Mg)",
+        "0.5%"
+      ],
+      [
+        "Sulfur (S)",
+        "Soufre (S)",
+        "0.2%"
+      ],
+      [
+        "Boron (B)",
+        "Bore (B)",
+        ""
+      ],
+      [
+        "Iron (Fe)",
+        "Fer (Fe)",
+        ""
+      ],
+      [
+        "Manganese (Mn)",
+        "Manganèse (Mn)",
+        ""
+      ],
+      [
+        "Zinc (Zn)",
+        "Zinc (Zn)",
+        ""
+      ],
+      [
+        "Copper (Cu)",
+        "Cuivre (Cu)",
+        ""
+      ]
+    ],
+    "how_en": "Mix 1–2 tbsp per gallon of soil. Apply monthly during the growing season.",
+    "how_fr": "Mélangez 1 à 2 c. à soupe par gallon de terre. Appliquez chaque mois pendant la saison de croissance.",
+    "when": "1–2 tbsp per gallon of soil, monthly in the growing season."
+  },
+  {
+    "slug": "alfalfa-meal",
+    "f": "alfalfa",
+    "a": "Alfalfa",
+    "b": "Meal",
+    "npk": [
+      3,
+      0.5,
+      3
+    ],
+    "accent": "#b985da",
+    "net": "2 lb (907 g)",
+    "grams": 907,
+    "title": "Alfalfa Meal 3-0.5-3 Organic Fertilizer | Mario's Super Soil",
+    "meta": "Organic alfalfa meal (3-0.5-3) with triacontanol growth hormone. Conditions and loosens soil, feeds earthworms and microbes. Ideal for soil, beds and teas.",
+    "desc": [
+      "Enhance your garden with Alfalfa Meal, an organic fertilizer and soil conditioner rich in nutrients that promote healthy plant growth.",
+      "Made from fermented alfalfa seeds, it has a light texture and pleasant earthy aroma. Apply generously around flowering perennials and shrubs."
+    ],
+    "ben": [
+      "Triacontanol growth hormone",
+      "Fast organic nitrogen (3-0.5-3)",
+      "Rich in Ca, Mg & trace minerals",
+      "Feeds earthworms & microbes",
+      "Conditions & loosens soil",
+      "Ideal for soil, beds & teas"
+    ],
+    "micro": [
+      [
+        "Calcium (Ca)",
+        "Calcium (Ca)",
+        "2%"
+      ],
+      [
+        "Magnesium (Mg)",
+        "Magnésium (Mg)",
+        "0.5%"
+      ],
+      [
+        "Sulfur (S)",
+        "Soufre (S)",
+        "0.2%"
+      ]
+    ],
+    "how_en": "Mix 2 tbsp per gallon of soil. Apply around plants and hedges, mix into soil, and water. Apply in spring; repeat every 6 weeks for long-blooming plants.",
+    "how_fr": "Mélanger 2 c. à soupe par gallon de terre. Appliquer autour des plantes et des haies, incorporer au sol et arroser. Appliquer au printemps, puis répéter toutes les 6 semaines pour les plantes à longue floraison.",
+    "when": "2 tbsp per gallon of soil, in spring and every 6 weeks."
+  },
+  {
+    "slug": "worm-castings",
+    "f": "worm",
+    "a": "Worm",
+    "b": "Castings",
+    "npk": [
+      1.5,
+      2.5,
+      1.3
+    ],
+    "accent": "#e0ab9c",
+    "net": "1.5 lb (1.0 L)",
+    "grams": 680,
+    "title": "Worm Castings Organic Soil Amendment | Mario's Super Soil",
+    "meta": "Organic worm castings packed with live microbes. Improves water retention, never burns, and activates dry amendments. Ideal for soil, coco and teas. 1.5 lb bag.",
+    "desc": [
+      "Worm castings are a natural fertilizer produced by earthworms, also known as vermicast. These castings consist of earthworm waste.",
+      "As worms consume compost materials, their nutrient-rich waste creates a superior soil amendment that supports healthier plant growth."
+    ],
+    "ben": [
+      "Packed with live microbes",
+      "Improves water retention",
+      "Natural disease resistance",
+      "100% safe, never burns",
+      "Activates dry amendments",
+      "Ideal for soil, coco & teas"
+    ],
+    "micro": [
+      [
+        "Iron (Fe)",
+        "Fer (Fe)",
+        "1%"
+      ],
+      [
+        "Calcium (Ca)",
+        "Calcium (Ca)",
+        "1%"
+      ],
+      [
+        "Magnesium (Mg)",
+        "Magnésium (Mg)",
+        "0.5%"
+      ],
+      [
+        "Sulfur (S)",
+        "Soufre (S)",
+        "0.5%"
+      ],
+      [
+        "Copper (Cu)",
+        "Cuivre (Cu)",
+        "0.05%"
+      ],
+      [
+        "Zinc (Zn)",
+        "Zinc (Zn)",
+        "0.05%"
+      ]
+    ],
+    "how_en": "Mix into potting soil or sprinkle around plants. For established plants, use 1–2 cups. Water thoroughly.",
+    "how_fr": "Mélangez au terreau ou saupoudrez autour des plantes. Pour les plantes établies, utilisez 1 à 2 tasses. Arrosez abondamment.",
+    "when": "Mix into potting soil, or 1–2 cups for established plants."
+  }
+]
