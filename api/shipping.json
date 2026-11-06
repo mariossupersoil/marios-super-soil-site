@@ -1,0 +1,16 @@
+{
+ "currency": "CAD",
+ "note": "Flat rate by total order weight in kg. The first row whose max_kg is at or above the order weight applies. Orders heavier than the last row can't use online checkout.",
+ "tiers": [
+  {"max_kg": 9.99, "price": 20},
+  {"max_kg": 15, "price": 25},
+  {"max_kg": 20, "price": 30},
+  {"max_kg": 25, "price": 35},
+  {"max_kg": 30, "price": 40},
+  {"max_kg": 36, "price": 50},
+  {"max_kg": 45, "price": 65},
+  {"max_kg": 55, "price": 70},
+  {"max_kg": 68, "price": 80},
+  {"max_kg": 90, "price": 100}
+ ]
+}

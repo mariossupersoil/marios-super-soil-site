@@ -8,19 +8,23 @@
    "sizes": {
     "2lb": {
      "label": "2 lb (0.9 kg)",
-     "price": null
+     "price": null,
+     "weight_kg": 0.91
     },
     "5lb": {
      "label": "5 lb (2.3 kg)",
-     "price": null
+     "price": null,
+     "weight_kg": 2.27
     },
     "10lb": {
      "label": "10 lb (4.5 kg)",
-     "price": null
+     "price": null,
+     "weight_kg": 4.54
     },
     "20lb": {
      "label": "20 lb (9.1 kg)",
-     "price": null
+     "price": null,
+     "weight_kg": 9.07
     }
    }
   },
@@ -30,19 +34,23 @@
    "sizes": {
     "2lb": {
      "label": "2 lb (0.9 kg)",
-     "price": null
+     "price": null,
+     "weight_kg": 0.91
     },
     "5lb": {
      "label": "5 lb (2.3 kg)",
-     "price": null
+     "price": null,
+     "weight_kg": 2.27
     },
     "10lb": {
      "label": "10 lb (4.5 kg)",
-     "price": null
+     "price": null,
+     "weight_kg": 4.54
     },
     "20lb": {
      "label": "20 lb (9.1 kg)",
-     "price": null
+     "price": null,
+     "weight_kg": 9.07
     }
    }
   },
@@ -52,19 +60,23 @@
    "sizes": {
     "2lb": {
      "label": "2 lb (0.9 kg)",
-     "price": null
+     "price": null,
+     "weight_kg": 0.91
     },
     "5lb": {
      "label": "5 lb (2.3 kg)",
-     "price": null
+     "price": null,
+     "weight_kg": 2.27
     },
     "10lb": {
      "label": "10 lb (4.5 kg)",
-     "price": null
+     "price": null,
+     "weight_kg": 4.54
     },
     "20lb": {
      "label": "20 lb (9.1 kg)",
-     "price": null
+     "price": null,
+     "weight_kg": 9.07
     }
    }
   },
@@ -74,19 +86,23 @@
    "sizes": {
     "2lb": {
      "label": "2 lb (0.9 kg)",
-     "price": null
+     "price": null,
+     "weight_kg": 0.91
     },
     "5lb": {
      "label": "5 lb (2.3 kg)",
-     "price": null
+     "price": null,
+     "weight_kg": 2.27
     },
     "10lb": {
      "label": "10 lb (4.5 kg)",
-     "price": null
+     "price": null,
+     "weight_kg": 4.54
     },
     "20lb": {
      "label": "20 lb (9.1 kg)",
-     "price": null
+     "price": null,
+     "weight_kg": 9.07
     }
    }
   },
@@ -96,19 +112,23 @@
    "sizes": {
     "2lb": {
      "label": "2 lb (0.9 kg)",
-     "price": null
+     "price": null,
+     "weight_kg": 0.91
     },
     "5lb": {
      "label": "5 lb (2.3 kg)",
-     "price": null
+     "price": null,
+     "weight_kg": 2.27
     },
     "10lb": {
      "label": "10 lb (4.5 kg)",
-     "price": null
+     "price": null,
+     "weight_kg": 4.54
     },
     "20lb": {
      "label": "20 lb (9.1 kg)",
-     "price": null
+     "price": null,
+     "weight_kg": 9.07
     }
    }
   },
@@ -118,19 +138,23 @@
    "sizes": {
     "1l": {
      "label": "1 L",
-     "price": null
+     "price": null,
+     "weight_kg": 0.6
     },
     "1gallon": {
      "label": "1 gallon",
-     "price": null
+     "price": null,
+     "weight_kg": 2.27
     },
     "2gallons": {
      "label": "2 gallons",
-     "price": null
+     "price": null,
+     "weight_kg": 4.54
     },
     "4gallons": {
      "label": "4 gallons",
-     "price": null
+     "price": null,
+     "weight_kg": 9.08
     }
    }
   }

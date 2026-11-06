@@ -13,8 +13,9 @@ $cfgFile = __DIR__ . '/config.php';
 $cfg = is_file($cfgFile) ? (require $cfgFile) : [];
 $sk = $cfg['stripe_secret_key'] ?? '';
 if ($sk === '' || str_contains($sk, 'PASTE')) fail(503, 'Checkout is not set up yet. Please contact us to order.');
-$shipCents = $cfg['shipping_cents'] ?? null;
-if (!is_int($shipCents) || $shipCents < 0) fail(503, 'Checkout is not set up yet. Please contact us to order.');
+$ship = json_decode((string)file_get_contents(__DIR__ . '/shipping.json'), true);
+$tiers = $ship['tiers'] ?? [];
+if (!$tiers) fail(503, 'Checkout is not set up yet. Please contact us to order.');
 $autoTax = (bool)($cfg['automatic_tax'] ?? true);
 $stripeUrl = $cfg['stripe_url'] ?? 'https://api.stripe.com/v1/checkout/sessions';
 $allowedHosts = $cfg['allowed_hosts'] ?? ['mariossupersoil.ca', 'www.mariossupersoil.ca'];
@@ -40,24 +41,18 @@ $params = [
     'shipping_address_collection' => ['allowed_countries' => ['CA']],
     'phone_number_collection' => ['enabled' => 'true'],
     'billing_address_collection' => 'auto',
-    'shipping_options' => [[
-        'shipping_rate_data' => [
-            'type' => 'fixed_amount',
-            'fixed_amount' => ['amount' => $shipCents, 'currency' => 'cad'],
-            'display_name' => 'Shipping within Canada',
-            'tax_behavior' => 'exclusive',
-        ],
-    ]],
     'line_items' => [],
 ];
 if ($autoTax) $params['automatic_tax'] = ['enabled' => 'true'];
 
+$totalKg = 0.0;
 foreach ($items as $it) {
     $slug = (string)($it['slug'] ?? ''); $key = (string)($it['size'] ?? ''); $qty = (int)($it['qty'] ?? 0);
     $prod = $catalog[$slug] ?? null; $size = $prod['sizes'][$key] ?? null;
     if (!$prod || !$size) fail(400, 'An item in your cart is no longer available. Please refresh the page.');
     if (!is_numeric($size['price'] ?? null) || $size['price'] <= 0) fail(400, $prod['name'] . ' (' . $size['label'] . ') does not have a price yet.');
     if ($qty < 1 || $qty > 20) fail(400, 'Quantity must be between 1 and 20.');
+    $totalKg += ((float)($size['weight_kg'] ?? 0)) * $qty;
     $params['line_items'][] = [
         'quantity' => $qty,
         'price_data' => [
@@ -68,6 +63,20 @@ foreach ($items as $it) {
         ],
     ];
 }
+
+$totalKg = round($totalKg, 2);
+$shipPrice = null;
+usort($tiers, fn($a, $b) => $a['max_kg'] <=> $b['max_kg']);
+foreach ($tiers as $tr) { if ($totalKg <= $tr['max_kg']) { $shipPrice = $tr['price']; break; } }
+if ($shipPrice === null) fail(400, 'This order is too heavy for online checkout. Please email us to arrange shipping.');
+$params['shipping_options'] = [[
+    'shipping_rate_data' => [
+        'type' => 'fixed_amount',
+        'fixed_amount' => ['amount' => (int)round($shipPrice * 100), 'currency' => 'cad'],
+        'display_name' => 'Shipping within Canada (' . rtrim(rtrim(number_format($totalKg, 1), '0'), '.') . ' kg)',
+        'tax_behavior' => 'exclusive',
+    ],
+]];
 
 $ch = curl_init($stripeUrl);
 curl_setopt_array($ch, [

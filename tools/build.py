@@ -120,6 +120,15 @@ def size_key(label):
     return re.sub(r"\s+", "", label.split("(")[0].strip().lower())
 
 
+def default_kg(label):
+    """Shipping weight guess: lb sizes by weight; gallon/litre sizes use the heavy end (5 lb per gallon). Editable in api/prices.json."""
+    m = re.match(r"([\d.]+)\s*(lb|gallons?|l)\b", label.strip().lower())
+    n, u = float(m.group(1)), m.group(2)
+    if u == "lb": return round(n * 0.4536, 2)
+    if u == "l": return round(n * 0.6, 2)
+    return round(n * 2.27, 2)
+
+
 def sync_prices():
     """api/prices.json holds the real prices (edit by hand). This keeps its structure in step with products.json
     and never invents or overwrites a price. null = no price yet, so the item can't be bought."""
@@ -131,7 +140,8 @@ def sync_prices():
         sizes = {}
         for lab in p["sizes"]:
             k = size_key(lab)
-            sizes[k] = {"label": lab, "price": oldp.get(p["slug"], {}).get("sizes", {}).get(k, {}).get("price")}
+            o = oldp.get(p["slug"], {}).get("sizes", {}).get(k, {})
+            sizes[k] = {"label": lab, "price": o.get("price"), "weight_kg": o.get("weight_kg", default_kg(lab))}
         prods[p["slug"]] = {"name": f"{plain_name(p)} {npk_dash(p)}", "img": f"/img/{p['f']}-front.webp", "sizes": sizes}
     out = {"currency": "CAD", "note": "Prices in Canadian dollars before tax and shipping, for example 24.99. null means no price yet.", "products": prods}
     f.write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n")

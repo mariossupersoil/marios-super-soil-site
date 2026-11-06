@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  var KEY='mss_cart_v1', PRICES=null, $=function(id){return document.getElementById(id);};
+  var KEY='mss_cart_v1', PRICES=null, SHIP=null, $=function(id){return document.getElementById(id);};
 
   function load(){try{var a=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(a)?a:[];}catch(e){return mem;}}
   var mem=[];
@@ -11,6 +11,10 @@
   function prices(){
     if(PRICES) return Promise.resolve(PRICES);
     return fetch('/api/prices.json',{cache:'no-cache'}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(j){PRICES=j.products||{};return PRICES;});
+  }
+  function ship(){
+    if(SHIP) return Promise.resolve(SHIP);
+    return fetch('/api/shipping.json',{cache:'no-cache'}).then(function(r){return r.json();}).then(function(j){SHIP=(j.tiers||[]).slice().sort(function(a,b){return a.max_kg-b.max_kg;});return SHIP;}).catch(function(){SHIP=[];return SHIP;});
   }
   function find(slug,size){var P=PRICES&&PRICES[slug];return P&&P.sizes&&P.sizes[size]?{p:P,s:P.sizes[size]}:null;}
   function valid(p){return typeof p==='number'&&p>0;}
@@ -70,22 +74,25 @@
       if(valid(pr)) total+=pr*i.qty;
     });
     root.appendChild(list);
+    var kg=0; c.forEach(function(i){var f=find(i.slug,i.size);kg+=(f.s.weight_kg||0)*i.qty;}); kg=Math.round(kg*100)/100;
+    var tier=null; (SHIP||[]).forEach(function(t){if(tier===null&&kg<=t.max_kg)tier=t;});
+    var tooHeavy=(SHIP&&SHIP.length&&tier===null);
     var sum=el('div','carttotal'); sum.appendChild(el('span',null,'Subtotal')); sum.appendChild(el('strong',null,money(total))); root.appendChild(sum);
-    root.appendChild(el('p','lede','Shipping and tax are added at checkout.'));
+    root.appendChild(el('p','lede',tier?('Shipping within Canada: '+money(tier.price)+' ('+kg.toFixed(1)+' kg). Tax is added at checkout.'):(tooHeavy?'This order is too heavy for online checkout. Please email us to arrange shipping.':'Shipping and tax are added at checkout.')));
     var err=el('div','cartmsg'); err.setAttribute('role','alert');
-    var go=el('button','btn solid','Checkout'); go.type='button'; go.disabled=missing;
+    var go=el('button','btn solid','Checkout'); go.type='button'; go.disabled=missing||tooHeavy;
     go.addEventListener('click',function(){
       go.disabled=true; err.textContent=''; go.textContent='Opening secure checkout...';
       fetch('/api/checkout.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items:load().map(function(i){return{slug:i.slug,size:i.size,qty:i.qty};})})})
       .then(function(r){return r.text().then(function(t){var j=null;try{j=JSON.parse(t);}catch(e){}if(!r.ok||!j||!j.url)throw new Error((j&&j.error)||'Could not start checkout. Please try again.');return j;});})
       .then(function(j){window.location.href=j.url;})
-      .catch(function(e){go.disabled=missing;go.textContent='Checkout';err.textContent=e.message==='Failed to fetch'?'Could not connect. Check your internet and try again.':e.message;});
+      .catch(function(e){go.disabled=missing||tooHeavy;go.textContent='Checkout';err.textContent=e.message==='Failed to fetch'?'Could not connect. Check your internet and try again.':e.message;});
     });
     var w2=el('p'); w2.style.marginTop='18px'; w2.appendChild(go); root.appendChild(w2); root.appendChild(err);
     var more=el('p','lede'); more.style.marginTop='18px'; var ml=el('a',null,'Keep shopping'); ml.href='/#products'; more.appendChild(ml); root.appendChild(more);
     badge();
   }
-  if(root) prices().then(renderCart).catch(function(){root.innerHTML='';root.appendChild(el('p','lede','Your cart could not be loaded. Please refresh the page.'));});
+  if(root) Promise.all([prices(),ship()]).then(renderCart).catch(function(){root.innerHTML='';root.appendChild(el('p','lede','Your cart could not be loaded. Please refresh the page.'));});
 
   // ---- order complete: clear the cart
   if($('order-done')){save([]);}

@@ -10,6 +10,6 @@ return [
 
     // Shop checkout (Stripe). Use an sk_test_ key first, then switch to sk_live_.
     'stripe_secret_key' => 'PASTE-YOUR-STRIPE-SECRET-KEY-HERE',
-    'shipping_cents' => null,      // REQUIRED: flat shipping in cents, for example 1500 = $15.00. Checkout stays off until set.
+    // Shipping is by order weight: see api/shipping.json
     'automatic_tax' => true,       // needs Stripe Tax turned on in your Stripe dashboard
 ];
