@@ -177,7 +177,7 @@ def build_home():
             return f'<div class="bar"><em>{v}</em><span style="width:{max(0, v / maxv * 70):.0f}%"></span></div>'
         rows += (f'<tr style="--accent:{p["accent"]}"><td class="p"><a href="/products/{p["slug"]}/">{name_html(p)}</a></td>'
                  f'<td>{bar(p["npk"][0])}</td><td>{bar(p["npk"][1])}</td><td>{bar(p["npk"][2])}</td>'
-                 f'<td class="a">{esc(p["when"])}</td><td class="a">{esc(sizes_text(p))}</td></tr>')
+                 f'<td class="a">{esc(p["when"])}</td><td class="a">{"<br>".join(esc(x) for x in p["sizes"])}</td></tr>')
     out += f"""  <section id="products" class="sec">
     <div class="wrap">
       <h2>Organic fertilizers and soil amendments</h2>
@@ -316,7 +316,7 @@ def build_product(p):
            "name": f"{plain_name(p)} {npk_dash(p)}", "description": p["meta"], "url": abs_url(path),
            "image": [abs_url(f"/img/{p['f']}-front.webp"), abs_url(f"/img/{p['f']}-back.webp")],
            "brand": {"@type": "Brand", "name": SITE["name"]}, "category": "Organic fertilizer",
-           "size": sizes_text(p),
+           "size": ", ".join(p["sizes"]),
            "countryOfOrigin": {"@type": "Country", "name": "Canada"}},
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},

@@ -35,9 +35,9 @@
     "how_fr": "Appliquez 1 à 2 cuillères à soupe par gallon de terreau. Mélangez et arrosez légèrement. Les nutriments se libèrent pendant 4 mois.",
     "when": "1–2 tbsp per gallon of soil. Releases over 4 months.",
     "sizes": [
-      "2 lb",
-      "5 lb",
-      "10 lb"
+      "2 lb (0.9 kg)",
+      "5 lb (2.3 kg)",
+      "10 lb (4.5 kg)"
     ]
   },
   {
@@ -81,9 +81,9 @@
     "how_fr": "Appliquer au printemps et tous les 2 à 3 mois. Utiliser 1 à 2 cuillères à café par gallon de terre. Les feuilles jaunes peuvent indiquer une carence en azote.",
     "when": "1–2 tsp per gallon of soil, in spring and every 2–3 months.",
     "sizes": [
-      "2 lb",
-      "5 lb",
-      "10 lb"
+      "2 lb (0.9 kg)",
+      "5 lb (2.3 kg)",
+      "10 lb (4.5 kg)"
     ]
   },
   {
@@ -122,9 +122,9 @@
     "how_fr": "Appliquez 1 à 2 cuillères à soupe par gallon de terre ou de coco. Mélangez et arrosez abondamment. Évitez le surdosage.",
     "when": "1–2 tbsp per gallon of soil or coco. Releases over 2–4 months.",
     "sizes": [
-      "2 lb",
-      "5 lb",
-      "10 lb"
+      "2 lb (0.9 kg)",
+      "5 lb (2.3 kg)",
+      "10 lb (4.5 kg)"
     ]
   },
   {
@@ -193,9 +193,9 @@
     "how_fr": "Mélangez 1 à 2 c. à soupe par gallon de terre. Appliquez chaque mois pendant la saison de croissance.",
     "when": "1–2 tbsp per gallon of soil, monthly in the growing season.",
     "sizes": [
-      "2 lb",
-      "5 lb",
-      "10 lb"
+      "2 lb (0.9 kg)",
+      "5 lb (2.3 kg)",
+      "10 lb (4.5 kg)"
     ]
   },
   {
@@ -244,9 +244,9 @@
     "how_fr": "Mélanger 2 c. à soupe par gallon de terre. Appliquer autour des plantes et des haies, incorporer au sol et arroser. Appliquer au printemps, puis répéter toutes les 6 semaines pour les plantes à longue floraison.",
     "when": "2 tbsp per gallon of soil, in spring and every 6 weeks.",
     "sizes": [
-      "2 lb",
-      "5 lb",
-      "10 lb"
+      "2 lb (0.9 kg)",
+      "5 lb (2.3 kg)",
+      "10 lb (4.5 kg)"
     ]
   },
   {
@@ -261,7 +261,7 @@
     ],
     "accent": "#e0ab9c",
     "title": "Worm Castings Organic Soil Amendment | Mario's Super Soil",
-    "meta": "Organic worm castings packed with live microbes. Improves water retention, never burns, activates dry amendments. For soil, coco and teas. Sizes: 2, 5 and 10 lb.",
+    "meta": "Organic worm castings packed with live microbes. Improves water retention, never burns, activates dry amendments. For soil, coco and teas. Sizes: 1 L and 1 gallon.",
     "desc": [
       "Worm castings are a natural fertilizer produced by earthworms, also known as vermicast. These castings consist of earthworm waste.",
       "As worms consume compost materials, their nutrient-rich waste creates a superior soil amendment that supports healthier plant growth."
@@ -310,9 +310,8 @@
     "how_fr": "Mélangez au terreau ou saupoudrez autour des plantes. Pour les plantes établies, utilisez 1 à 2 tasses. Arrosez abondamment.",
     "when": "Mix into potting soil, or 1–2 cups for established plants.",
     "sizes": [
-      "2 lb",
-      "5 lb",
-      "10 lb"
+      "1 L",
+      "1 gallon"
     ]
   }
 ]
