@@ -114,10 +114,14 @@ def footer():
 """
 
 
+def sizes_text(p):
+    return " · ".join(p["sizes"])
+
+
 def picker_item(p, eager=False):
     load = "" if eager else ' loading="lazy"'
     return (f'<li><a class="pick" href="/products/{p["slug"]}/" style="--accent:{p["accent"]}">'
-            f'<img src="/img/{p["f"]}-front.webp" width="170" height="250"{load} alt="{esc(plain_name(p))} {esc(npk_dash(p))} organic fertilizer, {esc(p["net"])} stand-up pouch">'
+            f'<img src="/img/{p["f"]}-front.webp" width="170" height="250"{load} alt="{esc(plain_name(p))} {esc(npk_dash(p))} organic fertilizer stand-up pouch">'
             f'<span class="nm">{name_html(p)}</span><span class="npk">{esc(npk_text(p))}</span></a></li>')
 
 
@@ -173,7 +177,7 @@ def build_home():
             return f'<div class="bar"><em>{v}</em><span style="width:{max(0, v / maxv * 70):.0f}%"></span></div>'
         rows += (f'<tr style="--accent:{p["accent"]}"><td class="p"><a href="/products/{p["slug"]}/">{name_html(p)}</a></td>'
                  f'<td>{bar(p["npk"][0])}</td><td>{bar(p["npk"][1])}</td><td>{bar(p["npk"][2])}</td>'
-                 f'<td class="a">{esc(p["when"])}</td><td class="a">{esc(p["net"])}</td></tr>')
+                 f'<td class="a">{esc(p["when"])}</td><td class="a">{esc(sizes_text(p))}</td></tr>')
     out += f"""  <section id="products" class="sec">
     <div class="wrap">
       <h2>Organic fertilizers and soil amendments</h2>
@@ -181,7 +185,7 @@ def build_home():
       <div class="tablewrap">
         <table>
           <caption class="sr">Nutrient comparison of Mario's Super Soil organic amendments</caption>
-          <thead><tr><th scope="col">Product</th><th scope="col">Nitrogen (N)</th><th scope="col">Phosphorus (P)</th><th scope="col">Potassium (K)</th><th scope="col">How much and when</th><th scope="col">Bag</th></tr></thead>
+          <thead><tr><th scope="col">Product</th><th scope="col">Nitrogen (N)</th><th scope="col">Phosphorus (P)</th><th scope="col">Potassium (K)</th><th scope="col">How much and when</th><th scope="col">Sizes</th></tr></thead>
           <tbody>{rows}</tbody>
         </table>
       </div>
@@ -312,7 +316,7 @@ def build_product(p):
            "name": f"{plain_name(p)} {npk_dash(p)}", "description": p["meta"], "url": abs_url(path),
            "image": [abs_url(f"/img/{p['f']}-front.webp"), abs_url(f"/img/{p['f']}-back.webp")],
            "brand": {"@type": "Brand", "name": SITE["name"]}, "category": "Organic fertilizer",
-           "weight": {"@type": "QuantitativeValue", "value": p["grams"], "unitCode": "GRM"},
+           "size": sizes_text(p),
            "countryOfOrigin": {"@type": "Country", "name": "Canada"}},
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
@@ -337,14 +341,14 @@ def build_product(p):
       <div class="viewer">
         <div class="stage">
           <div class="glow"><div class="pair">
-            <img src="/img/{p['f']}-front.webp" width="380" height="560" alt="{esc(plain_name(p))} {esc(npk_dash(p))} organic fertilizer, {esc(p['net'])} stand-up pouch, front">
+            <img src="/img/{p['f']}-front.webp" width="380" height="560" alt="{esc(plain_name(p))} {esc(npk_dash(p))} organic fertilizer stand-up pouch, front">
             <img src="/img/{p['f']}-back.webp" width="380" height="560" loading="lazy" alt="Back of the {esc(plain_name(p))} pouch with ingredients and directions">
           </div></div>
         </div>
         <div class="info">
           <h1 class="nm">{name_html(p)}</h1>
           <span class="pq">Premium quality</span>
-          <div class="npkline"><span class="big">{esc(npk_text(p))}</span><span class="net">Net wt. {esc(p['net'])}</span></div>
+          <div class="npkline"><span class="big">{esc(npk_text(p))}</span><span class="net">Sizes: {esc(sizes_text(p))}</span></div>
           <div class="desc">{desc}</div>
           <ul class="benefits">{ben}</ul>
           <div class="facts">
