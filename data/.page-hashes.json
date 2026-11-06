@@ -1,34 +1,38 @@
 {
   "404.html": {
-    "hash": "cedccc25b5cb338e84cd7d3f867a2def6ab978dc",
+    "hash": "1682ae432fd14d579e2ffa875190015106b70ee2",
     "lastmod": "2026-11-06"
   },
   "index.html": {
-    "hash": "704ce63b579cd3e96f5b39e742f2ddeea626ea2c",
+    "hash": "52b228f517d0c0f0563ec198302e420d81de1138",
     "lastmod": "2026-11-06"
   },
   "products/alfalfa-meal/index.html": {
-    "hash": "15ba53cad06f288bb0eddb7279fc4a31117b13cc",
+    "hash": "d8da20911c9ae79549687d663ebe2e3a6e3b334c",
     "lastmod": "2026-11-06"
   },
   "products/bone-meal/index.html": {
-    "hash": "dd806b11fc6da96642eaf770fc2b681f8095f9a3",
+    "hash": "e41330a1f1bbef031668a82ab03f1101360316f2",
     "lastmod": "2026-11-06"
   },
   "products/crab-meal/index.html": {
-    "hash": "c4229f84e3431f246479ab1c374709b1f9941369",
+    "hash": "22626367d71d270757b964243cac367025b51adf",
     "lastmod": "2026-11-06"
   },
   "products/feather-meal/index.html": {
-    "hash": "a45453a1e5254f415d08c1c07e6061a131a00cd1",
+    "hash": "360e6173a5dab7f739f4606c46c861e4c19c058e",
     "lastmod": "2026-11-06"
   },
   "products/kelp-meal/index.html": {
-    "hash": "65f8953e6ebbc0d802ea1d5cee7872868b77d44b",
+    "hash": "ecc3bc62bb9c09888814e1fffa03cd12b762a4f1",
     "lastmod": "2026-11-06"
   },
   "products/worm-castings/index.html": {
-    "hash": "1349551bf5a3fe43e59bac6c8051378a96842ca0",
+    "hash": "a526baaa452d38c00aa91b38ece101fc762e3a7b",
+    "lastmod": "2026-11-06"
+  },
+  "soil-calculator/index.html": {
+    "hash": "19ce6dd6a00cad64f81834999a91d389feb6b11a",
     "lastmod": "2026-11-06"
   }
 }

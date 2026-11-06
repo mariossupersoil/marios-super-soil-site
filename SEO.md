@@ -37,3 +37,7 @@ organic fertilizer Canada, organic soil amendments Canada, organic dry fertilize
 4. Make a small set of safe edits from the list above. Prefer 3-6 well-chosen changes over many.
 5. Rebuild, re-audit, commit on a branch named `seo/YYYY-MM-DD`, open a pull request. Describe what changed, why, and what you chose not to change.
 6. Never push to `main` directly. The owner approves by merging; Hostinger then deploys automatically.
+
+## Soil calculator page (`/soil-calculator/`)
+- Content lives in `data/calculator-body.inc`, `assets/calculator.js` (plant data, rates, product links) and `assets/calculator.css` (scoped under `.calc-panel`). These are the owner's own tool: do not edit rates, product data or plant advice. The weekly run may only touch the page's title, description, intro paragraph (in `build_calculator()`) and JSON-LD.
+- The tool contains cannabis plant options written by the owner. Do not add any cannabis wording to this page's title, description, intro or anywhere else.

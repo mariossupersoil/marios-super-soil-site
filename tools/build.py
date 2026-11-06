@@ -80,6 +80,7 @@ def header():
       <a href="/#products">Products</a>
       <a href="/#blends">Blends</a>
       <a href="/#buy">Where to buy</a>
+      <a href="/soil-calculator/">Calculator</a>
       <a href="/#faq">FAQ</a>
       <a href="/#mission">About</a>
       <a href="/#contact">Contact</a>
@@ -216,7 +217,7 @@ def build_home():
           <div><span class="big" id="c-lu">3</span><span>tbsp Level Up 3-3-3</span></div>
           <div><span class="big" id="c-fp">2</span><span>tbsp Flower Power 2-6-4</span></div>
         </div>
-        <p class="store">Mix into the soil and water in. <a href="{esc(SITE['links']['calculator'])}" target="_blank" rel="noopener">Open the full product calculator</a></p>
+        <p class="store">Mix into the soil and water in. <a href="/soil-calculator/">Open the full product calculator</a></p>
       </div>
     </div>
   </section>
@@ -366,6 +367,33 @@ def build_product(p):
     return out
 
 
+def build_calculator():
+    title = "Organic Fertilizer Calculator for Gardens | Mario's Super Soil"
+    desc = "Free organic fertilizer calculator. Pick your plant, bed size or pot size and growing zone to get amounts of Mario's Super Soil amendments to use."
+    path = "/soil-calculator/"
+    ld = [{"@context": "https://schema.org", "@type": "WebApplication", "name": "Soil Amendment Calculator",
+           "url": abs_url(path), "description": desc, "applicationCategory": "LifestyleApplication",
+           "operatingSystem": "Any", "inLanguage": "en-CA",
+           "publisher": {"@type": "Organization", "name": SITE["name"], "url": BASE}},
+          {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+              {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
+              {"@type": "ListItem", "position": 2, "name": "Soil amendment calculator", "item": abs_url(path)}]}]
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css">', '<link rel="stylesheet" href="/assets/style.css">\n<link rel="stylesheet" href="/assets/calculator.css">')
+    out += header()
+    body = (ROOT / "data/calculator-body.inc").read_text()
+    out += f"""  <section class="sec"><div class="wrap">
+    <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Soil amendment</b> <i>calculator</i></h1>
+    <p class="lede" style="margin-bottom:32px">Tell us what you are growing, the size of your bed or pot and where you are in Canada. The calculator shows how much of each Mario's Super Soil organic amendment to use, with a planting and feeding calendar for your zone.</p>
+    <div class="calc-panel">
+{body}    </div>
+    <p class="lede" style="margin-top:28px">Amounts are a guide based on the label rates. Read the bag for full directions. Every product is also on the <a href="/#products">products list</a>.</p>
+  </div></section>
+<script src="/assets/calculator.js" defer></script>
+"""
+    out += footer()
+    return out
+
+
 def build_404():
     out = head("Page not found | Mario's Super Soil", "This page could not be found.", "/404.html", noindex=True)
     out += header()
@@ -378,7 +406,7 @@ def build_404():
 
 # ---------------------------------------------------------------- write
 def main():
-    pages = {"index.html": build_home(), "404.html": build_404()}
+    pages = {"index.html": build_home(), "404.html": build_404(), "soil-calculator/index.html": build_calculator()}
     for p in PRODUCTS:
         pages[f"products/{p['slug']}/index.html"] = build_product(p)
 
@@ -395,7 +423,7 @@ def main():
 
     # sitemap (indexable pages only)
     urls = ""
-    for rel in ["index.html"] + [f"products/{p['slug']}/index.html" for p in PRODUCTS]:
+    for rel in ["index.html", "soil-calculator/index.html"] + [f"products/{p['slug']}/index.html" for p in PRODUCTS]:
         loc = BASE + "/" + rel.replace("index.html", "")
         prio = "1.0" if rel == "index.html" else "0.8"
         urls += f"  <url><loc>{loc}</loc><lastmod>{new[rel]['lastmod']}</lastmod><priority>{prio}</priority></url>\n"
