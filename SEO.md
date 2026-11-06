@@ -40,4 +40,4 @@ organic fertilizer Canada, organic soil amendments Canada, organic dry fertilize
 
 ## Soil calculator page (`/soil-calculator/`)
 - Content lives in `data/calculator-body.inc`, `assets/calculator.js` (plant data, rates, product links) and `assets/calculator.css` (scoped under `.calc-panel`). These are the owner's own tool: do not edit rates, product data or plant advice. The weekly run may only touch the page's title, description, intro paragraph (in `build_calculator()`) and JSON-LD.
-- The tool contains cannabis plant options written by the owner. Do not add any cannabis wording to this page's title, description, intro or anywhere else.
+- The tool contains cannabis plant options (veg, flower, full cycle) that the owner wants kept so cannabis growers can see recommended doses. Leave them in. Do not add cannabis wording to this page's title, description or intro, and do not add cannabis copy anywhere else on the site.

@@ -282,7 +282,7 @@ const PRODUCTS={
   zeolite:    {name:'Zeolite',               npk:'retention',url:'https://mariossupersoil.ca/sustainable-fertilizers',     tbsp:1.0,  lbs100:2.0},
   azomite:    {name:'Azomite',               npk:'minerals', url:'https://mariossupersoil.ca/sustainable-fertilizers',     tbsp:0.5,  lbs100:1.0},
   humicAcid:  {name:'Humic Acid (Granular)', npk:'bio',      url:'https://mariossupersoil.ca/sustainable-fertilizers',     tbsp:0.25, lbs100:0.5},
-  wormCast:   {name:'Worm Castings',         npk:'0.5-0.5-0.3',url:'https://mariossupersoil.ca/worm-castings',            tbsp:2.0,  lbs100:5.0},
+  wormCast:   {name:'Worm Castings',         npk:'1.5-2.5-1.3',url:'https://mariossupersoil.ca/worm-castings',            tbsp:2.0,  lbs100:5.0},
   biochar:    {name:'Biochar (Charged)',      npk:'carbon',   url:'https://mariossupersoil.ca/sustainable-fertilizers',     tbsp:1.0,  lbs100:2.0},
   karanja:    {name:'Karanja Cake',          npk:'pest/fert',url:'https://mariossupersoil.ca/sustainable-fertilizers',     tbsp:0.5,  lbs100:1.0},
   compost:    {name:'Compost Blend',         npk:'organic',  url:'https://mariossupersoil.ca/sustainable-fertilizers',     tbsp:2.0,  lbs100:5.0},
