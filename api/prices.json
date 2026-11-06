@@ -91,17 +91,17 @@
     },
     "5lb": {
      "label": "5 lb (2.3 kg)",
-     "price": null,
+     "price": 32.99,
      "weight_kg": 2.27
     },
     "10lb": {
      "label": "10 lb (4.5 kg)",
-     "price": null,
+     "price": 32.99,
      "weight_kg": 4.54
     },
     "20lb": {
      "label": "20 lb (9.1 kg)",
-     "price": null,
+     "price": 32.99,
      "weight_kg": 9.07
     }
    }
