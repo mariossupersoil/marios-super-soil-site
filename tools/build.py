@@ -349,6 +349,7 @@ def build_product(p):
           <h1 class="nm">{name_html(p)}</h1>
           <span class="pq">Premium quality</span>
           <div class="npkline"><span class="big">{esc(npk_text(p))}</span><span class="net">Sizes: {esc(sizes_text(p))}</span></div>
+          {('<p class="store">' + esc(p['size_note']) + '</p>') if p.get('size_note') else ''}
           <div class="desc">{desc}</div>
           <ul class="benefits">{ben}</ul>
           <div class="facts">
@@ -391,7 +392,7 @@ def build_calculator():
     <p class="lede" style="margin-bottom:32px">Tell us what you are growing, the size of your bed or pot and where you are in Canada. The calculator shows how much of each Mario's Super Soil organic amendment to use, with a planting and feeding calendar for your zone.</p>
     <div class="calc-panel">
 {body}    </div>
-    <p class="lede" style="margin-top:28px">Amounts are a guide based on the label rates. Read the bag for full directions. Every product is also on the <a href="/#products">products list</a>.</p>
+    <p class="lede" style="margin-top:28px">Amounts are a guide based on the label rates. Read the bag for full directions. Worm castings and compost are sold in litres and gallons, not by weight, because the weight changes with moisture (4 gallons is about 15 to 20 lb). Every product is also on the <a href="/#products">products list</a>.</p>
   </div></section>
 <script src="/assets/calculator.js" defer></script>
 """
