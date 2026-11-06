@@ -41,3 +41,8 @@ organic fertilizer Canada, organic soil amendments Canada, organic dry fertilize
 ## Soil calculator page (`/soil-calculator/`)
 - Content lives in `data/calculator-body.inc`, `assets/calculator.js` (plant data, rates, product links) and `assets/calculator.css` (scoped under `.calc-panel`). These are the owner's own tool: do not edit rates, product data or plant advice. The weekly run may only touch the page's title, description, intro paragraph (in `build_calculator()`) and JSON-LD.
 - The tool contains cannabis plant options (veg, flower, full cycle) that the owner wants kept so cannabis growers can see recommended doses. Leave them in. Do not add cannabis wording to this page's title, description or intro, and do not add cannabis copy anywhere else on the site.
+
+## Plant Dr. Mario (`/plant-drmario/`)
+- Photo diagnosis tool: page built by `build_drmario()`, front end in `assets/drmario.js` and `assets/drmario.css`, server script `api/diagnose.php` (calls the Claude API with the owner's key from `api/config.php`, which is not in GitHub).
+- The weekly run may only adjust the page's title, description, intro text and JSON-LD. Never touch `api/`, the key or its limits, and never commit `api/config.php`.
+- Recommended products come from `api/catalog.json` (same list as the calculator). Keep copy to "may help"; no cure or result promises.

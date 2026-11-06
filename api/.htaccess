@@ -1,0 +1,7 @@
+Options -Indexes
+<FilesMatch "^(config(\.sample)?\.php|\.rl)$">
+  Require all denied
+</FilesMatch>
+RewriteEngine On
+RewriteRule ^\.rl(/|$) - [R=404,L]
+RewriteRule ^config(\.sample)?\.php$ - [R=404,L]

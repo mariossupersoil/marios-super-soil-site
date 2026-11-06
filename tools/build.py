@@ -80,6 +80,7 @@ def header():
       <a href="/#products">Products</a>
       <a href="/#blends">Blends</a>
       <a href="/#buy">Where to buy</a>
+      <a href="/plant-drmario/">Plant Dr. Mario</a>
       <a href="/soil-calculator/">Calculator</a>
       <a href="/#faq">FAQ</a>
       <a href="/#mission">About</a>
@@ -394,6 +395,57 @@ def build_calculator():
     return out
 
 
+def build_drmario():
+    title = "Plant Dr. Mario: Free Plant Problem Diagnosis from a Photo"
+    desc = "Upload a photo of your plant and get a free AI diagnosis of yellow leaves, spots and other problems, with organic amendments that may help."
+    path = "/plant-drmario/"
+    ld = [{"@context": "https://schema.org", "@type": "WebApplication", "name": "Plant Dr. Mario",
+           "url": abs_url(path), "description": desc, "applicationCategory": "LifestyleApplication",
+           "operatingSystem": "Any", "inLanguage": "en-CA",
+           "publisher": {"@type": "Organization", "name": SITE["name"], "url": BASE}},
+          {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+              {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
+              {"@type": "ListItem", "position": 2, "name": "Plant Dr. Mario", "item": abs_url(path)}]}]
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css">', '<link rel="stylesheet" href="/assets/style.css">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
+    out += header()
+    out += """  <section class="sec"><div class="wrap">
+    <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Plant</b> <i>Dr. Mario</i></h1>
+    <p class="lede" style="margin-bottom:32px">Yellow leaves? Spots? Drooping? Take a photo of your plant and Dr. Mario will tell you what is most likely wrong and which Mario's Super Soil organic amendments may help. Free, and it works on phones and computers.</p>
+    <div class="dm" id="dm"><div class="dm-card">
+      <div id="dm-form">
+        <div class="dm-drop" id="dm-drop">
+          <div class="dm-big">Add a photo of your plant</div>
+          <p>Show the whole plant, plus a close-up of the leaves that look wrong. Up to 3 photos.</p>
+          <div class="dm-actions">
+            <button class="btn solid" type="button" id="dm-btn-cam">Take a photo</button>
+            <button class="btn" type="button" id="dm-btn-pick">Choose from files</button>
+          </div>
+          <p style="margin-top:14px;font-size:14px">On a computer you can also drag photos here.</p>
+          <input class="dm-file" type="file" id="dm-camera" accept="image/*" capture="environment" tabindex="-1" aria-hidden="true">
+          <input class="dm-file" type="file" id="dm-files" accept="image/*,.heic,.heif" multiple tabindex="-1" aria-hidden="true">
+        </div>
+        <ul class="dm-thumbs" id="dm-thumbs" aria-label="Your photos"></ul>
+        <div class="dm-fields">
+          <div class="dm-row">
+            <div><label for="dm-plant">Plant (optional)</label><input id="dm-plant" type="text" maxlength="80" placeholder="For example: tomato, monstera, rose" autocomplete="off"></div>
+            <div><label for="dm-where">Where is it growing? (optional)</label><select id="dm-where"><option value="">Not sure</option><option value="outdoor">Outdoor garden</option><option value="container">Outdoor pot or planter</option><option value="indoor">Indoors</option><option value="greenhouse">Greenhouse</option></select></div>
+          </div>
+          <div><label for="dm-note">What have you noticed? (optional)</label><textarea id="dm-note" maxlength="600" placeholder="For example: lower leaves turning yellow for two weeks, watering every 3 days"></textarea></div>
+        </div>
+        <div class="dm-msg" id="dm-msg" role="alert"></div>
+        <div class="dm-go"><button class="btn solid" type="button" id="dm-go" disabled>Diagnose my plant</button></div>
+      </div>
+      <div class="dm-busy" id="dm-busy" role="status" aria-live="polite"><div class="dm-spin"></div><p class="lede" style="margin:0 auto">Dr. Mario is looking at your plant. This takes about 15 seconds.</p></div>
+      <div class="dm-res" id="dm-res" aria-live="polite"></div>
+    </div></div>
+    <p class="lede" style="margin-top:28px">Photos are sent to an AI service to get your diagnosis and are not saved on this site. For amounts, follow the bag or use the <a href="/soil-calculator/">soil amendment calculator</a>.</p>
+  </div></section>
+<script src="/assets/drmario.js?v=1" defer></script>
+"""
+    out += footer()
+    return out
+
+
 def build_404():
     out = head("Page not found | Mario's Super Soil", "This page could not be found.", "/404.html", noindex=True)
     out += header()
@@ -406,7 +458,7 @@ def build_404():
 
 # ---------------------------------------------------------------- write
 def main():
-    pages = {"index.html": build_home(), "404.html": build_404(), "soil-calculator/index.html": build_calculator()}
+    pages = {"index.html": build_home(), "404.html": build_404(), "soil-calculator/index.html": build_calculator(), "plant-drmario/index.html": build_drmario()}
     for p in PRODUCTS:
         pages[f"products/{p['slug']}/index.html"] = build_product(p)
 
@@ -423,7 +475,7 @@ def main():
 
     # sitemap (indexable pages only)
     urls = ""
-    for rel in ["index.html", "soil-calculator/index.html"] + [f"products/{p['slug']}/index.html" for p in PRODUCTS]:
+    for rel in ["index.html", "soil-calculator/index.html", "plant-drmario/index.html"] + [f"products/{p['slug']}/index.html" for p in PRODUCTS]:
         loc = BASE + "/" + rel.replace("index.html", "")
         prio = "1.0" if rel == "index.html" else "0.8"
         urls += f"  <url><loc>{loc}</loc><lastmod>{new[rel]['lastmod']}</lastmod><priority>{prio}</priority></url>\n"

@@ -15,3 +15,8 @@ Do not point the target at the folder of the live mariossupersoil.ca site until 
 1. Set `"staging": false` in `data/site.json`, run `python3 tools/build.py`, commit and merge.
 2. Submit `https://mariossupersoil.ca/sitemap.xml` in Google Search Console.
 3. Keep the store: the "Shop online" buttons link to the current store pages.
+
+## Plant Dr. Mario setup (one time, on Hostinger)
+1. In hPanel open File Manager, go to `public_html/api/` (after the first deploy).
+2. Copy `config.sample.php` to `config.php` and paste the Anthropic API key from console.anthropic.com. Never put the key in GitHub or chat.
+3. Open `/plant-drmario/` and diagnose a test photo. Limits (12 per person and 400 total per day) are set in `config.php`.
