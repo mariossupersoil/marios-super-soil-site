@@ -86,6 +86,7 @@ def header():
       <a href="/#mission">About</a>
       <a href="/#contact">Contact</a>
     </nav>
+    <a class="cartlink" href="/cart/" aria-label="Shopping cart">Cart <span id="cart-n" class="cartn">0</span></a>
     <a class="btn solid" href="{esc(SITE['store_url'])}" target="_blank" rel="noopener">Shop online</a>
   </div>
 </header>
@@ -109,9 +110,31 @@ def footer():
   </div>
 </footer>
 <script src="/assets/app.js" defer></script>
+<script src="/assets/cart.js?v=1" defer></script>
 </body>
 </html>
 """
+
+
+def size_key(label):
+    return re.sub(r"\s+", "", label.split("(")[0].strip().lower())
+
+
+def sync_prices():
+    """api/prices.json holds the real prices (edit by hand). This keeps its structure in step with products.json
+    and never invents or overwrites a price. null = no price yet, so the item can't be bought."""
+    f = ROOT / "api/prices.json"
+    old = json.loads(f.read_text()) if f.exists() else {}
+    oldp = old.get("products", {})
+    prods = {}
+    for p in PRODUCTS:
+        sizes = {}
+        for lab in p["sizes"]:
+            k = size_key(lab)
+            sizes[k] = {"label": lab, "price": oldp.get(p["slug"], {}).get("sizes", {}).get(k, {}).get("price")}
+        prods[p["slug"]] = {"name": f"{plain_name(p)} {npk_dash(p)}", "img": f"/img/{p['f']}-front.webp", "sizes": sizes}
+    out = {"currency": "CAD", "note": "Prices in Canadian dollars before tax and shipping, for example 24.99. null means no price yet.", "products": prods}
+    f.write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n")
 
 
 def sizes_text(p):
@@ -322,6 +345,7 @@ def build_product(p):
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Products", "item": BASE + "/#products"},
               {"@type": "ListItem", "position": 3, "name": plain_name(p), "item": abs_url(path)}]}]
+    size_opts = ''.join(f'<option value="{esc(size_key(x))}">{esc(x)}</option>' for x in p['sizes'])
     out = head(p["title"], p["meta"], path, og_image=f"/img/{p['f']}-front.webp", jsonld=ld)
     out += header()
     ben = "".join(f'<li><img src="/img/ic-{p["f"]}-{i + 1}.webp" alt="" width="60" height="60" loading="lazy"><span>{esc(t)}</span></li>'
@@ -357,7 +381,16 @@ def build_product(p):
             <div><h2>How to use <small lang="fr">Comment utiliser</small></h2><p>{esc(p['how_en'])}</p><p lang="fr">{esc(p['how_fr'])}</p></div>
           </div>
           <p class="store">Store in a cool, dry place, away from moisture.</p>
-          <p class="ctas"><a class="btn solid" href="{esc(SITE['store_url'])}" target="_blank" rel="noopener">Buy {esc(plain_name(p))} online</a><a class="btn" href="/#buy">Find a local shop</a></p>
+          <div class="shopbox" id="buy-box" data-slug="{esc(p['slug'])}">
+            <div class="buyrow">
+              <div><label for="buy-size">Size</label><select id="buy-size">{size_opts}</select></div>
+              <div><label for="buy-qty">Quantity</label><input id="buy-qty" type="number" min="1" max="20" value="1" inputmode="numeric"></div>
+            </div>
+            <p class="buyprice" id="buy-price" aria-live="polite">Choose a size</p>
+            <button class="btn solid" type="button" id="buy-add">Add to cart</button>
+            <p class="buymsg" id="buy-msg" role="status" aria-live="polite"></p>
+          </div>
+          <p class="ctas"><a class="btn" href="/#buy">Find a local shop</a></p>
         </div>
       </div>
     </div>
@@ -451,6 +484,32 @@ def build_drmario():
     return out
 
 
+def build_cart():
+    out = head("Your cart | Mario's Super Soil", "Review your Mario's Super Soil order and check out securely.", "/cart/", noindex=True)
+    out += header()
+    out += """  <section class="sec"><div class="wrap">
+    <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Your</b> <i>cart</i></h1>
+    <div id="cart-root" class="cartbox"><p class="lede">Loading your cart...</p></div>
+    <p class="lede" style="margin-top:24px">Prices are in Canadian dollars. Shipping and tax are shown at checkout. Payment is handled securely by Stripe; we never see your card number.</p>
+  </div></section>
+"""
+    out += footer()
+    return out
+
+
+def build_order_complete():
+    out = head("Order received | Mario's Super Soil", "Thank you for your Mario's Super Soil order.", "/order-complete/", noindex=True)
+    out += header()
+    out += """  <section class="sec"><div class="wrap">
+    <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Thank</b> <i>you</i></h1>
+    <p class="lede" id="order-done">Your order has been received. Stripe will email your receipt. Questions? Email <a href="mailto:__EMAIL__">__EMAIL__</a> or call __PHONE__.</p>
+    <p class="ctas" style="margin-top:28px"><a class="btn solid" href="/">Back to the home page</a></p>
+  </div></section>
+""".replace("__EMAIL__", SITE["email"]).replace("__PHONE__", SITE["phone"])
+    out += footer()
+    return out
+
+
 def build_404():
     out = head("Page not found | Mario's Super Soil", "This page could not be found.", "/404.html", noindex=True)
     out += header()
@@ -463,7 +522,8 @@ def build_404():
 
 # ---------------------------------------------------------------- write
 def main():
-    pages = {"index.html": build_home(), "404.html": build_404(), "soil-calculator/index.html": build_calculator(), "plant-drmario/index.html": build_drmario()}
+    sync_prices()
+    pages = {"index.html": build_home(), "404.html": build_404(), "soil-calculator/index.html": build_calculator(), "plant-drmario/index.html": build_drmario(), "cart/index.html": build_cart(), "order-complete/index.html": build_order_complete()}
     for p in PRODUCTS:
         pages[f"products/{p['slug']}/index.html"] = build_product(p)
 

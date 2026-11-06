@@ -39,6 +39,7 @@
       <a href="/#mission">About</a>
       <a href="/#contact">Contact</a>
     </nav>
+    <a class="cartlink" href="/cart/" aria-label="Shopping cart">Cart <span id="cart-n" class="cartn">0</span></a>
     <a class="btn solid" href="https://mariossupersoil.ca/sustainable-fertilizers" target="_blank" rel="noopener">Shop online</a>
   </div>
 </header>
@@ -65,7 +66,16 @@
             <div><h2>How to use <small lang="fr">Comment utiliser</small></h2><p>Mix 2 tbsp per gallon of soil. Apply around plants and hedges, mix into soil, and water. Apply in spring; repeat every 6 weeks for long-blooming plants.</p><p lang="fr">Mélanger 2 c. à soupe par gallon de terre. Appliquer autour des plantes et des haies, incorporer au sol et arroser. Appliquer au printemps, puis répéter toutes les 6 semaines pour les plantes à longue floraison.</p></div>
           </div>
           <p class="store">Store in a cool, dry place, away from moisture.</p>
-          <p class="ctas"><a class="btn solid" href="https://mariossupersoil.ca/sustainable-fertilizers" target="_blank" rel="noopener">Buy Alfalfa Meal online</a><a class="btn" href="/#buy">Find a local shop</a></p>
+          <div class="shopbox" id="buy-box" data-slug="alfalfa-meal">
+            <div class="buyrow">
+              <div><label for="buy-size">Size</label><select id="buy-size"><option value="2lb">2 lb (0.9 kg)</option><option value="5lb">5 lb (2.3 kg)</option><option value="10lb">10 lb (4.5 kg)</option><option value="20lb">20 lb (9.1 kg)</option></select></div>
+              <div><label for="buy-qty">Quantity</label><input id="buy-qty" type="number" min="1" max="20" value="1" inputmode="numeric"></div>
+            </div>
+            <p class="buyprice" id="buy-price" aria-live="polite">Choose a size</p>
+            <button class="btn solid" type="button" id="buy-add">Add to cart</button>
+            <p class="buymsg" id="buy-msg" role="status" aria-live="polite"></p>
+          </div>
+          <p class="ctas"><a class="btn" href="/#buy">Find a local shop</a></p>
         </div>
       </div>
     </div>
@@ -90,5 +100,6 @@
   </div>
 </footer>
 <script src="/assets/app.js" defer></script>
+<script src="/assets/cart.js?v=1" defer></script>
 </body>
 </html>

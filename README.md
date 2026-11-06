@@ -20,3 +20,8 @@ Do not point the target at the folder of the live mariossupersoil.ca site until 
 1. In hPanel open File Manager, go to `public_html/api/` (after the first deploy).
 2. Copy `config.sample.php` to `config.php` and paste the Anthropic API key from console.anthropic.com. Never put the key in GitHub or chat.
 3. Open `/plant-drmario/` and diagnose a test photo. Limits (12 per person and 400 total per day) are set in `config.php`.
+
+## Shop: cart and checkout (Stripe)
+- Prices live in `api/prices.json` (CAD, before tax and shipping, for example `24.99`). `null` means no price yet and that size can't be bought. `tools/build.py` keeps the file's structure in step with `data/products.json` and never changes a price.
+- Add to `api/config.php` on the server: `stripe_secret_key` (sk_test_... first, then sk_live_...), `shipping_cents` (for example 1500) and `automatic_tax` (needs Stripe Tax enabled in Stripe). Never commit config.php.
+- The cart is stored in the shopper's browser. `api/checkout.php` re-prices everything on the server and creates a Stripe Checkout session; Stripe takes the card and emails receipts.

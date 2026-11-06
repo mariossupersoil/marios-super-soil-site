@@ -46,3 +46,6 @@ organic fertilizer Canada, organic soil amendments Canada, organic dry fertilize
 - Photo diagnosis tool: page built by `build_drmario()`, front end in `assets/drmario.js` and `assets/drmario.css`, server script `api/diagnose.php` (calls the Claude API with the owner's key from `api/config.php`, which is not in GitHub).
 - The weekly run may only adjust the page's title, description, intro text and JSON-LD. Never touch `api/`, the key or its limits, and never commit `api/config.php`.
 - Recommended products come from `api/catalog.json` (same list as the calculator). Keep copy to "may help"; no cure or result promises.
+
+## Shop (cart, checkout, prices)
+- Never edit `api/`, `assets/cart.js`, `api/prices.json` or the cart and order pages. They are noindex and outside the weekly SEO scope. Never add `offers`, prices or `aggregateRating` to structured data unless the owner asks.
