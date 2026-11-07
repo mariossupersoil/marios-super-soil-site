@@ -136,7 +136,19 @@ if ($action === 'save_settings') {
     $stk = $g['stock'] ?? ''; $stk = ($stk === '' || $stk === null) ? null : ((is_numeric($stk) && $stk >= 0 && (int)$stk == $stk) ? (int)$stk : fail(400, 'Gift stock must be a whole number or blank.'));
     $days = (int)($r['days'] ?? 60); if ($days < 7 || $days > 365) fail(400, 'Reminder days must be between 7 and 365.');
     $set = ['gift' => ['enabled' => !empty($g['enabled']), 'threshold' => round($thr, 2), 'name' => $name, 'choices' => $chs, 'weight_kg' => round($wt, 2), 'stock' => $stk], 'reminders' => ['enabled' => !empty($r['enabled']), 'days' => $days]];
-    store_update(function ($st) use ($set) { $st['settings'] = $set; return $st; }) ? out_json(['ok' => true]) : fail(500, 'Could not save.');
+    store_update(function ($st) use ($set) { $st['settings'] = array_merge($st['settings'] ?? [], $set); return $st; }) ? out_json(['ok' => true]) : fail(500, 'Could not save.');
+}
+if ($action === 'save_promo') {
+    $title = clean_line((string)($in['title'] ?? ''), 40); $text = clean_line((string)($in['text'] ?? ''), 100);
+    $code = preg_replace('/[^A-Za-z0-9_-]/', '', (string)($in['code'] ?? '')); $ends = trim((string)($in['ends'] ?? ''));
+    $on = !empty($in['enabled']);
+    if ($ends !== '' && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $ends)) fail(400, 'The end date looks wrong.');
+    if ($on) {
+        if ($title === '' || $text === '') fail(400, 'Give the deal a title and a short line of text.');
+        $found = false; foreach (store()['discounts'] ?? [] as $x) { if (norm_code((string)($x['code'] ?? '')) === norm_code($code) && $code !== '') { $found = true; break; } }
+        if (!$found) fail(400, 'That code is not in your Discount codes list yet. Add it there first, then save this again.');
+    }
+    store_update(function ($st) use ($on, $title, $text, $code, $ends) { $st['settings']['promo'] = ['enabled' => $on, 'title' => $title, 'text' => $text, 'code' => $code, 'ends' => $ends]; return $st; }) ? out_json(['ok' => true]) : fail(500, 'Could not save.');
 }
 if ($action === 'review_action') {
     $id = (string)($in['id'] ?? ''); $op = (string)($in['op'] ?? '');

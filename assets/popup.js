@@ -28,10 +28,11 @@
     function money(n){return '$'+Number(n).toFixed(2);}
     fetch('/api/shop.php').then(function(r){return r.json();}).then(function(d){
       var out=[];
+      if(d.promo){var lp=el('li'); lp.appendChild(el('b',null,d.promo.title+': ')); lp.appendChild(document.createTextNode(d.promo.text+' with code ')); lp.appendChild(el('b',null,d.promo.code)); deals.appendChild(lp);}
       Object.keys(d.products||{}).forEach(function(k){var P=d.products[k]; if(P.enabled===false) return; var best=null;
         Object.keys(P.sizes).forEach(function(z){var s=P.sizes[z]; if(s.sale_price!=null&&s.price!=null&&s.sale_price<s.price&&!s.soldout&&(!best||s.sale_price/s.price<best.sale_price/best.price)) best=s;});
         if(best) out.push({n:P.name,s:best});});
-      out.slice(0,3).forEach(function(o){var li=el('li'); li.appendChild(el('b',null,(o.s.sale_label||'Sale')+': ')); li.appendChild(document.createTextNode(o.n+' '+o.s.label+' '+money(o.s.sale_price)+' ')); li.appendChild(el('s',null,money(o.s.price))); deals.appendChild(li);});
+      out.slice(0,d.promo?2:3).forEach(function(o){var li=el('li'); li.appendChild(el('b',null,(o.s.sale_label||'Sale')+': ')); li.appendChild(document.createTextNode(o.n+' '+o.s.label+' '+money(o.s.sale_price)+' ')); li.appendChild(el('s',null,money(o.s.price))); deals.appendChild(li);});
       if(d.gift&&d.gift.threshold){var li=el('li'); li.appendChild(el('b',null,'Free gift: ')); li.appendChild(document.createTextNode('a free 2 lb bag of Level Up or Flower Power on orders over $'+d.gift.threshold)); deals.appendChild(li);}
       if(deals.children.length) deals.hidden=false;
     }).catch(function(){});

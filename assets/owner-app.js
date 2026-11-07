@@ -132,6 +132,18 @@
     return card;
   }
 
+  function promoCard(){
+    var card=el('div','own-card'); card.appendChild(el('h2',null,'Deal of the month'));
+    card.appendChild(el('p','hint','Shows a deal box on the home page, a small "deal" tab in the corner of every page, and a line in the sign-up pop-up. The code must already exist in Discount codes above. Customers who click Shop now get the code applied automatically. It switches itself off after the end date.'));
+    var pr=S.settings.promo||{};
+    var row=el('div','row'); row.style.gridTemplateColumns='repeat(auto-fill,minmax(200px,1fr))';
+    var on=chk('Show this deal on the site',pr.enabled), t=inp('text',pr.title||'',{maxlength:40}), x=inp('text',pr.text||'',{maxlength:100}), c=inp('text',pr.code||'',{maxlength:30}), e=inp('date',pr.ends||'');
+    row.appendChild(on); row.appendChild(field('Title',t)); row.appendChild(field('Short line',x)); row.appendChild(field('Discount code',c)); row.appendChild(field('Last day (blank = no end)',e)); card.appendChild(row);
+    var b=el('button','btn solid','Save'); b.type='button'; var m=msgBox(), bar=el('div','bar'); bar.appendChild(b); bar.appendChild(m); card.appendChild(bar);
+    saver(b,m,function(){return call('save_promo',{enabled:on.cb.checked,title:t.value,text:x.value,code:c.value,ends:e.value});});
+    return card;
+  }
+
   function reviewsCard(){
     var card=el('div','own-card'); card.appendChild(el('h2',null,'Customer reviews'));
     card.appendChild(el('p','hint','New reviews wait here until you approve them. Only approve real reviews from real customers. You can also add a review a customer sent you by email, text or social media.'));
@@ -203,7 +215,7 @@
       var top=el('p'); var out=el('button','btn','Log out'); out.type='button'; out.addEventListener('click',function(){call('logout',{}).then(function(){location.reload();});}); top.appendChild(out); root.appendChild(top);
       var n=0; try{n=Object.keys(S.catalog).length;}catch(e){}
       if(!n) root.appendChild(el('p','lede','No products were found in the shop catalog (api/prices.json may be missing on the server).'));
-      [['Products and prices',productsCard],['Sales',salesCard],['Shipping rates',shippingCard],['Discount codes',discountsCard],['Free gift and reminders',settingsCard],['Customer reviews',reviewsCard],['Wholesale applications',leadsCard],['Email list and backup',emailCard]].forEach(function(c){
+      [['Products and prices',productsCard],['Sales',salesCard],['Shipping rates',shippingCard],['Discount codes',discountsCard],['Deal of the month',promoCard],['Free gift and reminders',settingsCard],['Customer reviews',reviewsCard],['Wholesale applications',leadsCard],['Email list and backup',emailCard]].forEach(function(c){
         try{root.appendChild(c[1]());}catch(e){root.appendChild(el('p','lede','The "'+c[0]+'" section could not load: '+e.message));}
       });
     }).catch(function(e){ if(e.status===401) login(); else if(e.status===503){root.innerHTML='';root.appendChild(el('p','lede',e.message));} else login(e.message); });

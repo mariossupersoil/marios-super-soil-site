@@ -205,6 +205,7 @@ function settings(): array {
         'gift' => ['enabled' => true, 'threshold' => 120.0, 'name' => 'Free 2 lb bag', 'weight_kg' => 0.91, 'stock' => null,
             'choices' => [['id' => 'level-up', 'name' => 'Level Up 3-3-3 (2 lb)'], ['id' => 'flower-power', 'name' => 'Flower Power 2-6-4 (2 lb)']]],
         'reminders' => ['enabled' => true, 'days' => 60],
+        'promo' => ['enabled' => false, 'title' => 'Black Friday', 'text' => '25% off everything', 'code' => 'BlackFriday', 'ends' => ''],
     ];
     $s = store()['settings'] ?? [];
     foreach ($d as $k => $v) $d[$k] = array_merge($v, is_array($s[$k] ?? null) ? $s[$k] : []);
@@ -292,4 +293,13 @@ function do_backup(bool $email): string {
         return $ok ? "saved $name and emailed it" : "saved $name (email failed)";
     }
     return "saved $name";
+}
+
+/** The deal of the month shown on the site, only while it is on, not ended, and its discount code is live. */
+function active_promo(): ?array {
+    $p = settings()['promo']; if (empty($p['enabled']) || trim((string)$p['code']) === '') return null;
+    if (!empty($p['ends']) && today_toronto() > $p['ends']) return null;
+    $code = norm_code((string)$p['code']); $live = false;
+    foreach (store()['discounts'] ?? [] as $x) { if (norm_code((string)($x['code'] ?? '')) === $code && !empty($x['active'])) { $live = true; break; } }
+    return $live ? ['title' => $p['title'], 'text' => $p['text'], 'code' => (string)$p['code'], 'ends' => (string)$p['ends']] : null;
 }
