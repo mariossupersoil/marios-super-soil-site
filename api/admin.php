@@ -166,7 +166,7 @@ if ($action === 'lead_action') {
 }
 if ($action === 'test_mail') {
     $ok = send_mail(owner_email(), 'Test email from your shop', "If you can read this, your shop can send email. Reminders, new review alerts, wholesale applications and weekly backups all use the same sending.\n");
-    $ok ? out_json(['ok' => true, 'to' => owner_email()]) : fail(500, 'The server could not send email.');
+    $ok ? out_json(['ok' => true, 'to' => owner_email()]) : fail(500, 'The server could not send email.' . (!empty($GLOBALS['mail_err']) ? ' Reason: ' . $GLOBALS['mail_err'] : ' (No SMTP mailbox is set up in config.php, so it used the server\'s basic mail, which is often blocked.)'));
 }
 if ($action === 'backup_now') { out_json(['ok' => true, 'result' => do_backup(true)]); }
 fail(404, 'Unknown action.');

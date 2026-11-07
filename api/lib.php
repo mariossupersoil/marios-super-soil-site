@@ -250,7 +250,33 @@ function send_mail(string $to, string $subject, string $body, ?array $attach = n
     }
     $log = cfg()['mail_log'] ?? null;
     if ($log) { @file_put_contents($log, "TO:$to\nSUBJ:$subject\n$body\n---\n", FILE_APPEND); return true; }
-    return @mail($to, $subj, $msg, implode("\r\n", $h));
+    $c = cfg();
+    if (!empty($c['smtp_host']) && !empty($c['smtp_user']) && !empty($c['smtp_pass'])) {
+        $h[0] = 'From: ' . "Mario's Super Soil <{$c['smtp_user']}>";
+        return smtp_deliver($c, $from, $to, "To: $to\r\nSubject: $subj\r\nDate: " . date('r') . "\r\n" . implode("\r\n", $h) . "\r\n\r\n" . $msg);
+    }
+    return @mail($to, $subj, $msg, implode("\r\n", $h), '-f' . $from);
+}
+
+/** Send one message through an authenticated SMTP mailbox (config: smtp_host, smtp_user, smtp_pass, smtp_port). */
+function smtp_deliver(array $c, string $from, string $to, string $raw): bool {
+    $port = (int)($c['smtp_port'] ?? 465);
+    $fp = @stream_socket_client(($port === 465 ? 'ssl://' : 'tcp://') . $c['smtp_host'] . ':' . $port, $en, $es, 15);
+    if (!$fp) { $GLOBALS['mail_err'] = "connect: $es"; return false; }
+    stream_set_timeout($fp, 15);
+    $rd = function() use ($fp) { $o = ''; while (($l = fgets($fp, 1024)) !== false) { $o .= $l; if (strlen($l) < 4 || $l[3] === ' ') break; } return $o; };
+    $cmd = function(string $x, string $ok) use ($fp, $rd) { fwrite($fp, $x . "\r\n"); $r = $rd(); if (strpos($r, $ok) !== 0) { $GLOBALS['mail_err'] = trim($r); return false; } return true; };
+    $r = $rd(); if (strpos($r, '220') !== 0) { $GLOBALS['mail_err'] = trim($r); return false; }
+    $host = parse_url(site_url(), PHP_URL_HOST) ?: 'localhost';
+    if (!$cmd("EHLO $host", '250')) return false;
+    if ($port !== 465 && $port !== 25) { if (!$cmd('STARTTLS', '220')) return false; stream_socket_enable_crypto($fp, true, STREAM_CRYPTO_METHOD_TLS_CLIENT); if (!$cmd("EHLO $host", '250')) return false; }
+    $ok = $cmd('AUTH LOGIN', '334') && $cmd(base64_encode($c['smtp_user']), '334') && $cmd(base64_encode($c['smtp_pass']), '235')
+       && $cmd("MAIL FROM:<{$c['smtp_user']}>", '250') && $cmd("RCPT TO:<$to>", '250') && $cmd('DATA', '354');
+    if (!$ok) { fclose($fp); return false; }
+    fwrite($fp, preg_replace('/^\./m', '..', str_replace("\n", "\r\n", str_replace("\r\n", "\n", $raw))) . "\r\n.\r\n");
+    $r = $rd(); $good = strpos($r, '250') === 0; if (!$good) $GLOBALS['mail_err'] = trim($r);
+    @fwrite($fp, "QUIT\r\n"); fclose($fp);
+    return $good;
 }
 
 /** Copy store.json into api/backups/ (keep the newest 12) and optionally email it to the owner. */
