@@ -42,3 +42,4 @@ Do not point the target at the folder of the live mariossupersoil.ca site until 
 - **Free gift:** orders of $120 or more (after sales, before shipping, tax and codes) get a free 2 lb Level Up. Change in the admin (Free gift and reminders).
 - **Restock reminders:** one email per order, 60 days later (editable), to customers who paid, with an unsubscribe link. Not legal advice: check Canada's anti-spam law (CASL) rules before sending newsletters to the pop-up list.
 - **Backups:** also kept in `api/backups/` (last 12) on the server.
+- **Review us on Google:** set `google_review_url` in `data/site.json` (Google Business Profile > "Ask for reviews" link). Shows on product pages, the thank-you page and the footer; hidden while blank.

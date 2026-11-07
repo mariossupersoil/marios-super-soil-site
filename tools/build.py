@@ -66,7 +66,7 @@ def head(title, description, path, og_image="/img/og-image.jpg?v=3", jsonld=None
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=3">
 <link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/oswald-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=5">
+<link rel="stylesheet" href="/assets/style.css?v=6">
 {ld}</head>
 <body id="top">
 """
@@ -94,8 +94,17 @@ def header():
 """
 
 
+def google_review(cls="gr"):
+    u = (SITE.get("google_review_url") or "").strip()
+    if not u:
+        return ""
+    return (f'<div class="{cls}"><p><strong>Happy with your soil?</strong> A quick Google review helps other Canadian gardeners find us.</p>'
+            f'<p><a class="btn" href="{esc(u)}" target="_blank" rel="noopener">Review us on Google</a></p></div>')
+
+
 def footer():
     L = SITE["links"]
+    GR_FOOT = ('      <a href="' + esc(SITE["google_review_url"]) + '" target="_blank" rel="noopener">Review us on Google</a>\n') if (SITE.get("google_review_url") or "").strip() else ""
     return f"""</main>
 <footer>
   <div class="wrap">
@@ -105,7 +114,7 @@ def footer():
     <nav class="flinks" aria-label="More from Mario's Super Soil">
       <a href="/wholesale/">Wholesale</a>
       <a href="/shipping-returns/">Shipping &amp; returns</a>
-      <a href="{esc(L['blog'])}" target="_blank" rel="noopener">Blog</a>
+{GR_FOOT}      <a href="{esc(L['blog'])}" target="_blank" rel="noopener">Blog</a>
       <a href="{esc(L['refund'])}" target="_blank" rel="noopener">Refund policy</a>
       <a href="{esc(L['privacy'])}" target="_blank" rel="noopener">Privacy policy</a>
     </nav>
@@ -423,6 +432,7 @@ def build_product(p):
         <input class="hp" id="rv-hp" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div><button class="btn solid" type="submit">Send review</button></div>
       </form>
+      {google_review()}
       <p class="rv-msg" id="rv-msg" role="status"></p>
     </div>
   </section>
@@ -449,7 +459,7 @@ def build_calculator():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Soil amendment calculator", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=5">', '<link rel="stylesheet" href="/assets/style.css?v=5">\n<link rel="stylesheet" href="/assets/calculator.css">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=6">', '<link rel="stylesheet" href="/assets/style.css?v=6">\n<link rel="stylesheet" href="/assets/calculator.css">')
     out += header()
     body = (ROOT / "data/calculator-body.inc").read_text()
     out += f"""  <section class="sec"><div class="wrap">
@@ -476,7 +486,7 @@ def build_drmario():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Plant Dr. Mario", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=5">', '<link rel="stylesheet" href="/assets/style.css?v=5">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=6">', '<link rel="stylesheet" href="/assets/style.css?v=6">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Plant</b> <i>Dr. Mario</i></h1>
@@ -536,14 +546,15 @@ def build_order_complete():
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Thank</b> <i>you</i></h1>
     <p class="lede" id="order-done">Your order has been received. Stripe will email your receipt. Questions? Email <a href="mailto:__EMAIL__">__EMAIL__</a> or call __PHONE__.</p>
     <p class="ctas" style="margin-top:28px"><a class="btn solid" href="/">Back to the home page</a></p>
+    __GR__
   </div></section>
-""".replace("__EMAIL__", SITE["email"]).replace("__PHONE__", SITE["phone"])
+""".replace("__GR__", google_review()).replace("__EMAIL__", SITE["email"]).replace("__PHONE__", SITE["phone"])
     out += footer()
     return out
 
 
 def build_admin():
-    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=5">', '<link rel="stylesheet" href="/assets/style.css?v=5">\n<link rel="stylesheet" href="/assets/admin.css?v=2">')
+    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=6">', '<link rel="stylesheet" href="/assets/style.css?v=6">\n<link rel="stylesheet" href="/assets/admin.css?v=2">')
     out = out.replace('<meta name="robots" content="noindex, nofollow">\n', '').replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"', 1) if 'noindex' not in out else out
     out += header()
     out += """  <section class="sec"><div class="wrap">

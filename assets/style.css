@@ -290,3 +290,4 @@ a.pick{display:flex}
 .giftbar.on{border-style:solid;border-color:var(--leaf);color:var(--leaf)}
 .giftnote{margin:10px 0 0;color:var(--accent);font-size:15px}
 .rvform[hidden],.wsform[hidden]{display:none}
+.gr{margin-top:28px;padding:18px 20px;border:1px solid var(--line);border-radius:12px;max-width:640px}.gr p{margin:0 0 10px}
