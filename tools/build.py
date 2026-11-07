@@ -619,7 +619,7 @@ def build_admin():
     <h1 class="nm" style="font-size:clamp(36px,6vw,72px)"><b>Owner</b> <i>admin</i></h1>
     <div class="ad" id="ad-root"><p class="lede">Loading...</p></div>
   </div></section>
-<script src="/assets/admin.js?v=6" defer></script>
+<script src="/assets/admin.js?v=7" defer></script>
 """
     out += footer()
     return out

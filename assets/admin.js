@@ -197,5 +197,8 @@
       root.appendChild(productsCard()); root.appendChild(salesCard()); root.appendChild(shippingCard()); root.appendChild(discountsCard()); root.appendChild(settingsCard()); root.appendChild(reviewsCard()); root.appendChild(leadsCard()); root.appendChild(emailCard());
     }).catch(function(e){ if(e.status===401) login(); else if(e.status===503){root.innerHTML='';root.appendChild(el('p','lede',e.message));} else login(e.message); });
   }
-  boot();
+  function showFail(msg){root.innerHTML='';root.appendChild(el('p','lede','The admin page could not start: '+msg+' Please send this message to Claude.'));}
+  window.addEventListener('error',function(e){showFail((e&&e.message)||'script error');});
+  window.addEventListener('unhandledrejection',function(e){showFail((e&&e.reason&&e.reason.message)||'request failed');});
+  try{boot();}catch(e){showFail(e.message);}
 })();
