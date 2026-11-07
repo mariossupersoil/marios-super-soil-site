@@ -8,7 +8,7 @@
    "sizes": {
     "2lb": {
      "label": "2 lb (0.9 kg)",
-     "price": null,
+     "price": 11.49,
      "weight_kg": 0.91
     },
     "5lb": {
@@ -38,12 +38,12 @@
    "sizes": {
     "2lb": {
      "label": "2 lb (0.9 kg)",
-     "price": null,
+     "price": 18.99,
      "weight_kg": 0.91
     },
     "5lb": {
      "label": "5 lb (2.3 kg)",
-     "price": 30.79,
+     "price": 34.99,
      "weight_kg": 2.27
     },
     "10lb": {
@@ -68,7 +68,7 @@
    "sizes": {
     "2lb": {
      "label": "2 lb (0.9 kg)",
-     "price": null,
+     "price": 13.49,
      "weight_kg": 0.91
     },
     "5lb": {
@@ -98,7 +98,7 @@
    "sizes": {
     "2lb": {
      "label": "2 lb (0.9 kg)",
-     "price": null,
+     "price": 17.99,
      "weight_kg": 0.91
     },
     "5lb": {
@@ -128,7 +128,7 @@
    "sizes": {
     "2lb": {
      "label": "2 lb (0.9 kg)",
-     "price": null,
+     "price": 12.99,
      "weight_kg": 0.91
     },
     "5lb": {
