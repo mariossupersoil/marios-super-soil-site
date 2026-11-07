@@ -18,7 +18,7 @@
     root.innerHTML='';
     var c=el('div','ad-card'); c.style.maxWidth='420px';
     c.appendChild(el('h2',null,'Owner login'));
-    var p=inp('password','',{autocomplete:'current-password'}); c.appendChild(field('Password',p));
+    var p=inp('password','',{autocomplete:'current-password',placeholder:'Type your password here'}); c.appendChild(field('Password',p));
     var m=msgBox(); if(note)flash(m,false,note);
     var b=el('button','btn solid','Log in'); b.type='button'; var bar=el('div','bar'); bar.appendChild(b); c.appendChild(bar); c.appendChild(m); root.appendChild(c);
     function go(){b.disabled=true;call('login',{password:p.value}).then(boot).catch(function(e){flash(m,false,e.message);b.disabled=false;});}

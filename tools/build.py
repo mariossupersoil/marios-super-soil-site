@@ -612,14 +612,14 @@ def build_order_complete():
 
 
 def build_admin():
-    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=10">', '<link rel="stylesheet" href="/assets/style.css?v=10">\n<link rel="stylesheet" href="/assets/admin.css?v=2">')
+    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=10">', '<link rel="stylesheet" href="/assets/style.css?v=10">\n<link rel="stylesheet" href="/assets/admin.css?v=3">')
     out = out.replace('<meta name="robots" content="noindex, nofollow">\n', '').replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"', 1) if 'noindex' not in out else out
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(36px,6vw,72px)"><b>Owner</b> <i>admin</i></h1>
     <div class="ad" id="ad-root"><p class="lede">Loading...</p></div>
   </div></section>
-<script src="/assets/admin.js?v=8" defer></script>
+<script src="/assets/admin.js?v=9" defer></script>
 """
     out += footer()
     return out
