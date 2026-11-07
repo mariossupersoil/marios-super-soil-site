@@ -291,3 +291,7 @@ a.pick{display:flex}
 .giftnote{margin:10px 0 0;color:var(--accent);font-size:15px}
 .rvform[hidden],.wsform[hidden]{display:none}
 .gr{margin-top:28px;padding:18px 20px;border:1px solid var(--line);border-radius:12px;max-width:640px}.gr p{margin:0 0 10px}
+.topbar{background:var(--leaf);color:#0e0e0f;font:600 14px/1.3 var(--text);letter-spacing:.06em}
+.topbar .wrap{display:flex;flex-wrap:wrap;gap:4px 22px;justify-content:center;align-items:center;padding:8px 16px}
+.topbar a{color:#0e0e0f;text-decoration:underline;text-underline-offset:3px;font-weight:700}
+.topbar .tb-g{background:#0e0e0f;color:#f5f4f0;text-decoration:none;padding:4px 12px;border-radius:999px}
