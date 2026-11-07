@@ -66,7 +66,7 @@ def head(title, description, path, og_image="/img/og-image.jpg?v=3", jsonld=None
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=3">
 <link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/oswald-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=9">
+<link rel="stylesheet" href="/assets/style.css?v=10">
 {ld}</head>
 <body id="top">
 """
@@ -126,6 +126,7 @@ def footer():
 </footer>
 <script src="/assets/app.js" defer></script>
 <script src="/assets/cart.js?v=6" defer></script>
+<script src="/assets/social.js?v=1" defer></script>
 <script src="/assets/popup.js?v=1" defer></script>
 </body>
 </html>
@@ -354,6 +355,19 @@ def build_home():
     </div>
   </section>
 """
+    # social: follow links, plus a live Instagram feed once a feed id is set in data/site.json
+    fid = (SITE.get("instagram_feed_id") or "").strip()
+    follow = "".join(f'<a class="btn" href="{esc(u)}" target="_blank" rel="noopener">{esc(n)}</a>' for n, u in SITE["social"])
+    feed = (f'<div class="igfeed" id="igfeed" data-feed="{esc(fid)}"><noscript><p><a href="{esc(SITE["social"][0][1])}">See our posts on Instagram</a></p></noscript></div>' if fid else "")
+    out += f"""  <section id="social" class="sec">
+    <div class="wrap">
+      <h2>Follow along</h2>
+      <p class="lede">Grow tips, new products and what is happening at Mario's Super Soil.</p>
+      {feed}
+      <p class="ctas" style="margin-top:20px">{follow}</p>
+    </div>
+  </section>
+"""
     # faq
     faq = "".join(f"<details><summary>{esc(q)}</summary><p>{esc(a)}</p></details>" for q, a in SITE["faq"])
     out += f"""  <section id="faq" class="sec">
@@ -503,7 +517,7 @@ def build_calculator():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Soil amendment calculator", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=9">', '<link rel="stylesheet" href="/assets/style.css?v=9">\n<link rel="stylesheet" href="/assets/calculator.css">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=10">', '<link rel="stylesheet" href="/assets/style.css?v=10">\n<link rel="stylesheet" href="/assets/calculator.css">')
     out += header()
     body = (ROOT / "data/calculator-body.inc").read_text()
     out += f"""  <section class="sec"><div class="wrap">
@@ -530,7 +544,7 @@ def build_drmario():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Plant Dr. Mario", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=9">', '<link rel="stylesheet" href="/assets/style.css?v=9">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=10">', '<link rel="stylesheet" href="/assets/style.css?v=10">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Plant</b> <i>Dr. Mario</i></h1>
@@ -598,7 +612,7 @@ def build_order_complete():
 
 
 def build_admin():
-    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=9">', '<link rel="stylesheet" href="/assets/style.css?v=9">\n<link rel="stylesheet" href="/assets/admin.css?v=2">')
+    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=10">', '<link rel="stylesheet" href="/assets/style.css?v=10">\n<link rel="stylesheet" href="/assets/admin.css?v=2">')
     out = out.replace('<meta name="robots" content="noindex, nofollow">\n', '').replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"', 1) if 'noindex' not in out else out
     out += header()
     out += """  <section class="sec"><div class="wrap">
