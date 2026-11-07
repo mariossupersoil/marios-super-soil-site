@@ -40,7 +40,7 @@ def abs_url(path):
 
 
 # ---------------------------------------------------------------- shared pieces
-def head(title, description, path, og_image="/img/og-image.jpg?v=2", jsonld=None, noindex=False):
+def head(title, description, path, og_image="/img/og-image.jpg?v=3", jsonld=None, noindex=False):
     robots = '<meta name="robots" content="noindex, nofollow">\n' if (SITE["staging"] or noindex) else ""
     ld = ""
     for obj in (jsonld or []):
@@ -62,8 +62,8 @@ def head(title, description, path, og_image="/img/og-image.jpg?v=2", jsonld=None
 <meta property="og:image" content="{esc(abs_url(og_image))}">
 <meta property="og:locale" content="en_CA">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png?v=2">
-<link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=2">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png?v=3">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=3">
 <link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/oswald-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/style.css">
@@ -75,7 +75,7 @@ def head(title, description, path, og_image="/img/og-image.jpg?v=2", jsonld=None
 def header():
     return f"""<header>
   <div class="wrap">
-    <a class="brand" href="/"><img src="/img/logo.png?v=2" width="54" height="54" alt="Mario's Super Soil logo"><span>Mario's Super Soil</span></a>
+    <a class="brand" href="/"><img src="/img/logo.png?v=3" width="54" height="54" alt="Mario's Super Soil logo"><span>Mario's Super Soil</span></a>
     <nav aria-label="Main">
       <a href="/#products">Products</a>
       <a href="/#blends">Blends</a>
@@ -162,7 +162,7 @@ def org_ld():
     a = SITE["address"]
     return {
         "@context": "https://schema.org", "@type": "Organization",
-        "name": SITE["name"], "url": BASE + "/", "logo": abs_url("/img/logo.png?v=2"),
+        "name": SITE["name"], "url": BASE + "/", "logo": abs_url("/img/logo.png?v=3"),
         "email": SITE["email"], "telephone": "+1-" + SITE["phone"],
         "foundingDate": "2019",
         "address": {"@type": "PostalAddress", "streetAddress": a["street"], "addressLocality": a["city"],
