@@ -252,7 +252,7 @@ function send_mail(string $to, string $subject, string $body, ?array $attach = n
     if ($log) { @file_put_contents($log, "TO:$to\nSUBJ:$subject\n$body\n---\n", FILE_APPEND); return true; }
     $c = cfg();
     if (!empty($c['smtp_host']) && !empty($c['smtp_user']) && !empty($c['smtp_pass'])) {
-        $h[0] = 'From: ' . "Mario's Super Soil <{$c['smtp_user']}>";
+        $fa = !empty($c['smtp_from']) ? $c['smtp_from'] : $c['smtp_user']; $h[0] = 'From: ' . "Mario's Super Soil <$fa>";
         return smtp_deliver($c, $from, $to, "To: $to\r\nSubject: $subj\r\nDate: " . date('r') . "\r\n" . implode("\r\n", $h) . "\r\n\r\n" . $msg);
     }
     return @mail($to, $subj, $msg, implode("\r\n", $h), '-f' . $from);
@@ -271,7 +271,7 @@ function smtp_deliver(array $c, string $from, string $to, string $raw): bool {
     if (!$cmd("EHLO $host", '250')) return false;
     if ($port !== 465 && $port !== 25) { if (!$cmd('STARTTLS', '220')) return false; stream_socket_enable_crypto($fp, true, STREAM_CRYPTO_METHOD_TLS_CLIENT); if (!$cmd("EHLO $host", '250')) return false; }
     $ok = $cmd('AUTH LOGIN', '334') && $cmd(base64_encode($c['smtp_user']), '334') && $cmd(base64_encode($c['smtp_pass']), '235')
-       && $cmd("MAIL FROM:<{$c['smtp_user']}>", '250') && $cmd("RCPT TO:<$to>", '250') && $cmd('DATA', '354');
+       && $cmd("MAIL FROM:<" . (!empty($c['smtp_from']) ? $c['smtp_from'] : $c['smtp_user']) . ">", '250') && $cmd("RCPT TO:<$to>", '250') && $cmd('DATA', '354');
     if (!$ok) { fclose($fp); return false; }
     fwrite($fp, preg_replace('/^\./m', '..', str_replace("\n", "\r\n", str_replace("\r\n", "\n", $raw))) . "\r\n.\r\n");
     $r = $rd(); $good = strpos($r, '250') === 0; if (!$good) $GLOBALS['mail_err'] = trim($r);
