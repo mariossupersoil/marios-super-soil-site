@@ -201,7 +201,11 @@
       if(!j||j.auth!==true||!j.catalog){login();return;}
       S=j; csrf=j.csrf; root.innerHTML='';
       var top=el('p'); var out=el('button','btn','Log out'); out.type='button'; out.addEventListener('click',function(){call('logout',{}).then(function(){location.reload();});}); top.appendChild(out); root.appendChild(top);
-      root.appendChild(productsCard()); root.appendChild(salesCard()); root.appendChild(shippingCard()); root.appendChild(discountsCard()); root.appendChild(settingsCard()); root.appendChild(reviewsCard()); root.appendChild(leadsCard()); root.appendChild(emailCard());
+      var n=0; try{n=Object.keys(S.catalog).length;}catch(e){}
+      if(!n) root.appendChild(el('p','lede','No products were found in the shop catalog (api/prices.json may be missing on the server).'));
+      [['Products and prices',productsCard],['Sales',salesCard],['Shipping rates',shippingCard],['Discount codes',discountsCard],['Free gift and reminders',settingsCard],['Customer reviews',reviewsCard],['Wholesale applications',leadsCard],['Email list and backup',emailCard]].forEach(function(c){
+        try{root.appendChild(c[1]());}catch(e){root.appendChild(el('p','lede','The "'+c[0]+'" section could not load: '+e.message));}
+      });
     }).catch(function(e){ if(e.status===401) login(); else if(e.status===503){root.innerHTML='';root.appendChild(el('p','lede',e.message));} else login(e.message); });
   }
   function showFail(msg){root.innerHTML='';root.appendChild(el('p','lede','The admin page could not start: '+msg+' Please send this message to Claude.'));}

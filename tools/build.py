@@ -626,7 +626,7 @@ def build_admin():
       <p id="ad-msg" style="color:#ffb4a8;margin:10px 0 0;font:16px sans-serif"></p>
     </form></div>
   </div></section>
-<script src="/assets/admin.js?v=10" defer></script>
+<script src="/assets/admin.js?v=11" defer></script>
 """
     out += footer()
     return out
