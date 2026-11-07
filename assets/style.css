@@ -53,11 +53,12 @@ h1{font-size:clamp(56px,10.5vw,148px);line-height:.92}
 .picker{margin:clamp(28px,5vw,56px) 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
 .picker li{min-width:0}
 .pick{all:unset;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;padding:18px 6px 16px;cursor:pointer;position:relative;border-bottom:3px solid var(--line);text-align:center}
-.pick::before{content:"";position:absolute;inset:8% 0 30%;background:radial-gradient(closest-side,var(--accent),transparent);opacity:0;transition:opacity .25s}
-.pick:hover::before,.pick[aria-pressed="true"]::before{opacity:.38}
+.pick::before{content:"";position:absolute;inset:-4% -16% 20%;background:radial-gradient(closest-side,var(--accent),transparent);opacity:0;transition:opacity .25s}
+.pick:hover::before,.pick[aria-pressed="true"]::before{opacity:.8}
 .pick[aria-pressed="true"]{border-bottom-color:var(--accent)}
 .pick:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
-.pick img{position:relative;width:100%;max-width:170px;transition:transform .25s}
+.pick img{position:relative;width:100%;max-width:170px;transition:transform .25s,filter .25s}
+.pick:hover img,.pick[aria-pressed="true"] img{filter:drop-shadow(0 0 14px var(--accent)) drop-shadow(0 0 34px var(--accent))}
 .pick:hover img{transform:translateY(-6px)}
 .pick .nm{font-size:clamp(17px,1.9vw,24px);position:relative}
 .pick .npk{font-weight:500;font-size:15px;letter-spacing:.1em;color:var(--muted);position:relative}
