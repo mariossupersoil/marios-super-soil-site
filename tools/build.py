@@ -66,7 +66,7 @@ def head(title, description, path, og_image="/img/og-image.jpg?v=3", jsonld=None
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=3">
 <link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/oswald-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css">
+<link rel="stylesheet" href="/assets/style.css?v=5">
 {ld}</head>
 <body id="top">
 """
@@ -103,6 +103,8 @@ def footer():
     <p>Store in a cool, dry place, away from moisture. <span lang="fr">Conserver dans un endroit frais et sec, à l'abri de l'humidité.</span></p>
     <p>Dust hazard. Wear an appropriate dust mask when handling.</p>
     <nav class="flinks" aria-label="More from Mario's Super Soil">
+      <a href="/wholesale/">Wholesale</a>
+      <a href="/shipping-returns/">Shipping &amp; returns</a>
       <a href="{esc(L['blog'])}" target="_blank" rel="noopener">Blog</a>
       <a href="{esc(L['refund'])}" target="_blank" rel="noopener">Refund policy</a>
       <a href="{esc(L['privacy'])}" target="_blank" rel="noopener">Privacy policy</a>
@@ -110,7 +112,8 @@ def footer():
   </div>
 </footer>
 <script src="/assets/app.js" defer></script>
-<script src="/assets/cart.js?v=3" defer></script>
+<script src="/assets/cart.js?v=4" defer></script>
+<script src="/assets/popup.js?v=1" defer></script>
 </body>
 </html>
 """
@@ -405,6 +408,25 @@ def build_product(p):
       </div>
     </div>
   </section>
+  <section class="sec" id="reviews" data-slug="{esc(p['slug'])}">
+    <div class="wrap">
+      <h2>Customer reviews</h2>
+      <p id="rv-summary" aria-live="polite">Loading reviews...</p>
+      <div id="rv-list"></div>
+      <p><button class="btn" type="button" id="rv-open">Write a review</button></p>
+      <form class="rvform" id="rv-form" hidden>
+        <div><label for="rv-name">Your name</label><input id="rv-name" type="text" maxlength="40" required autocomplete="given-name"></div>
+        <div><label for="rv-rating">Rating</label><select id="rv-rating" name="rating" required><option value="">Choose</option><option value="5">5 stars - Excellent</option><option value="4">4 stars - Good</option><option value="3">3 stars - Okay</option><option value="2">2 stars - Poor</option><option value="1">1 star - Bad</option></select></div>
+        <div><label for="rv-title">Headline (optional)</label><input id="rv-title" type="text" maxlength="80"></div>
+        <div><label for="rv-text">Your review</label><textarea id="rv-text" maxlength="1000" required></textarea></div>
+        <div><label for="rv-email">Email (optional, never shown)</label><input id="rv-email" type="email" maxlength="120" autocomplete="email"></div>
+        <input class="hp" id="rv-hp" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div><button class="btn solid" type="submit">Send review</button></div>
+      </form>
+      <p class="rv-msg" id="rv-msg" role="status"></p>
+    </div>
+  </section>
+  <script src="/assets/reviews.js?v=1" defer></script>
   <section class="sec">
     <div class="wrap">
       <h2>More from Mario's Super Soil</h2>
@@ -427,7 +449,7 @@ def build_calculator():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Soil amendment calculator", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css">', '<link rel="stylesheet" href="/assets/style.css">\n<link rel="stylesheet" href="/assets/calculator.css">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=5">', '<link rel="stylesheet" href="/assets/style.css?v=5">\n<link rel="stylesheet" href="/assets/calculator.css">')
     out += header()
     body = (ROOT / "data/calculator-body.inc").read_text()
     out += f"""  <section class="sec"><div class="wrap">
@@ -454,7 +476,7 @@ def build_drmario():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Plant Dr. Mario", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css">', '<link rel="stylesheet" href="/assets/style.css">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=5">', '<link rel="stylesheet" href="/assets/style.css?v=5">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Plant</b> <i>Dr. Mario</i></h1>
@@ -500,7 +522,7 @@ def build_cart():
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Your</b> <i>cart</i></h1>
     <div id="cart-root" class="cartbox"><p class="lede">Loading your cart...</p></div>
-    <p class="lede" style="margin-top:24px">Prices are in Canadian dollars. Shipping and tax are shown at checkout. Payment is handled securely by Stripe; we never see your card number.</p>
+    <p class="lede" style="margin-top:24px">Prices are in Canadian dollars. Shipping and tax are shown at checkout. Payment is handled securely by Stripe; we never see your card number. See our <a href="/shipping-returns/">shipping and returns</a> policy.</p>
   </div></section>
 """
     out += footer()
@@ -521,17 +543,122 @@ def build_order_complete():
 
 
 def build_admin():
-    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css">', '<link rel="stylesheet" href="/assets/style.css">\n<link rel="stylesheet" href="/assets/admin.css?v=2">')
+    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=5">', '<link rel="stylesheet" href="/assets/style.css?v=5">\n<link rel="stylesheet" href="/assets/admin.css?v=2">')
     out = out.replace('<meta name="robots" content="noindex, nofollow">\n', '').replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"', 1) if 'noindex' not in out else out
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(36px,6vw,72px)"><b>Owner</b> <i>admin</i></h1>
     <div class="ad" id="ad-root"><p class="lede">Loading...</p></div>
   </div></section>
-<script src="/assets/admin.js?v=3" defer></script>
+<script src="/assets/admin.js?v=4" defer></script>
 """
     out += footer()
     return out
+
+
+def contact_block():
+    a = SITE["address"]
+    hrs = "".join(f"<li>{esc(d)}: {esc(h)}</li>" for d, h in SITE["hours"])
+    return f"""<p>Email <a href="mailto:{esc(SITE['email'])}">{esc(SITE['email'])}</a> or call <a href="tel:{esc(SITE['phone'].replace('-', ''))}">{esc(SITE['phone'])}</a>.</p><ul>{hrs}</ul>"""
+
+
+def build_policy():
+    title = "Shipping and Returns Policy | Mario's Super Soil"
+    desc = "Shipping rates, delivery and return policy for Mario's Super Soil orders within Canada: 30 day returns, refunds and exchanges, and who to contact."
+    path = "/shipping-returns/"
+    ld = [{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+              {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
+              {"@type": "ListItem", "position": 2, "name": "Shipping and returns", "item": abs_url(path)}]}]
+    out = head(title, desc, path, jsonld=ld) + header()
+    out += f"""  <section class="sec"><div class="wrap policy">
+    <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Shipping</b> <i>and returns</i></h1>
+    <h2>Shipping</h2>
+    <ul>
+      <li>We ship across Canada from Mississauga, Ontario.</li>
+      <li>Shipping is a flat rate based on the total weight of your order. You see the exact amount in your cart before you pay, and again at checkout.</li>
+      <li>Sales tax is worked out at checkout from your shipping address.</li>
+      <li>Delivery time depends on the carrier and where you live. If you want to know where your order is, email or call us and we will help.</li>
+      <li>If an order is too heavy for online checkout, email us and we will arrange the shipping with you.</li>
+    </ul>
+    <h2>Returns and refunds</h2>
+    <ul>
+      <li>You have 30 days after you receive your order to ask for a return.</li>
+      <li>Items must be unused, in the same condition you received them and in the original packaging. Please keep your receipt or order email as proof of purchase.</li>
+      <li>Email us before you send anything back. Returns sent without our approval cannot be accepted.</li>
+      <li>You pay the shipping to send an item back, because shipping costs are high for heavy products.</li>
+      <li>Once we receive and inspect your return, we will email you to say whether it is approved. Approved refunds go back to the original payment method. How long it takes to show up depends on your bank or card company.</li>
+    </ul>
+    <h2>Damaged, defective or wrong items</h2>
+    <p>Please check your order as soon as it arrives. If something is damaged, defective or not what you ordered, contact us right away. Photos help us sort it out quickly, and we will work with you to fix it.</p>
+    <h2>Items we cannot take back</h2>
+    <ul>
+      <li>Perishable goods</li>
+      <li>Custom or special-order products</li>
+      <li>Clearance items, which are final sale</li>
+      <li>Hazardous materials</li>
+    </ul>
+    <p>Not sure whether something qualifies? Ask us.</p>
+    <h2>Exchanges</h2>
+    <p>The fastest way to exchange an item is to start a return for it. Once the return is accepted, place a new order for the item you want.</p>
+    <h2>Warranty</h2>
+    <p>If you have a warranty question, contact us and we will help work out the next step. Some manufacturers ask you to deal with them directly. Clearance items are final sale and cannot be returned, exchanged or refunded.</p>
+    <h2>Contact us</h2>
+    {contact_block()}
+    <hr style="border:0;border-top:1px solid var(--line);margin:48px 0 8px">
+    <div lang="fr">
+    <h2>Livraison et retours</h2>
+    <p><strong>Livraison.</strong> Nous livrons partout au Canada depuis Mississauga, en Ontario. Les frais d'expédition sont un tarif fixe selon le poids total de votre commande. Vous voyez le montant exact dans votre panier avant de payer, puis à la caisse. Les taxes de vente sont calculées à la caisse selon votre adresse de livraison. Le délai de livraison dépend du transporteur et de votre région. Si une commande est trop lourde pour la caisse en ligne, écrivez-nous et nous organiserons l'expédition avec vous.</p>
+    <p><strong>Retours et remboursements.</strong> Vous avez 30 jours après la réception de votre commande pour demander un retour. Les articles doivent être inutilisés, dans le même état qu'à la réception et dans leur emballage d'origine. Conservez votre reçu ou votre courriel de commande comme preuve d'achat. Écrivez-nous avant de renvoyer quoi que ce soit : les retours envoyés sans notre autorisation ne peuvent pas être acceptés. Les frais de retour sont à votre charge. Une fois le retour reçu et inspecté, nous vous écrirons pour confirmer s'il est approuvé. Les remboursements approuvés sont versés au mode de paiement d'origine; le délai dépend de votre banque ou de votre émetteur de carte.</p>
+    <p><strong>Articles endommagés, défectueux ou erronés.</strong> Vérifiez votre commande dès son arrivée. Si un article est endommagé, défectueux ou différent de ce que vous avez commandé, communiquez avec nous tout de suite. Des photos nous aident à régler le problème rapidement.</p>
+    <p><strong>Articles non retournables.</strong> Denrées périssables, produits sur mesure ou commandes spéciales, articles en liquidation (vente finale) et matières dangereuses. En cas de doute, posez-nous la question.</p>
+    <p><strong>Échanges.</strong> Le plus simple est de demander le retour de l'article. Une fois le retour accepté, passez une nouvelle commande pour l'article souhaité.</p>
+    <p><strong>Garantie.</strong> Pour toute question de garantie, communiquez avec nous. Certains fabricants demandent que vous les contactiez directement. Les articles en liquidation sont en vente finale et ne peuvent être ni retournés, ni échangés, ni remboursés.</p>
+    <p><strong>Nous joindre.</strong> {esc(SITE['email'])} ou {esc(SITE['phone'])}.</p>
+    </div>
+  </div></section>
+"""
+    return out + footer()
+
+
+def build_wholesale():
+    title = "Wholesale Organic Fertilizer for Stores | Mario's Super Soil"
+    desc = "Stock Mario's Super Soil organic dry fertilizers and soil amendments in your garden centre or store. Volume pricing and Net 30 terms. Apply online."
+    path = "/wholesale/"
+    ld = [{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+              {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
+              {"@type": "ListItem", "position": 2, "name": "Wholesale", "item": abs_url(path)}]}]
+    out = head(title, desc, path, jsonld=ld) + header()
+    out += """  <section class="sec"><div class="wrap">
+    <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Wholesale</b> <i>for stores</i></h1>
+    <p class="lede">Run a garden centre, hydroponics shop, feed store or independent retailer? Mario's Super Soil makes organic dry fertilizers and soil amendments in Mississauga, Ontario, and we would like to hear from you.</p>
+    <ul class="perks">
+      <li><strong>Canadian made</strong><br>Organic dry fertilizers and soil amendments made in Ontario: bone, crab, feather, kelp and alfalfa meal, worm castings and blends.</li>
+      <li><strong>Volume pricing</strong><br>Wholesale pricing that improves as your order size grows, with minimum order quantities per tier.</li>
+      <li><strong>Net 30 terms</strong><br>Payment terms are available for approved stores.</li>
+      <li><strong>Retail-ready bags</strong><br>Stand-up pouches with clear directions in English and French, in sizes from 2 lb to 20 lb.</li>
+    </ul>
+    <h2>Apply for a wholesale account</h2>
+    <p class="lede">Tell us about your store. We will review your application and contact you by email or phone with the price list and next steps.</p>
+    <form class="wsform" id="ws-form">
+      <div class="wsgrid">
+        <div><label for="ws-business">Business name</label><input id="ws-business" name="business" type="text" maxlength="100" required autocomplete="organization"></div>
+        <div><label for="ws-contact">Your name</label><input id="ws-contact" name="contact" type="text" maxlength="80" required autocomplete="name"></div>
+        <div><label for="ws-email">Email</label><input id="ws-email" name="email" type="email" maxlength="120" required autocomplete="email"></div>
+        <div><label for="ws-phone">Phone</label><input id="ws-phone" name="phone" type="tel" maxlength="30" required autocomplete="tel"></div>
+        <div><label for="ws-city">City and province</label><input id="ws-city" name="city" type="text" maxlength="80" autocomplete="address-level2"></div>
+        <div><label for="ws-site">Website (optional)</label><input id="ws-site" name="site" type="text" maxlength="120"></div>
+        <div><label for="ws-type">Type of store</label><select id="ws-type" name="type"><option value="">Choose</option><option>Garden centre</option><option>Hydroponics shop</option><option>Farm or feed store</option><option>Hardware or general store</option><option>Online retailer</option><option>Other</option></select></div>
+        <div><label for="ws-volume">Expected order size</label><select id="ws-volume" name="volume"><option value="">Choose</option><option>Not sure yet</option><option>1 to 24 units</option><option>25 to 75 units</option><option>More than 75 units</option></select></div>
+      </div>
+      <div><label for="ws-message">Anything else we should know? (optional)</label><textarea id="ws-message" name="message" maxlength="1500"></textarea></div>
+      <input class="hp" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div><button class="btn solid" type="submit">Send application</button></div>
+    </form>
+    <p class="ws-msg" id="ws-msg" role="status"></p>
+  </div></section>
+<script src="/assets/wholesale.js?v=1" defer></script>
+"""
+    return out + footer()
 
 
 def build_404():
@@ -547,7 +674,7 @@ def build_404():
 # ---------------------------------------------------------------- write
 def main():
     sync_prices()
-    pages = {"index.html": build_home(), "404.html": build_404(), "soil-calculator/index.html": build_calculator(), "plant-drmario/index.html": build_drmario(), "cart/index.html": build_cart(), "order-complete/index.html": build_order_complete(), "admin/index.html": build_admin()}
+    pages = {"index.html": build_home(), "404.html": build_404(), "soil-calculator/index.html": build_calculator(), "plant-drmario/index.html": build_drmario(), "cart/index.html": build_cart(), "order-complete/index.html": build_order_complete(), "admin/index.html": build_admin(), "wholesale/index.html": build_wholesale(), "shipping-returns/index.html": build_policy()}
     for p in PRODUCTS:
         pages[f"products/{p['slug']}/index.html"] = build_product(p)
 
@@ -564,7 +691,7 @@ def main():
 
     # sitemap (indexable pages only)
     urls = ""
-    for rel in ["index.html", "soil-calculator/index.html", "plant-drmario/index.html"] + [f"products/{p['slug']}/index.html" for p in PRODUCTS]:
+    for rel in ["index.html", "soil-calculator/index.html", "plant-drmario/index.html", "wholesale/index.html", "shipping-returns/index.html"] + [f"products/{p['slug']}/index.html" for p in PRODUCTS]:
         loc = BASE + "/" + rel.replace("index.html", "")
         prio = "1.0" if rel == "index.html" else "0.8"
         urls += f"  <url><loc>{loc}</loc><lastmod>{new[rel]['lastmod']}</lastmod><priority>{prio}</priority></url>\n"

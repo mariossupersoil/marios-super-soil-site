@@ -55,6 +55,10 @@ foreach ($cart['lines'] as $l) { $e = $l['slug'] . ':' . $l['key'] . ':' . $l['q
 if ($cur !== '') $chunks[] = $cur;
 $params['metadata'] = [];
 foreach ($chunks as $i => $ch) $params['metadata']['items_' . ($i + 1)] = $ch;
+if ($cart['gift']) {
+    $params['line_items'][] = ['quantity' => 1, 'price_data' => ['currency' => 'cad', 'unit_amount' => 0, 'tax_behavior' => 'exclusive', 'product_data' => ['name' => 'FREE GIFT: ' . $cart['gift']]]];
+    $params['metadata']['gift'] = '1';
+}
 if ($disc) {
     $params['metadata']['discount_code'] = $disc['code'];
     if ($disc['amount_cents'] > 0) {

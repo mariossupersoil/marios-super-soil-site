@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  var KEY='mss_cart_v1', CODEKEY='mss_code_v1', PRICES=null, SHIP=null, $=function(id){return document.getElementById(id);};
+  var KEY='mss_cart_v1', CODEKEY='mss_code_v1', PRICES=null, SHIP=null, GIFT=null, $=function(id){return document.getElementById(id);};
   var mem=[], memCode='';
 
   function load(){try{var a=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(a)?a:[];}catch(e){return mem;}}
@@ -12,7 +12,7 @@
   function money(v){return new Intl.NumberFormat('en-CA',{style:'currency',currency:'CAD'}).format(v);}
   function shop(){
     if(PRICES) return Promise.resolve(PRICES);
-    return fetch('/api/shop.php',{cache:'no-cache'}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(j){PRICES=j.products||{};SHIP=j.tiers||[];return PRICES;});
+    return fetch('/api/shop.php',{cache:'no-cache'}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(j){PRICES=j.products||{};SHIP=j.tiers||[];GIFT=j.gift||null;return PRICES;});
   }
   function soldout(s){return !!s.soldout;}
   function find(slug,size){var P=PRICES&&PRICES[slug];return P&&P.enabled&&P.sizes&&P.sizes[size]?{p:P,s:P.sizes[size]}:null;}
@@ -58,6 +58,7 @@
       update();
     }).catch(function(){pr.textContent='Prices are unavailable right now.';add.disabled=true;});
     sel.addEventListener('change',update);
+    shop().then(function(){if(GIFT){var g=el('p','giftnote','Free gift: orders of '+money(GIFT.threshold)+' or more include a free '+GIFT.name+'.');box.appendChild(g);}}).catch(function(){});
     add.addEventListener('click',function(){
       var f0=find(slug,sel.value), cap=(f0&&f0.s.left)?f0.s.left:20, q=Math.max(1,Math.min(cap,parseInt(qty.value,10)||1)), c=load(), hit=null;
       c.forEach(function(i){if(i.slug===slug&&i.size===sel.value)hit=i;});
@@ -114,7 +115,13 @@
       if(valid(pr)) total+=pr*i.qty;
       kg+=(f.s.weight_kg||0)*i.qty;
     });
+    var gifted=GIFT&&total>=GIFT.threshold;
+    if(gifted){
+      var gl=el('li','cartrow'); gl.appendChild(el('span')); var gm=el('div','cartinfo'); gm.appendChild(el('strong',null,'Free gift: '+GIFT.name)); gm.appendChild(el('span',null,'Added automatically')); gl.appendChild(gm); gl.appendChild(el('span')); gl.appendChild(el('div','cartline','Free')); list.appendChild(gl);
+      kg+=GIFT.weight_kg||0;
+    }
     root.appendChild(list); kg=Math.round(kg*100)/100;
+    if(GIFT){var gb=el('div','giftbar'+(gifted?' on':''));gb.textContent=gifted?'You earned a free '+GIFT.name+'.':'Add '+money(GIFT.threshold-total)+' more to get a free '+GIFT.name+'.';root.appendChild(gb);}
     var tier=tierFor(kg), tooHeavy=(SHIP&&SHIP.length&&tier===null);
     var ship=tier?tier.price:null, off=disc?disc.discount:0;
     if(disc&&disc.free_shipping&&tier) ship=0;

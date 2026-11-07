@@ -1,3 +1,4 @@
 api/config.php
 api/.rl/
 api/store.json*
+api/backups/

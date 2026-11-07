@@ -32,3 +32,13 @@ Do not point the target at the folder of the live mariossupersoil.ca site until 
 - Discount codes are checked on the server and applied through Stripe coupons. A code's "Used" count goes up when a paid order lands on the thank-you page.
 - Sales (admin): percent or dollar-off prices for one product, one size or everything, with optional start and end dates. The shop shows the old price crossed out, the sale price and a Sale tag, and checkout charges the sale price. Stored in `api/store.json`.
 - Stock (admin): "In stock" per size. Counts down when a paid order is recorded (Stripe webhook `api/webhook.php`, with the thank-you page as a backup), and the shop shows Out of stock at 0. Blank = not tracked. Set `stripe_webhook_secret` in config.php and add the webhook in Stripe (Developers > Webhooks, URL `https://<site>/api/webhook.php`, event `checkout.session.completed`).
+
+## Wholesale, sign-ups, reviews, free gift, reminders, backup
+- Config keys to add in `api/config.php` (see `config.sample.php`): `owner_email`, `mail_from` (an address on your domain, e.g. shop@mariossupersoil.ca), `site_url`, `cron_key` (12+ random characters), `stripe_webhook_secret`, `admin_password`.
+- **Daily job:** Hostinger hPanel > Advanced > Cron Jobs > add a daily job with the command `curl -s "https://YOURSITE/api/cron.php?key=CRON_KEY" > /dev/null`. It sends restock reminders and, on Sundays, saves and emails a backup of `api/store.json`.
+- **Pop-up sign-up:** appears after 15 seconds (or on exit intent on desktop), once per visitor per 30 days. Emails go to `store.json`; download as CSV in the admin.
+- **Reviews:** customers submit on product pages; nothing shows until approved in the admin. No review stars or review schema are added to search results.
+- **Wholesale:** `/wholesale/` form emails the owner and saves to the admin list.
+- **Free gift:** orders of $120 or more (after sales, before shipping, tax and codes) get a free 2 lb Level Up. Change in the admin (Free gift and reminders).
+- **Restock reminders:** one email per order, 60 days later (editable), to customers who paid, with an unsubscribe link. Not legal advice: check Canada's anti-spam law (CASL) rules before sending newsletters to the pop-up list.
+- **Backups:** also kept in `api/backups/` (last 12) on the server.

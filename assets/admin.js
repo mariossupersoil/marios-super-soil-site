@@ -109,11 +109,91 @@
     return card;
   }
 
+  function settingsCard(){
+    var card=el('div','ad-card'); card.appendChild(el('h2',null,'Free gift and reminders'));
+    var g=S.settings.gift, r=S.settings.reminders;
+    card.appendChild(el('p','hint','Free gift: orders at or above the amount (before tax, shipping and discount codes, after sales) get the gift added automatically at checkout. The gift is not taken from the product stock above, so use "Gift stock" if you want it to run out.'));
+    var row=el('div','row'); row.style.gridTemplateColumns='repeat(auto-fill,minmax(180px,1fr))';
+    var gon=chk('Free gift is on',g.enabled), thr=inp('number',g.threshold,{min:1,step:'0.01',inputmode:'decimal'}), nm=inp('text',g.name,{maxlength:80}), wt=inp('number',g.weight_kg,{min:0,step:'0.01',inputmode:'decimal'}), stk=inp('number',g.stock==null?'':g.stock,{min:0,step:'1',inputmode:'numeric',placeholder:'not tracked'});
+    row.appendChild(gon); row.appendChild(field('Order amount ($)',thr)); row.appendChild(field('Gift name',nm)); row.appendChild(field('Gift weight (kg)',wt)); row.appendChild(field('Gift stock',stk)); card.appendChild(row);
+    card.appendChild(el('p','hint','Restock reminders: customers get one email this many days after an order, with links to reorder what they bought and an unsubscribe link. It sends when the daily job runs (see setup steps).'));
+    var row2=el('div','row'); row2.style.gridTemplateColumns='repeat(auto-fill,minmax(180px,1fr))';
+    var ron=chk('Restock reminders are on',r.enabled), days=inp('number',r.days,{min:7,max:365,step:'1',inputmode:'numeric'});
+    row2.appendChild(ron); row2.appendChild(field('Days after the order',days)); card.appendChild(row2);
+    var b=el('button','btn solid','Save'); b.type='button'; var m=msgBox(), bar=el('div','bar'); bar.appendChild(b); bar.appendChild(m); card.appendChild(bar);
+    saver(b,m,function(){return call('save_settings',{gift:{enabled:gon.cb.checked,threshold:thr.value,name:nm.value,weight_kg:wt.value,stock:stk.value},reminders:{enabled:ron.cb.checked,days:days.value}});});
+    return card;
+  }
+
+  function reviewsCard(){
+    var card=el('div','ad-card'); card.appendChild(el('h2',null,'Customer reviews'));
+    card.appendChild(el('p','hint','New reviews wait here until you approve them. Only approve real reviews from real customers. You can also add a review a customer sent you by email, text or social media.'));
+    var names={}; Object.keys(S.catalog).forEach(function(s){names[s]=S.catalog[s].name;});
+    var list=el('div'); var m=msgBox();
+    function act(id,op){call('review_action',{id:id,op:op}).then(function(){return call('state');}).then(function(j){S.reviews=j.reviews;draw();}).catch(function(e){flash(m,false,e.message);});}
+    function draw(){
+      list.innerHTML='';
+      if(!S.reviews.length) list.appendChild(el('p','hint','No reviews yet.'));
+      S.reviews.forEach(function(r){
+        var d=el('div','row'); d.style.gridTemplateColumns='1fr'; 
+        d.appendChild(el('strong',null,(r.status==='pending'?'WAITING: ':r.status==='rejected'?'Hidden: ':'Live: ')+names[r.slug]+' - '+r.rating+' stars - '+r.name+' ('+r.date+')'+(r.source==='owner'?' - added by you':'')));
+        d.appendChild(el('span',null,(r.title?r.title+' - ':'')+r.text)); if(r.contact) d.appendChild(el('span','used','Email: '+r.contact));
+        var bar=el('div','bar'); bar.style.marginTop='4px';
+        if(r.status!=='approved'){var a=el('button','btn','Approve'); a.type='button'; a.onclick=function(){act(r.id,'approve');}; bar.appendChild(a);}
+        if(r.status==='approved'){var h=el('button','btn','Hide'); h.type='button'; h.onclick=function(){act(r.id,'reject');}; bar.appendChild(h);}
+        var x=el('button','x','Delete'); x.type='button'; x.onclick=function(){if(confirm('Delete this review?'))act(r.id,'delete');}; bar.appendChild(x);
+        d.appendChild(bar); list.appendChild(d);
+      });
+    }
+    draw(); card.appendChild(list); card.appendChild(m);
+    card.appendChild(el('h3',null,'Add a review you received'));
+    var f=el('div','row'); f.style.gridTemplateColumns='repeat(auto-fill,minmax(200px,1fr))';
+    var prod=el('select'); Object.keys(names).forEach(function(s){var o=el('option',null,names[s]);o.value=s;prod.appendChild(o);});
+    var nm=inp('text','',{maxlength:40}), rt=el('select'); [5,4,3,2,1].forEach(function(n){var o=el('option',null,n+' stars');o.value=n;rt.appendChild(o);});
+    var ti=inp('text','',{maxlength:80}), tx=el('textarea'); tx.maxLength=1000; tx.style.cssText='width:100%;min-height:90px;background:#0e0e0f;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:10px;font:400 16px var(--text)';
+    f.appendChild(field('Product',prod)); f.appendChild(field('Customer name (first name and initial)',nm)); f.appendChild(field('Rating',rt)); f.appendChild(field('Headline (optional)',ti)); card.appendChild(f); card.appendChild(field('What they said (their own words)',tx));
+    var b=el('button','btn solid','Add review'); b.type='button'; var m2=msgBox(), bar2=el('div','bar'); bar2.appendChild(b); bar2.appendChild(m2); card.appendChild(bar2);
+    saver(b,m2,function(){return call('add_review',{slug:prod.value,name:nm.value,rating:rt.value,title:ti.value,text:tx.value}).then(function(){nm.value='';ti.value='';tx.value='';return call('state');}).then(function(j){S.reviews=j.reviews;draw();});});
+    return card;
+  }
+
+  function leadsCard(){
+    var card=el('div','ad-card'); card.appendChild(el('h2',null,'Wholesale applications'));
+    var list=el('div'), m=msgBox();
+    function act(id,op){call('lead_action',{id:id,op:op}).then(function(){return call('state');}).then(function(j){S.leads=j.leads;draw();}).catch(function(e){flash(m,false,e.message);});}
+    function draw(){
+      list.innerHTML=''; if(!S.leads.length) list.appendChild(el('p','hint','No applications yet. New ones are also emailed to you.'));
+      S.leads.forEach(function(l){
+        var d=el('div','row'); d.style.gridTemplateColumns='1fr';
+        d.appendChild(el('strong',null,(l.status==='new'?'NEW: ':'Contacted: ')+l.business+' - '+l.contact+' ('+l.date+')'));
+        d.appendChild(el('span',null,l.email+' | '+l.phone+' | '+(l.city||'')+' | '+(l.type||'')+' | '+(l.volume||'')+(l.website_url?' | '+l.website_url:'')));
+        if(l.message) d.appendChild(el('span','used',l.message));
+        var bar=el('div','bar'); bar.style.marginTop='4px';
+        var a=el('button','btn',l.status==='new'?'Mark contacted':'Mark new'); a.type='button'; a.onclick=function(){act(l.id,l.status==='new'?'contacted':'new');}; bar.appendChild(a);
+        var x=el('button','x','Delete'); x.type='button'; x.onclick=function(){if(confirm('Delete this application?'))act(l.id,'delete');}; bar.appendChild(x);
+        d.appendChild(bar); list.appendChild(d);
+      });
+    }
+    draw(); card.appendChild(list); card.appendChild(m); return card;
+  }
+
+  function emailCard(){
+    var card=el('div','ad-card'); card.appendChild(el('h2',null,'Email list, email test and backup'));
+    card.appendChild(el('p','hint','Pop-up signups: '+S.subscribers+'. Customers with an email on a paid order: '+S.customers+'. The download has both, with unsubscribed people marked. Use it in an email tool such as Mailchimp to send newsletters.'));
+    var bar=el('div','bar'); var dl=el('a','btn','Download email list (CSV)'); dl.href='/api/admin.php?action=export_subscribers'; bar.appendChild(dl);
+    var t=el('button','btn','Send me a test email'); t.type='button'; var m=msgBox();
+    t.addEventListener('click',function(){t.disabled=true;flash(m,true,'Sending...');call('test_mail',{}).then(function(j){flash(m,true,'Sent to '+j.to+'. Check your inbox and spam folder.');}).catch(function(e){flash(m,false,e.message);}).then(function(){t.disabled=false;});});
+    var bk=el('button','btn','Back up now'); bk.type='button'; bk.addEventListener('click',function(){bk.disabled=true;flash(m,true,'Backing up...');call('backup_now',{}).then(function(j){flash(m,true,j.result);}).catch(function(e){flash(m,false,e.message);}).then(function(){bk.disabled=false;});});
+    bar.appendChild(t); bar.appendChild(bk); card.appendChild(bar); card.appendChild(m);
+    card.appendChild(el('p','hint','A backup of all your shop data (prices, stock, sales, codes, subscribers, reviews, leads) is saved and emailed to you every Sunday once the daily job is set up. Last backup week: '+(S.last_backup||'none yet')+'.'));
+    return card;
+  }
+
   function boot(){
     call('state').then(function(j){
       S=j; csrf=j.csrf; root.innerHTML='';
       var top=el('p'); var out=el('button','btn','Log out'); out.type='button'; out.addEventListener('click',function(){call('logout',{}).then(function(){location.reload();});}); top.appendChild(out); root.appendChild(top);
-      root.appendChild(productsCard()); root.appendChild(salesCard()); root.appendChild(shippingCard()); root.appendChild(discountsCard());
+      root.appendChild(productsCard()); root.appendChild(salesCard()); root.appendChild(shippingCard()); root.appendChild(discountsCard()); root.appendChild(settingsCard()); root.appendChild(reviewsCard()); root.appendChild(leadsCard()); root.appendChild(emailCard());
     }).catch(function(e){ if(e.status===401) login(); else if(e.status===503){root.innerHTML='';root.appendChild(el('p','lede',e.message));} else login(e.message); });
   }
   boot();

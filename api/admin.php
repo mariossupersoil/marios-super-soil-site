@@ -34,7 +34,18 @@ if ($action === 'logout') { session_destroy(); out_json(['ok' => true]); }
 
 if ($action === 'state') {
     $st = store();
-    out_json(['auth' => true, 'csrf' => $_SESSION['csrf'], 'catalog' => catalog(true), 'tiers' => tiers(), 'discounts' => $st['discounts'] ?? [], 'sales' => $st['sales'] ?? []]);
+    out_json(['auth' => true, 'csrf' => $_SESSION['csrf'], 'catalog' => catalog(true), 'tiers' => tiers(), 'discounts' => $st['discounts'] ?? [], 'sales' => $st['sales'] ?? [],
+        'settings' => settings(), 'reviews' => array_reverse($st['reviews'] ?? []), 'leads' => array_reverse($st['wholesale_leads'] ?? []),
+        'subscribers' => count($st['subscribers'] ?? []), 'customers' => count($st['customers'] ?? []), 'last_backup' => $st['last_backup_week'] ?? '']);
+}
+
+if ($action === 'export_subscribers') {
+    $st = store(); $rows = []; 
+    foreach ($st['subscribers'] ?? [] as $s) $rows[$s['email']] = [$s['email'], '', $s['date'], 'signup pop-up', !empty($s['unsub']) ? 'unsubscribed' : 'subscribed'];
+    foreach ($st['customers'] ?? [] as $c) { if (!isset($rows[$c['email']])) $rows[$c['email']] = [$c['email'], $c['name'], $c['date'], 'customer', !empty($c['unsub']) ? 'unsubscribed' : 'subscribed']; elseif ($c['name'] !== '' && $rows[$c['email']][1] === '') $rows[$c['email']][1] = $c['name']; }
+    header('Content-Type: text/csv; charset=utf-8'); header('Content-Disposition: attachment; filename="mario-email-list-' . today_toronto() . '.csv"');
+    $o = fopen('php://output', 'w'); fputcsv($o, ['email', 'name', 'date', 'source', 'status']);
+    foreach ($rows as $r) { $r[0] = preg_match('/^[=+\-@]/', $r[0]) ? "'" . $r[0] : $r[0]; fputcsv($o, $r); } exit;
 }
 
 // everything below changes data: POST + CSRF token
@@ -114,4 +125,45 @@ if ($action === 'save_sales') {
     }
     store_update(function ($st) use ($out) { $st['sales'] = $out; return $st; }) ? out_json(['ok' => true]) : fail(500, 'Could not save.');
 }
+if ($action === 'save_settings') {
+    $g = $in['gift'] ?? []; $r = $in['reminders'] ?? [];
+    $thr = (float)($g['threshold'] ?? 0); if ($thr < 1 || $thr > 100000) fail(400, 'The free gift order amount must be at least $1.');
+    $name = clean_line((string)($g['name'] ?? ''), 80); if ($name === '') fail(400, 'Give the free gift a name.');
+    $wt = (float)($g['weight_kg'] ?? 0); if ($wt < 0 || $wt > 50) fail(400, 'The gift weight looks wrong.');
+    $stk = $g['stock'] ?? ''; $stk = ($stk === '' || $stk === null) ? null : ((is_numeric($stk) && $stk >= 0 && (int)$stk == $stk) ? (int)$stk : fail(400, 'Gift stock must be a whole number or blank.'));
+    $days = (int)($r['days'] ?? 60); if ($days < 7 || $days > 365) fail(400, 'Reminder days must be between 7 and 365.');
+    $set = ['gift' => ['enabled' => !empty($g['enabled']), 'threshold' => round($thr, 2), 'name' => $name, 'weight_kg' => round($wt, 2), 'stock' => $stk], 'reminders' => ['enabled' => !empty($r['enabled']), 'days' => $days]];
+    store_update(function ($st) use ($set) { $st['settings'] = $set; return $st; }) ? out_json(['ok' => true]) : fail(500, 'Could not save.');
+}
+if ($action === 'review_action') {
+    $id = (string)($in['id'] ?? ''); $op = (string)($in['op'] ?? '');
+    if (!in_array($op, ['approve', 'reject', 'delete'], true)) fail(400, 'Bad action.');
+    store_update(function ($st) use ($id, $op) {
+        foreach ($st['reviews'] ?? [] as $i => $r) { if ($r['id'] !== $id) continue;
+            if ($op === 'delete') unset($st['reviews'][$i]); else $st['reviews'][$i]['status'] = $op === 'approve' ? 'approved' : 'rejected'; }
+        $st['reviews'] = array_values($st['reviews'] ?? []); return $st; });
+    out_json(['ok' => true]);
+}
+if ($action === 'add_review') {
+    $base = jread(__DIR__ . '/prices.json')['products'] ?? [];
+    $slug = (string)($in['slug'] ?? ''); if (!isset($base[$slug])) fail(400, 'Choose a product.');
+    $name = clean_line((string)($in['name'] ?? ''), 40); $rating = (int)($in['rating'] ?? 0); $text = trim((string)($in['text'] ?? ''));
+    if ($name === '' || $rating < 1 || $rating > 5 || mb_strlen($text) < 10) fail(400, 'Enter a name, a rating from 1 to 5 and the review text.');
+    $r = ['id' => bin2hex(random_bytes(5)), 'slug' => $slug, 'name' => $name, 'rating' => $rating, 'title' => clean_line((string)($in['title'] ?? ''), 80), 'text' => mb_substr($text, 0, 1000),
+          'date' => preg_match('/^\d{4}-\d{2}-\d{2}$/', (string)($in['date'] ?? '')) ? $in['date'] : today_toronto(), 'status' => 'approved', 'source' => 'owner', 'contact' => ''];
+    store_update(function ($st) use ($r) { $st['reviews'][] = $r; return $st; }) ? out_json(['ok' => true]) : fail(500, 'Could not save.');
+}
+if ($action === 'lead_action') {
+    $id = (string)($in['id'] ?? ''); $op = (string)($in['op'] ?? '');
+    if (!in_array($op, ['contacted', 'new', 'delete'], true)) fail(400, 'Bad action.');
+    store_update(function ($st) use ($id, $op) {
+        foreach ($st['wholesale_leads'] ?? [] as $i => $l) { if ($l['id'] !== $id) continue; if ($op === 'delete') unset($st['wholesale_leads'][$i]); else $st['wholesale_leads'][$i]['status'] = $op; }
+        $st['wholesale_leads'] = array_values($st['wholesale_leads'] ?? []); return $st; });
+    out_json(['ok' => true]);
+}
+if ($action === 'test_mail') {
+    $ok = send_mail(owner_email(), 'Test email from your shop', "If you can read this, your shop can send email. Reminders, new review alerts, wholesale applications and weekly backups all use the same sending.\n");
+    $ok ? out_json(['ok' => true, 'to' => owner_email()]) : fail(500, 'The server could not send email.');
+}
+if ($action === 'backup_now') { out_json(['ok' => true, 'result' => do_backup(true)]); }
 fail(404, 'Unknown action.');

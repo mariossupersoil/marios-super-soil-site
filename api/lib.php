@@ -99,7 +99,11 @@ function price_cart(array $items, array $cat): array {
         $lines[] = ['name' => $p['name'] . ' - ' . $s['label'], 'unit_cents' => $cents, 'qty' => $qty, 'slug' => $slug, 'key' => $key];
         $sub += $cents * $qty; $kg += $s['weight_kg'] * $qty;
     }
-    return ['lines' => $lines, 'subtotal_cents' => $sub, 'kg' => round($kg, 2)];
+    $gift = settings()['gift']; $giftOn = false;
+    if (!empty($gift['enabled']) && $sub >= (int)round($gift['threshold'] * 100) && ($gift['stock'] === null || $gift['stock'] > 0)) {
+        $giftOn = true; $kg += (float)$gift['weight_kg'];
+    }
+    return ['lines' => $lines, 'subtotal_cents' => $sub, 'kg' => round($kg, 2), 'gift' => $giftOn ? $gift['name'] : null];
 }
 
 /** Check a discount code against the store. Returns ['d'=>discount row,'amount_cents'=>int,'free_shipping'=>bool] or fails. */
@@ -142,7 +146,9 @@ function record_paid_session(array $s): void {
         if (!preg_match('/^items_\d+$/', (string)$k)) continue;
         foreach (explode(';', (string)$v) as $e) { $q = explode(':', $e); if (count($q) === 3) $items[] = [$q[0], $q[1], (int)$q[2]]; }
     }
-    store_update(function (array $st) use ($sid, $code, $items) {
+    $cd = is_array($s['customer_details'] ?? null) ? $s['customer_details'] : [];
+    $gift = !empty($md['gift']);
+    store_update(function (array $st) use ($sid, $code, $items, $cd, $gift) {
         $done = $st['processed_sessions'] ?? [];
         if (in_array($sid, $done, true)) return $st;
         $done[] = $sid; $st['processed_sessions'] = array_slice($done, -500);
@@ -153,6 +159,84 @@ function record_paid_session(array $s): void {
         foreach ($items as [$slug, $key, $qty]) {
             if (isset($st['stock'][$slug][$key]) && is_int($st['stock'][$slug][$key])) $st['stock'][$slug][$key] = max(0, $st['stock'][$slug][$key] - $qty);
         }
+        if ($gift && isset($st['settings']['gift']['stock']) && is_int($st['settings']['gift']['stock'])) $st['settings']['gift']['stock'] = max(0, $st['settings']['gift']['stock'] - 1);
+        $email = strtolower(trim((string)($cd['email'] ?? '')));
+        if ($email !== '' && valid_email($email) && $items) {
+            $days = (int)(($st['settings']['reminders']['days'] ?? 60));
+            $st['customers'][] = ['email' => $email, 'name' => clean_line((string)($cd['name'] ?? ''), 60), 'date' => today_toronto(),
+                'remind_on' => (new DateTime('now', new DateTimeZone('America/Toronto')))->modify('+' . max(7, $days) . ' days')->format('Y-m-d'),
+                'items' => array_map(fn($i) => ['slug' => $i[0], 'size' => $i[1], 'qty' => $i[2]], $items), 'reminded' => false, 'unsub' => false, 'token' => bin2hex(random_bytes(12))];
+            $st['customers'] = array_slice($st['customers'], -5000);
+        }
         return $st;
     });
+}
+
+
+// ---------------------------------------------------------------- settings, mail, rate limits
+function settings(): array {
+    $d = [
+        'gift' => ['enabled' => true, 'threshold' => 120.0, 'name' => 'Level Up 3-3-3 (2 lb)', 'weight_kg' => 0.91, 'stock' => null],
+        'reminders' => ['enabled' => true, 'days' => 60],
+    ];
+    $s = store()['settings'] ?? [];
+    foreach ($d as $k => $v) $d[$k] = array_merge($v, is_array($s[$k] ?? null) ? $s[$k] : []);
+    return $d;
+}
+function site_url(): string { return rtrim((string)(cfg()['site_url'] ?? 'https://mariossupersoil.ca'), '/'); }
+function owner_email(): string { return (string)(cfg()['owner_email'] ?? 'mariossupersoil@mariossupersoil.com'); }
+
+/** Allow at most $max hits per $window seconds for this key (per visitor). Returns false when over the limit. */
+function rate_ok(string $name, int $max, int $window = 3600): bool {
+    $dir = __DIR__ . '/.rl'; if (!is_dir($dir)) @mkdir($dir, 0700, true);
+    $f = $dir . '/' . $name . '-' . substr(hash('sha256', $_SERVER['REMOTE_ADDR'] ?? 'x'), 0, 16);
+    $fp = @fopen($f, 'c+'); if (!$fp) return true;
+    flock($fp, LOCK_EX);
+    $rec = json_decode((string)stream_get_contents($fp), true) ?: [];
+    $rec = array_values(array_filter($rec, fn($t) => $t > time() - $window));
+    $ok = count($rec) < $max;
+    if ($ok) $rec[] = time();
+    ftruncate($fp, 0); rewind($fp); fwrite($fp, json_encode($rec));
+    flock($fp, LOCK_UN); fclose($fp);
+    return $ok;
+}
+
+function valid_email(string $e): bool { return strlen($e) <= 120 && filter_var($e, FILTER_VALIDATE_EMAIL) !== false && !preg_match('/[\r\n]/', $e); }
+function clean_line(string $s, int $max): string { return mb_substr(trim(preg_replace('/[\r\n\t]+/', ' ', $s)), 0, $max); }
+
+/** Plain-text email (optionally with one attachment). Uses PHP mail(): fine on Hostinger; set mail_from in config.php. */
+function send_mail(string $to, string $subject, string $body, ?array $attach = null, ?string $replyTo = null): bool {
+    if (!valid_email($to)) return false;
+    $host = parse_url(site_url(), PHP_URL_HOST) ?: 'localhost';
+    $from = (string)(cfg()['mail_from'] ?? ('noreply@' . preg_replace('/^www\./', '', $host)));
+    $h = ['From: ' . "Mario's Super Soil <$from>", 'MIME-Version: 1.0'];
+    if ($replyTo && valid_email($replyTo)) $h[] = 'Reply-To: ' . $replyTo;
+    $subj = '=?UTF-8?B?' . base64_encode($subject) . '?=';
+    if ($attach) {
+        $b = bin2hex(random_bytes(8));
+        $h[] = "Content-Type: multipart/mixed; boundary=\"$b\"";
+        $msg = "--$b\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\n" . chunk_split(base64_encode($body))
+             . "--$b\r\nContent-Type: application/json; name=\"{$attach['name']}\"\r\nContent-Transfer-Encoding: base64\r\nContent-Disposition: attachment; filename=\"{$attach['name']}\"\r\n\r\n" . chunk_split(base64_encode($attach['data'])) . "--$b--";
+    } else {
+        $h[] = 'Content-Type: text/plain; charset=UTF-8'; $h[] = 'Content-Transfer-Encoding: base64';
+        $msg = chunk_split(base64_encode($body));
+    }
+    $log = cfg()['mail_log'] ?? null;
+    if ($log) { @file_put_contents($log, "TO:$to\nSUBJ:$subject\n$body\n---\n", FILE_APPEND); return true; }
+    return @mail($to, $subj, $msg, implode("\r\n", $h));
+}
+
+/** Copy store.json into api/backups/ (keep the newest 12) and optionally email it to the owner. */
+function do_backup(bool $email): string {
+    $dir = __DIR__ . '/backups'; if (!is_dir($dir)) @mkdir($dir, 0700, true);
+    if (!is_file(STORE_FILE)) return 'nothing to back up yet';
+    $name = 'store-' . today_toronto() . '.json'; $data = (string)file_get_contents(STORE_FILE);
+    file_put_contents($dir . '/' . $name, $data);
+    $all = glob($dir . '/store-*.json') ?: []; sort($all);
+    foreach (array_slice($all, 0, max(0, count($all) - 12)) as $old) @unlink($old);
+    if ($email) {
+        $ok = send_mail(owner_email(), "Weekly backup of your shop data ($name)", "Attached is this week's backup of your shop data (prices, stock, sales, discount codes, subscribers, reviews, wholesale leads, customers). Keep it somewhere safe; it contains customer email addresses.\n", ['name' => $name, 'data' => $data]);
+        return $ok ? "saved $name and emailed it" : "saved $name (email failed)";
+    }
+    return "saved $name";
 }

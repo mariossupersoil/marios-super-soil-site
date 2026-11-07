@@ -256,3 +256,37 @@ a.pick{display:flex}
 .salebadge.tile{position:absolute;top:8px;left:8px;margin:0}
 .salenote{display:block;font:400 15px/1.3 var(--text);color:var(--accent);letter-spacing:.04em;margin-top:6px}
 .cartsale{color:var(--accent)}
+
+/* pop-up, reviews, wholesale, policy pages */
+.pop-back{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;padding:16px;z-index:100}
+.pop{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:clamp(22px,4vw,36px);max-width:460px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.pop h2{font-size:clamp(30px,6vw,40px);margin:0 28px 10px 0}
+.pop p{margin:0 0 16px;color:var(--muted)}
+.pop-x{all:unset;cursor:pointer;position:absolute;top:10px;right:12px;width:44px;height:44px;text-align:center;font:400 32px/44px var(--text);color:var(--muted)}
+.pop-x:focus-visible,.pop-no:focus-visible{outline:3px solid var(--accent)}
+.pop-form{display:flex;gap:10px;flex-wrap:wrap}
+.pop-form input[type=email]{flex:1 1 200px;min-width:0;box-sizing:border-box;background:#0e0e0f;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:12px;font:400 16px/1.3 var(--text);min-height:48px}
+.pop-form .btn{min-height:48px;display:inline-flex;align-items:center}
+.pop-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.pop-msg{margin:12px 0 0;color:var(--leaf);min-height:1.2em}.pop-msg.err{color:#ffb4a8}
+.pop-no{all:unset;cursor:pointer;display:block;margin-top:14px;color:var(--muted);text-decoration:underline;padding:6px 0}
+.rv{border-top:1px solid var(--line);padding:16px 0}
+.rv-h{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.rv p{margin:6px 0 0}.rv-by{color:var(--muted);font-size:15px}
+.rv-stars{color:var(--accent);letter-spacing:.12em;font-size:20px}
+#rv-summary{margin:0 0 18px;color:var(--muted)}
+.rvform,.wsform{display:grid;gap:14px;max-width:640px;margin-top:18px}
+.rvform label,.wsform label{display:block;font:500 13px/1.2 var(--text);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.rvform input[type=text],.rvform input[type=email],.rvform textarea,.rvform select,.wsform input,.wsform select,.wsform textarea{width:100%;box-sizing:border-box;background:#0e0e0f;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:12px;font:400 16px/1.4 var(--text);min-height:48px}
+.rvform textarea,.wsform textarea{min-height:110px;resize:vertical}
+.wsgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.wsgrid{grid-template-columns:1fr}}
+.rv-msg,.ws-msg{min-height:1.3em;margin:12px 0 0}.rv-msg.ok,.ws-msg.ok{color:var(--leaf)}.rv-msg.err,.ws-msg.err{color:#ffb4a8}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.policy{max-width:760px}.policy h2{font-size:clamp(26px,4vw,36px);margin:34px 0 10px}.policy p,.policy li{color:var(--ink)}.policy ul{padding-left:1.2em}
+.perks{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:26px 0;padding:0;list-style:none}
+.perks li{border:1px solid var(--line);border-radius:12px;padding:16px;background:var(--panel)}
+.giftbar{border:1px dashed var(--accent);border-radius:12px;padding:12px 16px;margin:18px 0 0;color:var(--accent)}
+.giftbar.on{border-style:solid;border-color:var(--leaf);color:var(--leaf)}
+.giftnote{margin:10px 0 0;color:var(--accent);font-size:15px}
+.rvform[hidden],.wsform[hidden]{display:none}

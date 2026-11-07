@@ -14,6 +14,12 @@ return [
     'stripe_webhook_secret' => 'PASTE-YOUR-STRIPE-WEBHOOK-SECRET-HERE', // whsec_... (see README) so stock is counted down even if a customer closes the tab
     'automatic_tax' => true,   // needs Stripe Tax turned on in your Stripe dashboard
 
+    // Email (reminders, wholesale and review alerts, weekly backup)
+    'owner_email' => 'mariossupersoil@mariossupersoil.com',
+    'mail_from' => 'orders@mariossupersoil.ca',   // an address on your own domain sends best
+    'site_url' => 'https://mariossupersoil.ca',   // used in email links
+    'cron_key' => 'PASTE-A-RANDOM-KEY-OF-20-OR-MORE-CHARACTERS-HERE', // for the daily job (see README)
+
     // Owner admin page at /admin/ (at least 10 characters; use something long and unique)
     'admin_password' => 'PASTE-A-LONG-ADMIN-PASSWORD-HERE',
 ];
