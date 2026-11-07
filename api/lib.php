@@ -56,13 +56,19 @@ function catalog(bool $admin = false): array {
     foreach ($base as $slug => $p) {
         $sizes = [];
         foreach ($p['sizes'] as $k => $s) {
+            $pack = (int)($s['pack_of'] ?? 0); $from = (string)($s['pack_from'] ?? '');
             $price = $s['price'] ?? null;
             if (isset($st['prices'][$slug]) && array_key_exists($k, $st['prices'][$slug])) $price = $st['prices'][$slug][$k];
+            if ($pack > 1 && $from !== '') {   // packed as several smaller bags: derived from the base size
+                $bp = $p['sizes'][$from]['price'] ?? null;
+                if (isset($st['prices'][$slug]) && array_key_exists($from, $st['prices'][$slug])) $bp = $st['prices'][$slug][$from];
+                $price = (is_numeric($bp) && $bp > 0) ? round((float)$bp * $pack, 2) : null;
+            }
             $price = (is_numeric($price) && $price > 0) ? round((float)$price, 2) : null;
             $avail = !in_array($k, $st['unavailable_sizes'][$slug] ?? [], true);
             if (!$admin && !$avail) continue;
             $sale = $price !== null ? best_sale($sales, $slug, $k, $price) : null;
-            $sizes[$k] = ['label' => $s['label'], 'price' => $price, 'sale_price' => $sale['price'] ?? null, 'sale_label' => $sale['label'] ?? '', 'sale_ends' => $sale['ends'] ?? '', 'weight_kg' => (float)($s['weight_kg'] ?? 0), 'available' => $avail, 'stock' => (isset($st['stock'][$slug][$k]) && is_int($st['stock'][$slug][$k])) ? $st['stock'][$slug][$k] : null];
+            $sizes[$k] = ['label' => $s['label'], 'price' => $price, 'sale_price' => $sale['price'] ?? null, 'sale_label' => $sale['label'] ?? '', 'sale_ends' => $sale['ends'] ?? '', 'weight_kg' => (float)($s['weight_kg'] ?? 0), 'available' => $avail, 'derived' => $pack > 1, 'stock' => ($pack > 1 && $from !== '') ? ((isset($st['stock'][$slug][$from]) && is_int($st['stock'][$slug][$from])) ? intdiv($st['stock'][$slug][$from], $pack) : null) : ((isset($st['stock'][$slug][$k]) && is_int($st['stock'][$slug][$k])) ? $st['stock'][$slug][$k] : null)];
         }
         $out[$slug] = ['name' => $p['name'], 'img' => $p['img'], 'enabled' => !in_array($slug, $st['disabled_products'] ?? [], true), 'sizes' => $sizes];
     }
@@ -156,7 +162,10 @@ function record_paid_session(array $s): void {
             foreach ($st['discounts'] as &$d) { if (norm_code((string)($d['code'] ?? '')) === $code) $d['uses'] = (int)($d['uses'] ?? 0) + 1; }
             unset($d);
         }
+        $baseP = jread(__DIR__ . '/prices.json')['products'] ?? [];
         foreach ($items as [$slug, $key, $qty]) {
+            $pk = $baseP[$slug]['sizes'][$key] ?? [];
+            if ((int)($pk['pack_of'] ?? 0) > 1 && !empty($pk['pack_from'])) { $key = (string)$pk['pack_from']; $qty *= (int)$pk['pack_of']; }
             if (isset($st['stock'][$slug][$key]) && is_int($st['stock'][$slug][$key])) $st['stock'][$slug][$key] = max(0, $st['stock'][$slug][$key] - $qty);
         }
         if ($gift && isset($st['settings']['gift']['stock']) && is_int($st['settings']['gift']['stock'])) $st['settings']['gift']['stock'] = max(0, $st['settings']['gift']['stock'] - 1);

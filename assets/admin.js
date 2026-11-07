@@ -36,7 +36,8 @@
         var s=p.sizes[k], r=el('div','row'), pr=inp('number',s.price==null?'':s.price,{min:0,step:'0.01',inputmode:'decimal',placeholder:'no price'}), av=chk('Sell this size',s.available);
         var st=inp('number',s.stock==null?'':s.stock,{min:0,step:'1',inputmode:'numeric',placeholder:'not tracked'}), init=st.value;
         if(s.stock!=null&&s.stock<=0){st.style.borderColor='#b4503f';} else if(s.stock!=null&&s.stock<=5){st.style.borderColor='#d8c98b';}
-        r.appendChild(el('div',null,s.label)); r.appendChild(field('Price ($)',pr)); r.appendChild(field('In stock',st)); r.appendChild(av); sz.appendChild(r); rows[slug].sizes[k]={pr:pr,av:av,st:st,init:init};
+        r.appendChild(el('div',null,s.label));
+        if(s.derived){r.appendChild(el('div','hint','Price and stock follow the 5 lb bag ('+(s.price==null?'no price yet':'$'+s.price.toFixed(2))+'; '+(s.stock==null?'stock not tracked':s.stock+' available')+')'));r.appendChild(av);pr.disabled=true;st.disabled=true;}else{r.appendChild(field('Price ($)',pr)); r.appendChild(field('In stock',st)); r.appendChild(av);} sz.appendChild(r); rows[slug].sizes[k]={pr:pr,av:av,st:st,init:init};
       });
       box.appendChild(sz); card.appendChild(box);
     });

@@ -158,6 +158,9 @@ def sync_prices():
             k = size_key(lab)
             o = oldp.get(p["slug"], {}).get("sizes", {}).get(k, {})
             sizes[k] = {"label": lab, "price": o.get("price"), "weight_kg": o.get("weight_kg", default_kg(lab))}
+            m = re.match(r"(\d+) lb \(.*= (\d+) x 5 lb", lab)
+            if m:  # packed as several 5 lb bags: price and stock come from the 5lb size
+                sizes[k]["pack_of"] = int(m.group(2)); sizes[k]["pack_from"] = "5lb"; sizes[k]["price"] = None
         prods[p["slug"]] = {"name": f"{plain_name(p)} {npk_dash(p)}", "img": f"/img/{p['f']}-front.webp", "sizes": sizes}
     out = {"currency": "CAD", "note": "Prices in Canadian dollars before tax and shipping, for example 24.99. null means no price yet.", "products": prods}
     f.write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n")
@@ -565,7 +568,7 @@ def build_admin():
     <h1 class="nm" style="font-size:clamp(36px,6vw,72px)"><b>Owner</b> <i>admin</i></h1>
     <div class="ad" id="ad-root"><p class="lede">Loading...</p></div>
   </div></section>
-<script src="/assets/admin.js?v=4" defer></script>
+<script src="/assets/admin.js?v=5" defer></script>
 """
     out += footer()
     return out
@@ -650,7 +653,7 @@ def build_wholesale():
       <li><strong>Canadian made</strong><br>Organic dry fertilizers and soil amendments made in Ontario: bone, crab, feather, kelp and alfalfa meal, worm castings and blends.</li>
       <li><strong>Volume pricing</strong><br>Wholesale pricing that improves as your order size grows, with minimum order quantities per tier.</li>
       <li><strong>Net 30 terms</strong><br>Payment terms are available for approved stores.</li>
-      <li><strong>Retail-ready bags</strong><br>Stand-up pouches with clear directions in English and French, in sizes from 2 lb to 20 lb.</li>
+      <li><strong>Retail-ready bags</strong><br>Stand-up pouches with clear directions in English and French, in 2 lb and 5 lb sizes. Bulk sacks are available on request.</li>
     </ul>
     <h2>Apply for a wholesale account</h2>
     <p class="lede">Tell us about your store. We will review your application and contact you by email or phone with the price list and next steps.</p>

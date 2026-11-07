@@ -17,14 +17,18 @@
      "weight_kg": 2.27
     },
     "10lb": {
-     "label": "10 lb (4.5 kg)",
+     "label": "10 lb (4.5 kg) = 2 x 5 lb bags",
      "price": null,
-     "weight_kg": 4.54
+     "weight_kg": 4.54,
+     "pack_of": 2,
+     "pack_from": "5lb"
     },
     "20lb": {
-     "label": "20 lb (9.1 kg)",
+     "label": "20 lb (9.1 kg) = 4 x 5 lb bags",
      "price": null,
-     "weight_kg": 9.07
+     "weight_kg": 9.07,
+     "pack_of": 4,
+     "pack_from": "5lb"
     }
    }
   },
@@ -43,14 +47,18 @@
      "weight_kg": 2.27
     },
     "10lb": {
-     "label": "10 lb (4.5 kg)",
+     "label": "10 lb (4.5 kg) = 2 x 5 lb bags",
      "price": null,
-     "weight_kg": 4.54
+     "weight_kg": 4.54,
+     "pack_of": 2,
+     "pack_from": "5lb"
     },
     "20lb": {
-     "label": "20 lb (9.1 kg)",
+     "label": "20 lb (9.1 kg) = 4 x 5 lb bags",
      "price": null,
-     "weight_kg": 9.07
+     "weight_kg": 9.07,
+     "pack_of": 4,
+     "pack_from": "5lb"
     }
    }
   },
@@ -69,14 +77,18 @@
      "weight_kg": 2.27
     },
     "10lb": {
-     "label": "10 lb (4.5 kg)",
+     "label": "10 lb (4.5 kg) = 2 x 5 lb bags",
      "price": null,
-     "weight_kg": 4.54
+     "weight_kg": 4.54,
+     "pack_of": 2,
+     "pack_from": "5lb"
     },
     "20lb": {
-     "label": "20 lb (9.1 kg)",
+     "label": "20 lb (9.1 kg) = 4 x 5 lb bags",
      "price": null,
-     "weight_kg": 9.07
+     "weight_kg": 9.07,
+     "pack_of": 4,
+     "pack_from": "5lb"
     }
    }
   },
@@ -95,14 +107,18 @@
      "weight_kg": 2.27
     },
     "10lb": {
-     "label": "10 lb (4.5 kg)",
+     "label": "10 lb (4.5 kg) = 2 x 5 lb bags",
      "price": null,
-     "weight_kg": 4.54
+     "weight_kg": 4.54,
+     "pack_of": 2,
+     "pack_from": "5lb"
     },
     "20lb": {
-     "label": "20 lb (9.1 kg)",
+     "label": "20 lb (9.1 kg) = 4 x 5 lb bags",
      "price": null,
-     "weight_kg": 9.07
+     "weight_kg": 9.07,
+     "pack_of": 4,
+     "pack_from": "5lb"
     }
    }
   },
@@ -121,14 +137,18 @@
      "weight_kg": 2.27
     },
     "10lb": {
-     "label": "10 lb (4.5 kg)",
+     "label": "10 lb (4.5 kg) = 2 x 5 lb bags",
      "price": null,
-     "weight_kg": 4.54
+     "weight_kg": 4.54,
+     "pack_of": 2,
+     "pack_from": "5lb"
     },
     "20lb": {
-     "label": "20 lb (9.1 kg)",
+     "label": "20 lb (9.1 kg) = 4 x 5 lb bags",
      "price": null,
-     "weight_kg": 9.07
+     "weight_kg": 9.07,
+     "pack_of": 4,
+     "pack_from": "5lb"
     }
    }
   },

@@ -37,9 +37,10 @@
     "sizes": [
       "2 lb (0.9 kg)",
       "5 lb (2.3 kg)",
-      "10 lb (4.5 kg)",
-      "20 lb (9.1 kg)"
-    ]
+      "10 lb (4.5 kg) = 2 x 5 lb bags",
+      "20 lb (9.1 kg) = 4 x 5 lb bags"
+    ],
+    "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
   },
   {
     "slug": "crab-meal",
@@ -84,9 +85,10 @@
     "sizes": [
       "2 lb (0.9 kg)",
       "5 lb (2.3 kg)",
-      "10 lb (4.5 kg)",
-      "20 lb (9.1 kg)"
-    ]
+      "10 lb (4.5 kg) = 2 x 5 lb bags",
+      "20 lb (9.1 kg) = 4 x 5 lb bags"
+    ],
+    "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
   },
   {
     "slug": "feather-meal",
@@ -126,9 +128,10 @@
     "sizes": [
       "2 lb (0.9 kg)",
       "5 lb (2.3 kg)",
-      "10 lb (4.5 kg)",
-      "20 lb (9.1 kg)"
-    ]
+      "10 lb (4.5 kg) = 2 x 5 lb bags",
+      "20 lb (9.1 kg) = 4 x 5 lb bags"
+    ],
+    "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
   },
   {
     "slug": "kelp-meal",
@@ -198,9 +201,10 @@
     "sizes": [
       "2 lb (0.9 kg)",
       "5 lb (2.3 kg)",
-      "10 lb (4.5 kg)",
-      "20 lb (9.1 kg)"
-    ]
+      "10 lb (4.5 kg) = 2 x 5 lb bags",
+      "20 lb (9.1 kg) = 4 x 5 lb bags"
+    ],
+    "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
   },
   {
     "slug": "alfalfa-meal",
@@ -250,9 +254,10 @@
     "sizes": [
       "2 lb (0.9 kg)",
       "5 lb (2.3 kg)",
-      "10 lb (4.5 kg)",
-      "20 lb (9.1 kg)"
-    ]
+      "10 lb (4.5 kg) = 2 x 5 lb bags",
+      "20 lb (9.1 kg) = 4 x 5 lb bags"
+    ],
+    "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
   },
   {
     "slug": "worm-castings",
