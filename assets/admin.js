@@ -27,21 +27,23 @@
 
   function productsCard(){
     var card=el('div','ad-card'); card.appendChild(el('h2',null,'Products and prices'));
-    card.appendChild(el('p','hint','Prices are in CAD before tax and shipping. Leave a price blank if it is not for sale yet. Untick "Sell this size" to hide a size, or "Show product" to stop selling a whole product.'));
+    card.appendChild(el('p','hint','Prices are in CAD before tax and shipping. Leave a price blank if it is not for sale yet. Untick "Sell this size" to hide a size, or "Show product" to stop selling a whole product. "In stock" is how many you have: it counts down when orders are paid and shows Out of stock at 0. Leave it blank to not track a size. Type a new number to restock.'));
     var rows={};
     Object.keys(S.catalog).forEach(function(slug){
       var p=S.catalog[slug], box=el('div','prod'), h=el('h3',null,p.name), en=chk('Show product',p.enabled); h.appendChild(en); box.appendChild(h);
       var sz=el('div','sizes'); rows[slug]={en:en,sizes:{}};
       Object.keys(p.sizes).forEach(function(k){
         var s=p.sizes[k], r=el('div','row'), pr=inp('number',s.price==null?'':s.price,{min:0,step:'0.01',inputmode:'decimal',placeholder:'no price'}), av=chk('Sell this size',s.available);
-        r.appendChild(el('div',null,s.label)); r.appendChild(field('Price ($)',pr)); r.appendChild(av); sz.appendChild(r); rows[slug].sizes[k]={pr:pr,av:av};
+        var st=inp('number',s.stock==null?'':s.stock,{min:0,step:'1',inputmode:'numeric',placeholder:'not tracked'}), init=st.value;
+        if(s.stock!=null&&s.stock<=0){st.style.borderColor='#b4503f';} else if(s.stock!=null&&s.stock<=5){st.style.borderColor='#d8c98b';}
+        r.appendChild(el('div',null,s.label)); r.appendChild(field('Price ($)',pr)); r.appendChild(field('In stock',st)); r.appendChild(av); sz.appendChild(r); rows[slug].sizes[k]={pr:pr,av:av,st:st,init:init};
       });
       box.appendChild(sz); card.appendChild(box);
     });
     var b=el('button','btn solid','Save products and prices'); b.type='button'; var m=msgBox(), bar=el('div','bar'); bar.appendChild(b); bar.appendChild(m); card.appendChild(bar);
     saver(b,m,function(){
       var out={};
-      Object.keys(rows).forEach(function(slug){out[slug]={enabled:rows[slug].en.cb.checked,sizes:{}};Object.keys(rows[slug].sizes).forEach(function(k){var x=rows[slug].sizes[k];out[slug].sizes[k]={price:x.pr.value,available:x.av.cb.checked};});});
+      Object.keys(rows).forEach(function(slug){out[slug]={enabled:rows[slug].en.cb.checked,sizes:{}};Object.keys(rows[slug].sizes).forEach(function(k){var x=rows[slug].sizes[k];out[slug].sizes[k]={price:x.pr.value,available:x.av.cb.checked,stock:x.st.value,stock_changed:x.st.value!==x.init};});});
       return call('save_products',{products:out});
     });
     return card;

@@ -50,8 +50,13 @@ foreach ($cart['lines'] as $l) {
     $params['line_items'][] = ['quantity' => $l['qty'], 'price_data' => [
         'currency' => 'cad', 'unit_amount' => $l['unit_cents'], 'tax_behavior' => 'exclusive', 'product_data' => ['name' => $l['name']]]];
 }
+$chunks = []; $cur = '';
+foreach ($cart['lines'] as $l) { $e = $l['slug'] . ':' . $l['key'] . ':' . $l['qty'] . ';'; if (strlen($cur) + strlen($e) > 450) { $chunks[] = $cur; $cur = ''; } $cur .= $e; }
+if ($cur !== '') $chunks[] = $cur;
+$params['metadata'] = [];
+foreach ($chunks as $i => $ch) $params['metadata']['items_' . ($i + 1)] = $ch;
 if ($disc) {
-    $params['metadata'] = ['discount_code' => $disc['code']];
+    $params['metadata']['discount_code'] = $disc['code'];
     if ($disc['amount_cents'] > 0) {
         $coupon = ['duration' => 'once', 'name' => $disc['code'], 'max_redemptions' => 1];
         if (($disc['d']['type'] ?? '') === 'percent') $coupon['percent_off'] = (float)min((float)$disc['d']['value'], 100);

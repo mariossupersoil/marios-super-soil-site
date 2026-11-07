@@ -14,6 +14,7 @@
     if(PRICES) return Promise.resolve(PRICES);
     return fetch('/api/shop.php',{cache:'no-cache'}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(j){PRICES=j.products||{};SHIP=j.tiers||[];return PRICES;});
   }
+  function soldout(s){return !!s.soldout;}
   function find(slug,size){var P=PRICES&&PRICES[slug];return P&&P.enabled&&P.sizes&&P.sizes[size]?{p:P,s:P.sizes[size]}:null;}
   function valid(p){return typeof p==='number'&&p>0;}
   function unit(s){return valid(s.sale_price)?s.sale_price:s.price;}
@@ -34,14 +35,16 @@
     var update=function(){
       var P=PRICES&&PRICES[slug];
       if(P&&!P.enabled){pr.textContent='Currently unavailable';add.disabled=true;return;}
-      var f=find(slug,sel.value), ok=f&&valid(f.s.price);
+      var f=find(slug,sel.value), ok=f&&valid(f.s.price)&&!soldout(f.s);
       pr.textContent='';
+      qty.max=(f&&f.s.left)?f.s.left:20;
+      if(f&&valid(f.s.price)&&soldout(f.s)){pr.textContent='Out of stock';add.disabled=true;msg.textContent='';return;}
       if(ok&&onSale(f.s)){
         var old=el('s','wasprice',money(f.s.price)); pr.appendChild(old); pr.appendChild(document.createTextNode(' '+money(f.s.sale_price)+' '));
         pr.appendChild(el('span','salebadge','Save '+Math.round((1-f.s.sale_price/f.s.price)*100)+'%'));
         var n=el('span','salenote',saleNote(f.s)); pr.appendChild(n);
       } else pr.textContent=ok?money(f.s.price):(f?'Price coming soon':'');
-      add.disabled=!ok; msg.textContent='';
+      add.disabled=!ok; msg.textContent=(ok&&f.s.left)?'Only '+f.s.left+' left in stock.':'';
     };
     add.disabled=true;
     shop().then(function(){
@@ -49,15 +52,16 @@
       Array.prototype.slice.call(sel.options).forEach(function(o){
         var s=P&&P.sizes&&P.sizes[o.value];
         if(!s){o.remove();return;}
+        if(valid(s.price)&&s.soldout){o.textContent=s.label+' — Out of stock';return;}
         if(valid(s.price))o.textContent=s.label+' — '+(onSale(s)?money(s.sale_price)+' (was '+money(s.price)+')':money(s.price));
       });
       update();
     }).catch(function(){pr.textContent='Prices are unavailable right now.';add.disabled=true;});
     sel.addEventListener('change',update);
     add.addEventListener('click',function(){
-      var q=Math.max(1,Math.min(20,parseInt(qty.value,10)||1)), c=load(), hit=null;
+      var f0=find(slug,sel.value), cap=(f0&&f0.s.left)?f0.s.left:20, q=Math.max(1,Math.min(cap,parseInt(qty.value,10)||1)), c=load(), hit=null;
       c.forEach(function(i){if(i.slug===slug&&i.size===sel.value)hit=i;});
-      if(hit)hit.qty=Math.min(20,hit.qty+q);else c.push({slug:slug,size:sel.value,qty:q});
+      if(hit)hit.qty=Math.min(cap,hit.qty+q);else c.push({slug:slug,size:sel.value,qty:q});
       save(c);badge();
       msg.textContent='';
       msg.appendChild(document.createTextNode('Added to your cart. '));
@@ -71,7 +75,9 @@
     Array.prototype.forEach.call(tiles,function(a){
       var P=PRICES[a.getAttribute('data-slug')]; if(!P||!P.enabled) return;
       var any=false; Object.keys(P.sizes).forEach(function(k){if(onSale(P.sizes[k]))any=true;});
-      if(any){a.style.position='relative';a.appendChild(el('span','salebadge tile','Sale'));}
+      var allOut=true,anyP=false; Object.keys(P.sizes).forEach(function(k){var s=P.sizes[k];if(valid(s.price)){anyP=true;if(!s.soldout)allOut=false;}});
+      if(anyP&&allOut){a.style.position='relative';var so=el('span','salebadge tile','Sold out');so.style.background='#555';a.appendChild(so);}
+      else if(any){a.style.position='relative';a.appendChild(el('span','salebadge tile','Sale'));}
     });
   }).catch(function(){});
 
@@ -93,6 +99,8 @@
       var im=el('img'); im.src=f.p.img; im.alt=''; im.width=64; im.height=94; li.appendChild(im);
       var mid=el('div','cartinfo'); mid.appendChild(el('strong',null,f.p.name)); mid.appendChild(el('span',null,f.s.label));
       if(onSale(f.s)) mid.appendChild(el('span','cartsale','On sale: was '+money(f.s.price)+' each'));
+      if(soldout(f.s)){missing=true;mid.appendChild(el('span','cartwarn','Out of stock. Remove this item to check out.'));}
+      else if(f.s.left&&i.qty>f.s.left){missing=true;mid.appendChild(el('span','cartwarn','Only '+f.s.left+' left. Lower the quantity to check out.'));}
       if(!valid(pr)){missing=true;mid.appendChild(el('span','cartwarn','No price yet. Remove this item to check out.'));}
       li.appendChild(mid);
       var q=el('div','cartqty'), lab=el('label',null,'Qty'); lab.className='sr'; lab.htmlFor='q'+idx;

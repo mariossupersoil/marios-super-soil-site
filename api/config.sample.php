@@ -11,6 +11,7 @@ return [
     // Shop checkout (Stripe). Use an sk_test_ key first, then switch to sk_live_.
     // Shipping is by order weight (set in the admin page).
     'stripe_secret_key' => 'PASTE-YOUR-STRIPE-SECRET-KEY-HERE',
+    'stripe_webhook_secret' => 'PASTE-YOUR-STRIPE-WEBHOOK-SECRET-HERE', // whsec_... (see README) so stock is counted down even if a customer closes the tab
     'automatic_tax' => true,   // needs Stripe Tax turned on in your Stripe dashboard
 
     // Owner admin page at /admin/ (at least 10 characters; use something long and unique)

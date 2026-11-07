@@ -42,7 +42,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST' || !hash_equals($_SESSION['csr
 
 if ($action === 'save_products') {
     $base = jread(__DIR__ . '/prices.json')['products'] ?? [];
-    $prices = []; $unavail = []; $disabled = [];
+    $prices = []; $unavail = []; $disabled = []; $stockSet = [];
     foreach ($base as $slug => $p) {
         $row = $in['products'][$slug] ?? null; if (!is_array($row)) continue;
         if (empty($row['enabled'])) $disabled[] = $slug;
@@ -54,9 +54,18 @@ if ($action === 'save_products') {
             else $v = round((float)$v, 2) ?: null;
             $prices[$slug][$k] = $v;
             if (empty($s['available'])) $unavail[$slug][] = $k;
+            if (!empty($s['stock_changed'])) {
+                $sv = $s['stock'] ?? '';
+                if ($sv === '' || $sv === null) $stockSet[$slug][$k] = null;
+                elseif (!is_numeric($sv) || $sv < 0 || $sv > 1000000 || (int)$sv != $sv) fail(400, "Stock for {$p['name']} {$k} must be a whole number.");
+                else $stockSet[$slug][$k] = (int)$sv;
+            }
         }
     }
-    $ok = store_update(function ($st) use ($prices, $unavail, $disabled) { $st['prices'] = $prices; $st['unavailable_sizes'] = $unavail; $st['disabled_products'] = $disabled; return $st; });
+    $ok = store_update(function ($st) use ($prices, $unavail, $disabled, $stockSet) {
+        $st['prices'] = $prices; $st['unavailable_sizes'] = $unavail; $st['disabled_products'] = $disabled;
+        foreach ($stockSet as $slug => $row) foreach ($row as $k => $v) { if ($v === null) unset($st['stock'][$slug][$k]); else $st['stock'][$slug][$k] = $v; }
+        return $st; });
     $ok ? out_json(['ok' => true]) : fail(500, 'Could not save. Check folder permissions.');
 }
 if ($action === 'save_shipping') {

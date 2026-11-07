@@ -62,7 +62,7 @@ function catalog(bool $admin = false): array {
             $avail = !in_array($k, $st['unavailable_sizes'][$slug] ?? [], true);
             if (!$admin && !$avail) continue;
             $sale = $price !== null ? best_sale($sales, $slug, $k, $price) : null;
-            $sizes[$k] = ['label' => $s['label'], 'price' => $price, 'sale_price' => $sale['price'] ?? null, 'sale_label' => $sale['label'] ?? '', 'sale_ends' => $sale['ends'] ?? '', 'weight_kg' => (float)($s['weight_kg'] ?? 0), 'available' => $avail];
+            $sizes[$k] = ['label' => $s['label'], 'price' => $price, 'sale_price' => $sale['price'] ?? null, 'sale_label' => $sale['label'] ?? '', 'sale_ends' => $sale['ends'] ?? '', 'weight_kg' => (float)($s['weight_kg'] ?? 0), 'available' => $avail, 'stock' => (isset($st['stock'][$slug][$k]) && is_int($st['stock'][$slug][$k])) ? $st['stock'][$slug][$k] : null];
         }
         $out[$slug] = ['name' => $p['name'], 'img' => $p['img'], 'enabled' => !in_array($slug, $st['disabled_products'] ?? [], true), 'sizes' => $sizes];
     }
@@ -93,8 +93,10 @@ function price_cart(array $items, array $cat): array {
         if (!$p || !$s || !$p['enabled']) fail(400, 'An item in your cart is no longer available. Please refresh the page.');
         if ($s['price'] === null) fail(400, $p['name'] . ' (' . $s['label'] . ') does not have a price yet.');
         if ($qty < 1 || $qty > 20) fail(400, 'Quantity must be between 1 and 20.');
+        if ($s['stock'] !== null && $s['stock'] <= 0) fail(400, $p['name'] . ' (' . $s['label'] . ') is out of stock.');
+        if ($s['stock'] !== null && $qty > $s['stock']) fail(400, 'Only ' . $s['stock'] . ' of ' . $p['name'] . ' (' . $s['label'] . ') left. Please lower the quantity.');
         $cents = (int)round(($s['sale_price'] ?? $s['price']) * 100);
-        $lines[] = ['name' => $p['name'] . ' - ' . $s['label'], 'unit_cents' => $cents, 'qty' => $qty];
+        $lines[] = ['name' => $p['name'] . ' - ' . $s['label'], 'unit_cents' => $cents, 'qty' => $qty, 'slug' => $slug, 'key' => $key];
         $sub += $cents * $qty; $kg += $s['weight_kg'] * $qty;
     }
     return ['lines' => $lines, 'subtotal_cents' => $sub, 'kg' => round($kg, 2)];
@@ -128,4 +130,29 @@ function stripe_call(string $method, string $path, array $params = []): array {
     $data = is_string($resp) ? json_decode($resp, true) : null;
     if ($code < 200 || $code >= 300 || !is_array($data)) { error_log("stripe $method $path $code: " . substr((string)$resp, 0, 300)); return []; }
     return $data;
+}
+
+/** A paid Stripe session: count the discount code use and take the items off stock, once per session. */
+function record_paid_session(array $s): void {
+    if (($s['payment_status'] ?? '') !== 'paid' || empty($s['id'])) return;
+    $sid = (string)$s['id']; $md = is_array($s['metadata'] ?? null) ? $s['metadata'] : [];
+    $code = norm_code((string)($md['discount_code'] ?? ''));
+    $items = [];
+    foreach ($md as $k => $v) {
+        if (!preg_match('/^items_\d+$/', (string)$k)) continue;
+        foreach (explode(';', (string)$v) as $e) { $q = explode(':', $e); if (count($q) === 3) $items[] = [$q[0], $q[1], (int)$q[2]]; }
+    }
+    store_update(function (array $st) use ($sid, $code, $items) {
+        $done = $st['processed_sessions'] ?? [];
+        if (in_array($sid, $done, true)) return $st;
+        $done[] = $sid; $st['processed_sessions'] = array_slice($done, -500);
+        if ($code !== '' && !empty($st['discounts'])) {
+            foreach ($st['discounts'] as &$d) { if (norm_code((string)($d['code'] ?? '')) === $code) $d['uses'] = (int)($d['uses'] ?? 0) + 1; }
+            unset($d);
+        }
+        foreach ($items as [$slug, $key, $qty]) {
+            if (isset($st['stock'][$slug][$key]) && is_int($st['stock'][$slug][$key])) $st['stock'][$slug][$key] = max(0, $st['stock'][$slug][$key] - $qty);
+        }
+        return $st;
+    });
 }

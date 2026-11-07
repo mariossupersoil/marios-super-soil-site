@@ -7,7 +7,7 @@
 .ad .row{display:grid;gap:10px 14px;align-items:end;padding:10px 0;border-top:1px solid var(--line)}
 .ad .prod{margin:0 0 22px}
 .ad .prod h3{font:500 20px/1.2 var(--text);margin:0 0 8px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-.ad .sizes .row{grid-template-columns:minmax(120px,1.4fr) 140px 120px}
+.ad .sizes .row{grid-template-columns:minmax(120px,1.4fr) 130px 130px 130px}
 .ad .tiers .row{grid-template-columns:1fr 1fr auto}
 .ad .codes .row{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));padding:16px 0}
 .ad .chk{display:flex;gap:8px;align-items:center;min-height:44px;text-transform:none;letter-spacing:0;font-size:15px;color:var(--ink);margin:0}
