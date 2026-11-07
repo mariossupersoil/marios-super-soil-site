@@ -66,7 +66,7 @@ def head(title, description, path, og_image="/img/og-image.jpg?v=3", jsonld=None
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=3">
 <link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/oswald-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=8">
+<link rel="stylesheet" href="/assets/style.css?v=9">
 {ld}</head>
 <body id="top">
 """
@@ -91,7 +91,7 @@ def header():
       <a href="/#contact">Contact</a>
     </nav>
     <a class="cartlink" href="/cart/" aria-label="Shopping cart">Cart <span id="cart-n" class="cartn">0</span></a>
-    <a class="btn solid" href="{esc(SITE['store_url'])}" target="_blank" rel="noopener">Shop online</a>
+    <a class="btn solid" href="/#products">Shop online</a>
   </div>
 </header>
 <main>
@@ -119,13 +119,13 @@ def footer():
       <a href="/wholesale/">Wholesale</a>
       <a href="/shipping-returns/">Shipping &amp; returns</a>
 {GR_FOOT}      <a href="{esc(L['blog'])}" target="_blank" rel="noopener">Blog</a>
-      <a href="{esc(L['refund'])}" target="_blank" rel="noopener">Refund policy</a>
+      <a href="/shipping-returns/">Refund policy</a>
       <a href="{esc(L['privacy'])}" target="_blank" rel="noopener">Privacy policy</a>
     </nav>
   </div>
 </footer>
 <script src="/assets/app.js" defer></script>
-<script src="/assets/cart.js?v=5" defer></script>
+<script src="/assets/cart.js?v=6" defer></script>
 <script src="/assets/popup.js?v=1" defer></script>
 </body>
 </html>
@@ -166,6 +166,36 @@ def sync_prices():
     f.write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n")
 
 
+_PRICES = None
+
+
+def price_rows(slug):
+    """Effective list prices from api/prices.json: [(short label, price)]. 10 and 20 lb are packs of the 5 lb bag."""
+    global _PRICES
+    if _PRICES is None:
+        _PRICES = json.loads((ROOT / "api/prices.json").read_text())["products"]
+    sizes = _PRICES.get(slug, {}).get("sizes", {})
+    out = []
+    for k, z in sizes.items():
+        pr = z.get("price")
+        if z.get("pack_of") and z.get("pack_from"):
+            base = sizes.get(z["pack_from"], {}).get("price")
+            pr = round(base * z["pack_of"], 2) if base else None
+        if pr:
+            out.append((z["label"].split(" (")[0], pr))
+    return out
+
+
+def price_line(p):
+    rows = price_rows(p["slug"])
+    if not rows:
+        return f'<p class="pricefrom" id="price-from" data-slug="{p["slug"]}"><span>Price coming soon</span></p>'
+    low = min(x[1] for x in rows)
+    each = " · ".join(f"{esc(l)} ${v:,.2f}" for l, v in rows)
+    return (f'<p class="pricefrom" id="price-from" data-slug="{p["slug"]}"><strong>From ${low:,.2f} CAD</strong> '
+            f'<span>{each}</span></p>')
+
+
 def sizes_text(p):
     return " · ".join(p["sizes"])
 
@@ -174,7 +204,9 @@ def picker_item(p, eager=False):
     load = "" if eager else ' loading="lazy"'
     return (f'<li><a class="pick" data-slug="{p["slug"]}" href="/products/{p["slug"]}/" style="--accent:{p["accent"]}">'
             f'<img src="/img/{p["f"]}-front.webp" width="170" height="250"{load} alt="{esc(plain_name(p))} {esc(npk_dash(p))} organic fertilizer stand-up pouch">'
-            f'<span class="nm">{name_html(p)}</span><span class="npk">{esc(npk_text(p))}</span></a></li>')
+            f'<span class="nm">{name_html(p)}</span><span class="npk">{esc(npk_text(p))}</span>'
+            + (f'<span class="from">From ${min(x[1] for x in price_rows(p["slug"])):,.2f}</span>' if price_rows(p["slug"]) else '')
+            + '</a></li>')
 
 
 def org_ld():
@@ -210,7 +242,7 @@ def build_home():
         <div>
           <p class="lede">{esc(H['lede'])}</p>
           <div class="ctas">
-            <a class="btn solid" href="{esc(SITE['store_url'])}" target="_blank" rel="noopener">Shop online</a>
+            <a class="btn solid" href="/#products">Shop online</a>
             <a class="btn" href="/#buy">Find a store</a>
           </div>
         </div>
@@ -283,13 +315,14 @@ def build_home():
     stores = ""
     for s in SITE["stores"]:
         link = f'<a href="{esc(s["url"])}" target="_blank" rel="noopener">{esc(re.sub(r"^https?://(www\.)?|/.*$", "", s["url"]))}</a>' if s["url"] else ""
-        stores += f'<li><strong>{esc(s["name"])}</strong><span>{esc(s["address"])}</span><span>{esc(s["phone"])}</span>{link}</li>'
+        extra = (f'<span>Hours: {esc(s["hours"])}</span>' if s.get("hours") else "") + (f'<span>Carries: {esc(s["carries"])}</span>' if s.get("carries") else "")
+        stores += f'<li><strong>{esc(s["name"])}</strong><span>{esc(s["address"])}</span><span>{esc(s["phone"])}</span>{extra}{link}</li>'
     out += f"""  <section id="buy" class="sec">
     <div class="wrap buy">
       <div>
         <h2>Where to buy</h2>
-        <p class="lede">Order online and we ship within Canada. USA shipping is planned. You can also pick up from a local shop.</p>
-        <p class="ctas"><a class="btn solid" href="{esc(SITE['store_url'])}" target="_blank" rel="noopener">Shop online</a></p>
+        <p class="lede">Order online and we ship within Canada. You can also pick up from a local shop.</p>
+        <p class="ctas"><a class="btn solid" href="/#products">Shop online</a></p>
       </div>
       <div>
         <h3 class="subh">Local shops</h3>
@@ -311,7 +344,7 @@ def build_home():
           <p>We believe nature provides the best path to plant health, helping gardeners of all levels cultivate a vibrant, sustainable future, one garden at a time.</p>
           <ul class="pledges">
             <li>100% natural, no synthetic chemicals</li>
-            <li>Lower cost per application than leading brands</li>
+            <li>Low usage rates: 1 tablespoon per gallon for Level Up and Flower Power</li>
             <li>Fully recyclable, reusable bags</li>
             <li>Used by home gardeners and commercial farmers</li>
           </ul>
@@ -363,8 +396,11 @@ def build_home():
 def build_product(p):
     path = f"/products/{p['slug']}/"
     others = [q for q in PRODUCTS if q["slug"] != p["slug"]]
+    rows = price_rows(p["slug"])
+    offers = ({"@type": "AggregateOffer", "priceCurrency": "CAD", "lowPrice": f"{min(x[1] for x in rows):.2f}",
+               "highPrice": f"{max(x[1] for x in rows):.2f}", "offerCount": len(rows), "url": abs_url(path)} if rows else None)
     ld = [org_ld(),
-          {"@context": "https://schema.org", "@type": "Product",
+          {"@context": "https://schema.org", "@type": "Product", **({"offers": offers} if offers else {}),
            "name": f"{plain_name(p)} {npk_dash(p)}", "description": p["meta"], "url": abs_url(path),
            "image": [abs_url(f"/img/{p['f']}-front.webp"), abs_url(f"/img/{p['f']}-back.webp")],
            "brand": {"@type": "Brand", "name": SITE["name"]}, "category": "Organic fertilizer",
@@ -402,6 +438,7 @@ def build_product(p):
           <h1 class="nm">{name_html(p)}</h1>
           <span class="pq">Premium quality</span>
           <div class="npkline"><span class="big">{esc(npk_text(p))}</span><span class="net">Sizes: {esc(sizes_text(p))}</span></div>
+          {price_line(p)}
           {('<p class="store">' + esc(p['size_note']) + '</p>') if p.get('size_note') else ''}
           <div class="desc">{desc}</div>
           <ul class="benefits">{ben}</ul>
@@ -466,7 +503,7 @@ def build_calculator():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Soil amendment calculator", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=8">', '<link rel="stylesheet" href="/assets/style.css?v=8">\n<link rel="stylesheet" href="/assets/calculator.css">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=9">', '<link rel="stylesheet" href="/assets/style.css?v=9">\n<link rel="stylesheet" href="/assets/calculator.css">')
     out += header()
     body = (ROOT / "data/calculator-body.inc").read_text()
     out += f"""  <section class="sec"><div class="wrap">
@@ -493,7 +530,7 @@ def build_drmario():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Plant Dr. Mario", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=8">', '<link rel="stylesheet" href="/assets/style.css?v=8">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=9">', '<link rel="stylesheet" href="/assets/style.css?v=9">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Plant</b> <i>Dr. Mario</i></h1>
@@ -561,7 +598,7 @@ def build_order_complete():
 
 
 def build_admin():
-    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=8">', '<link rel="stylesheet" href="/assets/style.css?v=8">\n<link rel="stylesheet" href="/assets/admin.css?v=2">')
+    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=9">', '<link rel="stylesheet" href="/assets/style.css?v=9">\n<link rel="stylesheet" href="/assets/admin.css?v=2">')
     out = out.replace('<meta name="robots" content="noindex, nofollow">\n', '').replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"', 1) if 'noindex' not in out else out
     out += header()
     out += """  <section class="sec"><div class="wrap">
@@ -592,7 +629,8 @@ def build_policy():
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Shipping</b> <i>and returns</i></h1>
     <h2>Shipping</h2>
     <ul>
-      <li>We ship across Canada from Mississauga, Ontario.</li>
+      <li>We ship across Canada from Mississauga, Ontario. We do not ship outside Canada at this time.</li>
+      <li>Orders of $120 or more include a free 2 lb bag of Level Up 3-3-3 or Flower Power 2-6-4. You choose which one in your cart.</li>
       <li>Shipping is a flat rate based on the total weight of your order. You see the exact amount in your cart before you pay, and again at checkout.</li>
       <li>Sales tax is worked out at checkout from your shipping address.</li>
       <li>Delivery time depends on the carrier and where you live. If you want to know where your order is, email or call us and we will help.</li>

@@ -70,6 +70,19 @@
     });
   }
 
+  // ---- live "From $X" on tiles and the product page (static text is the fallback)
+  function lowest(P){var m=null;Object.keys(P.sizes).forEach(function(k){var s=P.sizes[k];if(valid(s.price)&&!s.soldout){var v=(s.sale_price!=null&&s.sale_price<s.price)?s.sale_price:s.price;if(m===null||v<m)m=v;}});return m;}
+  if(document.querySelector('.pick[data-slug] .from,#price-from')) shop().then(function(){
+    Array.prototype.forEach.call(document.querySelectorAll('.pick[data-slug]'),function(a){
+      var P=PRICES[a.getAttribute('data-slug')]; var f=a.querySelector('.from'); if(!P||!f) return;
+      var m=lowest(P); if(m!==null) f.textContent='From '+money(m);
+    });
+    var pf=$('price-from'); if(pf){var P=PRICES[pf.getAttribute('data-slug')]; if(P){
+      var m=lowest(P), parts=[]; Object.keys(P.sizes).forEach(function(k){var s=P.sizes[k];if(valid(s.price)&&!s.soldout){var v=(s.sale_price!=null&&s.sale_price<s.price)?s.sale_price:s.price;parts.push(s.label.split(' (')[0]+' '+money(v));}});
+      if(m!==null){pf.textContent='';var st=el('strong',null,'From '+money(m)+' CAD');pf.appendChild(st);pf.appendChild(document.createTextNode(' '));pf.appendChild(el('span',null,parts.join(' \u00b7 ')));}
+    }}
+  }).catch(function(){});
+
   // ---- "Sale" tags on product tiles (home page and product pages)
   var tiles=document.querySelectorAll('.pick[data-slug]');
   if(tiles.length) shop().then(function(){
