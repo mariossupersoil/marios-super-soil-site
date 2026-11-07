@@ -576,7 +576,7 @@ def build_cart():
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Your</b> <i>cart</i></h1>
     <div id="cart-root" class="cartbox"><p class="lede">Loading your cart...</p></div>
-    <p class="lede" style="margin-top:24px">Prices are in Canadian dollars. Shipping and tax are shown at checkout. Payment is handled securely by Stripe; we never see your card number. See our <a href="/shipping-returns/">shipping and returns</a> policy.</p>
+    <p class="lede" style="margin-top:24px">Prices are in Canadian dollars. Shipping and tax are shown at checkout. Delivery takes 2 to 10 business days. Payment is handled securely by Stripe; we never see your card number. See our <a href="/shipping-returns/">shipping and returns</a> policy.</p>
   </div></section>
 """
     out += footer()
@@ -633,7 +633,7 @@ def build_policy():
       <li>Orders of $120 or more include a free 2 lb bag of Level Up 3-3-3 or Flower Power 2-6-4. You choose which one in your cart.</li>
       <li>Shipping is a flat rate based on the total weight of your order. You see the exact amount in your cart before you pay, and again at checkout.</li>
       <li>Sales tax is worked out at checkout from your shipping address.</li>
-      <li>Delivery time depends on the carrier and where you live. If you want to know where your order is, email or call us and we will help.</li>
+      <li>Most orders arrive in 2 to 3 business days. Please allow 2 to 10 business days, because delivery depends on the carrier, the weather and where you live. If you want to know where your order is, email or call us and we will help.</li>
       <li>If an order is too heavy for online checkout, email us and we will arrange the shipping with you.</li>
     </ul>
     <h2>Returns and refunds</h2>
