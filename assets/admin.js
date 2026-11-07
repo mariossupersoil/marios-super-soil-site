@@ -192,6 +192,7 @@
 
   function boot(){
     call('state').then(function(j){
+      if(!j||j.auth!==true||!j.catalog){login();return;}
       S=j; csrf=j.csrf; root.innerHTML='';
       var top=el('p'); var out=el('button','btn','Log out'); out.type='button'; out.addEventListener('click',function(){call('logout',{}).then(function(){location.reload();});}); top.appendChild(out); root.appendChild(top);
       root.appendChild(productsCard()); root.appendChild(salesCard()); root.appendChild(shippingCard()); root.appendChild(discountsCard()); root.appendChild(settingsCard()); root.appendChild(reviewsCard()); root.appendChild(leadsCard()); root.appendChild(emailCard());
