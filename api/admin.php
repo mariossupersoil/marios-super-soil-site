@@ -34,7 +34,7 @@ if ($action === 'logout') { session_destroy(); out_json(['ok' => true]); }
 
 if ($action === 'state') {
     $st = store();
-    out_json(['auth' => true, 'csrf' => $_SESSION['csrf'], 'catalog' => catalog(true), 'tiers' => tiers(), 'discounts' => $st['discounts'] ?? []]);
+    out_json(['auth' => true, 'csrf' => $_SESSION['csrf'], 'catalog' => catalog(true), 'tiers' => tiers(), 'discounts' => $st['discounts'] ?? [], 'sales' => $st['sales'] ?? []]);
 }
 
 // everything below changes data: POST + CSRF token
@@ -87,5 +87,22 @@ if ($action === 'save_discounts') {
             'uses' => (int)($old[$code]['uses'] ?? 0), 'active' => !empty($r['active']), 'note' => mb_substr((string)($r['note'] ?? ''), 0, 120)];
     }
     store_update(function ($st) use ($new) { $st['discounts'] = $new; return $st; }) ? out_json(['ok' => true, 'discounts' => $new]) : fail(500, 'Could not save.');
+}
+if ($action === 'save_sales') {
+    $base = jread(__DIR__ . '/prices.json')['products'] ?? [];
+    $out = [];
+    foreach (is_array($in['sales'] ?? null) ? $in['sales'] : [] as $r) {
+        $prod = (string)($r['product'] ?? 'all'); if ($prod !== 'all' && !isset($base[$prod])) fail(400, 'Unknown product in a sale.');
+        $size = (string)($r['size'] ?? 'all');
+        if ($size !== 'all') { $ok = false; foreach ($base as $b) { if (isset($b['sizes'][$size])) $ok = true; } if (!$ok) fail(400, 'Unknown size in a sale.'); }
+        $type = ($r['type'] ?? '') === 'fixed' ? 'fixed' : 'percent';
+        $val = (float)($r['value'] ?? 0);
+        if ($val <= 0 || ($type === 'percent' && $val > 90)) fail(400, 'Each sale needs an amount above 0 (percent sales: up to 90).');
+        foreach (['starts', 'ends'] as $dk) { $dv = (string)($r[$dk] ?? ''); if ($dv !== '' && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $dv)) fail(400, 'A sale has a bad date.'); }
+        if (!empty($r['starts']) && !empty($r['ends']) && $r['ends'] < $r['starts']) fail(400, 'A sale ends before it starts.');
+        $out[] = ['label' => mb_substr(trim((string)($r['label'] ?? '')), 0, 40), 'product' => $prod, 'size' => $size, 'type' => $type, 'value' => $val,
+            'starts' => (string)($r['starts'] ?? ''), 'ends' => (string)($r['ends'] ?? ''), 'active' => !empty($r['active'])];
+    }
+    store_update(function ($st) use ($out) { $st['sales'] = $out; return $st; }) ? out_json(['ok' => true]) : fail(500, 'Could not save.');
 }
 fail(404, 'Unknown action.');

@@ -30,3 +30,4 @@ Do not point the target at the folder of the live mariossupersoil.ca site until 
 - Log in with `admin_password` from `api/config.php` (at least 10 characters). Edit prices, hide sizes or products, shipping rates and discount codes. Changes are saved on the server in `api/store.json` (not in GitHub, so deploys never overwrite them) and apply to the shop immediately.
 - Once a price is saved in the admin it wins over `api/prices.json`. Use the admin for prices from now on.
 - Discount codes are checked on the server and applied through Stripe coupons. A code's "Used" count goes up when a paid order lands on the thank-you page.
+- Sales (admin): percent or dollar-off prices for one product, one size or everything, with optional start and end dates. The shop shows the old price crossed out, the sale price and a Sale tag, and checkout charges the sale price. Stored in `api/store.json`.

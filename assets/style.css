@@ -251,3 +251,8 @@ a.pick{display:flex}
 .codebox .btn{min-height:48px;display:inline-flex;align-items:center}
 .codemsg{margin:0 0 8px;min-height:1.2em;color:var(--leaf)}
 .codemsg.err{color:#ffb4a8}
+.wasprice{color:var(--muted);font:400 22px/1 var(--text);margin-right:6px}
+.salebadge{display:inline-block;background:#c0392b;color:#fff;font:600 13px/1 var(--text);letter-spacing:.1em;text-transform:uppercase;padding:6px 9px;border-radius:6px;vertical-align:middle;margin-left:8px}
+.salebadge.tile{position:absolute;top:8px;left:8px;margin:0}
+.salenote{display:block;font:400 15px/1.3 var(--text);color:var(--accent);letter-spacing:.04em;margin-top:6px}
+.cartsale{color:var(--accent)}

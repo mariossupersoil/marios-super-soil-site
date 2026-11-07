@@ -30,9 +30,29 @@ function store_update(callable $fn): bool {
     return $ok;
 }
 
+function today_toronto(): string { return (new DateTime('now', new DateTimeZone('America/Toronto')))->format('Y-m-d'); }
+
+/** Sales running today that apply to this product+size. Returns the best (lowest resulting price) or null. */
+function best_sale(array $sales, string $slug, string $key, float $price): ?array {
+    $today = today_toronto(); $best = null;
+    foreach ($sales as $s) {
+        if (empty($s['active'])) continue;
+        if (($s['product'] ?? 'all') !== 'all' && $s['product'] !== $slug) continue;
+        if (($s['size'] ?? 'all') !== 'all' && $s['size'] !== $key) continue;
+        if (!empty($s['starts']) && $today < $s['starts']) continue;
+        if (!empty($s['ends']) && $today > $s['ends']) continue;
+        $v = (float)($s['value'] ?? 0); if ($v <= 0) continue;
+        $np = ($s['type'] ?? '') === 'fixed' ? $price - $v : $price * (1 - min($v, 99) / 100);
+        $np = round(max(0.5, $np), 2);
+        if ($np >= $price) continue;
+        if ($best === null || $np < $best['price']) $best = ['price' => $np, 'label' => (string)($s['label'] ?? ''), 'ends' => (string)($s['ends'] ?? '')];
+    }
+    return $best;
+}
+
 function catalog(bool $admin = false): array {
     $base = jread(__DIR__ . '/prices.json')['products'] ?? [];
-    $st = store(); $out = [];
+    $st = store(); $out = []; $sales = $st['sales'] ?? [];
     foreach ($base as $slug => $p) {
         $sizes = [];
         foreach ($p['sizes'] as $k => $s) {
@@ -41,7 +61,8 @@ function catalog(bool $admin = false): array {
             $price = (is_numeric($price) && $price > 0) ? round((float)$price, 2) : null;
             $avail = !in_array($k, $st['unavailable_sizes'][$slug] ?? [], true);
             if (!$admin && !$avail) continue;
-            $sizes[$k] = ['label' => $s['label'], 'price' => $price, 'weight_kg' => (float)($s['weight_kg'] ?? 0), 'available' => $avail];
+            $sale = $price !== null ? best_sale($sales, $slug, $k, $price) : null;
+            $sizes[$k] = ['label' => $s['label'], 'price' => $price, 'sale_price' => $sale['price'] ?? null, 'sale_label' => $sale['label'] ?? '', 'sale_ends' => $sale['ends'] ?? '', 'weight_kg' => (float)($s['weight_kg'] ?? 0), 'available' => $avail];
         }
         $out[$slug] = ['name' => $p['name'], 'img' => $p['img'], 'enabled' => !in_array($slug, $st['disabled_products'] ?? [], true), 'sizes' => $sizes];
     }
@@ -72,7 +93,7 @@ function price_cart(array $items, array $cat): array {
         if (!$p || !$s || !$p['enabled']) fail(400, 'An item in your cart is no longer available. Please refresh the page.');
         if ($s['price'] === null) fail(400, $p['name'] . ' (' . $s['label'] . ') does not have a price yet.');
         if ($qty < 1 || $qty > 20) fail(400, 'Quantity must be between 1 and 20.');
-        $cents = (int)round($s['price'] * 100);
+        $cents = (int)round(($s['sale_price'] ?? $s['price']) * 100);
         $lines[] = ['name' => $p['name'] . ' - ' . $s['label'], 'unit_cents' => $cents, 'qty' => $qty];
         $sub += $cents * $qty; $kg += $s['weight_kg'] * $qty;
     }

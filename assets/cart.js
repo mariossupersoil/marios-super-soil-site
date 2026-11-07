@@ -16,6 +16,10 @@
   }
   function find(slug,size){var P=PRICES&&PRICES[slug];return P&&P.enabled&&P.sizes&&P.sizes[size]?{p:P,s:P.sizes[size]}:null;}
   function valid(p){return typeof p==='number'&&p>0;}
+  function unit(s){return valid(s.sale_price)?s.sale_price:s.price;}
+  function onSale(s){return valid(s.sale_price)&&valid(s.price)&&s.sale_price<s.price;}
+  function fmtEnd(d){if(!d)return '';var p=d.split('-');return new Date(+p[0],+p[1]-1,+p[2]).toLocaleDateString('en-CA',{month:'long',day:'numeric'});}
+  function saleNote(s){return (s.sale_label||'Sale')+(s.sale_ends?' - ends '+fmtEnd(s.sale_ends):'');}
   function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}
   function post(url,body){
     return fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
@@ -31,7 +35,12 @@
       var P=PRICES&&PRICES[slug];
       if(P&&!P.enabled){pr.textContent='Currently unavailable';add.disabled=true;return;}
       var f=find(slug,sel.value), ok=f&&valid(f.s.price);
-      pr.textContent=ok?money(f.s.price):(f?'Price coming soon':'');
+      pr.textContent='';
+      if(ok&&onSale(f.s)){
+        var old=el('s','wasprice',money(f.s.price)); pr.appendChild(old); pr.appendChild(document.createTextNode(' '+money(f.s.sale_price)+' '));
+        pr.appendChild(el('span','salebadge','Save '+Math.round((1-f.s.sale_price/f.s.price)*100)+'%'));
+        var n=el('span','salenote',saleNote(f.s)); pr.appendChild(n);
+      } else pr.textContent=ok?money(f.s.price):(f?'Price coming soon':'');
       add.disabled=!ok; msg.textContent='';
     };
     add.disabled=true;
@@ -40,7 +49,7 @@
       Array.prototype.slice.call(sel.options).forEach(function(o){
         var s=P&&P.sizes&&P.sizes[o.value];
         if(!s){o.remove();return;}
-        if(valid(s.price))o.textContent=s.label+' — '+money(s.price);
+        if(valid(s.price))o.textContent=s.label+' — '+(onSale(s)?money(s.sale_price)+' (was '+money(s.price)+')':money(s.price));
       });
       update();
     }).catch(function(){pr.textContent='Prices are unavailable right now.';add.disabled=true;});
@@ -56,6 +65,16 @@
     });
   }
 
+  // ---- "Sale" tags on product tiles (home page and product pages)
+  var tiles=document.querySelectorAll('.pick[data-slug]');
+  if(tiles.length) shop().then(function(){
+    Array.prototype.forEach.call(tiles,function(a){
+      var P=PRICES[a.getAttribute('data-slug')]; if(!P||!P.enabled) return;
+      var any=false; Object.keys(P.sizes).forEach(function(k){if(onSale(P.sizes[k]))any=true;});
+      if(any){a.style.position='relative';a.appendChild(el('span','salebadge tile','Sale'));}
+    });
+  }).catch(function(){});
+
   // ---- cart page
   var root=$('cart-root');
   function tierFor(kg){var t=null;(SHIP||[]).forEach(function(x){if(t===null&&kg<=x.max_kg)t=x;});return t;}
@@ -70,9 +89,10 @@
     }
     var list=el('ul','cartlist'), total=0, missing=false, kg=0;
     c.forEach(function(i,idx){
-      var f=find(i.slug,i.size), pr=f.s.price, li=el('li','cartrow');
+      var f=find(i.slug,i.size), pr=unit(f.s), li=el('li','cartrow');
       var im=el('img'); im.src=f.p.img; im.alt=''; im.width=64; im.height=94; li.appendChild(im);
       var mid=el('div','cartinfo'); mid.appendChild(el('strong',null,f.p.name)); mid.appendChild(el('span',null,f.s.label));
+      if(onSale(f.s)) mid.appendChild(el('span','cartsale','On sale: was '+money(f.s.price)+' each'));
       if(!valid(pr)){missing=true;mid.appendChild(el('span','cartwarn','No price yet. Remove this item to check out.'));}
       li.appendChild(mid);
       var q=el('div','cartqty'), lab=el('label',null,'Qty'); lab.className='sr'; lab.htmlFor='q'+idx;

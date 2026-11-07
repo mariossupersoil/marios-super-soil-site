@@ -110,7 +110,7 @@ def footer():
   </div>
 </footer>
 <script src="/assets/app.js" defer></script>
-<script src="/assets/cart.js?v=1" defer></script>
+<script src="/assets/cart.js?v=2" defer></script>
 </body>
 </html>
 """
@@ -153,7 +153,7 @@ def sizes_text(p):
 
 def picker_item(p, eager=False):
     load = "" if eager else ' loading="lazy"'
-    return (f'<li><a class="pick" href="/products/{p["slug"]}/" style="--accent:{p["accent"]}">'
+    return (f'<li><a class="pick" data-slug="{p["slug"]}" href="/products/{p["slug"]}/" style="--accent:{p["accent"]}">'
             f'<img src="/img/{p["f"]}-front.webp" width="170" height="250"{load} alt="{esc(plain_name(p))} {esc(npk_dash(p))} organic fertilizer stand-up pouch">'
             f'<span class="nm">{name_html(p)}</span><span class="npk">{esc(npk_text(p))}</span></a></li>')
 
@@ -528,7 +528,7 @@ def build_admin():
     <h1 class="nm" style="font-size:clamp(36px,6vw,72px)"><b>Owner</b> <i>admin</i></h1>
     <div class="ad" id="ad-root"><p class="lede">Loading...</p></div>
   </div></section>
-<script src="/assets/admin.js?v=1" defer></script>
+<script src="/assets/admin.js?v=2" defer></script>
 """
     out += footer()
     return out

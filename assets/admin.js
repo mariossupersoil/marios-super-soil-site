@@ -84,11 +84,34 @@
     return card;
   }
 
+  function salesCard(){
+    var card=el('div','ad-card'); card.appendChild(el('h2',null,'Sales'));
+    card.appendChild(el('p','hint','Put products on sale. The store shows the old price crossed out, the sale price and a Sale tag, and checkout charges the sale price. Leave the dates empty to run it until you turn it off. If two sales match, the lower price is used.'));
+    var list=el('div','codes'), sizeNames={};
+    Object.keys(S.catalog).forEach(function(s){Object.keys(S.catalog[s].sizes).forEach(function(k){sizeNames[k]=S.catalog[s].sizes[k].label.split('(')[0].trim();});});
+    function opt(sel,v,l){var o=el('option',null,l);o.value=v;sel.appendChild(o);}
+    function addRow(d){
+      d=d||{label:'',product:'all',size:'all',type:'percent',value:'',starts:'',ends:'',active:true};
+      var r=el('div','row'), lab=inp('text',d.label,{maxlength:40,placeholder:'Black Friday'}), prod=el('select'), size=el('select'), type=el('select'), val=inp('number',d.value,{min:0,step:'0.01',inputmode:'decimal'});
+      opt(prod,'all','All products'); Object.keys(S.catalog).forEach(function(s){opt(prod,s,S.catalog[s].name);}); prod.value=d.product;
+      opt(size,'all','All sizes'); Object.keys(sizeNames).forEach(function(k){opt(size,k,sizeNames[k]);}); size.value=d.size;
+      opt(type,'percent','Percent off (%)'); opt(type,'fixed','Dollars off ($)'); type.value=d.type;
+      var st=inp('date',d.starts||''), en=inp('date',d.ends||''), act=chk('On',d.active), x=el('button','x','Delete'); x.type='button'; x.addEventListener('click',function(){r.remove();});
+      r.appendChild(field('Name (optional)',lab)); r.appendChild(field('Product',prod)); r.appendChild(field('Size',size)); r.appendChild(field('Type',type)); r.appendChild(field('Amount',val)); r.appendChild(field('Starts',st)); r.appendChild(field('Ends',en)); r.appendChild(act); r.appendChild(x);
+      r.f={lab:lab,prod:prod,size:size,type:type,val:val,st:st,en:en,act:act}; list.appendChild(r);
+    }
+    (S.sales||[]).forEach(addRow); card.appendChild(list);
+    var add=el('button','btn','Add a sale'); add.type='button'; add.addEventListener('click',function(){addRow(null);});
+    var b=el('button','btn solid','Save sales'); b.type='button'; var m=msgBox(), bar=el('div','bar'); bar.appendChild(add); bar.appendChild(b); bar.appendChild(m); card.appendChild(bar);
+    saver(b,m,function(){return call('save_sales',{sales:Array.prototype.map.call(list.children,function(r){var f=r.f;return{label:f.lab.value,product:f.prod.value,size:f.size.value,type:f.type.value,value:f.val.value,starts:f.st.value,ends:f.en.value,active:f.act.cb.checked};})});});
+    return card;
+  }
+
   function boot(){
     call('state').then(function(j){
       S=j; csrf=j.csrf; root.innerHTML='';
       var top=el('p'); var out=el('button','btn','Log out'); out.type='button'; out.addEventListener('click',function(){call('logout',{}).then(function(){location.reload();});}); top.appendChild(out); root.appendChild(top);
-      root.appendChild(productsCard()); root.appendChild(shippingCard()); root.appendChild(discountsCard());
+      root.appendChild(productsCard()); root.appendChild(salesCard()); root.appendChild(shippingCard()); root.appendChild(discountsCard());
     }).catch(function(e){ if(e.status===401) login(); else if(e.status===503){root.innerHTML='';root.appendChild(el('p','lede',e.message));} else login(e.message); });
   }
   boot();
