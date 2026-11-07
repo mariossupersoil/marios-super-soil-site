@@ -617,9 +617,16 @@ def build_admin():
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(36px,6vw,72px)"><b>Owner</b> <i>admin</i></h1>
-    <div class="ad" id="ad-root"><p class="lede">Loading...</p></div>
+    <div class="ad" id="ad-root"><p class="lede">Loading...</p>
+    <form id="ad-static" style="display:none;max-width:420px;padding:22px;border:2px solid #d8c98b;border-radius:14px;background:#1b1b1d;color:#fff">
+      <h2 style="margin:0 0 12px;font:700 28px sans-serif;color:#fff">Owner login</h2>
+      <label for="ad-pw" style="display:block;margin-bottom:6px;color:#fff;font:600 16px sans-serif">Password</label>
+      <input id="ad-pw" type="password" autocomplete="current-password" placeholder="Type your password here" style="display:block;width:100%;box-sizing:border-box;padding:12px;font-size:18px;background:#fff;color:#000;border:2px solid #d8c98b;border-radius:8px">
+      <button id="ad-go" type="submit" style="margin-top:14px;padding:12px 22px;font-size:18px;font-weight:700;background:#7fc66a;color:#000;border:0;border-radius:6px;cursor:pointer">Log in</button>
+      <p id="ad-msg" style="color:#ffb4a8;margin:10px 0 0;font:16px sans-serif"></p>
+    </form></div>
   </div></section>
-<script src="/assets/admin.js?v=9" defer></script>
+<script src="/assets/admin.js?v=10" defer></script>
 """
     out += footer()
     return out

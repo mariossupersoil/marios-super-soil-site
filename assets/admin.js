@@ -14,15 +14,21 @@
   function flash(m,ok,text){m.className='msg '+(ok?'ok':'err');m.textContent=text;}
   function saver(btn,m,fn){btn.addEventListener('click',function(){btn.disabled=true;flash(m,true,'Saving...');fn().then(function(){flash(m,true,'Saved. The shop uses it right away.');}).catch(function(e){if(e.status===401){location.reload();return;}flash(m,false,e.message);}).then(function(){btn.disabled=false;});});}
 
+  var sf=document.getElementById('ad-static'), wired=false;
   function login(note){
-    root.innerHTML='';
-    var c=el('div','ad-card'); c.style.maxWidth='420px';
-    c.appendChild(el('h2',null,'Owner login'));
-    var p=inp('password','',{autocomplete:'current-password',placeholder:'Type your password here'}); c.appendChild(field('Password',p));
-    var m=msgBox(); if(note)flash(m,false,note);
-    var b=el('button','btn solid','Log in'); b.type='button'; var bar=el('div','bar'); bar.appendChild(b); c.appendChild(bar); c.appendChild(m); root.appendChild(c);
-    function go(){b.disabled=true;call('login',{password:p.value}).then(boot).catch(function(e){flash(m,false,e.message);b.disabled=false;});}
-    b.addEventListener('click',go); p.addEventListener('keydown',function(e){if(e.key==='Enter')go();}); p.focus();
+    // the login form is plain HTML in the page (always visible); this just shows it and wires the button
+    if(!sf){root.innerHTML='';root.appendChild(el('p','lede','The login form is missing. Please send this to Claude.'));return;}
+    root.innerHTML=''; sf.style.display='block'; root.appendChild(sf);
+    var pw=document.getElementById('ad-pw'), btn=document.getElementById('ad-go'), msg=document.getElementById('ad-msg');
+    msg.textContent=note||'';
+    if(!wired){
+      wired=true;
+      sf.addEventListener('submit',function(e){
+        e.preventDefault(); btn.disabled=true; msg.textContent='';
+        call('login',{password:pw.value}).then(function(){sf.style.display='none';boot();}).catch(function(er){msg.textContent=er.message;}).then(function(){btn.disabled=false;});
+      });
+    }
+    pw.focus();
   }
 
   function productsCard(){
