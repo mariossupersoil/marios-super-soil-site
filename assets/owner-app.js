@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  var API='/api/admin.php', root=document.getElementById('ad-root'), csrf='', S=null;
+  var API='/api/admin.php', root=document.getElementById('own-root'), csrf='', S=null;
   function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}
   function call(action,body){
     var o={method:body?'POST':'GET',headers:{'Content-Type':'application/json','X-CSRF':csrf},credentials:'same-origin'};
@@ -14,12 +14,12 @@
   function flash(m,ok,text){m.className='msg '+(ok?'ok':'err');m.textContent=text;}
   function saver(btn,m,fn){btn.addEventListener('click',function(){btn.disabled=true;flash(m,true,'Saving...');fn().then(function(){flash(m,true,'Saved. The shop uses it right away.');}).catch(function(e){if(e.status===401){location.reload();return;}flash(m,false,e.message);}).then(function(){btn.disabled=false;});});}
 
-  var sf=document.getElementById('ad-static'), wired=false;
+  var sf=document.getElementById('own-static'), wired=false;
   function login(note){
     // the login form is plain HTML in the page (always visible); this just shows it and wires the button
     if(!sf){root.innerHTML='';root.appendChild(el('p','lede','The login form is missing. Please send this to Claude.'));return;}
     root.innerHTML=''; sf.style.display='block'; root.appendChild(sf);
-    var pw=document.getElementById('ad-pw'), btn=document.getElementById('ad-go'), msg=document.getElementById('ad-msg');
+    var pw=document.getElementById('own-pw'), btn=document.getElementById('own-go'), msg=document.getElementById('own-msg');
     msg.textContent=note||'';
     if(!wired){
       wired=true;
@@ -32,7 +32,7 @@
   }
 
   function productsCard(){
-    var card=el('div','ad-card'); card.appendChild(el('h2',null,'Products and prices'));
+    var card=el('div','own-card'); card.appendChild(el('h2',null,'Products and prices'));
     card.appendChild(el('p','hint','Prices are in CAD before tax and shipping. Leave a price blank if it is not for sale yet. Untick "Sell this size" to hide a size, or "Show product" to stop selling a whole product. "In stock" is how many you have: it counts down when orders are paid and shows Out of stock at 0. Leave it blank to not track a size. Type a new number to restock.'));
     var rows={};
     Object.keys(S.catalog).forEach(function(slug){
@@ -57,7 +57,7 @@
   }
 
   function shippingCard(){
-    var card=el('div','ad-card'); card.appendChild(el('h2',null,'Shipping rates'));
+    var card=el('div','own-card'); card.appendChild(el('h2',null,'Shipping rates'));
     card.appendChild(el('p','hint','Flat rate by total order weight. The first row whose weight is at or above the order weight applies. Orders heavier than the last row cannot check out online.'));
     var list=el('div','tiers');
     function addRow(t){
@@ -73,7 +73,7 @@
   }
 
   function discountsCard(){
-    var card=el('div','ad-card'); card.appendChild(el('h2',null,'Discount codes'));
+    var card=el('div','own-card'); card.appendChild(el('h2',null,'Discount codes'));
     card.appendChild(el('p','hint','Customers type the code in their cart. A percent code takes that % off the products. A dollar code takes that amount off the products. Neither changes shipping unless "Free shipping" is ticked. The "Used" count goes up when a paid order uses the code.'));
     var list=el('div','codes');
     function addRow(d){
@@ -94,7 +94,7 @@
   }
 
   function salesCard(){
-    var card=el('div','ad-card'); card.appendChild(el('h2',null,'Sales'));
+    var card=el('div','own-card'); card.appendChild(el('h2',null,'Sales'));
     card.appendChild(el('p','hint','Put products on sale. The store shows the old price crossed out, the sale price and a Sale tag, and checkout charges the sale price. Leave the dates empty to run it until you turn it off. If two sales match, the lower price is used.'));
     var list=el('div','codes'), sizeNames={};
     Object.keys(S.catalog).forEach(function(s){Object.keys(S.catalog[s].sizes).forEach(function(k){sizeNames[k]=S.catalog[s].sizes[k].label.split('(')[0].trim();});});
@@ -117,7 +117,7 @@
   }
 
   function settingsCard(){
-    var card=el('div','ad-card'); card.appendChild(el('h2',null,'Free gift and reminders'));
+    var card=el('div','own-card'); card.appendChild(el('h2',null,'Free gift and reminders'));
     var g=S.settings.gift, r=S.settings.reminders;
     card.appendChild(el('p','hint','Free gift: orders at or above the amount (before tax, shipping and discount codes, after sales) get the gift added automatically at checkout. The customer picks one of the gift choices at checkout, and your order email and the Stripe order show which one to pack. Gift stock counts all gifts together and is not taken from product stock.'));
     var row=el('div','row'); row.style.gridTemplateColumns='repeat(auto-fill,minmax(180px,1fr))';
@@ -133,7 +133,7 @@
   }
 
   function reviewsCard(){
-    var card=el('div','ad-card'); card.appendChild(el('h2',null,'Customer reviews'));
+    var card=el('div','own-card'); card.appendChild(el('h2',null,'Customer reviews'));
     card.appendChild(el('p','hint','New reviews wait here until you approve them. Only approve real reviews from real customers. You can also add a review a customer sent you by email, text or social media.'));
     var names={}; Object.keys(S.catalog).forEach(function(s){names[s]=S.catalog[s].name;});
     var list=el('div'); var m=msgBox();
@@ -165,7 +165,7 @@
   }
 
   function leadsCard(){
-    var card=el('div','ad-card'); card.appendChild(el('h2',null,'Wholesale applications'));
+    var card=el('div','own-card'); card.appendChild(el('h2',null,'Wholesale applications'));
     var list=el('div'), m=msgBox();
     function act(id,op){call('lead_action',{id:id,op:op}).then(function(){return call('state');}).then(function(j){S.leads=j.leads;draw();}).catch(function(e){flash(m,false,e.message);});}
     function draw(){
@@ -185,7 +185,7 @@
   }
 
   function emailCard(){
-    var card=el('div','ad-card'); card.appendChild(el('h2',null,'Email list, email test and backup'));
+    var card=el('div','own-card'); card.appendChild(el('h2',null,'Email list, email test and backup'));
     card.appendChild(el('p','hint','Pop-up signups: '+S.subscribers+'. Customers with an email on a paid order: '+S.customers+'. The download has both, with unsubscribed people marked. Use it in an email tool such as Mailchimp to send newsletters.'));
     var bar=el('div','bar'); var dl=el('a','btn','Download email list (CSV)'); dl.href='/api/admin.php?action=export_subscribers'; bar.appendChild(dl);
     var t=el('button','btn','Send me a test email'); t.type='button'; var m=msgBox();
@@ -211,6 +211,6 @@
   function showFail(msg){root.innerHTML='';root.appendChild(el('p','lede','The admin page could not start: '+msg+' Please send this message to Claude.'));}
   window.addEventListener('error',function(e){showFail((e&&e.message)||'script error');});
   window.addEventListener('unhandledrejection',function(e){showFail((e&&e.reason&&e.reason.message)||'request failed');});
-  (function(){var v=document.getElementById('ad-ver'); if(v) v.textContent+=' \u00b7 script 12 running';})();
+  (function(){var v=document.getElementById('own-ver'); if(v) v.textContent+=' \u00b7 script 13 running';})();
   try{boot();}catch(e){showFail(e.message);}
 })();

@@ -612,22 +612,22 @@ def build_order_complete():
 
 
 def build_admin():
-    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=10">', '<link rel="stylesheet" href="/assets/style.css?v=10">\n<link rel="stylesheet" href="/assets/admin.css?v=3">')
+    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=10">', '<link rel="stylesheet" href="/assets/style.css?v=10">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
     out = out.replace('<meta name="robots" content="noindex, nofollow">\n', '').replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"', 1) if 'noindex' not in out else out
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(36px,6vw,72px)"><b>Owner</b> <i>admin</i></h1>
-    <p id="ad-ver" style="color:#a7a7a3;font:14px sans-serif;margin:6px 0">Admin page build 12</p>
-    <div class="ad" id="ad-root"><p class="lede">Loading...</p>
-    <form id="ad-static" style="display:none;max-width:420px;padding:22px;border:2px solid #d8c98b;border-radius:14px;background:#1b1b1d;color:#fff">
+    <p id="own-ver" style="color:#a7a7a3;font:14px sans-serif;margin:6px 0">Admin page build 13</p>
+    <div class="own" id="own-root"><p class="lede">Loading...</p>
+    <form id="own-static" style="display:none;max-width:420px;padding:22px;border:2px solid #d8c98b;border-radius:14px;background:#1b1b1d;color:#fff">
       <h2 style="margin:0 0 12px;font:700 28px sans-serif;color:#fff">Owner login</h2>
-      <label for="ad-pw" style="display:block;margin-bottom:6px;color:#fff;font:600 16px sans-serif">Password</label>
-      <input id="ad-pw" type="password" autocomplete="current-password" placeholder="Type your password here" style="display:block;width:100%;box-sizing:border-box;padding:12px;font-size:18px;background:#fff;color:#000;border:2px solid #d8c98b;border-radius:8px">
-      <button id="ad-go" type="submit" style="margin-top:14px;padding:12px 22px;font-size:18px;font-weight:700;background:#7fc66a;color:#000;border:0;border-radius:6px;cursor:pointer">Log in</button>
-      <p id="ad-msg" style="color:#ffb4a8;margin:10px 0 0;font:16px sans-serif"></p>
+      <label for="own-pw" style="display:block;margin-bottom:6px;color:#fff;font:600 16px sans-serif">Password</label>
+      <input id="own-pw" type="password" autocomplete="current-password" placeholder="Type your password here" style="display:block;width:100%;box-sizing:border-box;padding:12px;font-size:18px;background:#fff;color:#000;border:2px solid #d8c98b;border-radius:8px">
+      <button id="own-go" type="submit" style="margin-top:14px;padding:12px 22px;font-size:18px;font-weight:700;background:#7fc66a;color:#000;border:0;border-radius:6px;cursor:pointer">Log in</button>
+      <p id="own-msg" style="color:#ffb4a8;margin:10px 0 0;font:16px sans-serif"></p>
     </form></div>
   </div></section>
-<script src="/assets/admin-app.js?v=1" defer></script>
+<script src="/assets/owner-app.js?v=1" defer></script>
 """
     out += footer()
     return out
