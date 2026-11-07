@@ -223,6 +223,6 @@
   function showFail(msg){root.innerHTML='';root.appendChild(el('p','lede','The admin page could not start: '+msg+' Please send this message to Claude.'));}
   window.addEventListener('error',function(e){showFail((e&&e.message)||'script error');});
   window.addEventListener('unhandledrejection',function(e){showFail((e&&e.reason&&e.reason.message)||'request failed');});
-  (function(){var v=document.getElementById('own-ver'); if(v) v.textContent+=' \u00b7 script 13 running';})();
+  (function(){var v=document.getElementById('own-ver'); if(v) v.textContent+=' \u00b7 script 14 running';})();
   try{boot();}catch(e){showFail(e.message);}
 })();

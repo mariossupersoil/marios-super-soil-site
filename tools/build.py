@@ -632,7 +632,7 @@ def build_admin():
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(36px,6vw,72px)"><b>Owner</b> <i>admin</i></h1>
-    <p id="own-ver" style="color:#a7a7a3;font:14px sans-serif;margin:6px 0">Admin page build 13</p>
+    <p id="own-ver" style="color:#a7a7a3;font:14px sans-serif;margin:6px 0">Admin page build 14</p>
     <div class="own" id="own-root"><p class="lede">Loading...</p>
     <form id="own-static" style="display:none;max-width:420px;padding:22px;border:2px solid #d8c98b;border-radius:14px;background:#1b1b1d;color:#fff">
       <h2 style="margin:0 0 12px;font:700 28px sans-serif;color:#fff">Owner login</h2>
@@ -642,7 +642,7 @@ def build_admin():
       <p id="own-msg" style="color:#ffb4a8;margin:10px 0 0;font:16px sans-serif"></p>
     </form></div>
   </div></section>
-<script src="/assets/owner-app.js?v=1" defer></script>
+<script src="/assets/owner-app.js?v=2" defer></script>
 """
     out += footer()
     return out
