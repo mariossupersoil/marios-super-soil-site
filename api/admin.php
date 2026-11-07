@@ -128,11 +128,14 @@ if ($action === 'save_sales') {
 if ($action === 'save_settings') {
     $g = $in['gift'] ?? []; $r = $in['reminders'] ?? [];
     $thr = (float)($g['threshold'] ?? 0); if ($thr < 1 || $thr > 100000) fail(400, 'The free gift order amount must be at least $1.');
-    $name = clean_line((string)($g['name'] ?? ''), 80); if ($name === '') fail(400, 'Give the free gift a name.');
+    $chs = [];
+    foreach (($g['choices'] ?? []) as $i => $ch) { $n = clean_line((string)($ch['name'] ?? ''), 80); if ($n === '') continue; $chs[] = ['id' => preg_replace('/[^a-z-]/', '', strtolower((string)($ch['id'] ?? ''))) ?: ('gift-' . ($i + 1)), 'name' => $n]; }
+    if (!$chs) fail(400, 'Give the free gift at least one choice.');
+    $name = 'Free 2 lb bag';
     $wt = (float)($g['weight_kg'] ?? 0); if ($wt < 0 || $wt > 50) fail(400, 'The gift weight looks wrong.');
     $stk = $g['stock'] ?? ''; $stk = ($stk === '' || $stk === null) ? null : ((is_numeric($stk) && $stk >= 0 && (int)$stk == $stk) ? (int)$stk : fail(400, 'Gift stock must be a whole number or blank.'));
     $days = (int)($r['days'] ?? 60); if ($days < 7 || $days > 365) fail(400, 'Reminder days must be between 7 and 365.');
-    $set = ['gift' => ['enabled' => !empty($g['enabled']), 'threshold' => round($thr, 2), 'name' => $name, 'weight_kg' => round($wt, 2), 'stock' => $stk], 'reminders' => ['enabled' => !empty($r['enabled']), 'days' => $days]];
+    $set = ['gift' => ['enabled' => !empty($g['enabled']), 'threshold' => round($thr, 2), 'name' => $name, 'choices' => $chs, 'weight_kg' => round($wt, 2), 'stock' => $stk], 'reminders' => ['enabled' => !empty($r['enabled']), 'days' => $days]];
     store_update(function ($st) use ($set) { $st['settings'] = $set; return $st; }) ? out_json(['ok' => true]) : fail(500, 'Could not save.');
 }
 if ($action === 'review_action') {

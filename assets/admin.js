@@ -113,16 +113,16 @@
   function settingsCard(){
     var card=el('div','ad-card'); card.appendChild(el('h2',null,'Free gift and reminders'));
     var g=S.settings.gift, r=S.settings.reminders;
-    card.appendChild(el('p','hint','Free gift: orders at or above the amount (before tax, shipping and discount codes, after sales) get the gift added automatically at checkout. The gift is not taken from the product stock above, so use "Gift stock" if you want it to run out.'));
+    card.appendChild(el('p','hint','Free gift: orders at or above the amount (before tax, shipping and discount codes, after sales) get the gift added automatically at checkout. The customer picks one of the gift choices at checkout, and your order email and the Stripe order show which one to pack. Gift stock counts all gifts together and is not taken from product stock.'));
     var row=el('div','row'); row.style.gridTemplateColumns='repeat(auto-fill,minmax(180px,1fr))';
-    var gon=chk('Free gift is on',g.enabled), thr=inp('number',g.threshold,{min:1,step:'0.01',inputmode:'decimal'}), nm=inp('text',g.name,{maxlength:80}), wt=inp('number',g.weight_kg,{min:0,step:'0.01',inputmode:'decimal'}), stk=inp('number',g.stock==null?'':g.stock,{min:0,step:'1',inputmode:'numeric',placeholder:'not tracked'});
-    row.appendChild(gon); row.appendChild(field('Order amount ($)',thr)); row.appendChild(field('Gift name',nm)); row.appendChild(field('Gift weight (kg)',wt)); row.appendChild(field('Gift stock',stk)); card.appendChild(row);
+    var gon=chk('Free gift is on',g.enabled), thr=inp('number',g.threshold,{min:1,step:'0.01',inputmode:'decimal'}), ch0=inp('text',(g.choices[0]||{}).name||'',{maxlength:80}), ch1=inp('text',(g.choices[1]||{}).name||'',{maxlength:80}), wt=inp('number',g.weight_kg,{min:0,step:'0.01',inputmode:'decimal'}), stk=inp('number',g.stock==null?'':g.stock,{min:0,step:'1',inputmode:'numeric',placeholder:'not tracked'});
+    row.appendChild(gon); row.appendChild(field('Order amount ($)',thr)); row.appendChild(field('Gift choice 1',ch0)); row.appendChild(field('Gift choice 2 (optional)',ch1)); row.appendChild(field('Gift weight (kg)',wt)); row.appendChild(field('Gift stock',stk)); card.appendChild(row);
     card.appendChild(el('p','hint','Restock reminders: customers get one email this many days after an order, with links to reorder what they bought and an unsubscribe link. It sends when the daily job runs (see setup steps).'));
     var row2=el('div','row'); row2.style.gridTemplateColumns='repeat(auto-fill,minmax(180px,1fr))';
     var ron=chk('Restock reminders are on',r.enabled), days=inp('number',r.days,{min:7,max:365,step:'1',inputmode:'numeric'});
     row2.appendChild(ron); row2.appendChild(field('Days after the order',days)); card.appendChild(row2);
     var b=el('button','btn solid','Save'); b.type='button'; var m=msgBox(), bar=el('div','bar'); bar.appendChild(b); bar.appendChild(m); card.appendChild(bar);
-    saver(b,m,function(){return call('save_settings',{gift:{enabled:gon.cb.checked,threshold:thr.value,name:nm.value,weight_kg:wt.value,stock:stk.value},reminders:{enabled:ron.cb.checked,days:days.value}});});
+    saver(b,m,function(){return call('save_settings',{gift:{enabled:gon.cb.checked,threshold:thr.value,choices:[{id:(g.choices[0]||{}).id||'level-up',name:ch0.value},{id:(g.choices[1]||{}).id||'flower-power',name:ch1.value}],weight_kg:wt.value,stock:stk.value},reminders:{enabled:ron.cb.checked,days:days.value}});});
     return card;
   }
 

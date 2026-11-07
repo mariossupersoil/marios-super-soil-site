@@ -90,7 +90,7 @@ function ship_price(float $kg, array $tiers): ?float {
 function norm_code(string $c): string { return strtoupper(preg_replace('/[^A-Za-z0-9_-]/', '', trim($c))); }
 
 /** Validate cart items against the catalog. Returns lines + totals, or fails with a message. */
-function price_cart(array $items, array $cat): array {
+function price_cart(array $items, array $cat, string $giftChoice = ''): array {
     $items = array_slice($items, 0, 30); if (!$items) fail(400, 'Your cart is empty.');
     $lines = []; $sub = 0; $kg = 0.0;
     foreach ($items as $it) {
@@ -109,7 +109,14 @@ function price_cart(array $items, array $cat): array {
     if (!empty($gift['enabled']) && $sub >= (int)round($gift['threshold'] * 100) && ($gift['stock'] === null || $gift['stock'] > 0)) {
         $giftOn = true; $kg += (float)$gift['weight_kg'];
     }
-    return ['lines' => $lines, 'subtotal_cents' => $sub, 'kg' => round($kg, 2), 'gift' => $giftOn ? $gift['name'] : null];
+    $gid = null; $gname = null;
+    if ($giftOn) {
+        $chs = $gift['choices'];
+        $pick = $chs[0];
+        foreach ($chs as $ch) { if (($ch['id'] ?? '') === $giftChoice) { $pick = $ch; break; } }
+        $gid = $pick['id']; $gname = $pick['name'];
+    }
+    return ['lines' => $lines, 'subtotal_cents' => $sub, 'kg' => round($kg, 2), 'gift' => $gname, 'gift_id' => $gid];
 }
 
 /** Check a discount code against the store. Returns ['d'=>discount row,'amount_cents'=>int,'free_shipping'=>bool] or fails. */
@@ -153,11 +160,12 @@ function record_paid_session(array $s): void {
         foreach (explode(';', (string)$v) as $e) { $q = explode(':', $e); if (count($q) === 3) $items[] = [$q[0], $q[1], (int)$q[2]]; }
     }
     $cd = is_array($s['customer_details'] ?? null) ? $s['customer_details'] : [];
-    $gift = !empty($md['gift']);
-    store_update(function (array $st) use ($sid, $code, $items, $cd, $gift) {
+    $gift = !empty($md['gift']); $giftId = preg_replace('/[^a-z-]/', '', (string)($md['gift'] ?? ''));
+    $new = false; $summary = [];
+    store_update(function (array $st) use ($sid, $code, $items, $cd, $gift, $giftId, &$new) {
         $done = $st['processed_sessions'] ?? [];
         if (in_array($sid, $done, true)) return $st;
-        $done[] = $sid; $st['processed_sessions'] = array_slice($done, -500);
+        $new = true; $done[] = $sid; $st['processed_sessions'] = array_slice($done, -500);
         if ($code !== '' && !empty($st['discounts'])) {
             foreach ($st['discounts'] as &$d) { if (norm_code((string)($d['code'] ?? '')) === $code) $d['uses'] = (int)($d['uses'] ?? 0) + 1; }
             unset($d);
@@ -174,18 +182,28 @@ function record_paid_session(array $s): void {
             $days = (int)(($st['settings']['reminders']['days'] ?? 60));
             $st['customers'][] = ['email' => $email, 'name' => clean_line((string)($cd['name'] ?? ''), 60), 'date' => today_toronto(),
                 'remind_on' => (new DateTime('now', new DateTimeZone('America/Toronto')))->modify('+' . max(7, $days) . ' days')->format('Y-m-d'),
-                'items' => array_map(fn($i) => ['slug' => $i[0], 'size' => $i[1], 'qty' => $i[2]], $items), 'reminded' => false, 'unsub' => false, 'token' => bin2hex(random_bytes(12))];
+                'gift' => $gift ? $giftId : '', 'items' => array_map(fn($i) => ['slug' => $i[0], 'size' => $i[1], 'qty' => $i[2]], $items), 'reminded' => false, 'unsub' => false, 'token' => bin2hex(random_bytes(12))];
             $st['customers'] = array_slice($st['customers'], -5000);
         }
         return $st;
     });
+    if ($new) {   // tell the owner about the order, including which free gift was picked
+        $cat = catalog(true); $lines = [];
+        foreach ($items as [$slug, $key, $qty]) $lines[] = $qty . ' x ' . ($cat[$slug]['name'] ?? $slug) . ' - ' . ($cat[$slug]['sizes'][$key]['label'] ?? $key);
+        $gname = '';
+        if ($gift) { foreach (settings()['gift']['choices'] as $ch) { if ($ch['id'] === $giftId) $gname = $ch['name']; } if ($gname === '') $gname = $giftId ?: 'free gift'; }
+        $body = "New paid order" . ($cd['name'] ?? '' ? ' from ' . clean_line((string)$cd['name'], 60) : '') . ".\n\n" . implode("\n", $lines) . "\n"
+            . ($gift ? "\nFREE GIFT TO PACK: " . $gname . "\n" : '') . "\nCustomer email: " . ($cd['email'] ?? '') . "\nStripe order: " . $sid . "\nFull details and shipping address are in your Stripe dashboard.\n";
+        send_mail(owner_email(), ($gift ? 'New order (free gift: ' . $gname . ')' : 'New order'), $body);
+    }
 }
 
 
 // ---------------------------------------------------------------- settings, mail, rate limits
 function settings(): array {
     $d = [
-        'gift' => ['enabled' => true, 'threshold' => 120.0, 'name' => 'Level Up 3-3-3 (2 lb)', 'weight_kg' => 0.91, 'stock' => null],
+        'gift' => ['enabled' => true, 'threshold' => 120.0, 'name' => 'Free 2 lb bag', 'weight_kg' => 0.91, 'stock' => null,
+            'choices' => [['id' => 'level-up', 'name' => 'Level Up 3-3-3 (2 lb)'], ['id' => 'flower-power', 'name' => 'Flower Power 2-6-4 (2 lb)']]],
         'reminders' => ['enabled' => true, 'days' => 60],
     ];
     $s = store()['settings'] ?? [];

@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  var KEY='mss_cart_v1', CODEKEY='mss_code_v1', PRICES=null, SHIP=null, GIFT=null, $=function(id){return document.getElementById(id);};
+  var KEY='mss_cart_v1', CODEKEY='mss_code_v1', PRICES=null, SHIP=null, GIFT=null, GCH='', $=function(id){return document.getElementById(id);};
   var mem=[], memCode='';
 
   function load(){try{var a=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(a)?a:[];}catch(e){return mem;}}
@@ -58,7 +58,7 @@
       update();
     }).catch(function(){pr.textContent='Prices are unavailable right now.';add.disabled=true;});
     sel.addEventListener('change',update);
-    shop().then(function(){if(GIFT){var g=el('p','giftnote','Free gift: orders of '+money(GIFT.threshold)+' or more include a free '+GIFT.name+'.');box.appendChild(g);}}).catch(function(){});
+    shop().then(function(){if(GIFT){var g=el('p','giftnote','Free gift: orders of '+money(GIFT.threshold)+' or more include a free 2 lb bag of '+((GIFT.choices||[]).map(function(c){return c.name.replace(/ \(.*/,'').replace(/ [0-9-]+$/,'');}).join(' or ')||GIFT.name)+' (your choice).');box.appendChild(g);}}).catch(function(){});
     add.addEventListener('click',function(){
       var f0=find(slug,sel.value), cap=(f0&&f0.s.left)?f0.s.left:20, q=Math.max(1,Math.min(cap,parseInt(qty.value,10)||1)), c=load(), hit=null;
       c.forEach(function(i){if(i.slug===slug&&i.size===sel.value)hit=i;});
@@ -117,11 +117,17 @@
     });
     var gifted=GIFT&&total>=GIFT.threshold;
     if(gifted){
-      var gl=el('li','cartrow'); gl.appendChild(el('span')); var gm=el('div','cartinfo'); gm.appendChild(el('strong',null,'Free gift: '+GIFT.name)); gm.appendChild(el('span',null,'Added automatically')); gl.appendChild(gm); gl.appendChild(el('span')); gl.appendChild(el('div','cartline','Free')); list.appendChild(gl);
+      var chs=GIFT.choices&&GIFT.choices.length?GIFT.choices:[{id:'',name:GIFT.name}];
+      try{GCH=localStorage.getItem('mss_gift_v1')||'';}catch(e){}
+      if(!chs.some(function(c){return c.id===GCH;}))GCH=chs[0].id;
+      var cur=chs.filter(function(c){return c.id===GCH;})[0];
+      var gl=el('li','cartrow'); gl.appendChild(el('span')); var gm=el('div','cartinfo'); gm.appendChild(el('strong',null,'Free gift: '+cur.name));
+      if(chs.length>1){var gs=el('span',null,'Choose your free gift:'); gm.appendChild(gs); chs.forEach(function(c){var lb=el('label','giftopt'); var rd=el('input'); rd.type='radio'; rd.name='giftpick'; rd.value=c.id; rd.checked=(c.id===GCH); rd.addEventListener('change',function(){GCH=c.id;try{localStorage.setItem('mss_gift_v1',GCH);}catch(e){} renderCart(disc,codeMsg);}); lb.appendChild(rd); lb.appendChild(document.createTextNode(' '+c.name)); gm.appendChild(lb);});}
+      else gm.appendChild(el('span',null,'Added automatically')); gl.appendChild(gm); gl.appendChild(el('span')); gl.appendChild(el('div','cartline','Free')); list.appendChild(gl);
       kg+=GIFT.weight_kg||0;
     }
     root.appendChild(list); kg=Math.round(kg*100)/100;
-    if(GIFT){var gb=el('div','giftbar'+(gifted?' on':''));gb.textContent=gifted?'You earned a free '+GIFT.name+'.':'Add '+money(GIFT.threshold-total)+' more to get a free '+GIFT.name+'.';root.appendChild(gb);}
+    if(GIFT){var gb=el('div','giftbar'+(gifted?' on':''));gb.textContent=gifted?'You earned a free 2 lb bag. Pick which one above.':'Add '+money(GIFT.threshold-total)+' more to get a free 2 lb bag of '+((GIFT.choices||[]).map(function(c){return c.name.replace(/ \(.*/,'');}).join(' or ')||GIFT.name)+'.';root.appendChild(gb);}
     var tier=tierFor(kg), tooHeavy=(SHIP&&SHIP.length&&tier===null);
     var ship=tier?tier.price:null, off=disc?disc.discount:0;
     if(disc&&disc.free_shipping&&tier) ship=0;
@@ -153,7 +159,7 @@
     var go=el('button','btn solid','Checkout'); go.type='button'; go.disabled=missing||tooHeavy;
     go.addEventListener('click',function(){
       go.disabled=true; err.textContent=''; go.textContent='Opening secure checkout...';
-      post('/api/checkout.php',{items:load().map(function(i){return{slug:i.slug,size:i.size,qty:i.qty};}),code:disc?disc.code:''})
+      post('/api/checkout.php',{items:load().map(function(i){return{slug:i.slug,size:i.size,qty:i.qty};}),code:disc?disc.code:'',gift_choice:GCH})
         .then(function(j){if(!j.url)throw new Error('Could not start checkout. Please try again.');window.location.href=j.url;})
         .catch(function(e){go.disabled=missing||tooHeavy;go.textContent='Checkout';err.textContent=neterr(e);});
     });

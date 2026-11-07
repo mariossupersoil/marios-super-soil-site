@@ -19,7 +19,7 @@ if ($origin !== '' && (parse_url($origin, PHP_URL_HOST) ?: '') !== $host) fail(4
 $base = (($host === 'localhost') ? 'http' : 'https') . '://' . ($_SERVER['HTTP_HOST'] ?? $host);
 
 $in = json_decode((string)file_get_contents('php://input', false, null, 0, 65536), true) ?: [];
-$cart = price_cart(is_array($in['items'] ?? null) ? $in['items'] : [], catalog());
+$cart = price_cart(is_array($in['items'] ?? null) ? $in['items'] : [], catalog(), (string)($in['gift_choice'] ?? ''));
 
 $disc = null; $codeRaw = trim((string)($in['code'] ?? ''));
 if ($codeRaw !== '') $disc = apply_code($codeRaw, $cart['subtotal_cents']);
@@ -57,7 +57,7 @@ $params['metadata'] = [];
 foreach ($chunks as $i => $ch) $params['metadata']['items_' . ($i + 1)] = $ch;
 if ($cart['gift']) {
     $params['line_items'][] = ['quantity' => 1, 'price_data' => ['currency' => 'cad', 'unit_amount' => 0, 'tax_behavior' => 'exclusive', 'product_data' => ['name' => 'FREE GIFT: ' . $cart['gift']]]];
-    $params['metadata']['gift'] = '1';
+    $params['metadata']['gift'] = $cart['gift_id'];
 }
 if ($disc) {
     $params['metadata']['discount_code'] = $disc['code'];
