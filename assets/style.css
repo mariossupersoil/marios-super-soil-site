@@ -246,3 +246,8 @@ a.pick{display:flex}
 .cartmsg{margin-top:12px;color:#ffb4a8}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 @media(max-width:640px){.cartrow{grid-template-columns:56px 1fr auto;grid-template-areas:"i n n" "i q l" "i r r"}.cartrow img{grid-area:i;width:56px}.cartinfo{grid-area:n}.cartqty{grid-area:q;max-width:90px}.cartline{grid-area:l}.cartrm{grid-area:r;justify-self:start}}
+.codebox{display:flex;gap:10px;margin:22px 0 6px;max-width:420px}
+.codebox input{flex:1;min-width:0;box-sizing:border-box;background:#0e0e0f;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:12px;font:400 16px/1.3 var(--text);min-height:48px;text-transform:uppercase}
+.codebox .btn{min-height:48px;display:inline-flex;align-items:center}
+.codemsg{margin:0 0 8px;min-height:1.2em;color:var(--leaf)}
+.codemsg.err{color:#ffb4a8}

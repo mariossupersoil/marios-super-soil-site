@@ -25,3 +25,8 @@ Do not point the target at the folder of the live mariossupersoil.ca site until 
 - Prices live in `api/prices.json` (CAD, before tax and shipping, for example `24.99`). `null` means no price yet and that size can't be bought. `tools/build.py` keeps the file's structure in step with `data/products.json` and never changes a price.
 - Shipping is by total order weight from `api/shipping.json` (CAD tiers). Each size's shipping weight is `weight_kg` in `api/prices.json`. Add to `api/config.php` on the server: `stripe_secret_key` (sk_test_... first, then sk_live_...), and `automatic_tax` (needs Stripe Tax enabled in Stripe). Never commit config.php.
 - The cart is stored in the shopper's browser. `api/checkout.php` re-prices everything on the server and creates a Stripe Checkout session; Stripe takes the card and emails receipts.
+
+## Owner admin (`/admin/`)
+- Log in with `admin_password` from `api/config.php` (at least 10 characters). Edit prices, hide sizes or products, shipping rates and discount codes. Changes are saved on the server in `api/store.json` (not in GitHub, so deploys never overwrite them) and apply to the shop immediately.
+- Once a price is saved in the admin it wins over `api/prices.json`. Use the admin for prices from now on.
+- Discount codes are checked on the server and applied through Stripe coupons. A code's "Used" count goes up when a paid order lands on the thank-you page.

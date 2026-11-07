@@ -88,7 +88,7 @@ for t, v in descs.items():
 sm = (ROOT / "sitemap.xml").read_text()
 for f in pages:
     rel = "/" + str(f.relative_to(ROOT)).replace("index.html", "")
-    if rel in ("/404.html", "/cart/", "/order-complete/"): continue
+    if rel in ("/404.html", "/cart/", "/order-complete/", "/admin/"): continue
     if BASE + rel not in sm: out("FAIL", rel, "missing from sitemap.xml")
 
 if SITE["staging"]: out("WARN", "site", "staging=true: pages are noindex and robots.txt blocks crawling")

@@ -520,6 +520,20 @@ def build_order_complete():
     return out
 
 
+def build_admin():
+    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css">', '<link rel="stylesheet" href="/assets/style.css">\n<link rel="stylesheet" href="/assets/admin.css?v=1">')
+    out = out.replace('<meta name="robots" content="noindex, nofollow">\n', '').replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"', 1) if 'noindex' not in out else out
+    out += header()
+    out += """  <section class="sec"><div class="wrap">
+    <h1 class="nm" style="font-size:clamp(36px,6vw,72px)"><b>Owner</b> <i>admin</i></h1>
+    <div class="ad" id="ad-root"><p class="lede">Loading...</p></div>
+  </div></section>
+<script src="/assets/admin.js?v=1" defer></script>
+"""
+    out += footer()
+    return out
+
+
 def build_404():
     out = head("Page not found | Mario's Super Soil", "This page could not be found.", "/404.html", noindex=True)
     out += header()
@@ -533,7 +547,7 @@ def build_404():
 # ---------------------------------------------------------------- write
 def main():
     sync_prices()
-    pages = {"index.html": build_home(), "404.html": build_404(), "soil-calculator/index.html": build_calculator(), "plant-drmario/index.html": build_drmario(), "cart/index.html": build_cart(), "order-complete/index.html": build_order_complete()}
+    pages = {"index.html": build_home(), "404.html": build_404(), "soil-calculator/index.html": build_calculator(), "plant-drmario/index.html": build_drmario(), "cart/index.html": build_cart(), "order-complete/index.html": build_order_complete(), "admin/index.html": build_admin()}
     for p in PRODUCTS:
         pages[f"products/{p['slug']}/index.html"] = build_product(p)
 
@@ -559,7 +573,7 @@ def main():
     if SITE["staging"]:
         robots = "User-agent: *\nDisallow: /\n"
     else:
-        robots = f"User-agent: *\nAllow: /\nDisallow: /data/\nDisallow: /tools/\n\nSitemap: {BASE}/sitemap.xml\n"
+        robots = f"User-agent: *\nAllow: /\nDisallow: /data/\nDisallow: /tools/\nDisallow: /admin/\nDisallow: /api/\nDisallow: /cart/\n\nSitemap: {BASE}/sitemap.xml\n"
     (ROOT / "robots.txt").write_text(robots)
     print(f"built {len(pages)} pages; staging={SITE['staging']}")
 

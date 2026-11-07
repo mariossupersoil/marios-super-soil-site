@@ -49,3 +49,4 @@ organic fertilizer Canada, organic soil amendments Canada, organic dry fertilize
 
 ## Shop (cart, checkout, prices)
 - Never edit `api/`, `assets/cart.js`, `api/prices.json` or the cart and order pages. They are noindex and outside the weekly SEO scope. Never add `offers`, prices or `aggregateRating` to structured data unless the owner asks.
+- Never touch `/admin/`, `assets/admin.js`, `api/admin.php`, `api/lib.php`, `api/store.json` or discount codes.

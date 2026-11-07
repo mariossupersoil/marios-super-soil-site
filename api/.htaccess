@@ -1,7 +1,7 @@
 Options -Indexes
-<FilesMatch "^(config(\.sample)?\.php|\.rl)$">
+<FilesMatch "^(config(\.sample)?\.php|lib\.php|store\.json.*|\.rl)$">
   Require all denied
 </FilesMatch>
 RewriteEngine On
 RewriteRule ^\.rl(/|$) - [R=404,L]
-RewriteRule ^config(\.sample)?\.php$ - [R=404,L]
+RewriteRule ^(config(\.sample)?\.php|lib\.php|store\.json.*)$ - [R=404,L]
