@@ -282,7 +282,7 @@ def build_home():
     # buy
     stores = ""
     for s in SITE["stores"]:
-        link = f'<a href="{esc(s["url"])}" target="_blank" rel="noopener">{esc(re.sub(r"^https?://|/$", "", s["url"]))}</a>' if s["url"] else ""
+        link = f'<a href="{esc(s["url"])}" target="_blank" rel="noopener">{esc(re.sub(r"^https?://(www\.)?|/.*$", "", s["url"]))}</a>' if s["url"] else ""
         stores += f'<li><strong>{esc(s["name"])}</strong><span>{esc(s["address"])}</span><span>{esc(s["phone"])}</span>{link}</li>'
     out += f"""  <section id="buy" class="sec">
     <div class="wrap buy">
