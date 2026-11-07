@@ -298,3 +298,12 @@ a.pick{display:flex}
 .giftopt{display:block;margin:6px 0 0;cursor:pointer;font-size:15px}.giftopt input{width:18px;height:18px;vertical-align:-3px;accent-color:var(--leaf)}
 .pricefrom{margin:14px 0 0;font:500 17px/1.5 var(--text)}.pricefrom strong{font:600 22px var(--text);color:var(--leaf);margin-right:10px}.pricefrom span{color:var(--muted)}.pick .from{display:block;margin-top:6px;font:600 15px var(--text);color:var(--leaf);letter-spacing:.04em}
 .igfeed{margin:18px 0;min-height:0}
+
+.sigbox{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:clamp(16px,3vw,26px);margin-bottom:18px;max-width:640px}
+.sigbox h2{font-size:clamp(26px,4vw,34px);margin:0 0 8px;color:var(--ink)}
+.sigbox p{color:var(--muted)}
+.sigbox .pop-msg{margin:10px 0 0}
+.pop-deals{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:8px}
+.pop-deals li{background:#0e0e0f;border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--ink);font-size:16px}
+.pop-deals b{color:var(--accent);font-weight:500}
+.pop-deals s{color:var(--muted)}

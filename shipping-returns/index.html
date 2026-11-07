@@ -94,10 +94,22 @@
 </main>
 <footer>
   <div class="wrap">
+    <div class="sigbox" id="signup">
+      <h2>Get deals and restock reminders</h2>
+      <p>Sale alerts, planting tips and restock reminders from Mario&rsquo;s Super Soil. No spam, and you can unsubscribe any time.</p>
+      <form class="pop-form" id="sigform" novalidate>
+        <label class="sr" for="sig-email">Email address</label>
+        <input type="email" id="sig-email" placeholder="you@example.com" autocomplete="email" required maxlength="120">
+        <input type="text" id="sig-hp" class="pop-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn solid" type="submit">Sign me up</button>
+      </form>
+      <p class="pop-msg" id="sig-msg" role="status"></p>
+    </div>
     <strong>A Canadian company, Mississauga, Ontario</strong>
     <p>Store in a cool, dry place, away from moisture. <span lang="fr">Conserver dans un endroit frais et sec, à l'abri de l'humidité.</span></p>
     <p>Dust hazard. Wear an appropriate dust mask when handling.</p>
     <nav class="flinks" aria-label="More from Mario's Super Soil">
+      <a href="#signup">Sign up for deals</a>
       <a href="/wholesale/">Wholesale</a>
       <a href="/shipping-returns/">Shipping &amp; returns</a>
       <a href="https://g.page/r/CecEG2eLNfmfEAE/review" target="_blank" rel="noopener">Review us on Google</a>
@@ -110,6 +122,7 @@
 <script src="/assets/app.js" defer></script>
 <script src="/assets/cart.js?v=6" defer></script>
 <script src="/assets/social.js?v=1" defer></script>
-<script src="/assets/popup.js?v=2" defer></script>
+<script src="/assets/signup.js?v=1" defer></script>
+<script src="/assets/popup.js?v=3" defer></script>
 </body>
 </html>

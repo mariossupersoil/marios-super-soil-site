@@ -12,8 +12,9 @@
     if(shown) return; shown=true; prev=document.activeElement;
     var back=el('div','pop-back'), box=el('div','pop'); box.setAttribute('role','dialog'); box.setAttribute('aria-modal','true'); box.setAttribute('aria-labelledby','pop-h');
     var x=el('button','pop-x','×'); x.type='button'; x.setAttribute('aria-label','Close');
-    var h=el('h2',null,'Stay in the grow'); h.id='pop-h';
-    var p=el('p',null,'Get restock reminders, planting tips and sale alerts from Mario’s Super Soil. No spam, and you can unsubscribe any time.');
+    var h=el('h2',null,'Deals on right now'); h.id='pop-h';
+    var p=el('p',null,'Join the list for sale alerts, planting tips and restock reminders. No spam, and you can unsubscribe any time.');
+    var deals=el('ul','pop-deals'); deals.hidden=true;
     var f=el('form','pop-form'); f.noValidate=true;
     var lab=el('label','sr','Email address'); lab.htmlFor='pop-email';
     var em=el('input'); em.type='email'; em.id='pop-email'; em.placeholder='you@example.com'; em.autocomplete='email'; em.required=true; em.maxLength=120;
@@ -22,8 +23,18 @@
     var msg=el('p','pop-msg'); msg.setAttribute('role','status');
     f.appendChild(lab); f.appendChild(em); f.appendChild(hp); f.appendChild(go);
     var no=el('button','pop-no','No thanks'); no.type='button';
-    box.appendChild(x); box.appendChild(h); box.appendChild(p); box.appendChild(f); box.appendChild(msg); box.appendChild(no);
+    box.appendChild(x); box.appendChild(h); box.appendChild(p); box.appendChild(deals); box.appendChild(f); box.appendChild(msg); box.appendChild(no);
     back.appendChild(box); document.body.appendChild(back); em.focus();
+    function money(n){return '$'+Number(n).toFixed(2);}
+    fetch('/api/shop.php').then(function(r){return r.json();}).then(function(d){
+      var out=[];
+      Object.keys(d.products||{}).forEach(function(k){var P=d.products[k]; if(P.enabled===false) return; var best=null;
+        Object.keys(P.sizes).forEach(function(z){var s=P.sizes[z]; if(s.sale_price!=null&&s.price!=null&&s.sale_price<s.price&&!s.soldout&&(!best||s.sale_price/s.price<best.sale_price/best.price)) best=s;});
+        if(best) out.push({n:P.name,s:best});});
+      out.slice(0,3).forEach(function(o){var li=el('li'); li.appendChild(el('b',null,(o.s.sale_label||'Sale')+': ')); li.appendChild(document.createTextNode(o.n+' '+o.s.label+' '+money(o.s.sale_price)+' ')); li.appendChild(el('s',null,money(o.s.price))); deals.appendChild(li);});
+      if(d.gift&&d.gift.threshold){var li=el('li'); li.appendChild(el('b',null,'Free gift: ')); li.appendChild(document.createTextNode('a free 2 lb bag of Level Up or Flower Power on orders over $'+d.gift.threshold)); deals.appendChild(li);}
+      if(deals.children.length) deals.hidden=false;
+    }).catch(function(){});
     function close(days){remember(days);back.remove();document.removeEventListener('keydown',key);if(prev&&prev.focus)try{prev.focus();}catch(e){}}
     function key(e){
       if(e.key==='Escape'){close(7);return;}
