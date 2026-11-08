@@ -162,10 +162,30 @@ function record_paid_session(array $s): void {
     $cd = is_array($s['customer_details'] ?? null) ? $s['customer_details'] : [];
     $gift = !empty($md['gift']); $giftId = preg_replace('/[^a-z-]/', '', (string)($md['gift'] ?? ''));
     $new = false; $summary = [];
-    store_update(function (array $st) use ($sid, $code, $items, $cd, $gift, $giftId, &$new) {
+    $cat0 = catalog(true); $oitems = []; $lines = [];
+    foreach ($items as [$slug, $key, $qty]) {
+        $nm = $cat0[$slug]['name'] ?? $slug; $lb = $cat0[$slug]['sizes'][$key]['label'] ?? $key;
+        $oitems[] = ['slug' => $slug, 'size' => $key, 'qty' => $qty, 'name' => $nm, 'label' => $lb];
+        $lines[] = $qty . ' x ' . $nm . ' - ' . $lb;
+    }
+    $gname = '';
+    if ($gift) { foreach (settings()['gift']['choices'] as $ch) { if ($ch['id'] === $giftId) $gname = $ch['name']; } if ($gname === '') $gname = $giftId ?: 'free gift'; }
+    $sd = $s['shipping_details'] ?? ($s['collected_information']['shipping_details'] ?? []); $ad = is_array($sd['address'] ?? null) ? $sd['address'] : (is_array($cd['address'] ?? null) ? $cd['address'] : []);
+    $td = is_array($s['total_details'] ?? null) ? $s['total_details'] : [];
+    $orderRec = ['id' => $sid, 'created' => date('c'), 'date' => today_toronto(),
+        'name' => clean_line((string)($sd['name'] ?? $cd['name'] ?? ''), 80), 'email' => strtolower(trim((string)($cd['email'] ?? ''))), 'phone' => clean_line((string)($cd['phone'] ?? ''), 30),
+        'address' => ['line1' => clean_line((string)($ad['line1'] ?? ''), 80), 'line2' => clean_line((string)($ad['line2'] ?? ''), 80), 'city' => clean_line((string)($ad['city'] ?? ''), 60),
+            'state' => clean_line((string)($ad['state'] ?? ''), 30), 'postal_code' => clean_line((string)($ad['postal_code'] ?? ''), 15), 'country' => clean_line((string)($ad['country'] ?? ''), 4)],
+        'items' => $oitems, 'gift' => $gname, 'code' => $code,
+        'total' => round(((int)($s['amount_total'] ?? 0)) / 100, 2), 'discount' => round(((int)($td['amount_discount'] ?? 0)) / 100, 2),
+        'shipping' => round(((int)($td['amount_shipping'] ?? 0)) / 100, 2), 'tax' => round(((int)($td['amount_tax'] ?? 0)) / 100, 2),
+        'status' => 'new', 'carrier' => '', 'tracking' => '', 'shipped_at' => '', 'notified' => false];
+    store_update(function (array $st) use ($sid, $code, $items, $cd, $gift, $giftId, &$new, $orderRec) {
         $done = $st['processed_sessions'] ?? [];
         if (in_array($sid, $done, true)) return $st;
         $new = true; $done[] = $sid; $st['processed_sessions'] = array_slice($done, -500);
+        $seq = (int)($st['order_seq'] ?? 1000) + 1; $st['order_seq'] = $seq; $orderRec['number'] = $seq;
+        $st['orders'] = array_slice(array_merge($st['orders'] ?? [], [$orderRec]), -3000);
         if ($code !== '' && !empty($st['discounts'])) {
             foreach ($st['discounts'] as &$d) { if (norm_code((string)($d['code'] ?? '')) === $code) $d['uses'] = (int)($d['uses'] ?? 0) + 1; }
             unset($d);
@@ -188,12 +208,8 @@ function record_paid_session(array $s): void {
         return $st;
     });
     if ($new) {   // tell the owner about the order, including which free gift was picked
-        $cat = catalog(true); $lines = [];
-        foreach ($items as [$slug, $key, $qty]) $lines[] = $qty . ' x ' . ($cat[$slug]['name'] ?? $slug) . ' - ' . ($cat[$slug]['sizes'][$key]['label'] ?? $key);
-        $gname = '';
-        if ($gift) { foreach (settings()['gift']['choices'] as $ch) { if ($ch['id'] === $giftId) $gname = $ch['name']; } if ($gname === '') $gname = $giftId ?: 'free gift'; }
         $body = "New paid order" . ($cd['name'] ?? '' ? ' from ' . clean_line((string)$cd['name'], 60) : '') . ".\n\n" . implode("\n", $lines) . "\n"
-            . ($gift ? "\nFREE GIFT TO PACK: " . $gname . "\n" : '') . "\nCustomer email: " . ($cd['email'] ?? '') . "\nStripe order: " . $sid . "\nFull details and shipping address are in your Stripe dashboard.\n";
+            . ($gift ? "\nFREE GIFT TO PACK: " . $gname . "\n" : '') . "\nCustomer email: " . ($cd['email'] ?? '') . "\nStripe order: " . $sid . "\nSee the full order and send the shipping update here: " . site_url() . "/admin/ (Orders section).\n";
         send_mail(owner_email(), ($gift ? 'New order (free gift: ' . $gname . ')' : 'New order'), $body);
     }
 }
@@ -302,4 +318,28 @@ function active_promo(): ?array {
     $code = norm_code((string)$p['code']); $live = false;
     foreach (store()['discounts'] ?? [] as $x) { if (norm_code((string)($x['code'] ?? '')) === $code && !empty($x['active'])) { $live = true; break; } }
     return $live ? ['title' => $p['title'], 'text' => $p['text'], 'code' => (string)$p['code'], 'ends' => (string)$p['ends']] : null;
+}
+
+/** Carrier tracking link for the shipped email. */
+function tracking_url(string $carrier, string $num): string {
+    $n = rawurlencode(str_replace(' ', '', $num));
+    switch (strtolower($carrier)) {
+        case 'canada post': return "https://www.canadapost-postescanada.ca/track-reperage/en#/search?searchFor=$n";
+        case 'purolator': return "https://www.purolator.com/en/shipping/tracker?pin=$n";
+        case 'ups': return "https://www.ups.com/track?tracknum=$n";
+        case 'fedex': return "https://www.fedex.com/fedextrack/?trknbr=$n";
+        case 'dhl': return "https://www.dhl.com/ca-en/home/tracking.html?tracking-id=$n";
+    }
+    return '';
+}
+
+/** Email the customer that their order has shipped, with the tracking number. */
+function send_shipped_email(array $o): bool {
+    $lines = []; foreach ($o['items'] as $i) $lines[] = $i['qty'] . ' x ' . $i['name'] . ' - ' . $i['label'];
+    if (!empty($o['gift'])) $lines[] = '1 x ' . $o['gift'] . ' (free gift)';
+    $url = $o['tracking'] !== '' ? tracking_url((string)$o['carrier'], (string)$o['tracking']) : '';
+    $body = 'Hi' . ($o['name'] !== '' ? ' ' . $o['name'] : '') . ",\n\nGood news: your Mario's Super Soil order #" . $o['number'] . " is on its way.\n\n" . implode("\n", $lines) . "\n\n"
+        . ($o['tracking'] !== '' ? 'Carrier: ' . ($o['carrier'] ?: 'see tracking') . "\nTracking number: " . $o['tracking'] . "\n" . ($url ? 'Track it here: ' . $url . "\n" : '') . "\n" : '')
+        . "Shipping within Canada usually takes 2 to 10 business days. If anything looks wrong when it arrives, just reply to this email.\n\nThank you for growing with us.\nMario's Super Soil\n";
+    return send_mail($o['email'], "Your Mario's Super Soil order #" . $o['number'] . ' has shipped', $body, null, owner_email());
 }

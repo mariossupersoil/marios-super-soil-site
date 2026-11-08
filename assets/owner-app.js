@@ -132,6 +132,55 @@
     return card;
   }
 
+  function ordersCard(){
+    var card=el('div','own-card'); card.appendChild(el('h2',null,'Orders'));
+    card.appendChild(el('p','hint','New paid orders show up here, newest first. When you ship one, pick the carrier, add the tracking number, leave "Email the customer" ticked, and click Mark as shipped. The customer gets an email with the tracking link. Orders placed before this section existed are in Stripe.'));
+    var list=el('div'), m=msgBox(), filt='todo', q='';
+    var bar=el('div','row'); bar.style.gridTemplateColumns='repeat(auto-fill,minmax(180px,1fr))';
+    var sel=el('select'); [['todo','To ship'],['shipped','Shipped'],['all','All orders']].forEach(function(o){var op=el('option',null,o[1]);op.value=o[0];sel.appendChild(op);});
+    var sb=inp('text','',{placeholder:'Name, email or order number'});
+    bar.appendChild(field('Show',sel)); bar.appendChild(field('Search',sb)); card.appendChild(bar);
+    var CARR=['Canada Post','Purolator','UPS','FedEx','DHL','Other'];
+    function money(n){return '$'+Number(n||0).toFixed(2);}
+    function addr(a){a=a||{};var l=[a.line1,a.line2,[a.city,a.state].filter(Boolean).join(', '),a.postal_code,a.country].filter(Boolean);return l;}
+    function refresh(){return call('state').then(function(j){S.orders=j.orders||[];draw();});}
+    function row(o){
+      var d=el('div','ordrow'); d.style.cssText='border:1px solid #3a3a3c;border-radius:12px;padding:14px;margin:12px 0';
+      var head=el('div'); head.style.cssText='display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;align-items:baseline';
+      head.appendChild(el('strong',null,'#'+o.number+' \u00b7 '+(o.name||'(no name)')+' \u00b7 '+money(o.total)));
+      var st=el('span',null,o.status==='shipped'?'Shipped '+(o.shipped_at||'').slice(0,10):'To ship \u00b7 '+o.date); st.style.cssText='padding:3px 10px;border-radius:999px;font-size:14px;background:'+(o.status==='shipped'?'#2f5d2f':'#7a5a12')+';color:#fff'; head.appendChild(st); d.appendChild(head);
+      var ul=el('ul'); ul.style.margin='8px 0'; (o.items||[]).forEach(function(i){ul.appendChild(el('li',null,i.qty+' x '+i.name+' - '+i.label));});
+      if(o.gift){var g=el('li',null,'FREE GIFT TO PACK: '+o.gift); g.style.fontWeight='700'; ul.appendChild(g);} d.appendChild(ul);
+      var info=el('p','hint',''); info.style.whiteSpace='pre-line';
+      info.textContent=[o.email+(o.phone?' \u00b7 '+o.phone:''),addr(o.address).join('\n'),'Paid '+money(o.total)+(o.discount?' \u00b7 discount -'+money(o.discount)+(o.code?' ('+o.code+')':''):'')+' \u00b7 shipping '+money(o.shipping)+' \u00b7 tax '+money(o.tax),'Stripe: '+o.id].join('\n');
+      d.appendChild(info);
+      var f=el('div','row'); f.style.gridTemplateColumns='repeat(auto-fill,minmax(180px,1fr))';
+      var cs=el('select'); CARR.forEach(function(c){var op=el('option',null,c);op.value=c;cs.appendChild(op);}); cs.value=o.carrier||'Canada Post';
+      var tn=inp('text',o.tracking||'',{maxlength:40,placeholder:'Tracking number'});
+      var nt=chk('Email the customer',!o.notified);
+      f.appendChild(field('Carrier',cs)); f.appendChild(field('Tracking number',tn)); f.appendChild(nt); d.appendChild(f);
+      var b=el('button','btn solid',o.status==='shipped'?'Save and resend email':'Mark as shipped'); b.type='button'; var mm=msgBox(); var br=el('div','bar'); br.appendChild(b);
+      if(o.status==='shipped'){var u=el('button','btn','Undo shipped'); u.type='button'; u.addEventListener('click',function(){u.disabled=true;call('order_unship',{id:o.id}).then(refresh).catch(function(e){u.disabled=false;flash(mm,false,e.message);});}); br.appendChild(u);}
+      br.appendChild(mm); d.appendChild(br);
+      b.addEventListener('click',function(){
+        b.disabled=true; flash(mm,true,'Saving...');
+        call('order_ship',{id:o.id,carrier:cs.value,tracking:tn.value,notify:nt.cb.checked}).then(function(r){flash(mm,true,r.emailed?'Marked as shipped. Email sent to '+o.email+'.':'Marked as shipped.');return refresh();}).catch(function(e){b.disabled=false;flash(mm,false,e.message);refresh();});
+      });
+      return d;
+    }
+    function draw(){
+      list.innerHTML=''; var n=0, qq=q.toLowerCase();
+      (S.orders||[]).forEach(function(o){
+        if(filt==='todo'&&o.status==='shipped') return; if(filt==='shipped'&&o.status!=='shipped') return;
+        if(qq&&(o.name+' '+o.email+' #'+o.number).toLowerCase().indexOf(qq)<0) return;
+        n++; list.appendChild(row(o));
+      });
+      if(!n) list.appendChild(el('p','hint',(S.orders||[]).length?'No orders match.':'No orders yet. New paid orders will appear here.'));
+    }
+    sel.addEventListener('change',function(){filt=sel.value;draw();}); sb.addEventListener('input',function(){q=sb.value.trim();draw();});
+    card.appendChild(list); card.appendChild(m); draw(); return card;
+  }
+
   function promoCard(){
     var card=el('div','own-card'); card.appendChild(el('h2',null,'Deal of the month'));
     card.appendChild(el('p','hint','Shows a deal box on the home page, a small "deal" tab in the corner of every page, and a line in the sign-up pop-up. The code must already exist in Discount codes above. Customers who click Shop now get the code applied automatically. It switches itself off after the end date.'));
@@ -215,7 +264,7 @@
       var top=el('p'); var out=el('button','btn','Log out'); out.type='button'; out.addEventListener('click',function(){call('logout',{}).then(function(){location.reload();});}); top.appendChild(out); root.appendChild(top);
       var n=0; try{n=Object.keys(S.catalog).length;}catch(e){}
       if(!n) root.appendChild(el('p','lede','No products were found in the shop catalog (api/prices.json may be missing on the server).'));
-      [['Products and prices',productsCard],['Sales',salesCard],['Shipping rates',shippingCard],['Discount codes',discountsCard],['Deal of the month',promoCard],['Free gift and reminders',settingsCard],['Customer reviews',reviewsCard],['Wholesale applications',leadsCard],['Email list and backup',emailCard]].forEach(function(c){
+      [['Orders',ordersCard],['Products and prices',productsCard],['Sales',salesCard],['Shipping rates',shippingCard],['Discount codes',discountsCard],['Deal of the month',promoCard],['Free gift and reminders',settingsCard],['Customer reviews',reviewsCard],['Wholesale applications',leadsCard],['Email list and backup',emailCard]].forEach(function(c){
         try{root.appendChild(c[1]());}catch(e){root.appendChild(el('p','lede','The "'+c[0]+'" section could not load: '+e.message));}
       });
     }).catch(function(e){ if(e.status===401) login(); else if(e.status===503){root.innerHTML='';root.appendChild(el('p','lede',e.message));} else login(e.message); });
@@ -223,6 +272,6 @@
   function showFail(msg){root.innerHTML='';root.appendChild(el('p','lede','The admin page could not start: '+msg+' Please send this message to Claude.'));}
   window.addEventListener('error',function(e){showFail((e&&e.message)||'script error');});
   window.addEventListener('unhandledrejection',function(e){showFail((e&&e.reason&&e.reason.message)||'request failed');});
-  (function(){var v=document.getElementById('own-ver'); if(v) v.textContent+=' \u00b7 script 14 running';})();
+  (function(){var v=document.getElementById('own-ver'); if(v) v.textContent+=' \u00b7 script 15 running';})();
   try{boot();}catch(e){showFail(e.message);}
 })();

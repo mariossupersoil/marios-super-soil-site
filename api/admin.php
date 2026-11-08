@@ -36,7 +36,7 @@ if ($action === 'state') {
     $st = store();
     out_json(['auth' => true, 'csrf' => $_SESSION['csrf'], 'catalog' => catalog(true), 'tiers' => tiers(), 'discounts' => $st['discounts'] ?? [], 'sales' => $st['sales'] ?? [],
         'settings' => settings(), 'reviews' => array_reverse($st['reviews'] ?? []), 'leads' => array_reverse($st['wholesale_leads'] ?? []),
-        'subscribers' => count($st['subscribers'] ?? []), 'customers' => count($st['customers'] ?? []), 'last_backup' => $st['last_backup_week'] ?? '']);
+        'orders' => array_slice(array_reverse($st['orders'] ?? []), 0, 300), 'subscribers' => count($st['subscribers'] ?? []), 'customers' => count($st['customers'] ?? []), 'last_backup' => $st['last_backup_week'] ?? '']);
 }
 
 if ($action === 'export_subscribers') {
@@ -149,6 +149,25 @@ if ($action === 'save_promo') {
         if (!$found) fail(400, 'That code is not in your Discount codes list yet. Add it there first, then save this again.');
     }
     store_update(function ($st) use ($on, $title, $text, $code, $ends) { $st['settings']['promo'] = ['enabled' => $on, 'title' => $title, 'text' => $text, 'code' => $code, 'ends' => $ends]; return $st; }) ? out_json(['ok' => true]) : fail(500, 'Could not save.');
+}
+if ($action === 'order_ship' || $action === 'order_unship') {
+    $id = (string)($in['id'] ?? ''); $found = null; $notify = !empty($in['notify']);
+    $carrier = clean_line((string)($in['carrier'] ?? ''), 30); $tracking = preg_replace('/[^A-Za-z0-9 -]/', '', (string)($in['tracking'] ?? '')); $tracking = substr(trim($tracking), 0, 40);
+    store_update(function ($st) use ($id, $action, $carrier, $tracking, &$found) {
+        if (!isset($st['orders'])) $st['orders'] = []; foreach ($st['orders'] as &$o) { if (($o['id'] ?? '') !== $id) continue;
+            if ($action === 'order_unship') { $o['status'] = 'new'; $o['shipped_at'] = ''; }
+            else { $o['status'] = 'shipped'; $o['carrier'] = $carrier; $o['tracking'] = $tracking; if (empty($o['shipped_at'])) $o['shipped_at'] = date('c'); }
+            $found = $o; break; }
+        unset($o); return $st; });
+    if (!$found) fail(404, 'Order not found.');
+    $sent = null;
+    if ($action === 'order_ship' && $notify) {
+        if (!valid_email((string)$found['email'])) fail(400, 'Marked as shipped, but this order has no valid customer email, so nothing was sent.');
+        $sent = send_shipped_email($found);
+        if ($sent) store_update(function ($st) use ($id) { if (!isset($st['orders'])) $st['orders'] = []; foreach ($st['orders'] as &$o) { if (($o['id'] ?? '') === $id) { $o['notified'] = true; $o['notified_at'] = date('c'); } } unset($o); return $st; });
+        else fail(500, 'Marked as shipped, but the email could not be sent.' . (!empty($GLOBALS['mail_err']) ? ' Reason: ' . $GLOBALS['mail_err'] : ''));
+    }
+    out_json(['ok' => true, 'emailed' => $sent === true]);
 }
 if ($action === 'review_action') {
     $id = (string)($in['id'] ?? ''); $op = (string)($in['op'] ?? '');
