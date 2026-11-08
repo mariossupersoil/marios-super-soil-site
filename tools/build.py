@@ -132,7 +132,7 @@ def footer():
       <a href="/shipping-returns/">Shipping &amp; returns</a>
 {GR_FOOT}      <a href="{esc(L['blog'])}" target="_blank" rel="noopener">Blog</a>
       <a href="/shipping-returns/">Refund policy</a>
-      <a href="{esc(L['privacy'])}" target="_blank" rel="noopener">Privacy policy</a>
+      <a href="/privacy/">Privacy policy</a>
     </nav>
   </div>
 </footer>
@@ -654,6 +654,88 @@ def contact_block():
     return f"""<p>Email <a href="mailto:{esc(SITE['email'])}">{esc(SITE['email'])}</a> or call <a href="tel:{esc(SITE['phone'].replace('-', ''))}">{esc(SITE['phone'])}</a>.</p><ul>{hrs}</ul>"""
 
 
+def build_privacy():
+    title = "Privacy Policy | Mario's Super Soil"
+    desc = "How Mario's Super Soil collects, uses and protects your personal information when you shop, sign up for emails, use Plant Dr. Mario or apply for wholesale."
+    path = "/privacy/"
+    ld = [{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+              {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
+              {"@type": "ListItem", "position": 2, "name": "Privacy policy", "item": abs_url(path)}]}]
+    out = head(title, desc, path, jsonld=ld) + header()
+    out += f"""  <section class="sec"><div class="wrap policy">
+    <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Privacy</b> <i>policy</i></h1>
+    <p>Last updated: November 8, 2026</p>
+    <p>Mario&rsquo;s Super Soil is a Canadian company based in Mississauga, Ontario. This policy explains what personal information we collect on this website, why we collect it, who we share it with and what choices you have. We keep it to what we need to run the shop. We never sell your information.</p>
+
+    <h2>What we collect and why</h2>
+    <ul>
+      <li><strong>When you place an order:</strong> your name, email address, phone number, shipping address and what you ordered. We use it to take payment, pack and ship your order, send receipts and shipping updates, handle returns and keep our business and tax records.</li>
+      <li><strong>When you sign up for emails</strong> (the sign-up box or pop-up): your email address. We use it to send you deals, planting tips and restock news, only because you asked us to.</li>
+      <li><strong>After you order:</strong> we send one restock reminder email about two months later, suggesting you reorder what you bought. Every one of these emails has an unsubscribe link.</li>
+      <li><strong>When you leave a review:</strong> the name, rating and comment you submit, and your email if you give it. Reviews are checked by us before they appear on the site.</li>
+      <li><strong>When you apply for wholesale:</strong> your business name, contact name, email, phone and the details you give about your business. We use it to reply to you and set up an account.</li>
+      <li><strong>When you use Plant Dr. Mario:</strong> the plant photos and the notes you send. They are sent to an AI service to produce the diagnosis you see on screen. We do not save your photos on our website.</li>
+      <li><strong>When you contact us:</strong> whatever you send us by email or phone, so we can answer you.</li>
+      <li><strong>Technical information:</strong> like most websites, our hosting company keeps basic server logs (such as your IP address, browser and the pages requested) for security and to keep the site running. We also use your IP address in a scrambled form to limit how often forms and Plant Dr. Mario can be used, so that nobody can flood them.</li>
+    </ul>
+
+    <h2>Payments</h2>
+    <p>Payments are handled by Stripe. You enter your card details on Stripe&rsquo;s secure page, and we never see or store your full card number. Stripe gives us your name, email, phone, address and the order total so we can fulfil your order. Stripe&rsquo;s own privacy policy explains how it handles your information.</p>
+
+    <h2>Cookies and browser storage</h2>
+    <p>We do not use advertising or tracking cookies, and we do not run analytics tools on this site. We store a few things in your own browser so the site works: your shopping cart, a discount code you were given, whether you have closed the sign-up pop-up or the deal tab, and your choice of free gift. These stay on your device and you can clear them any time in your browser settings. The owner&rsquo;s admin page uses a login cookie that is only for the owner.</p>
+    <p>The Instagram feed on our home page is provided by Behold and shows posts from Instagram. It loads only when you scroll down to it, and those services may set their own cookies or collect information as described in their policies. If you follow a link to Instagram, Facebook, Google or another site, that site&rsquo;s own policy applies.</p>
+
+    <h2>Who we share information with</h2>
+    <p>We share information only with the services that help us run the shop, and only what they need:</p>
+    <ul>
+      <li>Stripe, to take payments.</li>
+      <li>Shipping carriers such as Canada Post, Purolator or UPS, who receive your name, address and phone number so they can deliver your order.</li>
+      <li>Our website hosting company (Hostinger), which stores the site and our order records.</li>
+      <li>Our email provider (Google), which sends and receives our emails.</li>
+      <li>The AI service that analyses plant photos for Plant Dr. Mario (Anthropic), which receives only the photos and notes you send.</li>
+      <li>Behold, which supplies the Instagram feed.</li>
+      <li>The authorities, if the law requires it.</li>
+    </ul>
+    <p>Some of these providers process information outside Canada, including in the United States, so your information may be subject to the laws of those places.</p>
+
+    <h2>How long we keep it</h2>
+    <ul>
+      <li>Order records: as long as we need them for accounting, tax and legal reasons. Canadian tax rules generally require businesses to keep records for six years.</li>
+      <li>Email list: until you unsubscribe.</li>
+      <li>Reviews: until you ask us to remove them or we take them down.</li>
+      <li>Wholesale applications: as long as we need them to deal with your application and any account that follows.</li>
+      <li>Plant photos: we do not keep them.</li>
+    </ul>
+
+    <h2>Your choices and rights</h2>
+    <ul>
+      <li><strong>Unsubscribe:</strong> use the link at the bottom of any marketing email, or email us and we will remove you.</li>
+      <li><strong>See or fix your information:</strong> ask us what we hold about you, and we will tell you and correct anything that is wrong.</li>
+      <li><strong>Delete your information:</strong> ask us to delete it. We will do so unless we need to keep some of it for tax, accounting or legal reasons.</li>
+      <li><strong>Withdraw consent:</strong> you can change your mind about emails or other uses at any time.</li>
+    </ul>
+    <p>If you are not happy with how we handled your information, you can contact us first. You can also contact the Office of the Privacy Commissioner of Canada at priv.gc.ca.</p>
+
+    <h2>Keeping your information safe</h2>
+    <p>Our site uses HTTPS, orders and admin access are protected by a password, and card payments stay with Stripe. No website is completely risk free, but we take reasonable steps to protect what you give us and we only collect what we need.</p>
+
+    <h2>Children</h2>
+    <p>This website is for adults and is not meant for children. We do not knowingly collect information from children.</p>
+
+    <h2>Changes to this policy</h2>
+    <p>If we change how we handle your information, we will update this page and the date at the top.</p>
+
+    <h2>Contact us</h2>
+    <p>For any privacy question or request, contact our privacy contact, Mario, at:</p>
+    {contact_block()}
+    <hr style="border:0;border-top:1px solid var(--line);margin:48px 0 8px">
+    </div></section>
+"""
+    out += footer()
+    return out
+
+
 def build_policy():
     title = "Shipping and Returns Policy | Mario's Super Soil"
     desc = "Shipping rates, delivery and return policy for Mario's Super Soil orders within Canada: 30 day returns, refunds and exchanges, and who to contact."
@@ -767,7 +849,7 @@ def build_404():
 # ---------------------------------------------------------------- write
 def main():
     sync_prices()
-    pages = {"index.html": build_home(), "404.html": build_404(), "soil-calculator/index.html": build_calculator(), "plant-drmario/index.html": build_drmario(), "cart/index.html": build_cart(), "order-complete/index.html": build_order_complete(), "admin/index.html": build_admin(), "wholesale/index.html": build_wholesale(), "shipping-returns/index.html": build_policy()}
+    pages = {"index.html": build_home(), "404.html": build_404(), "soil-calculator/index.html": build_calculator(), "plant-drmario/index.html": build_drmario(), "cart/index.html": build_cart(), "order-complete/index.html": build_order_complete(), "admin/index.html": build_admin(), "wholesale/index.html": build_wholesale(), "shipping-returns/index.html": build_policy(), "privacy/index.html": build_privacy()}
     for p in PRODUCTS:
         pages[f"products/{p['slug']}/index.html"] = build_product(p)
 
@@ -784,7 +866,7 @@ def main():
 
     # sitemap (indexable pages only)
     urls = ""
-    for rel in ["index.html", "soil-calculator/index.html", "plant-drmario/index.html", "wholesale/index.html", "shipping-returns/index.html"] + [f"products/{p['slug']}/index.html" for p in PRODUCTS]:
+    for rel in ["index.html", "soil-calculator/index.html", "plant-drmario/index.html", "wholesale/index.html", "shipping-returns/index.html", "privacy/index.html"] + [f"products/{p['slug']}/index.html" for p in PRODUCTS]:
         loc = BASE + "/" + rel.replace("index.html", "")
         prio = "1.0" if rel == "index.html" else "0.8"
         urls += f"  <url><loc>{loc}</loc><lastmod>{new[rel]['lastmod']}</lastmod><priority>{prio}</priority></url>\n"

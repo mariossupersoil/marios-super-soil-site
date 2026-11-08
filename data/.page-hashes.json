@@ -1,62 +1,66 @@
 {
   "404.html": {
-    "hash": "72fbac7c96e1de37aee51c257925ff5f0412955d",
-    "lastmod": "2026-11-07"
+    "hash": "9e05d455832ec777edd1cc3067ca0118ced1a5a4",
+    "lastmod": "2026-11-08"
   },
   "admin/index.html": {
-    "hash": "35ac826c829a89f232a8ba20125657cf6d7e17b7",
+    "hash": "1831aab03af2366e576a06e5bda0f48523816090",
     "lastmod": "2026-11-08"
   },
   "cart/index.html": {
-    "hash": "4d9c40818c8c966379c55b6fd2ef05949a0208dc",
-    "lastmod": "2026-11-07"
+    "hash": "b1a85131054849580c664bde10ae1004fc63ce5a",
+    "lastmod": "2026-11-08"
   },
   "index.html": {
-    "hash": "af9e946833e144911d61ad4b139b52265a4d1b6b",
-    "lastmod": "2026-11-07"
+    "hash": "db0a9aecd091c7380dab649a6aa95e02afd26129",
+    "lastmod": "2026-11-08"
   },
   "order-complete/index.html": {
-    "hash": "2689a4eebbf9bf34266e3a1f3f79cc76e35fcbf2",
-    "lastmod": "2026-11-07"
+    "hash": "45d0df4ccb54aa0af715095d6d39cfa8325c11fe",
+    "lastmod": "2026-11-08"
   },
   "plant-drmario/index.html": {
-    "hash": "112749d525a6571a7bc6ea36f23d000394568bab",
-    "lastmod": "2026-11-07"
+    "hash": "87611d3b018425cdd5035b8d9228154b93952f67",
+    "lastmod": "2026-11-08"
+  },
+  "privacy/index.html": {
+    "hash": "65ec8bdf1c9bf5d409d87982e739f379abf9a3dd",
+    "lastmod": "2026-11-08"
   },
   "products/alfalfa-meal/index.html": {
-    "hash": "62070d8e5866e32ea598f4ed9b9b28ced491aff3",
-    "lastmod": "2026-11-07"
+    "hash": "6c6c00c158a37ae9bdb0b63e2182e4ab5bbf6105",
+    "lastmod": "2026-11-08"
   },
   "products/bone-meal/index.html": {
-    "hash": "2b50ca0a5f82b1106730ebdf07a6c78d259c95b5",
-    "lastmod": "2026-11-07"
+    "hash": "2d1bd8201bc8879843ac87dba3fa6cc691f3602b",
+    "lastmod": "2026-11-08"
   },
   "products/crab-meal/index.html": {
-    "hash": "604702a1a10ceb7aa59ba8d41b57bc6fc3eb3db3",
-    "lastmod": "2026-11-07"
+    "hash": "5b9bcc14a9297f64d25072141f98da423cf633a2",
+    "lastmod": "2026-11-08"
   },
   "products/feather-meal/index.html": {
-    "hash": "daced9b3c1edfc96ac0d6619d94d95d4ae7c3df2",
-    "lastmod": "2026-11-07"
+    "hash": "373c38b9b05e26060ccde1d40a1d4fe123bf9b26",
+    "lastmod": "2026-11-08"
   },
   "products/kelp-meal/index.html": {
-    "hash": "633059527900218e6fffb52a06154d8205b88167",
-    "lastmod": "2026-11-07"
+    "hash": "10f19c005f967b02ba64a04e27b77dd70bb2bff8",
+    "lastmod": "2026-11-08"
   },
   "products/worm-castings/index.html": {
-    "hash": "0d4ceca6231df906f7ccac4ae3bf85a98a44c236",
-    "lastmod": "2026-11-07"
+    "hash": "15a2ceb07a4e117e35acd69bf80757748dc2b206",
+    "lastmod": "2026-11-08"
   },
   "shipping-returns/index.html": {
-    "hash": "d5ceffbe7a11b4a8d86e817099e1897da8aa572f",
-    "lastmod": "2026-11-07"
+    "hash": "85ca5a63304b2d5750e534a366d03bb08e11244c",
+    "lastmod": "2026-11-08"
   },
   "soil-calculator/index.html": {
-    "hash": "d1b6f66ba014fe2eab7b4c1e5a74c53b1502c4af",
-    "lastmod": "2026-11-07"
+    "hash": "a71b8ae574382a57e9a956253d802f84100eba89",
+    "lastmod": "2026-11-08"
   },
   "wholesale/index.html": {
-    "hash": "33f9a5039393081a20c173fce96f2756a5859286",
-    "lastmod": "2026-11-07"
+    "hash": "5e221a112ebe767e4f74aea8f6bcfdab44a7e683",
+    "lastmod": "2026-11-08"
   }
 }
