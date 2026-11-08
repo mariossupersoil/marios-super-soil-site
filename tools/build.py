@@ -406,6 +406,7 @@ def build_home():
           <button class="btn" type="button" id="copy">Copy email</button>
         </div>
         <p class="site">{esc(SITE['phone'])}<br>{(esc(a['street']) + ', ') if a.get('street', '').strip() else ''}{esc(a['city'])}, Ontario</p>
+        <p class="site">Local pickup in Mississauga is by arrangement. Call or email us to set it up.</p>
       </div>
       <div>
         <h3 class="subh">Hours</h3>
