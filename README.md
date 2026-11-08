@@ -50,3 +50,6 @@ Store listings (`data/site.json` > `stores`) accept optional `hours` and `carrie
 
 ## Live Instagram feed
 `data/site.json` > `instagram_feed_id`: paste the Behold feed id (from the widget embed code, `feed-id="..."`) and rebuild. The feed loads when the "Follow along" section scrolls into view. Blank = only the follow buttons show.
+
+## Email list sync to n8n (optional)
+Every new email sign-up (pop-up and footer box) is also sent to an n8n webhook so the weekly email bot's Google Sheet stays in step. Set `n8n_subscribe_url` (the production webhook URL of the "Mario's New Subscriber from Website" workflow) and `n8n_secret` (same text as the SECRET in that workflow's first Code node) in `api/config.php`. If n8n is down the sign-up still works and the failure is only written to the server error log.
