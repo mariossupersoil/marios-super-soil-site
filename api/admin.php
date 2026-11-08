@@ -138,6 +138,10 @@ if ($action === 'save_settings') {
     $set = ['gift' => ['enabled' => !empty($g['enabled']), 'threshold' => round($thr, 2), 'name' => $name, 'choices' => $chs, 'weight_kg' => round($wt, 2), 'stock' => $stk], 'reminders' => ['enabled' => !empty($r['enabled']), 'days' => $days]];
     store_update(function ($st) use ($set) { $st['settings'] = array_merge($st['settings'] ?? [], $set); return $st; }) ? out_json(['ok' => true]) : fail(500, 'Could not save.');
 }
+if ($action === 'save_tax') {
+    $on = !empty($in['enabled']);
+    store_update(function ($st) use ($on) { $st['settings'] = array_merge($st['settings'] ?? [], ['tax' => ['enabled' => $on]]); return $st; }) ? out_json(['ok' => true]) : fail(500, 'Could not save.');
+}
 if ($action === 'save_promo') {
     $title = clean_line((string)($in['title'] ?? ''), 40); $text = clean_line((string)($in['text'] ?? ''), 100);
     $code = preg_replace('/[^A-Za-z0-9_-]/', '', (string)($in['code'] ?? '')); $ends = trim((string)($in['ends'] ?? ''));

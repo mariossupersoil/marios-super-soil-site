@@ -127,6 +127,11 @@
     var row2=el('div','row'); row2.style.gridTemplateColumns='repeat(auto-fill,minmax(180px,1fr))';
     var ron=chk('Restock reminders are on',r.enabled), days=inp('number',r.days,{min:7,max:365,step:'1',inputmode:'numeric'});
     row2.appendChild(ron); row2.appendChild(field('Days after the order',days)); card.appendChild(row2);
+    card.appendChild(el('p','hint','Sales tax: when this is on, Stripe adds GST/HST on top of the price at checkout. Only turn it on after Stripe Tax is set up in your Stripe account.'));
+    var tx=S.settings.tax||{enabled:true}, ton=chk('Charge tax at checkout (Stripe Tax)',tx.enabled);
+    var row3=el('div','row'); row3.style.gridTemplateColumns='repeat(auto-fill,minmax(180px,1fr))'; row3.appendChild(ton); card.appendChild(row3);
+    var tb=el('button','btn','Save tax setting'); tb.type='button'; var tm=msgBox(), tbar=el('div','bar'); tbar.appendChild(tb); tbar.appendChild(tm); card.appendChild(tbar);
+    saver(tb,tm,function(){return call('save_tax',{enabled:ton.cb.checked});});
     var b=el('button','btn solid','Save'); b.type='button'; var m=msgBox(), bar=el('div','bar'); bar.appendChild(b); bar.appendChild(m); card.appendChild(bar);
     saver(b,m,function(){return call('save_settings',{gift:{enabled:gon.cb.checked,threshold:thr.value,choices:[{id:(g.choices[0]||{}).id||'level-up',name:ch0.value},{id:(g.choices[1]||{}).id||'flower-power',name:ch1.value}],weight_kg:wt.value,stock:stk.value},reminders:{enabled:ron.cb.checked,days:days.value}});});
     return card;

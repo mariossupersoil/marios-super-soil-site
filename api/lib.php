@@ -222,6 +222,7 @@ function settings(): array {
             'choices' => [['id' => 'level-up', 'name' => 'Level Up 3-3-3 (2 lb)'], ['id' => 'flower-power', 'name' => 'Flower Power 2-6-4 (2 lb)']]],
         'reminders' => ['enabled' => true, 'days' => 60],
         'promo' => ['enabled' => false, 'title' => 'Black Friday', 'text' => '25% off everything', 'code' => 'BlackFriday', 'ends' => ''],
+        'tax' => ['enabled' => (bool)(cfg()['automatic_tax'] ?? true)],
     ];
     $s = store()['settings'] ?? [];
     foreach ($d as $k => $v) $d[$k] = array_merge($v, is_array($s[$k] ?? null) ? $s[$k] : []);

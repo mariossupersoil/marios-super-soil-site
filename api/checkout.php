@@ -8,7 +8,7 @@ $sk = $cfg['stripe_secret_key'] ?? '';
 if ($sk === '' || str_contains($sk, 'PASTE')) fail(503, 'Checkout is not set up yet. Please contact us to order.');
 $tiers = tiers();
 if (!$tiers) fail(503, 'Checkout is not set up yet. Please contact us to order.');
-$autoTax = (bool)($cfg['automatic_tax'] ?? true);
+$autoTax = !empty(settings()['tax']['enabled']);
 $allowedHosts = $cfg['allowed_hosts'] ?? ['mariossupersoil.ca', 'www.mariossupersoil.ca'];
 
 $host = strtolower(preg_replace('/:\d+$/', '', $_SERVER['HTTP_HOST'] ?? ''));
