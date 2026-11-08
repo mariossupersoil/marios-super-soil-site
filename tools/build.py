@@ -231,8 +231,8 @@ def org_ld():
         "name": SITE["name"], "url": BASE + "/", "logo": abs_url("/img/logo.png?v=3"),
         "email": SITE["email"], "telephone": "+1-" + SITE["phone"],
         "foundingDate": "2019",
-        "address": {"@type": "PostalAddress", "streetAddress": a["street"], "addressLocality": a["city"],
-                    "addressRegion": a["region"], "addressCountry": a["country"]},
+        "address": {"@type": "PostalAddress", **({"streetAddress": a["street"]} if a.get("street", "").strip() else {}),
+                    "addressLocality": a["city"], "addressRegion": a["region"], "addressCountry": a["country"]},
         "sameAs": [u for _, u in SITE["social"]],
     }
 
@@ -405,7 +405,7 @@ def build_home():
           <span class="mail" id="mail">{esc(SITE['email'])}</span>
           <button class="btn" type="button" id="copy">Copy email</button>
         </div>
-        <p class="site">{esc(SITE['phone'])}<br>{esc(a['street'])}, {esc(a['city'])}, Ontario</p>
+        <p class="site">{esc(SITE['phone'])}<br>{(esc(a['street']) + ', ') if a.get('street', '').strip() else ''}{esc(a['city'])}, Ontario</p>
       </div>
       <div>
         <h3 class="subh">Hours</h3>
