@@ -95,7 +95,8 @@
           "Bag sizes",
           "2 lb (0.9 kg) and 5 lb (2.3 kg) bags. 10 lb and 20 lb orders are packed as 2 or 4 of the 5 lb bags."
         ]
-      ]
+      ],
+      "from": 17.99
     },
     {
       "id": "flower-power",
@@ -135,7 +136,8 @@
           "Kit sizes",
           "5, 10 and 20 lb"
         ]
-      ]
+      ],
+      "from": 109.99
     }
   ],
   "quotes": [

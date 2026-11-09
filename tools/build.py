@@ -71,7 +71,7 @@ def head(title, description, path, og_image="/img/og-image.jpg?v=3", jsonld=None
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=3">
 <link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/oswald-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=24">
+<link rel="stylesheet" href="/assets/style.css?v=25">
 {ld}</head>
 <body id="top">
 """
@@ -86,7 +86,6 @@ def header():
     <a class="brand" href="/"><img src="/img/logo.png?v=3" width="54" height="54" alt="Mario's Super Soil logo"><span>Mario's Super Soil</span></a>
     <nav aria-label="Main">
       <a href="/#products">Products</a>
-      <a href="/#blends">Blends</a>
       <a href="/#buy">Where to buy</a>
       <a href="/plant-drmario/">Plant Dr. Mario</a>
       <a href="/soil-calculator/">Calculator</a>
@@ -245,7 +244,7 @@ def ring_html():
     """Blends as two big static cards, then tabs; each tab holds a slowly turning ring of bags (ring.js). Without JS it is a plain row."""
     cards = ""
     for b in SITE["blends"]:
-        if b["id"] not in ("level-up", "flower-power"):
+        if b["id"] not in ("level-up", "flower-power", "starter-pack"):
             continue
         prod = next((q for q in PRODUCTS if q["slug"] == b["id"]), None)
         if prod:
@@ -254,8 +253,9 @@ def ring_html():
             cards += (f'<a class="bcard" href="/products/{prod["slug"]}/" style="--accent:{b["accent"]}"><img src="/img/{prod["f"]}-front.webp" width="170" height="220" alt="{esc(full_name(prod))} organic fertilizer pouch">'
                       f'<span class="bt"><span class="nm"><b>{esc(b["a"])}</b> <i>{esc(b["b"])}</i></span><span class="bsub">{esc(b["tagline"])}</span>{fr}<span class="btn solid">See the bag</span></span></a>')
         else:
-            cards += (f'<a class="bcard noimg" href="/#blends" style="--accent:{b["accent"]}"><span class="bt"><span class="nm"><b>{esc(b["a"])}</b> <i>{esc(b["b"])}</i></span>'
-                      f'<span class="bsub">{esc(b["tagline"])}</span><span class="btn">Details</span></span></a>')
+            fr = f'<span class="from">From ${b["from"]:,.2f}</span>' if b.get("from") else ""
+            cards += (f'<a class="bcard noimg" href="/#contact" style="--accent:{b["accent"]}"><span class="bt"><span class="nm"><b>{esc(b["a"])}</b> <i>{esc(b["b"])}</i></span>'
+                      f'<span class="bsub">{esc(b["tagline"])}</span>{fr}<span class="btn">Ask us about it</span></span></a>')
     tabs, panels = "", ""
     cats = [(k, l) for k, l in CATS if k != "blends" and any(p.get("cat") == k for p in PRODUCTS)]
     for n, (k, l) in enumerate(cats):
@@ -358,23 +358,11 @@ def build_home():
     </div>
   </section>
 """
-    # blends + calculator
-    blends = ""
-    for b in SITE["blends"]:
-        dl = "".join(f"<dt>{esc(k)}</dt><dd>{esc(v)}</dd>" for k, v in b["rows"])
-        blends += f"""        <article class="blend" style="--accent:{b['accent']}">
-          <div><h3 class="nm"><b>{esc(b['a'])}</b> <i>{esc(b['b'])}</i></h3><p class="bsub">{esc(b['tagline'])}</p></div>
-          <div><p>{esc(b['text'])}</p><dl>{dl}</dl>{f'<p><a class="btn" href="/products/{b["id"]}/">See the bag and buy</a></p>' if any(q["slug"] == b["id"] for q in PRODUCTS) else ''}</div>
-        </article>
-"""
-    out += f"""  <section id="blends" class="sec">
+    # feeding calculator (the blends themselves are shown in the featured cards above)
+    out += f"""  <section id="feed" class="sec">
     <div class="wrap">
-      <h2>Blends and kits</h2>
-      <p class="lede">Two all-in-one dry blends that combine several of the amendments above, and a kit that puts the range in one box.</p>
-      <div class="blends">
-{blends}      </div>
       <div class="calc" id="calc">
-        <h3>Feeding calculator</h3>
+        <h2>Feeding calculator</h2>
         <p class="lede">Works out how much of each blend to mix in for your pot. It scales the 1 tablespoon per gallon rate and the 5 gallon example from our product pages.</p>
         <div class="crow">
           <label for="gal">Pot size in gallons</label>
@@ -601,7 +589,7 @@ def build_calculator():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Soil amendment calculator", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=24">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=25">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
     out += header()
     body = (ROOT / "data/calculator-body.inc").read_text()
     out += f"""  <section class="sec"><div class="wrap">
@@ -628,7 +616,7 @@ def build_drmario():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Plant Dr. Mario", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=24">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=25">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Plant</b> <i>Dr. Mario</i></h1>
@@ -696,7 +684,7 @@ def build_order_complete():
 
 
 def build_admin():
-    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=24">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
+    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=25">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
     out = out.replace('<meta name="robots" content="noindex, nofollow">\n', '').replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"', 1) if 'noindex' not in out else out
     out += header()
     out += """  <section class="sec"><div class="wrap">
