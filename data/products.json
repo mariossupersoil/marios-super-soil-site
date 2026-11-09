@@ -584,5 +584,59 @@
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
   "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
+ },
+ {
+  "slug": "flower-power",
+  "f": "flower",
+  "a": "Flower",
+  "b": "Power",
+  "npk": [
+   2,
+   6,
+   4
+  ],
+  "accent": "#e68fb7",
+  "title": "Flower Power 2-6-4 Organic Bloom Fertilizer | Mario's Super Soil",
+  "meta": "Flower Power 2-6-4 organic bloom fertilizer for strong roots, lush growth and abundant flowers, indoors and out. Sizes: 2 to 20 lb.",
+  "desc": [
+   "Flower Power 2-6-4 is a premium organic fertilizer that promotes strong roots, lush growth, and vibrant blooms in indoor and outdoor flowering plants.",
+   "Its nutrient-rich formula supports abundant flower production, with easy application and clear instructions for gardeners of all experience levels.",
+   "Made from alfalfa meal, bone meal, soft rock phosphate, KMS, glacial rock dust, kelp meal, oyster shell flour, gypsum and azomite."
+  ],
+  "ben": [
+   "Explosive bloom & yield",
+   "Rich in phosphorus",
+   "Mineral rich formula",
+   "Stronger stems & roots",
+   "Natural plant immunity",
+   "Balances soil pH naturally"
+  ],
+  "micro": [
+   [
+    "Calcium (Ca)",
+    "Calcium (Ca)",
+    "14%"
+   ],
+   [
+    "Magnesium (Mg)",
+    "Magnésium (Mg)",
+    "2.9%"
+   ],
+   [
+    "Sulfur (S)",
+    "Soufre (S)",
+    "about 4.5%"
+   ]
+  ],
+  "how_en": "Use 1 tbsp per gallon of soil or coco. For mature plants, use 2 tbsp per gallon. Use 1/2 tbsp for seedlings.",
+  "how_fr": "Utiliser 1 c. à soupe par gallon de terre ou de coco. Pour les plantes matures, utiliser 2 c. à soupe par gallon. Utiliser 1/2 c. à soupe pour les semis.",
+  "when": "1 tbsp per gallon. Mature plants: 2 tbsp. Seedlings: 1/2 tbsp.",
+  "sizes": [
+   "2 lb (0.9 kg)",
+   "5 lb (2.3 kg)",
+   "10 lb (4.5 kg) = 2 x 5 lb bags",
+   "20 lb (9.1 kg) = 4 x 5 lb bags"
+  ],
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
  }
 ]

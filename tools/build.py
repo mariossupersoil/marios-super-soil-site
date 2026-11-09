@@ -305,7 +305,7 @@ def build_home():
         dl = "".join(f"<dt>{esc(k)}</dt><dd>{esc(v)}</dd>" for k, v in b["rows"])
         blends += f"""        <article class="blend" style="--accent:{b['accent']}">
           <div><h3 class="nm"><b>{esc(b['a'])}</b> <i>{esc(b['b'])}</i></h3><p class="bsub">{esc(b['tagline'])}</p></div>
-          <div><p>{esc(b['text'])}</p><dl>{dl}</dl></div>
+          <div><p>{esc(b['text'])}</p><dl>{dl}</dl>{f'<p><a class="btn" href="/products/{b["id"]}/">See the bag and buy</a></p>' if any(q["slug"] == b["id"] for q in PRODUCTS) else ''}</div>
         </article>
 """
     out += f"""  <section id="blends" class="sec">
