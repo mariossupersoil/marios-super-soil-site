@@ -52,7 +52,8 @@
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
   "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
-  "cat": "blends"
+  "cat": "blends",
+  "use": "For blooms and bigger yields"
  },
  {
   "slug": "crab-meal",
@@ -101,7 +102,8 @@
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
   "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
-  "cat": "meals"
+  "cat": "meals",
+  "use": "Root and pest protection, plus calcium"
  },
  {
   "slug": "bone-meal",
@@ -145,7 +147,8 @@
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
   "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
-  "cat": "meals"
+  "cat": "meals",
+  "use": "Phosphorus for roots, blooms and fruit"
  },
  {
   "slug": "kelp-meal",
@@ -219,7 +222,8 @@
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
   "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
-  "cat": "meals"
+  "cat": "meals",
+  "use": "Ocean minerals for stress and root growth"
  },
  {
   "slug": "alfalfa-meal",
@@ -273,7 +277,8 @@
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
   "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
-  "cat": "meals"
+  "cat": "meals",
+  "use": "Gentle nitrogen and a growth boost"
  },
  {
   "slug": "feather-meal",
@@ -317,7 +322,8 @@
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
   "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
-  "cat": "meals"
+  "cat": "meals",
+  "use": "Slow nitrogen for lush leaves"
  },
  {
   "slug": "soft-rock-phosphate",
@@ -361,7 +367,8 @@
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
   "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
-  "cat": "minerals"
+  "cat": "minerals",
+  "use": "Slow phosphorus and calcium"
  },
  {
   "slug": "gypsum",
@@ -412,7 +419,8 @@
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
   "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
-  "cat": "minerals"
+  "cat": "minerals",
+  "use": "Loosens clay, adds calcium and sulfur"
  },
  {
   "slug": "oyster-shell-flour",
@@ -458,7 +466,8 @@
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
   "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
-  "cat": "minerals"
+  "cat": "minerals",
+  "use": "Slow calcium and a steady pH"
  },
  {
   "slug": "dolomite-lime",
@@ -509,7 +518,8 @@
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
   "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
-  "cat": "minerals"
+  "cat": "minerals",
+  "use": "Raises pH, adds calcium and magnesium"
  },
  {
   "slug": "basalt-rock-dust",
@@ -580,7 +590,8 @@
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
   "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
-  "cat": "minerals"
+  "cat": "minerals",
+  "use": "Trace minerals and silica for strong stems"
  },
  {
   "slug": "worm-castings",
@@ -649,7 +660,8 @@
    "4 gallons"
   ],
   "size_note": "Worm castings and compost are sold in litres and gallons, not by weight, because the weight changes with moisture. Roughly: 1 L is about 1 to 1.3 lb, 1 gallon about 4 to 5 lb, 2 gallons about 8 to 10 lb and 4 gallons about 15 to 20 lb.",
-  "cat": "soil"
+  "cat": "soil",
+  "use": "Live biology for any soil"
  },
  {
   "slug": "compost-blend",
@@ -693,6 +705,7 @@
    "4 gallons"
   ],
   "size_note": "Worm castings and compost are sold in litres and gallons, not by weight, because the weight changes with moisture. Roughly: 1 L is about 1 to 1.3 lb, 1 gallon about 4 to 5 lb, 2 gallons about 8 to 10 lb and 4 gallons about 15 to 20 lb.",
-  "cat": "soil"
+  "cat": "soil",
+  "use": "Organic matter that builds humus"
  }
 ]

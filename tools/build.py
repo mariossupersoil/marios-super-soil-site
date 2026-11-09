@@ -71,7 +71,7 @@ def head(title, description, path, og_image="/img/og-image.jpg?v=3", jsonld=None
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=3">
 <link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/oswald-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=21">
+<link rel="stylesheet" href="/assets/style.css?v=23">
 {ld}</head>
 <body id="top">
 """
@@ -325,33 +325,27 @@ def build_home():
     </div>
   </section>
 """
-    # compare
-    rows = ""
-    maxv = 11.0
-    lastcat = None
-    for p in sorted(PRODUCTS, key=lambda q: [c for c, _ in CATS].index(q.get("cat", "meals"))):
-        if p.get("cat") != lastcat:
-            lastcat = p.get("cat")
-            rows += f'<tr class="catrow"><th colspan="6" scope="colgroup">{esc(dict(CATS).get(lastcat, ""))}</th></tr>'
-        def bar(v):
-            return f'<div class="bar"><em>{v}</em><span style="width:{max(0, v / maxv * 70):.0f}%"></span></div>'
-        cells = ('<td colspan="3" class="a">N-P-K negligible. Mineral amendment.</td>' if p.get("macro_note")
-                 else f'<td>{bar(p["npk"][0])}</td><td>{bar(p["npk"][1])}</td><td>{bar(p["npk"][2])}</td>')
-        rows += (f'<tr style="--accent:{p["accent"]}"><td class="p"><a href="/products/{p["slug"]}/">{name_html(p)}</a></td>'
-                 + cells
-                 + f'<td class="a">{esc(p["when"])}</td><td class="a">{"<br>".join(esc(x) for x in p["sizes"])}</td></tr>')
+    # simple guide: one short list per product type
+    DESC = {"blends": "All-in-one mixes", "meals": "Single ingredients that feed plants", "minerals": "Calcium, minerals and pH", "soil": "Living soil builders"}
+    colhtml = {}
+    for k, l in CATS:
+        lis = ""
+        for p in PRODUCTS:
+            if p.get("cat") != k:
+                continue
+            rows = price_rows(p["slug"])
+            fr = f'<span class="gp">From ${min(x[1] for x in rows):,.2f}</span>' if rows else ""
+            lis += (f'<li><a href="/products/{p["slug"]}/" style="--accent:{p["accent"]}"><span class="gd" aria-hidden="true"></span>'
+                    f'<span class="gn"><span class="nm">{name_html(p)}</span><span class="gu">{esc(p.get("use", ""))}</span></span>{fr}</a></li>')
+        if lis:
+            colhtml[k] = f'<div class="gblock"><h3>{esc(l)}</h3><p class="gdesc">{esc(DESC.get(k, ""))}</p><ul>{lis}</ul></div>'
+    blocks = "".join('<div class="gcol">' + "".join(colhtml.get(k, "") for k in col) + '</div>' for col in (("blends", "meals"), ("minerals", "soil")))
     out += f"""  <section id="deal" class="sec dealsec" hidden></section>
   <section id="products" class="sec">
     <div class="wrap">
-      <h2>Organic fertilizers and soil amendments</h2>
-      <p class="lede">Every bag has a clear job, grouped by type. Guaranteed analysis in percent; bars share one scale so you can see which product leads in nitrogen, phosphorus or potassium.</p>
-      <div class="tablewrap">
-        <table>
-          <caption class="sr">Nutrient comparison of Mario's Super Soil organic amendments</caption>
-          <thead><tr><th scope="col">Product</th><th scope="col">Nitrogen (N)</th><th scope="col">Phosphorus (P)</th><th scope="col">Potassium (K)</th><th scope="col">How much and when</th><th scope="col">Sizes</th></tr></thead>
-          <tbody>{rows}</tbody>
-        </table>
-      </div>
+      <h2>Find the right bag</h2>
+      <p class="lede">Pick a type, tap a bag, and you will find the dose, the ingredients and the price on its page.</p>
+      <div class="guide">{blocks}</div>
     </div>
   </section>
 """
@@ -598,7 +592,7 @@ def build_calculator():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Soil amendment calculator", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=21">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=23">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
     out += header()
     body = (ROOT / "data/calculator-body.inc").read_text()
     out += f"""  <section class="sec"><div class="wrap">
@@ -625,7 +619,7 @@ def build_drmario():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Plant Dr. Mario", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=21">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=23">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Plant</b> <i>Dr. Mario</i></h1>
@@ -693,7 +687,7 @@ def build_order_complete():
 
 
 def build_admin():
-    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=21">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
+    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=23">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
     out = out.replace('<meta name="robots" content="noindex, nofollow">\n', '').replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"', 1) if 'noindex' not in out else out
     out += header()
     out += """  <section class="sec"><div class="wrap">
