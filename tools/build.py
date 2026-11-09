@@ -71,7 +71,7 @@ def head(title, description, path, og_image="/img/og-image.jpg?v=3", jsonld=None
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=3">
 <link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/oswald-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=25">
+<link rel="stylesheet" href="/assets/style.css?v=26">
 {ld}</head>
 <body id="top">
 """
@@ -349,6 +349,16 @@ def build_home():
                     f'<span class="gn"><span class="nm">{name_html(p)} {chip}</span><span class="gu">{esc(p.get("use", ""))}</span></span>{fr}</a></li>')
         if lis:
             blocks += f'<div class="gblock"><h3>{esc(title)}</h3><p class="gdesc">{esc(desc)}</p><ul>{lis}</ul></div>'
+    sp = next((b for b in SITE["blends"] if b["id"] == "starter-pack"), None)
+    if sp:
+        kit = [("Level Up 3-3-3", None), ("Flower Power 2-6-4", "flower-power"), ("Kelp Meal", "kelp-meal"), ("Alfalfa Meal", "alfalfa-meal"), ("Compost", "compost-blend"), ("Worm Castings", "worm-castings")]
+        items = "".join((f'<li><a href="/products/{sl}/">{esc(n)}</a></li>' if sl else f"<li>{esc(n)}</li>") for n, sl in kit)
+        kitblock = (f'<div class="gblock"><h3>Starter kit</h3><p class="gdesc">Everything in one box, for new gardeners</p><ul>'
+                    f'<li><a href="/#contact" style="--accent:{sp["accent"]}"><span class="gd" aria-hidden="true"></span><span class="gn"><span class="nm"><b>Super Starter</b> <i>Pack</i></span>'
+                    f'<span class="gu">{esc(sp["tagline"])} Kit sizes: 5, 10 and 20 lb.</span></span><span class="gp">From ${sp["from"]:,.2f}</span></a></li>'
+                    f'<li class="kitin"><span class="gu">What comes in the kit</span><ul class="kitlist">{items}</ul></li></ul></div>')
+        i = blocks.index('<div class="gblock"><h3>Nitrogen')
+        blocks = blocks[:i] + kitblock + blocks[i:]
     out += f"""  <section id="deal" class="sec dealsec" hidden></section>
   <section id="products" class="sec">
     <div class="wrap">
@@ -589,7 +599,7 @@ def build_calculator():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Soil amendment calculator", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=25">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=26">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
     out += header()
     body = (ROOT / "data/calculator-body.inc").read_text()
     out += f"""  <section class="sec"><div class="wrap">
@@ -616,7 +626,7 @@ def build_drmario():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Plant Dr. Mario", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=25">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=26">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Plant</b> <i>Dr. Mario</i></h1>
@@ -684,7 +694,7 @@ def build_order_complete():
 
 
 def build_admin():
-    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=25">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
+    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=26">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
     out = out.replace('<meta name="robots" content="noindex, nofollow">\n', '').replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"', 1) if 'noindex' not in out else out
     out += header()
     out += """  <section class="sec"><div class="wrap">
