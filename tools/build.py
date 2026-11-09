@@ -20,19 +20,24 @@ def esc(s):
 
 
 def npk_text(p):
-    return " - ".join(str(x) for x in p["npk"])
+    """Mineral amendments with negligible N-P-K carry an npk_label (e.g. "Soil amendment") instead of numbers."""
+    return p.get("npk_label") or " - ".join(str(x) for x in p["npk"])
 
 
 def npk_dash(p):
-    return "-".join(str(x) for x in p["npk"])
+    return "" if p.get("npk_label") else "-".join(str(x) for x in p["npk"])
 
 
 def name_html(p):
-    return f'<b>{esc(p["a"])}</b> <i>{esc(p["b"])}</i>'
+    return f'<b>{esc(p["a"])}</b>' + (f' <i>{esc(p["b"])}</i>' if p.get("b") else "")
 
 
 def plain_name(p):
-    return f'{p["a"]} {p["b"]}'
+    return f'{p["a"]} {p.get("b", "")}'.strip()
+
+
+def full_name(p):
+    return f"{plain_name(p)} {npk_dash(p)}".strip()
 
 
 def abs_url(path):
@@ -66,7 +71,7 @@ def head(title, description, path, og_image="/img/og-image.jpg?v=3", jsonld=None
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=3">
 <link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/oswald-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=14">
+<link rel="stylesheet" href="/assets/style.css?v=15">
 {ld}</head>
 <body id="top">
 """
@@ -176,7 +181,7 @@ def sync_prices():
             m = re.match(r"(\d+) lb \(.*= (\d+) x 5 lb", lab)
             if m:  # packed as several 5 lb bags: price and stock come from the 5lb size
                 sizes[k]["pack_of"] = int(m.group(2)); sizes[k]["pack_from"] = "5lb"; sizes[k]["price"] = None
-        prods[p["slug"]] = {"name": f"{plain_name(p)} {npk_dash(p)}", "img": f"/img/{p['f']}-front.webp", "sizes": sizes}
+        prods[p["slug"]] = {"name": full_name(p), "img": f"/img/{p['f']}-front.webp", "sizes": sizes}
     out = {"currency": "CAD", "note": "Prices in Canadian dollars before tax and shipping, for example 24.99. null means no price yet.", "products": prods}
     f.write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n")
 
@@ -218,7 +223,7 @@ def sizes_text(p):
 def picker_item(p, eager=False):
     load = "" if eager else ' loading="lazy"'
     return (f'<li><a class="pick" data-slug="{p["slug"]}" href="/products/{p["slug"]}/" style="--accent:{p["accent"]}">'
-            f'<img src="/img/{p["f"]}-front.webp" width="170" height="250"{load} alt="{esc(plain_name(p))} {esc(npk_dash(p))} organic fertilizer stand-up pouch">'
+            f'<img src="/img/{p["f"]}-front.webp" width="170" height="250"{load} alt="{esc(full_name(p))} organic fertilizer stand-up pouch">'
             f'<span class="nm">{name_html(p)}</span><span class="npk">{esc(npk_text(p))}</span>'
             + (f'<span class="from">From ${min(x[1] for x in price_rows(p["slug"])):,.2f}</span>' if price_rows(p["slug"]) else '')
             + '</a></li>')
@@ -274,14 +279,16 @@ def build_home():
     for p in PRODUCTS:
         def bar(v):
             return f'<div class="bar"><em>{v}</em><span style="width:{max(0, v / maxv * 70):.0f}%"></span></div>'
+        cells = ('<td colspan="3" class="a">N-P-K negligible. Mineral amendment.</td>' if p.get("macro_note")
+                 else f'<td>{bar(p["npk"][0])}</td><td>{bar(p["npk"][1])}</td><td>{bar(p["npk"][2])}</td>')
         rows += (f'<tr style="--accent:{p["accent"]}"><td class="p"><a href="/products/{p["slug"]}/">{name_html(p)}</a></td>'
-                 f'<td>{bar(p["npk"][0])}</td><td>{bar(p["npk"][1])}</td><td>{bar(p["npk"][2])}</td>'
-                 f'<td class="a">{esc(p["when"])}</td><td class="a">{"<br>".join(esc(x) for x in p["sizes"])}</td></tr>')
+                 + cells
+                 + f'<td class="a">{esc(p["when"])}</td><td class="a">{"<br>".join(esc(x) for x in p["sizes"])}</td></tr>')
     out += f"""  <section id="deal" class="sec dealsec" hidden></section>
   <section id="products" class="sec">
     <div class="wrap">
       <h2>Organic fertilizers and soil amendments</h2>
-      <p class="lede">Six single-ingredient bags, each with a clear job. Guaranteed analysis in percent; bars share one scale so you can see which product leads in nitrogen, phosphorus or potassium.</p>
+      <p class="lede">Single-ingredient bags, each with a clear job. Guaranteed analysis in percent; bars share one scale so you can see which product leads in nitrogen, phosphorus or potassium.</p>
       <div class="tablewrap">
         <table>
           <caption class="sr">Nutrient comparison of Mario's Super Soil organic amendments</caption>
@@ -431,7 +438,7 @@ def build_product(p):
                "highPrice": f"{max(x[1] for x in rows):.2f}", "offerCount": len(rows), "url": abs_url(path)} if rows else None)
     ld = [org_ld(),
           {"@context": "https://schema.org", "@type": "Product", **({"offers": offers} if offers else {}),
-           "name": f"{plain_name(p)} {npk_dash(p)}", "description": p["meta"], "url": abs_url(path),
+           "name": full_name(p), "description": p["meta"], "url": abs_url(path),
            "image": [abs_url(f"/img/{p['f']}-front.webp"), abs_url(f"/img/{p['f']}-back.webp")],
            "brand": {"@type": "Brand", "name": SITE["name"]}, "category": "Organic fertilizer",
            "size": ", ".join(p["sizes"]),
@@ -447,10 +454,12 @@ def build_product(p):
                   for i, t in enumerate(p["ben"]))
     desc = "".join(f"<p>{esc(d)}</p>" for d in p["desc"])
     n, ph, k = p["npk"]
-    ing = (f'<dt>Nitrogen (N) <small lang="fr">Azote (N)</small></dt><dd>{n}%</dd>'
+    ing = ('<dt>Nitrogen, phosphorus, potassium <small lang="fr">Azote, phosphore, potassium</small></dt><dd>Negligible <small lang="fr">Négligeable</small></dd>'
+           if p.get("macro_note") else
+           f'<dt>Nitrogen (N) <small lang="fr">Azote (N)</small></dt><dd>{n}%</dd>'
            f'<dt>Phosphorus (P) <small lang="fr">Phosphore (P)</small></dt><dd>{ph}%</dd>'
-           f'<dt>Potassium (K) <small lang="fr">Potassium (K)</small></dt><dd>{k}%</dd>'
-           f'<dt class="sub">Micronutrients <small lang="fr">Micronutriments</small></dt><dd class="sub"></dd>')
+           f'<dt>Potassium (K) <small lang="fr">Potassium (K)</small></dt><dd>{k}%</dd>')
+    ing += (f'<dt class="sub">Micronutrients <small lang="fr">Micronutriments</small></dt><dd class="sub"></dd>')
     for en, fr, val in p["micro"]:
         ing += f'<dt>{esc(en)}{"" if en == fr else f" <small lang=fr>{esc(fr)}</small>"}</dt><dd>{esc(val)}</dd>'
     more = "".join(picker_item(q) for q in others)
@@ -460,14 +469,14 @@ def build_product(p):
       <div class="viewer">
         <div class="stage">
           <div class="glow"><div class="pair">
-            <img src="/img/{p['f']}-front.webp" width="380" height="560" alt="{esc(plain_name(p))} {esc(npk_dash(p))} organic fertilizer stand-up pouch, front">
+            <img src="/img/{p['f']}-front.webp" width="380" height="560" alt="{esc(full_name(p))} organic fertilizer stand-up pouch, front">
             <img src="/img/{p['f']}-back.webp" width="380" height="560" loading="lazy" alt="Back of the {esc(plain_name(p))} pouch with ingredients and directions">
           </div></div>
         </div>
         <div class="info">
           <h1 class="nm">{name_html(p)}</h1>
           <span class="pq">Premium quality</span>
-          <div class="npkline"><span class="big">{esc(npk_text(p))}</span><span class="net">Sizes: {esc(sizes_text(p))}</span></div>
+          <div class="npkline"><span class="big{" lab" if p.get("npk_label") else ""}">{esc(npk_text(p))}</span><span class="net">Sizes: {esc(sizes_text(p))}</span></div>
           {price_line(p)}
           {('<p class="store">' + esc(p['size_note']) + '</p>') if p.get('size_note') else ''}
           <div class="desc">{desc}</div>
@@ -533,7 +542,7 @@ def build_calculator():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Soil amendment calculator", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=14">', '<link rel="stylesheet" href="/assets/style.css?v=14">\n<link rel="stylesheet" href="/assets/calculator.css">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=15">', '<link rel="stylesheet" href="/assets/style.css?v=15">\n<link rel="stylesheet" href="/assets/calculator.css">')
     out += header()
     body = (ROOT / "data/calculator-body.inc").read_text()
     out += f"""  <section class="sec"><div class="wrap">
@@ -560,7 +569,7 @@ def build_drmario():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Plant Dr. Mario", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=14">', '<link rel="stylesheet" href="/assets/style.css?v=14">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=15">', '<link rel="stylesheet" href="/assets/style.css?v=15">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Plant</b> <i>Dr. Mario</i></h1>
@@ -628,7 +637,7 @@ def build_order_complete():
 
 
 def build_admin():
-    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=14">', '<link rel="stylesheet" href="/assets/style.css?v=14">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
+    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=15">', '<link rel="stylesheet" href="/assets/style.css?v=15">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
     out = out.replace('<meta name="robots" content="noindex, nofollow">\n', '').replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"', 1) if 'noindex' not in out else out
     out += header()
     out += """  <section class="sec"><div class="wrap">
@@ -808,7 +817,7 @@ def build_wholesale():
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Wholesale</b> <i>for stores</i></h1>
     <p class="lede">Run a garden centre, hydroponics shop, feed store or independent retailer? Mario's Super Soil makes organic dry fertilizers and soil amendments in Mississauga, Ontario, and we would like to hear from you.</p>
     <ul class="perks">
-      <li><strong>Canadian made</strong><br>Organic dry fertilizers and soil amendments made in Ontario: bone, crab, feather, kelp and alfalfa meal, worm castings and blends.</li>
+      <li><strong>Canadian made</strong><br>Organic dry fertilizers and soil amendments made in Ontario: bone, crab, feather, kelp and alfalfa meal, worm castings, dolomite lime, gypsum, oyster shell flour, soft rock phosphate, basalt rock dust and blends.</li>
       <li><strong>Volume pricing</strong><br>Wholesale pricing that improves as your order size grows, with minimum order quantities per tier.</li>
       <li><strong>Net 30 terms</strong><br>Payment terms are available for approved stores.</li>
       <li><strong>Retail-ready bags</strong><br>Stand-up pouches with clear directions in English and French, in 2 lb and 5 lb sizes. Bulk sacks are available on request.</li>

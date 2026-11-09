@@ -1,330 +1,588 @@
 [
-  {
-    "slug": "bone-meal",
-    "f": "bone",
-    "a": "Bone",
-    "b": "Meal",
-    "npk": [
-      4,
-      10,
-      0
-    ],
-    "accent": "#d8c98b",
-    "title": "Bone Meal 4-10-0 Organic Fertilizer | Mario's Super Soil",
-    "meta": "Organic bone meal fertilizer (4-10-0) with high organic phosphorus for strong roots, bigger blooms and fruit. Sizes: 2 to 20 lb. Made in Mississauga, Ontario.",
-    "desc": [
-      "Bone meal is an organic fertilizer made from ground animal bones, rich in phosphorus to support strong roots & healthy plant growth.",
-      "It also provides calcium, iron, magnesium, and zinc, helping promote healthy stems, leaves, flowers, seeds and fruit production."
-    ],
-    "ben": [
-      "Rich in bio calcium",
-      "Steady slow release",
-      "Strong root networks",
-      "Bigger blooms & fruit",
-      "Ideal for bulbs, veggies & shrubs",
-      "High organic phosphorus"
-    ],
-    "micro": [
-      [
-        "Calcium (Ca)",
-        "Calcium (Ca)",
-        "22%"
-      ]
-    ],
-    "how_en": "Apply 1–2 tablespoons per gallon of soil. Mix in and water lightly. Nutrients release over 4 months.",
-    "how_fr": "Appliquez 1 à 2 cuillères à soupe par gallon de terreau. Mélangez et arrosez légèrement. Les nutriments se libèrent pendant 4 mois.",
-    "when": "1–2 tbsp per gallon of soil. Releases over 4 months.",
-    "sizes": [
-      "2 lb (0.9 kg)",
-      "5 lb (2.3 kg)",
-      "10 lb (4.5 kg) = 2 x 5 lb bags",
-      "20 lb (9.1 kg) = 4 x 5 lb bags"
-    ],
-    "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
-  },
-  {
-    "slug": "crab-meal",
-    "f": "crab",
-    "a": "Crab",
-    "b": "Meal",
-    "npk": [
-      4,
-      3,
-      0
-    ],
-    "accent": "#f0603a",
-    "title": "Crab Meal 4-3-0 Organic Fertilizer | Mario's Super Soil",
-    "meta": "Organic crab meal (4-3-0) made from crab and lobster shells. Chitin-rich, high in calcium, with slow-release nitrogen for veggies. Sizes: 2 to 20 lb.",
-    "desc": [
-      "Crab meal is an organic fertilizer made from crab & lobster shells, providing nutrients that support healthy soil & flower and vegetable growth.",
-      "The NPK ratio of crab meal is 4-3-0, with a high concentration of nitrogen, phosphorus, and magnesium, and it is particularly rich in chitin."
-    ],
-    "ben": [
-      "Chitin-rich pest shield",
-      "Fights root rot & blight",
-      "High calcium (prevents rot)",
-      "Slow-release nitrogen (4-3-0)",
-      "Supercharges soil microbes",
-      "Essential for tomatoes & veg"
-    ],
-    "micro": [
-      [
-        "Calcium (Ca)",
-        "Calcium (Ca)",
-        "23%"
-      ],
-      [
-        "Chitin",
-        "Chitine",
-        ""
-      ]
-    ],
-    "how_en": "Apply in spring and every 2–3 months. Use 1–2 teaspoons per gallon of soil. Yellow leaves may indicate nitrogen deficiency.",
-    "how_fr": "Appliquer au printemps et tous les 2 à 3 mois. Utiliser 1 à 2 cuillères à café par gallon de terre. Les feuilles jaunes peuvent indiquer une carence en azote.",
-    "when": "1–2 tsp per gallon of soil, in spring and every 2–3 months.",
-    "sizes": [
-      "2 lb (0.9 kg)",
-      "5 lb (2.3 kg)",
-      "10 lb (4.5 kg) = 2 x 5 lb bags",
-      "20 lb (9.1 kg) = 4 x 5 lb bags"
-    ],
-    "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
-  },
-  {
-    "slug": "feather-meal",
-    "f": "feather",
-    "a": "Feather",
-    "b": "Meal",
-    "npk": [
-      11,
-      0,
-      0
-    ],
-    "accent": "#d3d7dc",
-    "title": "Feather Meal 11-0-0 Organic Nitrogen | Mario's Super Soil",
-    "meta": "Organic feather meal (11-0-0) for lush leaf and stem growth. 2–4 month slow-release nitrogen, ideal for heavy feeders in soil or coco. Sizes: 2 to 20 lb.",
-    "desc": [
-      "Feather meal is an organic fertilizer made from poultry feathers, processed under high heat and pressure, then finely ground into a nutrient-rich powder.",
-      "With an NPK ratio of 11-0-0, it provides essential nitrogen for plant development, particularly during the vegetative stage, through both immediate and slow-release nutrition."
-    ],
-    "ben": [
-      "2–4 month slow release",
-      "Lush leaf & stem growth",
-      "Rich in proteins & aminos",
-      "Sustains soil microbes",
-      "Ideal for heavy feeders",
-      "Ultra-high nitrogen"
-    ],
-    "micro": [
-      [
-        "Minimal trace minerals",
-        "Minéraux traces minimes",
-        ""
-      ]
-    ],
-    "how_en": "Apply 1–2 tablespoons per gallon of soil or coco. Mix in and water thoroughly. Avoid overapplication.",
-    "how_fr": "Appliquez 1 à 2 cuillères à soupe par gallon de terre ou de coco. Mélangez et arrosez abondamment. Évitez le surdosage.",
-    "when": "1–2 tbsp per gallon of soil or coco. Releases over 2–4 months.",
-    "sizes": [
-      "2 lb (0.9 kg)",
-      "5 lb (2.3 kg)",
-      "10 lb (4.5 kg) = 2 x 5 lb bags",
-      "20 lb (9.1 kg) = 4 x 5 lb bags"
-    ],
-    "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
-  },
-  {
-    "slug": "kelp-meal",
-    "f": "kelp",
-    "a": "Kelp",
-    "b": "Meal",
-    "npk": [
-      1,
-      0,
-      4
-    ],
-    "accent": "#3f93e6",
-    "title": "Kelp Meal 1-0-4 Organic Potassium | Mario's Super Soil",
-    "meta": "Organic kelp meal (1-0-4) with 70+ ocean minerals. Feeds soil microbes and stimulates strong roots. For soil, coco and teas. Sizes: 2 to 20 lb.",
-    "desc": [
-      "Kelp is a marine algae sourced from nutrient-rich oceans. Often combined with fish products, it promotes healthier plant growth, improves yields, & enhances garden quality.",
-      "With an NPK ratio of 1-0-4, kelp meal releases nutrients quickly and provides over 70 vitamins and minerals, including essential micronutrients and macronutrients."
-    ],
-    "ben": [
-      "70+ ocean minerals",
-      "Heat & drought defense",
-      "Stimulates strong roots",
-      "Organic potassium (1-0-4)",
-      "Feeds soil microbes",
-      "Ideal for soil, coco & teas"
-    ],
-    "micro": [
-      [
-        "Magnesium (Mg)",
-        "Magnésium (Mg)",
-        "0.5%"
-      ],
-      [
-        "Sulfur (S)",
-        "Soufre (S)",
-        "0.2%"
-      ],
-      [
-        "Boron (B)",
-        "Bore (B)",
-        ""
-      ],
-      [
-        "Iron (Fe)",
-        "Fer (Fe)",
-        ""
-      ],
-      [
-        "Manganese (Mn)",
-        "Manganèse (Mn)",
-        ""
-      ],
-      [
-        "Zinc (Zn)",
-        "Zinc (Zn)",
-        ""
-      ],
-      [
-        "Copper (Cu)",
-        "Cuivre (Cu)",
-        ""
-      ]
-    ],
-    "how_en": "Mix 1–2 tbsp per gallon of soil. Apply monthly during the growing season.",
-    "how_fr": "Mélangez 1 à 2 c. à soupe par gallon de terre. Appliquez chaque mois pendant la saison de croissance.",
-    "when": "1–2 tbsp per gallon of soil, monthly in the growing season.",
-    "sizes": [
-      "2 lb (0.9 kg)",
-      "5 lb (2.3 kg)",
-      "10 lb (4.5 kg) = 2 x 5 lb bags",
-      "20 lb (9.1 kg) = 4 x 5 lb bags"
-    ],
-    "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
-  },
-  {
-    "slug": "alfalfa-meal",
-    "f": "alfalfa",
-    "a": "Alfalfa",
-    "b": "Meal",
-    "npk": [
-      3,
-      0.5,
-      3
-    ],
-    "accent": "#b985da",
-    "title": "Alfalfa Meal 3-0.5-3 Organic Fertilizer | Mario's Super Soil",
-    "meta": "Organic alfalfa meal (3-0.5-3) with triacontanol growth hormone. Conditions and loosens soil, feeds earthworms and microbes. Ideal for soil, beds and teas.",
-    "desc": [
-      "Enhance your garden with Alfalfa Meal, an organic fertilizer and soil conditioner rich in nutrients that promote healthy plant growth.",
-      "Made from fermented alfalfa seeds, it has a light texture and pleasant earthy aroma. Apply generously around flowering perennials and shrubs."
-    ],
-    "ben": [
-      "Triacontanol growth hormone",
-      "Fast organic nitrogen (3-0.5-3)",
-      "Rich in Ca, Mg & trace minerals",
-      "Feeds earthworms & microbes",
-      "Conditions & loosens soil",
-      "Ideal for soil, beds & teas"
-    ],
-    "micro": [
-      [
-        "Calcium (Ca)",
-        "Calcium (Ca)",
-        "2%"
-      ],
-      [
-        "Magnesium (Mg)",
-        "Magnésium (Mg)",
-        "0.5%"
-      ],
-      [
-        "Sulfur (S)",
-        "Soufre (S)",
-        "0.2%"
-      ]
-    ],
-    "how_en": "Mix 2 tbsp per gallon of soil. Apply around plants and hedges, mix into soil, and water. Apply in spring; repeat every 6 weeks for long-blooming plants.",
-    "how_fr": "Mélanger 2 c. à soupe par gallon de terre. Appliquer autour des plantes et des haies, incorporer au sol et arroser. Appliquer au printemps, puis répéter toutes les 6 semaines pour les plantes à longue floraison.",
-    "when": "2 tbsp per gallon of soil, in spring and every 6 weeks.",
-    "sizes": [
-      "2 lb (0.9 kg)",
-      "5 lb (2.3 kg)",
-      "10 lb (4.5 kg) = 2 x 5 lb bags",
-      "20 lb (9.1 kg) = 4 x 5 lb bags"
-    ],
-    "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
-  },
-  {
-    "slug": "worm-castings",
-    "f": "worm",
-    "a": "Worm",
-    "b": "Castings",
-    "npk": [
-      1.5,
-      2.5,
-      1.3
-    ],
-    "accent": "#e0ab9c",
-    "title": "Worm Castings Organic Soil Amendment | Mario's Super Soil",
-    "meta": "Organic worm castings packed with live microbes. Improves water retention, never burns, activates dry amendments. For soil, coco and teas. Sizes: 1 L to 4 gallons.",
-    "desc": [
-      "Worm castings are a natural fertilizer produced by earthworms, also known as vermicast. These castings consist of earthworm waste.",
-      "As worms consume compost materials, their nutrient-rich waste creates a superior soil amendment that supports healthier plant growth."
-    ],
-    "ben": [
-      "Packed with live microbes",
-      "Improves water retention",
-      "Natural disease resistance",
-      "100% safe, never burns",
-      "Activates dry amendments",
-      "Ideal for soil, coco & teas"
-    ],
-    "micro": [
-      [
-        "Iron (Fe)",
-        "Fer (Fe)",
-        "1%"
-      ],
-      [
-        "Calcium (Ca)",
-        "Calcium (Ca)",
-        "1%"
-      ],
-      [
-        "Magnesium (Mg)",
-        "Magnésium (Mg)",
-        "0.5%"
-      ],
-      [
-        "Sulfur (S)",
-        "Soufre (S)",
-        "0.5%"
-      ],
-      [
-        "Copper (Cu)",
-        "Cuivre (Cu)",
-        "0.05%"
-      ],
-      [
-        "Zinc (Zn)",
-        "Zinc (Zn)",
-        "0.05%"
-      ]
-    ],
-    "how_en": "Mix into potting soil or sprinkle around plants. For established plants, use 1–2 cups. Water thoroughly.",
-    "how_fr": "Mélangez au terreau ou saupoudrez autour des plantes. Pour les plantes établies, utilisez 1 à 2 tasses. Arrosez abondamment.",
-    "when": "Mix into potting soil, or 1–2 cups for established plants.",
-    "sizes": [
-      "1 L",
-      "1 gallon",
-      "2 gallons",
-      "4 gallons"
-    ],
-    "size_note": "Worm castings and compost are sold in litres and gallons, not by weight, because the weight changes with moisture. Roughly: 1 L is about 1 to 1.3 lb, 1 gallon about 4 to 5 lb, 2 gallons about 8 to 10 lb and 4 gallons about 15 to 20 lb."
-  }
+ {
+  "slug": "bone-meal",
+  "f": "bone",
+  "a": "Bone",
+  "b": "Meal",
+  "npk": [
+   4,
+   10,
+   0
+  ],
+  "accent": "#d8c98b",
+  "title": "Bone Meal 4-10-0 Organic Fertilizer | Mario's Super Soil",
+  "meta": "Organic bone meal fertilizer (4-10-0) with high organic phosphorus for strong roots, bigger blooms and fruit. Sizes: 2 to 20 lb. Made in Mississauga, Ontario.",
+  "desc": [
+   "Bone meal is an organic fertilizer made from ground animal bones, rich in phosphorus to support strong roots & healthy plant growth.",
+   "It also provides calcium, iron, magnesium, and zinc, helping promote healthy stems, leaves, flowers, seeds and fruit production."
+  ],
+  "ben": [
+   "Rich in bio calcium",
+   "Steady slow release",
+   "Strong root networks",
+   "Bigger blooms & fruit",
+   "Ideal for bulbs, veggies & shrubs",
+   "High organic phosphorus"
+  ],
+  "micro": [
+   [
+    "Calcium (Ca)",
+    "Calcium (Ca)",
+    "22%"
+   ]
+  ],
+  "how_en": "Apply 1–2 tablespoons per gallon of soil. Mix in and water lightly. Nutrients release over 4 months.",
+  "how_fr": "Appliquez 1 à 2 cuillères à soupe par gallon de terreau. Mélangez et arrosez légèrement. Les nutriments se libèrent pendant 4 mois.",
+  "when": "1–2 tbsp per gallon of soil. Releases over 4 months.",
+  "sizes": [
+   "2 lb (0.9 kg)",
+   "5 lb (2.3 kg)",
+   "10 lb (4.5 kg) = 2 x 5 lb bags",
+   "20 lb (9.1 kg) = 4 x 5 lb bags"
+  ],
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
+ },
+ {
+  "slug": "crab-meal",
+  "f": "crab",
+  "a": "Crab",
+  "b": "Meal",
+  "npk": [
+   4,
+   3,
+   0
+  ],
+  "accent": "#f0603a",
+  "title": "Crab Meal 4-3-0 Organic Fertilizer | Mario's Super Soil",
+  "meta": "Organic crab meal (4-3-0) made from crab and lobster shells. Chitin-rich, high in calcium, with slow-release nitrogen for veggies. Sizes: 2 to 20 lb.",
+  "desc": [
+   "Crab meal is an organic fertilizer made from crab & lobster shells, providing nutrients that support healthy soil & flower and vegetable growth.",
+   "The NPK ratio of crab meal is 4-3-0, with a high concentration of nitrogen, phosphorus, and magnesium, and it is particularly rich in chitin."
+  ],
+  "ben": [
+   "Chitin-rich pest shield",
+   "Fights root rot & blight",
+   "High calcium (prevents rot)",
+   "Slow-release nitrogen (4-3-0)",
+   "Supercharges soil microbes",
+   "Essential for tomatoes & veg"
+  ],
+  "micro": [
+   [
+    "Calcium (Ca)",
+    "Calcium (Ca)",
+    "23%"
+   ],
+   [
+    "Chitin",
+    "Chitine",
+    ""
+   ]
+  ],
+  "how_en": "Apply in spring and every 2–3 months. Use 1–2 teaspoons per gallon of soil. Yellow leaves may indicate nitrogen deficiency.",
+  "how_fr": "Appliquer au printemps et tous les 2 à 3 mois. Utiliser 1 à 2 cuillères à café par gallon de terre. Les feuilles jaunes peuvent indiquer une carence en azote.",
+  "when": "1–2 tsp per gallon of soil, in spring and every 2–3 months.",
+  "sizes": [
+   "2 lb (0.9 kg)",
+   "5 lb (2.3 kg)",
+   "10 lb (4.5 kg) = 2 x 5 lb bags",
+   "20 lb (9.1 kg) = 4 x 5 lb bags"
+  ],
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
+ },
+ {
+  "slug": "feather-meal",
+  "f": "feather",
+  "a": "Feather",
+  "b": "Meal",
+  "npk": [
+   11,
+   0,
+   0
+  ],
+  "accent": "#d3d7dc",
+  "title": "Feather Meal 11-0-0 Organic Nitrogen | Mario's Super Soil",
+  "meta": "Organic feather meal (11-0-0) for lush leaf and stem growth. 2–4 month slow-release nitrogen, ideal for heavy feeders in soil or coco. Sizes: 2 to 20 lb.",
+  "desc": [
+   "Feather meal is an organic fertilizer made from poultry feathers, processed under high heat and pressure, then finely ground into a nutrient-rich powder.",
+   "With an NPK ratio of 11-0-0, it provides essential nitrogen for plant development, particularly during the vegetative stage, through both immediate and slow-release nutrition."
+  ],
+  "ben": [
+   "2–4 month slow release",
+   "Lush leaf & stem growth",
+   "Rich in proteins & aminos",
+   "Sustains soil microbes",
+   "Ideal for heavy feeders",
+   "Ultra-high nitrogen"
+  ],
+  "micro": [
+   [
+    "Minimal trace minerals",
+    "Minéraux traces minimes",
+    ""
+   ]
+  ],
+  "how_en": "Apply 1–2 tablespoons per gallon of soil or coco. Mix in and water thoroughly. Avoid overapplication.",
+  "how_fr": "Appliquez 1 à 2 cuillères à soupe par gallon de terre ou de coco. Mélangez et arrosez abondamment. Évitez le surdosage.",
+  "when": "1–2 tbsp per gallon of soil or coco. Releases over 2–4 months.",
+  "sizes": [
+   "2 lb (0.9 kg)",
+   "5 lb (2.3 kg)",
+   "10 lb (4.5 kg) = 2 x 5 lb bags",
+   "20 lb (9.1 kg) = 4 x 5 lb bags"
+  ],
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
+ },
+ {
+  "slug": "kelp-meal",
+  "f": "kelp",
+  "a": "Kelp",
+  "b": "Meal",
+  "npk": [
+   1,
+   0,
+   4
+  ],
+  "accent": "#3f93e6",
+  "title": "Kelp Meal 1-0-4 Organic Potassium | Mario's Super Soil",
+  "meta": "Organic kelp meal (1-0-4) with 70+ ocean minerals. Feeds soil microbes and stimulates strong roots. For soil, coco and teas. Sizes: 2 to 20 lb.",
+  "desc": [
+   "Kelp is a marine algae sourced from nutrient-rich oceans. Often combined with fish products, it promotes healthier plant growth, improves yields, & enhances garden quality.",
+   "With an NPK ratio of 1-0-4, kelp meal releases nutrients quickly and provides over 70 vitamins and minerals, including essential micronutrients and macronutrients."
+  ],
+  "ben": [
+   "70+ ocean minerals",
+   "Heat & drought defense",
+   "Stimulates strong roots",
+   "Organic potassium (1-0-4)",
+   "Feeds soil microbes",
+   "Ideal for soil, coco & teas"
+  ],
+  "micro": [
+   [
+    "Magnesium (Mg)",
+    "Magnésium (Mg)",
+    "0.5%"
+   ],
+   [
+    "Sulfur (S)",
+    "Soufre (S)",
+    "0.2%"
+   ],
+   [
+    "Boron (B)",
+    "Bore (B)",
+    ""
+   ],
+   [
+    "Iron (Fe)",
+    "Fer (Fe)",
+    ""
+   ],
+   [
+    "Manganese (Mn)",
+    "Manganèse (Mn)",
+    ""
+   ],
+   [
+    "Zinc (Zn)",
+    "Zinc (Zn)",
+    ""
+   ],
+   [
+    "Copper (Cu)",
+    "Cuivre (Cu)",
+    ""
+   ]
+  ],
+  "how_en": "Mix 1–2 tbsp per gallon of soil. Apply monthly during the growing season.",
+  "how_fr": "Mélangez 1 à 2 c. à soupe par gallon de terre. Appliquez chaque mois pendant la saison de croissance.",
+  "when": "1–2 tbsp per gallon of soil, monthly in the growing season.",
+  "sizes": [
+   "2 lb (0.9 kg)",
+   "5 lb (2.3 kg)",
+   "10 lb (4.5 kg) = 2 x 5 lb bags",
+   "20 lb (9.1 kg) = 4 x 5 lb bags"
+  ],
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
+ },
+ {
+  "slug": "alfalfa-meal",
+  "f": "alfalfa",
+  "a": "Alfalfa",
+  "b": "Meal",
+  "npk": [
+   3,
+   0.5,
+   3
+  ],
+  "accent": "#b985da",
+  "title": "Alfalfa Meal 3-0.5-3 Organic Fertilizer | Mario's Super Soil",
+  "meta": "Organic alfalfa meal (3-0.5-3) with triacontanol growth hormone. Conditions and loosens soil, feeds earthworms and microbes. Ideal for soil, beds and teas.",
+  "desc": [
+   "Enhance your garden with Alfalfa Meal, an organic fertilizer and soil conditioner rich in nutrients that promote healthy plant growth.",
+   "Made from fermented alfalfa seeds, it has a light texture and pleasant earthy aroma. Apply generously around flowering perennials and shrubs."
+  ],
+  "ben": [
+   "Triacontanol growth hormone",
+   "Fast organic nitrogen (3-0.5-3)",
+   "Rich in Ca, Mg & trace minerals",
+   "Feeds earthworms & microbes",
+   "Conditions & loosens soil",
+   "Ideal for soil, beds & teas"
+  ],
+  "micro": [
+   [
+    "Calcium (Ca)",
+    "Calcium (Ca)",
+    "2%"
+   ],
+   [
+    "Magnesium (Mg)",
+    "Magnésium (Mg)",
+    "0.5%"
+   ],
+   [
+    "Sulfur (S)",
+    "Soufre (S)",
+    "0.2%"
+   ]
+  ],
+  "how_en": "Mix 2 tbsp per gallon of soil. Apply around plants and hedges, mix into soil, and water. Apply in spring; repeat every 6 weeks for long-blooming plants.",
+  "how_fr": "Mélanger 2 c. à soupe par gallon de terre. Appliquer autour des plantes et des haies, incorporer au sol et arroser. Appliquer au printemps, puis répéter toutes les 6 semaines pour les plantes à longue floraison.",
+  "when": "2 tbsp per gallon of soil, in spring and every 6 weeks.",
+  "sizes": [
+   "2 lb (0.9 kg)",
+   "5 lb (2.3 kg)",
+   "10 lb (4.5 kg) = 2 x 5 lb bags",
+   "20 lb (9.1 kg) = 4 x 5 lb bags"
+  ],
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
+ },
+ {
+  "slug": "worm-castings",
+  "f": "worm",
+  "a": "Worm",
+  "b": "Castings",
+  "npk": [
+   1.5,
+   2.5,
+   1.3
+  ],
+  "accent": "#e0ab9c",
+  "title": "Worm Castings Organic Soil Amendment | Mario's Super Soil",
+  "meta": "Organic worm castings packed with live microbes. Improves water retention, never burns, activates dry amendments. For soil, coco and teas. Sizes: 1 L to 4 gallons.",
+  "desc": [
+   "Worm castings are a natural fertilizer produced by earthworms, also known as vermicast. These castings consist of earthworm waste.",
+   "As worms consume compost materials, their nutrient-rich waste creates a superior soil amendment that supports healthier plant growth."
+  ],
+  "ben": [
+   "Packed with live microbes",
+   "Improves water retention",
+   "Natural disease resistance",
+   "100% safe, never burns",
+   "Activates dry amendments",
+   "Ideal for soil, coco & teas"
+  ],
+  "micro": [
+   [
+    "Iron (Fe)",
+    "Fer (Fe)",
+    "1%"
+   ],
+   [
+    "Calcium (Ca)",
+    "Calcium (Ca)",
+    "1%"
+   ],
+   [
+    "Magnesium (Mg)",
+    "Magnésium (Mg)",
+    "0.5%"
+   ],
+   [
+    "Sulfur (S)",
+    "Soufre (S)",
+    "0.5%"
+   ],
+   [
+    "Copper (Cu)",
+    "Cuivre (Cu)",
+    "0.05%"
+   ],
+   [
+    "Zinc (Zn)",
+    "Zinc (Zn)",
+    "0.05%"
+   ]
+  ],
+  "how_en": "Mix into potting soil or sprinkle around plants. For established plants, use 1–2 cups. Water thoroughly.",
+  "how_fr": "Mélangez au terreau ou saupoudrez autour des plantes. Pour les plantes établies, utilisez 1 à 2 tasses. Arrosez abondamment.",
+  "when": "Mix into potting soil, or 1–2 cups for established plants.",
+  "sizes": [
+   "1 L",
+   "1 gallon",
+   "2 gallons",
+   "4 gallons"
+  ],
+  "size_note": "Worm castings and compost are sold in litres and gallons, not by weight, because the weight changes with moisture. Roughly: 1 L is about 1 to 1.3 lb, 1 gallon about 4 to 5 lb, 2 gallons about 8 to 10 lb and 4 gallons about 15 to 20 lb."
+ },
+ {
+  "slug": "dolomite-lime",
+  "f": "dolomite",
+  "a": "Dolomite",
+  "b": "Lime",
+  "npk": [
+   0,
+   0,
+   0
+  ],
+  "accent": "#b8b4a3",
+  "npk_label": "Soil amendment",
+  "macro_note": true,
+  "title": "Dolomite Lime Soil Amendment | Mario's Super Soil",
+  "meta": "Dolomite lime with calcium and magnesium to balance soil pH and reduce acidity. Sizes: 2 to 20 lb. Made in Mississauga, Ontario.",
+  "desc": [
+   "Dolomite lime is a natural mineral amendment containing calcium and magnesium, essential nutrients that support healthy soil and plant growth.",
+   "Rich in calcium and magnesium carbonates, it helps balance soil pH, reduce acidity, and improve nutrient availability for healthier plants and gardens."
+  ],
+  "ben": [
+   "Natural soil pH sweetener",
+   "Rich in bio calcium & Mg",
+   "Prevents blossom end rot",
+   "Drives green chlorophyll",
+   "Buffers soil acidification",
+   "Ideal for soil, peat & beds"
+  ],
+  "micro": [
+   [
+    "Calcium (Ca)",
+    "Calcium (Ca)",
+    "21%"
+   ],
+   [
+    "Magnesium (Mg)",
+    "Magnésium (Mg)",
+    "12%"
+   ]
+  ],
+  "how_en": "Use 1–2 tbsp per gallon of soil. To raise soil pH from 5.5 to 6.5, use approximately 5 lbs per 100 square feet.",
+  "how_fr": "Utiliser 1–2 c. à soupe par gallon de terreau. Pour augmenter le pH de 5,5 à 6,5, utiliser environ 5 lb par 100 pieds carrés.",
+  "when": "1–2 tbsp per gallon of soil. 5 lb per 100 sq ft to raise pH 5.5 to 6.5.",
+  "sizes": [
+   "2 lb (0.9 kg)",
+   "5 lb (2.3 kg)",
+   "10 lb (4.5 kg) = 2 x 5 lb bags",
+   "20 lb (9.1 kg) = 4 x 5 lb bags"
+  ],
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
+ },
+ {
+  "slug": "gypsum",
+  "f": "gypsum",
+  "a": "Gypsum",
+  "b": "",
+  "npk": [
+   0,
+   0,
+   0
+  ],
+  "accent": "#e8d9cb",
+  "npk_label": "Soil amendment",
+  "macro_note": true,
+  "title": "Gypsum Calcium & Sulfur Soil Amendment | Mario's Super Soil",
+  "meta": "Gypsum with calcium and sulfur to loosen heavy clay, improve drainage and prevent blossom end rot without changing pH. 2 to 20 lb.",
+  "desc": [
+   "Gypsum is a natural mineral rich in calcium and sulfur, helping improve water absorption, reduce soil erosion, and support plant growth.",
+   "It has little effect on soil pH but helps roots grow by reducing aluminum toxicity, especially in acidic soils, promoting healthier development."
+  ],
+  "ben": [
+   "Loosens heavy clay soil",
+   "Bio calcium without pH change",
+   "Rich in elemental sulfur",
+   "Prevents blossom end rot",
+   "Improves drainage & aeration",
+   "Ideal for soil, lawns & beds"
+  ],
+  "micro": [
+   [
+    "Calcium (Ca)",
+    "Calcium (Ca)",
+    "22%"
+   ],
+   [
+    "Sulfur (S)",
+    "Soufre (S)",
+    "17%"
+   ]
+  ],
+  "how_en": "Use 1–2 tbsp per gallon of soil or coco. For foliar spray, mix 1/2–1 tsp per gallon of water and spray leaves evenly. For soil drench, mix 1–2 tbsp per gallon of water.",
+  "how_fr": "Utiliser 1–2 c. à soupe par gallon de terreau ou de fibre de coco. Pour les pulvérisations foliaires, mélanger 1/2–1 c. à thé par gallon d’eau et vaporiser les feuilles uniformément. Pour l’arrosage du sol, mélanger 1–2 c. à soupe par gallon d’eau.",
+  "when": "1–2 tbsp per gallon of soil or coco.",
+  "sizes": [
+   "2 lb (0.9 kg)",
+   "5 lb (2.3 kg)",
+   "10 lb (4.5 kg) = 2 x 5 lb bags",
+   "20 lb (9.1 kg) = 4 x 5 lb bags"
+  ],
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
+ },
+ {
+  "slug": "oyster-shell-flour",
+  "f": "oyster",
+  "a": "Oyster Shell",
+  "b": "Flour",
+  "npk": [
+   0,
+   0,
+   0
+  ],
+  "accent": "#a8dce8",
+  "npk_label": "Soil amendment",
+  "macro_note": true,
+  "title": "Oyster Shell Flour Calcium Amendment | Mario's Super Soil",
+  "meta": "Ultra-fine oyster shell flour, 96% calcium carbonate, a slow-release calcium source and long-term pH buffer. Sizes: 2 to 20 lb.",
+  "desc": [
+   "Oyster shell flour contains 96% calcium carbonate and micronutrients, providing slow-release nutrition while helping maintain balanced soil pH levels.",
+   "Its gradual breakdown provides lasting calcium, reducing the risk of nutrient lockout and supporting consistent nutrient availability for healthier plant growth."
+  ],
+  "ben": [
+   "Ultra-fine bio-calcium",
+   "Long-term pH buffer",
+   "Prevents blossom end rot",
+   "Strengthens cell walls",
+   "Feeds soil biology",
+   "Ideal for living soil & peat"
+  ],
+  "micro": [
+   [
+    "Calcium (Ca)",
+    "Calcium (Ca)",
+    "34%"
+   ]
+  ],
+  "how_en": "New pots: 1–2 tbsp per gallon of soil. Established plants: 1 tbsp per gallon. Base mixes: 1 cup per 30 L. Garden beds: 2.5–5 lbs per 100 square feet, mixed into the top 3 inches of soil.",
+  "how_fr": "Nouveaux pots : 1–2 c. à soupe par gallon de terreau. Plantes établies : 1 c. à soupe par gallon. Mélanges de base : 1 tasse par 30 L. Plates-bandes : 2,5–5 lb par 100 pieds carrés, à mélanger dans les 3 premiers pouces de sol.",
+  "when": "1–2 tbsp per gallon of soil. Beds: 2.5 to 5 lb per 100 sq ft.",
+  "sizes": [
+   "2 lb (0.9 kg)",
+   "5 lb (2.3 kg)",
+   "10 lb (4.5 kg) = 2 x 5 lb bags",
+   "20 lb (9.1 kg) = 4 x 5 lb bags"
+  ],
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
+ },
+ {
+  "slug": "soft-rock-phosphate",
+  "f": "phosphate",
+  "a": "Soft Rock",
+  "b": "Phosphate",
+  "npk": [
+   0,
+   3,
+   0
+  ],
+  "accent": "#c8703f",
+  "title": "Soft Rock Phosphate Organic Fertilizer | Mario's Super Soil",
+  "meta": "Soft rock phosphate (0-3-0) with slow-release phosphorus, calcium and trace minerals for roots, blooms and fruit. Sizes: 2 to 20 lb.",
+  "desc": [
+   "Soft rock phosphate is a natural mineral fertilizer derived from fossilized marine organisms formed millions of years ago.",
+   "It provides slow-release phosphorus, silicon, boron, and trace minerals, improving soil fertility and retaining calcium around plant roots for healthier growth."
+  ],
+  "ben": [
+   "Colloidal soft phosphorus",
+   "Rich in bio-available calcium",
+   "Triggers heavy blooms & fruit",
+   "Drives explosive root growth",
+   "50+ minerals & trace elements",
+   "Ideal for soil, beds & transplants"
+  ],
+  "micro": [
+   [
+    "Calcium (Ca)",
+    "Calcium (Ca)",
+    "1%"
+   ]
+  ],
+  "how_en": "Apply 1 cup per plant at planting or early in the season. For gardens, use 10 lbs per 100 square feet monthly. For containers, mix 2 tbsp per gallon of soil.",
+  "how_fr": "Appliquer 1 tasse par plante à la plantation ou en début de saison. Pour les jardins, utiliser 10 lb par 100 pieds carrés chaque mois. Pour les contenants, mélanger 2 c. à soupe par gallon de terreau.",
+  "when": "1 cup per plant at planting. Containers: 2 tbsp per gallon.",
+  "sizes": [
+   "2 lb (0.9 kg)",
+   "5 lb (2.3 kg)",
+   "10 lb (4.5 kg) = 2 x 5 lb bags",
+   "20 lb (9.1 kg) = 4 x 5 lb bags"
+  ],
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
+ },
+ {
+  "slug": "basalt-rock-dust",
+  "f": "basalt",
+  "a": "Basalt",
+  "b": "Rock Dust",
+  "npk": [
+   0,
+   0,
+   0
+  ],
+  "accent": "#9a9a9a",
+  "npk_label": "Soil amendment",
+  "macro_note": true,
+  "title": "Basalt Rock Dust Volcanic Remineralizer | Mario's Super Soil",
+  "meta": "Basalt rock dust, a silica-rich volcanic remineralizer for soil mixes and compost with 50+ trace minerals. Sizes: 2 to 20 lb. Made in Ontario.",
+  "desc": [
+   "Basalt rock dust is a natural soil amendment made from finely ground volcanic rock, commonly found around the world.",
+   "It breaks down easily in soil, releasing essential minerals that help replenish nutrients, improve soil health, and support stronger plant growth."
+  ],
+  "ben": [
+   "Volcanic mineral remineralizer",
+   "50+ trace micro-nutrients",
+   "Silica-fortified stems & cells",
+   "High paramagnetic energy",
+   "Boosts microbial activity",
+   "Ideal for soil mixes & compost"
+  ],
+  "micro": [
+   [
+    "Silicon (Si)",
+    "Silicium (Si)",
+    "45%"
+   ],
+   [
+    "Iron (Fe)",
+    "Fer (Fe)",
+    "5%"
+   ],
+   [
+    "Magnesium (Mg)",
+    "Magnésium (Mg)",
+    "2%"
+   ],
+   [
+    "Calcium (Ca)",
+    "Calcium (Ca)",
+    "3%"
+   ],
+   [
+    "Potassium (K)",
+    "Potassium (K)",
+    "0.5%"
+   ],
+   [
+    "Manganese (Mn)",
+    "Manganèse (Mn)",
+    "0.1%"
+   ]
+  ],
+  "how_en": "Use 1 tbsp (15 ml) per gallon (4 L) for potting, transplanting, or monthly feeding. For living soil, use 1/4 - 3/8 cup (4–6 tbsp) per gallon.",
+  "how_fr": "Utiliser 1 c. à soupe (15 ml) par gallon (4 L) pour le rempotage, la transplantation ou l’application mensuelle. Pour un terreau vivant, utiliser 1/4 - 3/8 tasse (4–6 c. à soupe) par gallon.",
+  "when": "1 tbsp per gallon for potting. Living soil: 4 to 6 tbsp per gallon.",
+  "sizes": [
+   "2 lb (0.9 kg)",
+   "5 lb (2.3 kg)",
+   "10 lb (4.5 kg) = 2 x 5 lb bags",
+   "20 lb (9.1 kg) = 4 x 5 lb bags"
+  ],
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
+ }
 ]
