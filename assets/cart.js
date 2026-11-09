@@ -1,10 +1,12 @@
 (function(){
   'use strict';
-  var KEY='mss_cart_v1', CODEKEY='mss_code_v1', PRICES=null, SHIP=null, GIFT=null, GCH='', $=function(id){return document.getElementById(id);};
+  var KEY='mss_cart_v1', CODEKEY='mss_code_v1', PRICES=null, SHIP=null, GIFT=null, PROMO=null, GCH='', $=function(id){return document.getElementById(id);};
   var mem=[], memCode='';
 
   function load(){try{var a=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(a)?a:[];}catch(e){return mem;}}
   function save(a){mem=a;try{localStorage.setItem(KEY,JSON.stringify(a));}catch(e){}}
+  function declined(){try{return sessionStorage.getItem('mss_nopromo')==='1';}catch(e){return false;}}
+  function decline(on){try{if(on)sessionStorage.setItem('mss_nopromo','1');else sessionStorage.removeItem('mss_nopromo');}catch(e){}}
   function getCode(){try{return localStorage.getItem(CODEKEY)||'';}catch(e){return memCode;}}
   function setCode(c){memCode=c;try{if(c)localStorage.setItem(CODEKEY,c);else localStorage.removeItem(CODEKEY);}catch(e){}}
   function count(){return load().reduce(function(n,i){return n+(i.qty||0);},0);}
@@ -12,7 +14,7 @@
   function money(v){return new Intl.NumberFormat('en-CA',{style:'currency',currency:'CAD'}).format(v);}
   function shop(){
     if(PRICES) return Promise.resolve(PRICES);
-    return fetch('/api/shop.php',{cache:'no-cache'}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(j){PRICES=j.products||{};SHIP=j.tiers||[];GIFT=j.gift||null;return PRICES;});
+    return fetch('/api/shop.php',{cache:'no-cache'}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(j){PRICES=j.products||{};SHIP=j.tiers||[];GIFT=j.gift||null;PROMO=j.promo||null;return PRICES;});
   }
   function soldout(s){return !!s.soldout;}
   function find(slug,size){var P=PRICES&&PRICES[slug];return P&&P.enabled&&P.sizes&&P.sizes[size]?{p:P,s:P.sizes[size]}:null;}
@@ -153,7 +155,8 @@
     if(disc) cm.textContent='Code '+disc.code+' applied'+(off>0?': -'+money(off):'')+(disc.free_shipping?' (free shipping)':'')+'.';
     if(codeMsg){cm.textContent=codeMsg;cm.className='codemsg err';}
     cbtn.addEventListener('click',function(){
-      var v=ci.value.trim(); if(!v){setCode('');start();return;}
+      var v=ci.value.trim(); if(!v){setCode('');decline(true);start();return;}
+      decline(false);
       cbtn.disabled=true;
       post('/api/discount.php',{items:load(),code:v}).then(function(d){setCode(d.code);d.code=d.code;renderCart(d);})
         .catch(function(e){setCode('');renderCart(null,neterr(e));});
@@ -182,9 +185,11 @@
   }
   function start(){
     var code=getCode(), items=load();
+    // the live deal-of-the-month code is applied for everyone who reaches the cart, unless they removed it themselves
+    if(!code&&PROMO&&PROMO.code&&!declined()) code=PROMO.code;
     if(!code||!items.length){renderCart(null);return;}
     post('/api/discount.php',{items:items,code:code})
-      .then(function(d){renderCart(d);})
+      .then(function(d){if(d&&d.code)setCode(d.code);renderCart(d);})
       .catch(function(e){setCode('');renderCart(null,neterr(e));});
   }
   if(root) shop().then(start).catch(function(){root.innerHTML='';root.appendChild(el('p','lede','Your cart could not be loaded. Please refresh the page.'));});
