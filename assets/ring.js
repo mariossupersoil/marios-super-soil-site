@@ -4,7 +4,7 @@
   var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var tabs = [].slice.call(root.querySelectorAll('[role=tab]'));
   var panels = [].slice.call(root.querySelectorAll('.ringpanel'));
-  var cur = null, active = 0, paused = false, visible = true, holdUntil = 0;
+  var playing = !still, cur = null, active = 0, paused = false, visible = true, holdUntil = 0;
   function items() { return [].slice.call(cur.querySelectorAll('.rit')); }
   function layout() {
     var its = items(), n = its.length, w = cur.querySelector('.ringstage').clientWidth;
@@ -33,12 +33,14 @@
   }
   tabs.forEach(function (t) { t.addEventListener('click', function () { show(t.dataset.cat); }); });
   panels.forEach(function (p) {
-    p.querySelectorAll('.rbtn').forEach(function (b) { b.addEventListener('click', function () { cur = p; go(+b.dataset.dir, true); }); });
+    p.querySelectorAll('.rbtn[data-dir]').forEach(function (b) { b.addEventListener('click', function () { cur = p; go(+b.dataset.dir, true); }); });
     p.querySelectorAll('.rit').forEach(function (el, i) {
       el.addEventListener('click', function (e) { if (!p.classList.contains('ring-on')) return; if (i !== active) { e.preventDefault(); active = i; holdUntil = Date.now() + 6000; layout(); } });
     });
-    ['pointerenter', 'focusin'].forEach(function (e) { p.addEventListener(e, function () { paused = true; }); });
-    ['pointerleave', 'focusout'].forEach(function (e) { p.addEventListener(e, function () { paused = false; holdUntil = Date.now() + 1500; }); });
+    p.addEventListener('pointerenter', function () { paused = true; });
+    p.addEventListener('pointerleave', function () { paused = false; holdUntil = Date.now() + 1500; });
+    p.addEventListener('focusin', function (e) { try { if (e.target.matches(':focus-visible')) paused = true; } catch (x) {} }); // keyboard users only
+    p.addEventListener('focusout', function () { paused = false; });
     p.addEventListener('touchstart', function () { holdUntil = Date.now() + 6000; }, { passive: true });
     var sx = null;
     p.addEventListener('pointerdown', function (e) { sx = e.clientX; });
@@ -47,5 +49,8 @@
   cur = panels[0]; setup();
   window.addEventListener('resize', function () { if (cur.classList.contains('ring-on')) layout(); });
   if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { visible = e[0].isIntersecting; }).observe(root);
-  if (!still) setInterval(function () { if (!paused && visible && !document.hidden && Date.now() >= holdUntil && cur.classList.contains('ring-on')) go(1); }, 3200);
+  function syncBtns() { root.querySelectorAll('.playbtn').forEach(function (b) { b.innerHTML = playing ? '&#10074;&#10074;' : '&#9654;'; b.setAttribute('aria-label', playing ? 'Pause turning' : 'Play turning'); }); }
+  root.querySelectorAll('.playbtn').forEach(function (b) { b.addEventListener('click', function () { playing = !playing; holdUntil = 0; syncBtns(); }); });
+  syncBtns();
+  setInterval(function () { if (playing && !paused && visible && !document.hidden && Date.now() >= holdUntil && cur.classList.contains('ring-on')) go(1); }, 2000);
 })();
