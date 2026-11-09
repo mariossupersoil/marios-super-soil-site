@@ -137,8 +137,8 @@
           "2 lb and 5 lb"
         ]
       ],
-      "from": 60.0,
-      "price_label": "2 lb: $60.00 · 5 lb: $109.99"
+      "from": 59.99,
+      "price_label": "2 lb: $59.99 · 5 lb: $109.99"
     }
   ],
   "quotes": [
