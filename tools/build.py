@@ -71,7 +71,7 @@ def head(title, description, path, og_image="/img/og-image.jpg?v=3", jsonld=None
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=3">
 <link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/oswald-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=16">
+<link rel="stylesheet" href="/assets/style.css?v=17">
 {ld}</head>
 <body id="top">
 """
@@ -142,6 +142,7 @@ def footer():
   </div>
 </footer>
 <script src="/assets/app.js" defer></script>
+<script src="/assets/ring.js?v=1" defer></script>
 <script src="/assets/rail.js?v=1" defer></script>
 <script src="/assets/cart.js?v=6" defer></script>
 <script src="/assets/social.js?v=1" defer></script>
@@ -240,6 +241,38 @@ def rail_html():
       </div>"""
 
 
+def ring_html():
+    """Blends as two big static cards, then tabs; each tab holds a slowly turning ring of bags (ring.js). Without JS it is a plain row."""
+    cards = ""
+    for b in SITE["blends"]:
+        if b["id"] not in ("level-up", "flower-power"):
+            continue
+        prod = next((q for q in PRODUCTS if q["slug"] == b["id"]), None)
+        if prod:
+            rows = price_rows(prod["slug"])
+            fr = f'<span class="from">From ${min(x[1] for x in rows):,.2f}</span>' if rows else ""
+            cards += (f'<a class="bcard" href="/products/{prod["slug"]}/" style="--accent:{b["accent"]}"><img src="/img/{prod["f"]}-front.webp" width="170" height="220" alt="{esc(full_name(prod))} organic fertilizer pouch">'
+                      f'<span class="bt"><span class="nm"><b>{esc(b["a"])}</b> <i>{esc(b["b"])}</i></span><span class="bsub">{esc(b["tagline"])}</span>{fr}<span class="btn solid">See the bag</span></span></a>')
+        else:
+            cards += (f'<a class="bcard noimg" href="/#blends" style="--accent:{b["accent"]}"><span class="bt"><span class="nm"><b>{esc(b["a"])}</b> <i>{esc(b["b"])}</i></span>'
+                      f'<span class="bsub">{esc(b["tagline"])}</span><span class="btn">Details</span></span></a>')
+    tabs, panels = "", ""
+    cats = [(k, l) for k, l in CATS if k != "blends" and any(p.get("cat") == k for p in PRODUCTS)]
+    for n, (k, l) in enumerate(cats):
+        sel = "true" if n == 0 else "false"
+        tabs += f'<button type="button" role="tab" class="chip" id="tab-{k}" aria-controls="ring-{k}" aria-selected="{sel}" data-cat="{k}">{esc(l)}</button>'
+        items = "".join(f'<li class="rit">{picker_item(p, eager=True)[4:-5]}</li>' for p in PRODUCTS if p.get("cat") == k)
+        panels += (f'<div class="ringpanel" role="tabpanel" id="ring-{k}" aria-labelledby="tab-{k}"{"" if n == 0 else " hidden"}>'
+                   f'<div class="ringstage"><ul class="ringlist">{items}</ul></div>'
+                   f'<div class="ringnav"><button type="button" class="rbtn" data-dir="-1" aria-label="Previous product">&#8592;</button><button type="button" class="rbtn" data-dir="1" aria-label="Next product">&#8594;</button></div></div>')
+    return f"""<div class="ringsec" id="ring">
+        <div class="bcards">{cards}</div>
+        <div class="chips" role="tablist" aria-label="Product types">{tabs}</div>
+        {panels}
+        <p class="railhint">Turns on its own. Hover or touch to stop it. Tap a bag to bring it to the front.</p>
+      </div>"""
+
+
 def picker_item(p, eager=False):
     load = "" if eager else ' loading="lazy"'
     return (f'<li><a class="pick" data-slug="{p["slug"]}" href="/products/{p["slug"]}/" style="--accent:{p["accent"]}">'
@@ -287,7 +320,7 @@ def build_home():
           </div>
         </div>
       </div>
-      {rail_html()}
+      {ring_html() if SITE.get('home_style', 'ring') == 'ring' else rail_html()}
     </div>
   </section>
 """
@@ -564,7 +597,7 @@ def build_calculator():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Soil amendment calculator", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=16">', '<link rel="stylesheet" href="/assets/style.css?v=16">\n<link rel="stylesheet" href="/assets/calculator.css">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=17">', '<link rel="stylesheet" href="/assets/style.css?v=17">\n<link rel="stylesheet" href="/assets/calculator.css">')
     out += header()
     body = (ROOT / "data/calculator-body.inc").read_text()
     out += f"""  <section class="sec"><div class="wrap">
@@ -591,7 +624,7 @@ def build_drmario():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Plant Dr. Mario", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=16">', '<link rel="stylesheet" href="/assets/style.css?v=16">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=17">', '<link rel="stylesheet" href="/assets/style.css?v=17">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Plant</b> <i>Dr. Mario</i></h1>
@@ -659,7 +692,7 @@ def build_order_complete():
 
 
 def build_admin():
-    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=16">', '<link rel="stylesheet" href="/assets/style.css?v=16">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
+    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=17">', '<link rel="stylesheet" href="/assets/style.css?v=17">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
     out = out.replace('<meta name="robots" content="noindex, nofollow">\n', '').replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"', 1) if 'noindex' not in out else out
     out += header()
     out += """  <section class="sec"><div class="wrap">

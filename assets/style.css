@@ -352,3 +352,27 @@ html{scroll-behavior:smooth}@media(prefers-reduced-motion:reduce){html{scroll-be
 .railhint{margin:6px 0 0;font-size:13px;color:var(--muted)}
 .catrow th{text-align:left;padding:22px 8px 8px;font:600 15px var(--text);letter-spacing:.14em;text-transform:uppercase;color:var(--leaf);border-bottom:2px solid var(--line)}
 @media (max-width:620px){.railrow li{flex-basis:44vw}.railhint{display:none}}
+
+/* --- ring (coverflow) --- */
+.bcards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:clamp(24px,4vw,44px) 0 28px}
+.bcard{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:20px;padding:18px 22px;border:2px solid var(--accent);cursor:pointer;background:linear-gradient(120deg,rgba(255,255,255,.04),transparent)}
+.bcard:hover,.bcard:focus-visible{box-shadow:0 0 28px -6px var(--accent);outline:none}
+.bcard img{width:clamp(110px,14vw,170px);height:auto;flex:0 0 auto}
+.bcard .bt{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.bcard .nm{font-size:clamp(26px,3vw,42px);line-height:1}.bcard .nm i{white-space:nowrap}
+.bcard .bsub{color:var(--muted);font-size:16px}
+.bcard .from{font:600 18px var(--text);color:var(--leaf)}
+.bcard.noimg{min-height:180px}
+.chip[aria-selected="true"]{border-color:var(--leaf);background:rgba(127,196,107,.12)}
+.ringstage{position:relative;height:clamp(390px,34vw,430px);perspective:1100px;overflow:hidden;margin-top:14px}
+.ringlist{list-style:none;margin:0;padding:0;display:flex;gap:10px;overflow-x:auto;height:100%;align-items:flex-start}
+.ringlist .rit{flex:0 0 clamp(150px,22vw,230px)}
+.ring-on .ringlist{display:block;overflow:visible;transform-style:preserve-3d}
+.ring-on .rit{position:absolute;left:50%;top:0;width:clamp(150px,22vw,230px);transition:transform .7s cubic-bezier(.2,.7,.2,1),opacity .5s;will-change:transform}
+.ring-on .rit .pick{border-bottom-color:transparent}
+.ring-on .rit:not(.on) .nm,.ring-on .rit:not(.on) .npk,.ring-on .rit:not(.on) .from{opacity:0}
+.ring-on .rit:not(.on) .pick{cursor:pointer}
+.ring-on .rit:not(.on) img{filter:brightness(.55)}
+.ringnav{display:flex;gap:8px;justify-content:center;margin-top:6px}
+@media (max-width:760px){.bcards{grid-template-columns:minmax(0,1fr)}.bcard{padding:14px}.ringstage{height:400px}}
+@media (prefers-reduced-motion:reduce){.ring-on .rit{transition:none}}
