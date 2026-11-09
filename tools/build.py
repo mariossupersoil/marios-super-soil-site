@@ -251,7 +251,7 @@ def ring_html():
         if prod:
             rows = price_rows(prod["slug"])
             fr = f'<span class="from">From ${min(x[1] for x in rows):,.2f}</span>' if rows else ""
-            cards += (f'<a class="bcard" href="/products/{prod["slug"]}/" style="--accent:{b["accent"]}"><img src="/img/{prod["f"]}-front.webp" width="170" height="220" alt="{esc(full_name(prod))} organic fertilizer pouch">'
+            cards += (f'<a class="bcard" href="/products/{prod["slug"]}/" style="--accent:{b["accent"]}"><img src="/img/{prod["f"]}-front.webp" width="170" height="220" alt="{esc(full_name(prod))} organic dry amendment pouch">'
                       f'<span class="bt"><span class="nm"><b>{esc(b["a"])}</b> <i>{esc(b["b"])}</i></span><span class="bsub">{esc(b["tagline"])}</span>{fr}<span class="btn solid">See the bag</span></span></a>')
         else:
             fr = (f'<span class="from">{esc(b["price_label"])}</span>' if b.get("price_label") else f'<span class="from">From ${b["from"]:,.2f}</span>' if b.get("from") else "")
@@ -278,7 +278,7 @@ def ring_html():
 def picker_item(p, eager=False):
     load = "" if eager else ' loading="lazy"'
     return (f'<li><a class="pick" data-slug="{p["slug"]}" href="/products/{p["slug"]}/" style="--accent:{p["accent"]}">'
-            f'<img src="/img/{p["f"]}-front.webp" width="170" height="250"{load} alt="{esc(full_name(p))} organic fertilizer stand-up pouch">'
+            f'<img src="/img/{p["f"]}-front.webp" width="170" height="250"{load} alt="{esc(full_name(p))} organic dry amendment stand-up pouch">'
             f'<span class="nm">{name_html(p)}</span><span class="npk">{esc(npk_text(p))}</span>'
             + (f'<span class="from">From ${min(x[1] for x in price_rows(p["slug"])):,.2f}</span>' if price_rows(p["slug"]) else '')
             + '</a></li>')
@@ -508,7 +508,7 @@ def build_product(p):
           {"@context": "https://schema.org", "@type": "Product", **({"offers": offers} if offers else {}),
            "name": full_name(p), "description": p["meta"], "url": abs_url(path),
            "image": [abs_url(f"/img/{p['f']}-front.webp"), abs_url(f"/img/{p['f']}-back.webp")],
-           "brand": {"@type": "Brand", "name": SITE["name"]}, "category": "Organic fertilizer",
+           "brand": {"@type": "Brand", "name": SITE["name"]}, "category": "Organic dry amendment",
            "size": ", ".join(p["sizes"]),
            "countryOfOrigin": {"@type": "Country", "name": "Canada"}},
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
@@ -537,7 +537,7 @@ def build_product(p):
       <div class="viewer">
         <div class="stage">
           <div class="glow"><div class="pair">
-            <img src="/img/{p['f']}-front.webp" width="380" height="560" alt="{esc(full_name(p))} organic fertilizer stand-up pouch, front">
+            <img src="/img/{p['f']}-front.webp" width="380" height="560" alt="{esc(full_name(p))} organic dry amendment stand-up pouch, front">
             <img src="/img/{p['f']}-back.webp" width="380" height="560" loading="lazy" alt="Back of the {esc(plain_name(p))} pouch with ingredients and directions">
           </div></div>
         </div>
@@ -600,8 +600,8 @@ def build_product(p):
 
 
 def build_calculator():
-    title = "Organic Fertilizer Calculator for Gardens | Mario's Super Soil"
-    desc = "Free organic fertilizer calculator. Pick your plant, bed size or pot size and growing zone to get amounts of Mario's Super Soil amendments to use."
+    title = "Organic Amendment Calculator for Gardens | Mario's Super Soil"
+    desc = "Free organic amendment calculator. Pick your plant, bed size or pot size and growing zone to get amounts of Mario's Super Soil amendments to use."
     path = "/soil-calculator/"
     ld = [{"@context": "https://schema.org", "@type": "WebApplication", "name": "Soil Amendment Calculator",
            "url": abs_url(path), "description": desc, "applicationCategory": "LifestyleApplication",
@@ -874,8 +874,8 @@ def build_policy():
 
 
 def build_wholesale():
-    title = "Wholesale Organic Fertilizer for Stores | Mario's Super Soil"
-    desc = "Stock Mario's Super Soil organic dry fertilizers and soil amendments in your garden centre or store. Volume pricing and Net 30 terms. Apply online."
+    title = "Wholesale Organic Dry Amendments for Stores | Mario's Super Soil"
+    desc = "Stock Mario's Super Soil organic dry amendments in your garden centre or store. Volume pricing and Net 30 terms. Apply online."
     path = "/wholesale/"
     ld = [{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
@@ -883,9 +883,9 @@ def build_wholesale():
     out = head(title, desc, path, jsonld=ld) + header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Wholesale</b> <i>for stores</i></h1>
-    <p class="lede">Run a garden centre, hydroponics shop, feed store or independent retailer? Mario's Super Soil makes organic dry fertilizers and soil amendments in Mississauga, Ontario, and we would like to hear from you.</p>
+    <p class="lede">Run a garden centre, hydroponics shop, feed store or independent retailer? Mario's Super Soil makes organic dry amendments in Mississauga, Ontario, and we would like to hear from you.</p>
     <ul class="perks">
-      <li><strong>Canadian made</strong><br>Organic dry fertilizers and soil amendments made in Ontario: bone, crab, feather, kelp and alfalfa meal, worm castings, dolomite lime, gypsum, oyster shell flour, soft rock phosphate, basalt rock dust and blends.</li>
+      <li><strong>Canadian made</strong><br>Organic dry amendments made in Ontario: bone, crab, feather, kelp and alfalfa meal, worm castings, dolomite lime, gypsum, oyster shell flour, soft rock phosphate, basalt rock dust and blends.</li>
       <li><strong>Volume pricing</strong><br>Wholesale pricing that improves as your order size grows, with minimum order quantities per tier.</li>
       <li><strong>Net 30 terms</strong><br>Payment terms are available for approved stores.</li>
       <li><strong>Retail-ready bags</strong><br>Stand-up pouches with clear directions in English and French, in 2 lb and 5 lb sizes. Bulk sacks are available on request.</li>

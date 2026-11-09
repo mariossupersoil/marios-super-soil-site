@@ -1,6 +1,6 @@
 # Mario's Super Soil website
 
-Static site for Mario's Super Soil (organic dry fertilizers and soil amendments, Mississauga, Ontario).
+Static site for Mario's Super Soil (organic dry amendments, Mississauga, Ontario).
 
 - `index.html` and `products/*/index.html` are generated. Do not edit them by hand.
 - Edit `data/site.json`, `data/products.json` or `tools/build.py`, then run `python3 tools/build.py` and `python3 tools/audit.py`.

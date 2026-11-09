@@ -12,7 +12,7 @@ Read this before making any change. It is the rulebook for the weekly SEO review
 - `data/site.json` -> `"staging": true` makes every page `noindex` and `robots.txt` block crawling. Only the owner flips this to `false` when the site goes live on the main domain. Never flip it yourself.
 
 ## Target searches (Canada, English)
-organic fertilizer Canada, organic soil amendments Canada, organic dry fertilizer, bone meal fertilizer 4-10-0, crab meal fertilizer 4-3-0, feather meal 11-0-0, kelp meal 1-0-4, alfalfa meal fertilizer, worm castings, organic fertilizer for tomatoes, organic fertilizer Mississauga / Ontario.
+organic dry amendments Canada, organic soil amendments Canada, organic dry amendments, bone meal amendment 4-10-0, crab meal amendment 4-3-0, feather meal 11-0-0, kelp meal 1-0-4, alfalfa meal amendment, worm castings, organic dry amendment for tomatoes, organic dry amendment Mississauga / Ontario.
 
 ## What the weekly run may change
 - `<title>` and meta description wording (titles 20-65 chars, descriptions 70-165 chars, one unique pair per page).
