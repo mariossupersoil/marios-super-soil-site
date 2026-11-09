@@ -391,8 +391,8 @@ html{scroll-behavior:smooth}@media(prefers-reduced-motion:reduce){html{scroll-be
 .guide{columns:2;column-gap:56px;margin-top:28px}
 .gblock{break-inside:avoid;margin:0 0 36px}
 .gk{font:500 15px var(--text);letter-spacing:.08em;color:var(--muted);margin-left:6px;vertical-align:middle}
-.gblock h3{margin:0;font:600 22px var(--text);letter-spacing:.12em;text-transform:uppercase;color:var(--leaf)}
-.gdesc{margin:4px 0 10px;color:var(--muted);font-size:16px}
+.gblock h3{margin:0;font:600 clamp(26px,3vw,34px) var(--text);letter-spacing:.12em;text-transform:uppercase;color:var(--leaf)}
+.gdesc{margin:8px 0 14px;padding:4px 0 4px 14px;border-left:4px solid var(--leaf);color:var(--ink,#f4f4ef);font:500 clamp(19px,2vw,24px)/1.25 var(--text);letter-spacing:.02em}
 .gblock ul{list-style:none;margin:0;padding:0;border-top:2px solid var(--line)}
 .gblock li a{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:14px;width:100%;padding:14px 4px;border-bottom:1px solid var(--line);cursor:pointer}
 .gblock li a:hover,.gblock li a:focus-visible{background:rgba(255,255,255,.04);outline:none}
@@ -410,3 +410,6 @@ html{scroll-behavior:smooth}@media(prefers-reduced-motion:reduce){html{scroll-be
 .kitlist li{font:500 16px var(--text);padding:6px 12px;border:1px solid var(--line)}
 .kitlist li a{all:unset;cursor:pointer;display:inline}
 .kitlist li:has(a):hover{border-color:var(--leaf)}
+
+.gblock.pre{opacity:0;transform:translateY(34px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.gblock.pre.in{opacity:1;transform:none}
