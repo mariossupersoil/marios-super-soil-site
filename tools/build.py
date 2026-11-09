@@ -221,7 +221,7 @@ def sizes_text(p):
     return " · ".join(p["sizes"])
 
 
-CATS = [("meals", "Meals"), ("minerals", "Rock dusts & minerals"), ("blends", "Blends"), ("soil", "Castings & compost")]
+CATS = [("blends", "Blends"), ("meals", "Meals"), ("minerals", "Rock dusts & minerals"), ("soil", "Castings & compost")]
 
 
 def rail_html():
