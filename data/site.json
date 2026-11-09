@@ -134,10 +134,11 @@
         ],
         [
           "Kit sizes",
-          "5, 10 and 20 lb"
+          "2 lb and 5 lb"
         ]
       ],
-      "from": 109.99
+      "from": 109.99,
+      "price_label": "5 lb: $109.99"
     }
   ],
   "quotes": [

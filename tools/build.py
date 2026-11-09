@@ -254,7 +254,7 @@ def ring_html():
             cards += (f'<a class="bcard" href="/products/{prod["slug"]}/" style="--accent:{b["accent"]}"><img src="/img/{prod["f"]}-front.webp" width="170" height="220" alt="{esc(full_name(prod))} organic fertilizer pouch">'
                       f'<span class="bt"><span class="nm"><b>{esc(b["a"])}</b> <i>{esc(b["b"])}</i></span><span class="bsub">{esc(b["tagline"])}</span>{fr}<span class="btn solid">See the bag</span></span></a>')
         else:
-            fr = f'<span class="from">From ${b["from"]:,.2f}</span>' if b.get("from") else ""
+            fr = (f'<span class="from">{esc(b["price_label"])}</span>' if b.get("price_label") else f'<span class="from">From ${b["from"]:,.2f}</span>' if b.get("from") else "")
             cards += (f'<a class="bcard noimg" href="/#contact" style="--accent:{b["accent"]}"><span class="bt"><span class="nm"><b>{esc(b["a"])}</b> <i>{esc(b["b"])}</i></span>'
                       f'<span class="bsub">{esc(b["tagline"])}</span>{fr}<span class="btn">Ask us about it</span></span></a>')
     tabs, panels = "", ""
@@ -356,7 +356,7 @@ def build_home():
         items = "".join((f'<li><a href="/products/{sl}/">{esc(n)}</a></li>' if sl else f"<li>{esc(n)}</li>") for n, sl in kit)
         kitblock = (f'<div class="gblock"><h3>Starter kit</h3><p class="gdesc">Everything in one box, for new gardeners</p><ul>'
                     f'<li><a href="/#contact" style="--accent:{sp["accent"]}"><span class="gd" aria-hidden="true"></span><span class="gn"><span class="nm"><b>Super Starter</b> <i>Pack</i></span>'
-                    f'<span class="gu">{esc(sp["tagline"])} Kit sizes: 5, 10 and 20 lb.</span></span><span class="gp">From ${sp["from"]:,.2f}</span></a></li>'
+                    f'<span class="gu">{esc(sp["tagline"])} Kit sizes: 2 lb and 5 lb.</span></span><span class="gp">{esc(sp.get("price_label") or "From $%.2f" % sp["from"])}</span></a></li>'
                     f'<li class="kitin"><span class="gu">What comes in the kit</span><ul class="kitlist">{items}</ul></li></ul></div>')
         i = blocks.index('<div class="gblock"><h3>Nitrogen')
         blocks = blocks[:i] + kitblock + blocks[i:]
