@@ -63,7 +63,8 @@
       "name": "Tru Hydroponics",
       "address": "285 Midland Ave #3, Midland, ON L4R 1V4",
       "phone": "249-877-9246",
-      "url": "https://truhydroponics.ca/"
+      "url": "https://truhydroponics.ca/",
+      "province": "Ontario"
     },
     {
       "name": "The Greenhouse Hydroponics",
@@ -71,7 +72,8 @@
       "hours": "Monday to Saturday 9:30 am to 5:30 pm, closed Sundays",
       "carries": "Crab Meal, Oyster Shell Flour, Dolomite Lime, Azomite, KMS 0-0-21.5 and Yucca Powder",
       "phone": "250-590-8845",
-      "url": "https://petsandplants.ca/products/marios-super-soil"
+      "url": "https://petsandplants.ca/products/marios-super-soil",
+      "province": "British Columbia"
     }
   ],
   "blends": [

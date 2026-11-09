@@ -71,7 +71,7 @@ def head(title, description, path, og_image="/img/og-image.jpg?v=3", jsonld=None
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=3">
 <link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/oswald-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=27">
+<link rel="stylesheet" href="/assets/style.css?v=28">
 {ld}</head>
 <body id="top">
 """
@@ -393,11 +393,21 @@ def build_home():
   </section>
 """
     # buy
+    PROV = ["Ontario", "British Columbia", "Alberta", "Saskatchewan", "Manitoba", "Quebec", "New Brunswick", "Nova Scotia", "Prince Edward Island", "Newfoundland and Labrador", "Yukon", "Northwest Territories", "Nunavut"]
+    byprov = {}
+    for s_ in SITE["stores"]:
+        byprov.setdefault(s_.get("province", "Ontario"), []).append(s_)
     stores = ""
-    for s in SITE["stores"]:
-        link = f'<a href="{esc(s["url"])}" target="_blank" rel="noopener">{esc(re.sub(r"^https?://(www\.)?|/.*$", "", s["url"]))}</a>' if s["url"] else ""
-        extra = (f'<span>Hours: {esc(s["hours"])}</span>' if s.get("hours") else "") + (f'<span>Carries: {esc(s["carries"])}</span>' if s.get("carries") else "")
-        stores += f'<li><strong>{esc(s["name"])}</strong><span>{esc(s["address"])}</span><span>{esc(s["phone"])}</span>{extra}{link}</li>'
+    for pv in sorted(byprov, key=lambda x: PROV.index(x) if x in PROV else 99):
+        cards = ""
+        for s_ in sorted(byprov[pv], key=lambda x: x["name"]):
+            host = re.sub(r"^https?://(www\.)?|/.*$", "", s_["url"]) if s_.get("url") else ""
+            extra = (f'<span class="sx">Hours: {esc(s_["hours"])}</span>' if s_.get("hours") else "") + (f'<span class="sx">Carries: {esc(s_["carries"])}</span>' if s_.get("carries") else "")
+            name = (f'<a class="sname" href="{esc(s_["url"])}" target="_blank" rel="noopener">{esc(s_["name"])}</a>' if s_.get("url") else f'<span class="sname">{esc(s_["name"])}</span>')
+            tel = f'<a class="stel" href="tel:{re.sub(r"[^0-9+]", "", s_["phone"])}">{esc(s_["phone"])}</a>' if s_.get("phone") else ""
+            go = f'<span class="sgo" aria-hidden="true">Visit {esc(host)} &#8594;</span>' if host else ""
+            cards += f'<li class="scard"><strong>{name}</strong><span class="sx">{esc(s_["address"])}</span>{extra}{tel}{go}</li>'
+        stores += f'<div class="prov"><h4>{esc(pv)}</h4><ul class="stores">{cards}</ul></div>'
     out += f"""  <section id="buy" class="sec">
     <div class="wrap buy">
       <div>
@@ -406,8 +416,8 @@ def build_home():
         <p class="ctas"><a class="btn solid" href="/#products">Shop online</a></p>
       </div>
       <div>
-        <h3 class="subh">Local shops</h3>
-        <ul class="stores">{stores}</ul>
+        <h3 class="subh">Local shops by province</h3>
+        {stores}
         <p class="store">Want to stock Mario's Super Soil? Email {esc(SITE['email'])}.</p>
       </div>
     </div>
@@ -600,7 +610,7 @@ def build_calculator():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Soil amendment calculator", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=27">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=28">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
     out += header()
     body = (ROOT / "data/calculator-body.inc").read_text()
     out += f"""  <section class="sec"><div class="wrap">
@@ -627,7 +637,7 @@ def build_drmario():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Plant Dr. Mario", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=27">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=28">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Plant</b> <i>Dr. Mario</i></h1>
@@ -695,7 +705,7 @@ def build_order_complete():
 
 
 def build_admin():
-    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=27">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
+    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=28">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
     out = out.replace('<meta name="robots" content="noindex, nofollow">\n', '').replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"', 1) if 'noindex' not in out else out
     out += header()
     out += """  <section class="sec"><div class="wrap">

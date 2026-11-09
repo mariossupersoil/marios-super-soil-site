@@ -413,3 +413,17 @@ html{scroll-behavior:smooth}@media(prefers-reduced-motion:reduce){html{scroll-be
 
 .gblock.pre{opacity:0;transform:translateY(34px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
 .gblock.pre.in{opacity:1;transform:none}
+
+/* --- where to buy: by province, each shop is a hover-highlight button --- */
+.prov{margin:0 0 22px}
+.prov h4{margin:0 0 10px;font:600 20px var(--text);letter-spacing:.14em;text-transform:uppercase;color:var(--leaf)}
+.stores .scard{position:relative;display:grid;gap:4px;padding:16px 18px;margin:0 0 12px;border:2px solid var(--line);border-radius:10px;background:transparent;transition:border-color .2s,background .2s,transform .2s,box-shadow .2s;cursor:pointer}
+.stores .scard:hover,.stores .scard:focus-within{border-color:var(--leaf);background:rgba(127,196,107,.10);transform:translateY(-2px);box-shadow:0 8px 22px -12px var(--leaf)}
+.stores .sname{color:var(--ink);font:500 22px var(--text);letter-spacing:.03em;text-decoration:none}
+.stores a.sname::after{content:"";position:absolute;inset:0;border-radius:10px}
+.stores .sx{color:var(--muted);font-size:17px}
+.stores .stel{position:relative;z-index:2;width:max-content;color:var(--ink);font-size:17px;text-decoration:none;border-bottom:1px dotted var(--muted)}
+.stores .stel:hover{color:var(--leaf);border-bottom-color:var(--leaf)}
+.stores .sgo{margin-top:6px;color:var(--leaf);font:600 16px var(--text);letter-spacing:.06em}
+.stores .scard:hover .sgo{text-decoration:underline}
+@media (prefers-reduced-motion:reduce){.stores .scard{transition:none}.stores .scard:hover{transform:none}}
