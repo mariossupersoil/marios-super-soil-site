@@ -638,5 +638,48 @@
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
   "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
+ },
+ {
+  "slug": "compost-blend",
+  "f": "compost",
+  "a": "Compost",
+  "b": "Blend",
+  "npk": [
+   0.7,
+   0.3,
+   0.6
+  ],
+  "accent": "#b07a45",
+  "title": "Compost Blend Organic Soil Builder | Mario's Super Soil",
+  "meta": "Premium compost blend (0.7-0.3-0.6) that enriches organic matter, improves water retention and builds healthy humus. Sold by the litre and gallon.",
+  "desc": [
+   "Compost is a carefully balanced mixture of organic materials utilized as a plant fertilizer, improving the physical, chemical, and biological properties of soil.",
+   "It is typically produced by decomposing plant matter, food waste recycling of organic materials, and various types of manure."
+  ],
+  "ben": [
+   "Enriched organic matter",
+   "Improves water retention",
+   "Natural disease resistance",
+   "Builds healthy humus",
+   "100% natural & synthetic-free",
+   "Ideal for soil, beds & teas"
+  ],
+  "micro": [
+   [
+    "Depends on bedding and feed",
+    "Varie selon la litière et l’alimentation",
+    "Varies"
+   ]
+  ],
+  "how_en": "Mix 1 part compost with 4 parts soil, or spread on garden beds and lawns. For compost tea, aerate in water for 24–48 hours.",
+  "how_fr": "Mélangez 1 part de compost avec 4 parts de terre, ou épandez sur les plates-bandes et les pelouses. Pour le thé de compost, aérez dans l’eau pendant 24 à 48 heures.",
+  "when": "1 part compost to 4 parts soil, or spread on beds and lawns.",
+  "sizes": [
+   "1 L",
+   "1 gallon",
+   "2 gallons",
+   "4 gallons"
+  ],
+  "size_note": "Worm castings and compost are sold in litres and gallons, not by weight, because the weight changes with moisture. Roughly: 1 L is about 1 to 1.3 lb, 1 gallon about 4 to 5 lb, 2 gallons about 8 to 10 lb and 4 gallons about 15 to 20 lb."
  }
 ]

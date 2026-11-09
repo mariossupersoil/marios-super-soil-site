@@ -357,6 +357,32 @@
      "pack_from": "5lb"
     }
    }
+  },
+  "compost-blend": {
+   "name": "Compost Blend 0.7-0.3-0.6",
+   "img": "/img/compost-front.webp",
+   "sizes": {
+    "1l": {
+     "label": "1 L",
+     "price": 6.99,
+     "weight_kg": 0.6
+    },
+    "1gallon": {
+     "label": "1 gallon",
+     "price": 12.99,
+     "weight_kg": 2.27
+    },
+    "2gallons": {
+     "label": "2 gallons",
+     "price": 21.99,
+     "weight_kg": 4.54
+    },
+    "4gallons": {
+     "label": "4 gallons",
+     "price": 39.99,
+     "weight_kg": 9.08
+    }
+   }
   }
  }
 }
