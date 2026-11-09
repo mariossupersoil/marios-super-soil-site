@@ -418,7 +418,7 @@ def build_home():
     out += f"""  <section id="mission" class="sec">
     <div class="wrap">
       <div class="mission">
-        <h2>Good for your plants, better for the planet</h2>
+        <h2>Our story</h2>
         <div>
           <p>Mario's Super Soil started in 2019 as a basement operation in Mississauga, Ontario. We began by experimenting with synthetic nutrients for growing cannabis, then moved to organic gardening because it fit our values better.</p>
           <p>We found that high costs and limited availability kept organic dry amendments out of reach for many growers, so we set out to make them accessible, affordable and effective. We also want to encourage younger people to take up gardening as a life skill.</p>
