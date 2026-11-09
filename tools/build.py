@@ -71,7 +71,7 @@ def head(title, description, path, og_image="/img/og-image.jpg?v=3", jsonld=None
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=3">
 <link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/oswald-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=28">
+<link rel="stylesheet" href="/assets/style.css?v=31">
 {ld}</head>
 <body id="top">
 """
@@ -142,6 +142,7 @@ def footer():
 </footer>
 <script src="/assets/app.js" defer></script>
 <script src="/assets/ring.js?v=8" defer></script>
+<script src="/assets/room.js?v=1" defer></script>
 <script src="/assets/guide.js?v=1" defer></script>
 <script src="/assets/rail.js?v=1" defer></script>
 <script src="/assets/cart.js?v=7" defer></script>
@@ -241,8 +242,8 @@ def rail_html():
       </div>"""
 
 
-def ring_html():
-    """Blends as two big static cards, then tabs; each tab holds a slowly turning ring of bags (ring.js). Without JS it is a plain row."""
+def blend_cards():
+    """Big featured cards for the blends and the starter kit."""
     cards = ""
     for b in SITE["blends"]:
         if b["id"] not in ("level-up", "flower-power", "starter-pack"):
@@ -257,6 +258,45 @@ def ring_html():
             fr = (f'<span class="from">{esc(b["price_label"])}</span>' if b.get("price_label") else f'<span class="from">From ${b["from"]:,.2f}</span>' if b.get("from") else "")
             cards += (f'<a class="bcard noimg" href="/#contact" style="--accent:{b["accent"]}"><span class="bt"><span class="nm"><b>{esc(b["a"])}</b> <i>{esc(b["b"])}</i></span>'
                       f'<span class="bsub">{esc(b["tagline"])}</span>{fr}<span class="btn">Ask us about it</span></span></a>')
+    return cards
+
+
+def room_html():
+    """The product wall: bags hang on a rail in a dark room. Drag sideways to slide along it, tap a bag to take it down (room.js)."""
+    groups, details = "", ""
+    for k, l in CATS:
+        bags = ""
+        for n, p in enumerate(q for q in PRODUCTS if q.get("cat") == k):
+            bags += (f'<li class="rbag" style="--accent:{p["accent"]};--k:{(0.8 + (len(groups) + n * 7) % 5 * 0.1):.1f}"><button type="button" data-slug="{p["slug"]}" aria-label="Take down {esc(full_name(p))}">'
+                     f'<span class="hook" aria-hidden="true"></span><img src="/img/{p["f"]}-front.webp" width="230" height="298" loading="eager" alt="">'
+                     f'<span class="rn">{name_html(p)}</span></button></li>')
+            rows = price_rows(p["slug"])
+            fr = f'From ${min(x[1] for x in rows):,.2f}' if rows else ""
+            chips = "".join(f"<li>{esc(x)}</li>" for x in p["ben"])
+            chip = "" if p.get("npk_label") else f'<span class="gk">{esc(npk_dash(p))}</span>'
+            details += (f'<div class="dtpl" data-slug="{p["slug"]}" hidden style="--accent:{p["accent"]}"><img src="/img/{p["f"]}-front.webp" width="380" height="492" alt="{esc(full_name(p))} pouch, front">'
+                        f'<div class="dbody"><h3 class="nm">{name_html(p)} {chip}</h3><p class="dline">{esc(p.get("use", ""))}</p><ul class="dchips">{chips}</ul>'
+                        f'<p class="dprice">{esc(fr)}</p><p class="dact"><a class="btn solid" href="/products/{p["slug"]}/">View and buy</a></p></div></div>')
+        if bags:
+            groups += f'<div class="rg"><div class="rplaque"><span>{esc(l)}</span></div><ul class="rrow">{bags}</ul></div>'
+    return f"""<div class="roomsec" id="room">
+        <div class="bcards">{blend_cards()}</div>
+        <div class="room" aria-label="Product wall. Drag sideways to slide along the rail, tap a bag to take it down.">
+          <div class="roomwall" aria-hidden="true"></div><div class="roomlight" aria-hidden="true"></div>
+          <div class="rrail" aria-hidden="true"></div>
+          <div class="roomtrack" tabindex="0"><div class="rtrack">{groups}</div></div>
+          <div class="roomfloor" aria-hidden="true"></div>
+        </div>
+        <div class="roomctl"><button type="button" class="rbtn" data-dir="-1" aria-label="Slide the rail left">&#8592;</button><button type="button" class="rbtn" data-dir="1" aria-label="Slide the rail right">&#8594;</button><button type="button" class="rbtn playbtn" aria-label="Pause sliding" aria-pressed="false">&#10074;&#10074;</button>
+          <span class="railhint">Drag to slide along the rail. Tap a bag to take it down.</span></div>
+        <div class="roomdetail" id="roomdetail" aria-live="polite" hidden></div>
+        <div class="dstore" hidden>{details}</div>
+      </div>"""
+
+
+def ring_html():
+    """Blends as two big static cards, then tabs; each tab holds a slowly turning ring of bags (ring.js). Without JS it is a plain row."""
+    cards = blend_cards()
     tabs, panels = "", ""
     cats = [(k, l) for k, l in CATS if k != "blends" and any(p.get("cat") == k for p in PRODUCTS)]
     for n, (k, l) in enumerate(cats):
@@ -322,7 +362,7 @@ def build_home():
           </div>
         </div>
       </div>
-      {ring_html() if SITE.get('home_style', 'ring') == 'ring' else rail_html()}
+      {room_html() if SITE.get('home_style', 'room') == 'room' else ring_html() if SITE.get('home_style') == 'ring' else rail_html()}
     </div>
   </section>
 """
@@ -610,7 +650,7 @@ def build_calculator():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Soil amendment calculator", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=28">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=31">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
     out += header()
     body = (ROOT / "data/calculator-body.inc").read_text()
     out += f"""  <section class="sec"><div class="wrap">
@@ -637,7 +677,7 @@ def build_drmario():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Plant Dr. Mario", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=28">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=31">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Plant</b> <i>Dr. Mario</i></h1>
@@ -705,7 +745,7 @@ def build_order_complete():
 
 
 def build_admin():
-    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=28">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
+    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=31">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
     out = out.replace('<meta name="robots" content="noindex, nofollow">\n', '').replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"', 1) if 'noindex' not in out else out
     out += header()
     out += """  <section class="sec"><div class="wrap">

@@ -427,3 +427,41 @@ html{scroll-behavior:smooth}@media(prefers-reduced-motion:reduce){html{scroll-be
 .stores .sgo{margin-top:6px;color:var(--leaf);font:600 16px var(--text);letter-spacing:.06em}
 .stores .scard:hover .sgo{text-decoration:underline}
 @media (prefers-reduced-motion:reduce){.stores .scard{transition:none}.stores .scard:hover{transform:none}}
+
+/* --- product wall (room.js): bags hang on a rail in a dark room --- */
+.room{position:relative;height:clamp(400px,33vw,440px);margin-top:18px;overflow:hidden;border-radius:14px;background:#0a0a0b;border:1px solid var(--line);touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+.room.drag{cursor:grabbing}
+.roomwall{position:absolute;inset:0 -30% 0 -30%;background:repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 2px,transparent 2px 190px),linear-gradient(180deg,#141416,#0b0b0c 70%)}
+.roomlight{position:absolute;inset:0;background:radial-gradient(60% 55% at 50% 0%,rgba(127,196,107,.18),transparent 70%),radial-gradient(120% 60% at 50% 110%,rgba(0,0,0,.7),transparent 60%);pointer-events:none}
+.rrail{position:absolute;left:0;right:0;top:54px;height:9px;background:linear-gradient(180deg,#8d9196,#4a4d52 45%,#2a2c2f);box-shadow:0 6px 14px rgba(0,0,0,.6);z-index:3}
+.roomtrack{position:absolute;inset:0;overflow:hidden}
+.roomtrack:focus-visible{outline:3px solid var(--leaf);outline-offset:-3px}
+.rtrack{position:absolute;left:0;top:0;height:100%;display:flex;gap:46px;padding:0 24px;will-change:transform}
+.rg{flex:0 0 auto;display:flex;flex-direction:column}
+.rplaque{height:54px;display:flex;align-items:flex-end}
+.rplaque span{position:relative;z-index:4;margin:0 0 2px 10px;padding:6px 14px;border:1px solid var(--leaf);background:#0f1a0f;color:var(--leaf);font:600 14px var(--text);letter-spacing:.16em;text-transform:uppercase;box-shadow:0 4px 10px rgba(0,0,0,.5)}
+.rrow{list-style:none;margin:0;padding:0;display:flex;gap:6px;position:relative;top:9px}
+.rbag{flex:0 0 clamp(150px,18vw,215px);transform-origin:50% 0;transform:rotate(calc(var(--sway,0) * var(--k,1) * 1deg));position:relative}
+.rbag button{all:unset;box-sizing:border-box;display:block;width:100%;cursor:pointer;position:relative;text-align:center;transition:transform .35s cubic-bezier(.2,.7,.2,1),filter .3s}
+.rbag .hook{position:absolute;left:50%;top:-12px;width:16px;height:22px;margin-left:-8px;border:3px solid #9aa0a6;border-bottom:none;border-radius:10px 10px 0 0;z-index:2}
+.rbag img{display:block;width:100%;height:auto;filter:drop-shadow(0 14px 14px rgba(0,0,0,.65))}
+.rbag .rn{display:block;margin-top:-6px;font-size:19px;line-height:1.1;text-shadow:0 2px 6px #000}
+.rbag button:hover,.rbag button:focus-visible{transform:translateY(-8px) scale(1.04);outline:none}
+.rbag button:focus-visible img{outline:3px solid var(--leaf);outline-offset:2px;border-radius:14px}
+.rbag.sel button{transform:translateY(-12px) scale(1.06);filter:brightness(1.12) drop-shadow(0 0 14px var(--accent))}
+.roomfloor{position:absolute;left:0;right:0;bottom:0;height:46px;background:linear-gradient(0deg,#050505,transparent);pointer-events:none;z-index:4}
+.roomctl{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.roomdetail{margin-top:18px}
+.dcard{position:relative;display:grid;grid-template-columns:minmax(150px,260px) 1fr;gap:28px;align-items:center;padding:24px;border:2px solid var(--accent,var(--leaf));border-radius:14px;background:linear-gradient(120deg,rgba(255,255,255,.05),transparent);animation:dIn .45s cubic-bezier(.2,.7,.2,1)}
+@keyframes dIn{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+.dcard img{width:100%;height:auto;filter:drop-shadow(0 14px 18px rgba(0,0,0,.6))}
+.dbody .nm{font-size:clamp(30px,4vw,48px);line-height:1;margin:0}
+.dline{margin:10px 0 12px;font:500 clamp(19px,2vw,24px)/1.25 var(--text);color:var(--ink)}
+.dchips{list-style:none;margin:0 0 14px;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.dchips li{padding:6px 12px;border:1px solid var(--line);font-size:16px;color:var(--muted)}
+.dprice{margin:0 0 14px;font:600 24px var(--text);color:var(--leaf)}
+.dclose{all:unset;position:absolute;top:10px;right:14px;width:40px;height:40px;display:grid;place-items:center;font-size:30px;cursor:pointer;color:var(--muted)}
+.dclose:hover,.dclose:focus-visible{color:var(--leaf);outline:none}
+@media (max-width:700px){.room{height:350px}.rbag{flex-basis:44vw}.rtrack{gap:30px}.dcard{grid-template-columns:1fr;padding:18px}.dcard img{max-width:200px;margin:0 auto}}
+@media (prefers-reduced-motion:reduce){.rbag button,.dcard{transition:none;animation:none}}
+.bcards{align-items:start}
