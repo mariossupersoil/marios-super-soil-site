@@ -333,3 +333,22 @@ html{scroll-behavior:smooth}@media(prefers-reduced-motion:reduce){html{scroll-be
 .dealpanel .dealrow{justify-content:flex-start}
 .dealpanel .dealcode{font-size:16px;padding:9px 12px}
 .dealx{all:unset;cursor:pointer;position:absolute;top:6px;right:8px;width:40px;height:40px;text-align:center;font:400 28px/40px var(--text);color:var(--muted)}
+
+/* --- product rail: one drifting row grouped by type --- */
+.rail{margin:clamp(24px,4vw,48px) 0 0}
+.railbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{all:unset;box-sizing:border-box;cursor:pointer;padding:8px 14px;border:2px solid var(--line);font:600 14px var(--text);letter-spacing:.08em;text-transform:uppercase}
+.chip:hover,.chip:focus-visible{border-color:var(--leaf);outline:none}
+.railbtns{display:flex;gap:6px}
+.rbtn{all:unset;box-sizing:border-box;cursor:pointer;width:40px;height:40px;display:grid;place-items:center;border:2px solid var(--line);font-size:20px}
+.rbtn:hover,.rbtn:focus-visible{border-color:var(--leaf);outline:none}
+.railtrack{display:flex;gap:28px;overflow-x:auto;scrollbar-width:thin;padding-bottom:8px;overscroll-behavior-x:contain}
+.railtrack:focus-visible{outline:3px solid var(--leaf);outline-offset:2px}
+.rgroup{flex:0 0 auto}
+.rlabel{margin:0 0 4px 6px;font:600 14px var(--text);letter-spacing:.14em;text-transform:uppercase;color:var(--leaf)}
+.railrow{display:flex;gap:8px;list-style:none;margin:0;padding:0}
+.railrow li{flex:0 0 clamp(150px,17vw,190px)}
+.railhint{margin:6px 0 0;font-size:13px;color:var(--muted)}
+.catrow th{text-align:left;padding:22px 8px 8px;font:600 15px var(--text);letter-spacing:.14em;text-transform:uppercase;color:var(--leaf);border-bottom:2px solid var(--line)}
+@media (max-width:620px){.railrow li{flex-basis:44vw}.railhint{display:none}}

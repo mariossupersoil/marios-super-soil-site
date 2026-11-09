@@ -40,7 +40,8 @@
    "10 lb (4.5 kg) = 2 x 5 lb bags",
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
-  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
+  "cat": "meals"
  },
  {
   "slug": "crab-meal",
@@ -88,7 +89,8 @@
    "10 lb (4.5 kg) = 2 x 5 lb bags",
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
-  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
+  "cat": "meals"
  },
  {
   "slug": "feather-meal",
@@ -131,7 +133,8 @@
    "10 lb (4.5 kg) = 2 x 5 lb bags",
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
-  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
+  "cat": "meals"
  },
  {
   "slug": "kelp-meal",
@@ -204,7 +207,8 @@
    "10 lb (4.5 kg) = 2 x 5 lb bags",
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
-  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
+  "cat": "meals"
  },
  {
   "slug": "alfalfa-meal",
@@ -257,75 +261,8 @@
    "10 lb (4.5 kg) = 2 x 5 lb bags",
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
-  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
- },
- {
-  "slug": "worm-castings",
-  "f": "worm",
-  "a": "Worm",
-  "b": "Castings",
-  "npk": [
-   1.5,
-   2.5,
-   1.3
-  ],
-  "accent": "#e0ab9c",
-  "title": "Worm Castings Organic Soil Amendment | Mario's Super Soil",
-  "meta": "Organic worm castings packed with live microbes. Improves water retention, never burns, activates dry amendments. For soil, coco and teas. Sizes: 1 L to 4 gallons.",
-  "desc": [
-   "Worm castings are a natural fertilizer produced by earthworms, also known as vermicast. These castings consist of earthworm waste.",
-   "As worms consume compost materials, their nutrient-rich waste creates a superior soil amendment that supports healthier plant growth."
-  ],
-  "ben": [
-   "Packed with live microbes",
-   "Improves water retention",
-   "Natural disease resistance",
-   "100% safe, never burns",
-   "Activates dry amendments",
-   "Ideal for soil, coco & teas"
-  ],
-  "micro": [
-   [
-    "Iron (Fe)",
-    "Fer (Fe)",
-    "1%"
-   ],
-   [
-    "Calcium (Ca)",
-    "Calcium (Ca)",
-    "1%"
-   ],
-   [
-    "Magnesium (Mg)",
-    "Magnésium (Mg)",
-    "0.5%"
-   ],
-   [
-    "Sulfur (S)",
-    "Soufre (S)",
-    "0.5%"
-   ],
-   [
-    "Copper (Cu)",
-    "Cuivre (Cu)",
-    "0.05%"
-   ],
-   [
-    "Zinc (Zn)",
-    "Zinc (Zn)",
-    "0.05%"
-   ]
-  ],
-  "how_en": "Mix into potting soil or sprinkle around plants. For established plants, use 1–2 cups. Water thoroughly.",
-  "how_fr": "Mélangez au terreau ou saupoudrez autour des plantes. Pour les plantes établies, utilisez 1 à 2 tasses. Arrosez abondamment.",
-  "when": "Mix into potting soil, or 1–2 cups for established plants.",
-  "sizes": [
-   "1 L",
-   "1 gallon",
-   "2 gallons",
-   "4 gallons"
-  ],
-  "size_note": "Worm castings and compost are sold in litres and gallons, not by weight, because the weight changes with moisture. Roughly: 1 L is about 1 to 1.3 lb, 1 gallon about 4 to 5 lb, 2 gallons about 8 to 10 lb and 4 gallons about 15 to 20 lb."
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
+  "cat": "meals"
  },
  {
   "slug": "dolomite-lime",
@@ -375,7 +312,8 @@
    "10 lb (4.5 kg) = 2 x 5 lb bags",
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
-  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
+  "cat": "minerals"
  },
  {
   "slug": "gypsum",
@@ -425,7 +363,8 @@
    "10 lb (4.5 kg) = 2 x 5 lb bags",
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
-  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
+  "cat": "minerals"
  },
  {
   "slug": "oyster-shell-flour",
@@ -470,7 +409,8 @@
    "10 lb (4.5 kg) = 2 x 5 lb bags",
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
-  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
+  "cat": "minerals"
  },
  {
   "slug": "soft-rock-phosphate",
@@ -513,7 +453,8 @@
    "10 lb (4.5 kg) = 2 x 5 lb bags",
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
-  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
+  "cat": "minerals"
  },
  {
   "slug": "basalt-rock-dust",
@@ -583,7 +524,8 @@
    "10 lb (4.5 kg) = 2 x 5 lb bags",
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
-  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
+  "cat": "minerals"
  },
  {
   "slug": "flower-power",
@@ -637,7 +579,77 @@
    "10 lb (4.5 kg) = 2 x 5 lb bags",
    "20 lb (9.1 kg) = 4 x 5 lb bags"
   ],
-  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag."
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
+  "cat": "blends"
+ },
+ {
+  "slug": "worm-castings",
+  "f": "worm",
+  "a": "Worm",
+  "b": "Castings",
+  "npk": [
+   1.5,
+   2.5,
+   1.3
+  ],
+  "accent": "#e0ab9c",
+  "title": "Worm Castings Organic Soil Amendment | Mario's Super Soil",
+  "meta": "Organic worm castings packed with live microbes. Improves water retention, never burns, activates dry amendments. For soil, coco and teas. Sizes: 1 L to 4 gallons.",
+  "desc": [
+   "Worm castings are a natural fertilizer produced by earthworms, also known as vermicast. These castings consist of earthworm waste.",
+   "As worms consume compost materials, their nutrient-rich waste creates a superior soil amendment that supports healthier plant growth."
+  ],
+  "ben": [
+   "Packed with live microbes",
+   "Improves water retention",
+   "Natural disease resistance",
+   "100% safe, never burns",
+   "Activates dry amendments",
+   "Ideal for soil, coco & teas"
+  ],
+  "micro": [
+   [
+    "Iron (Fe)",
+    "Fer (Fe)",
+    "1%"
+   ],
+   [
+    "Calcium (Ca)",
+    "Calcium (Ca)",
+    "1%"
+   ],
+   [
+    "Magnesium (Mg)",
+    "Magnésium (Mg)",
+    "0.5%"
+   ],
+   [
+    "Sulfur (S)",
+    "Soufre (S)",
+    "0.5%"
+   ],
+   [
+    "Copper (Cu)",
+    "Cuivre (Cu)",
+    "0.05%"
+   ],
+   [
+    "Zinc (Zn)",
+    "Zinc (Zn)",
+    "0.05%"
+   ]
+  ],
+  "how_en": "Mix into potting soil or sprinkle around plants. For established plants, use 1–2 cups. Water thoroughly.",
+  "how_fr": "Mélangez au terreau ou saupoudrez autour des plantes. Pour les plantes établies, utilisez 1 à 2 tasses. Arrosez abondamment.",
+  "when": "Mix into potting soil, or 1–2 cups for established plants.",
+  "sizes": [
+   "1 L",
+   "1 gallon",
+   "2 gallons",
+   "4 gallons"
+  ],
+  "size_note": "Worm castings and compost are sold in litres and gallons, not by weight, because the weight changes with moisture. Roughly: 1 L is about 1 to 1.3 lb, 1 gallon about 4 to 5 lb, 2 gallons about 8 to 10 lb and 4 gallons about 15 to 20 lb.",
+  "cat": "soil"
  },
  {
   "slug": "compost-blend",
@@ -680,6 +692,7 @@
    "2 gallons",
    "4 gallons"
   ],
-  "size_note": "Worm castings and compost are sold in litres and gallons, not by weight, because the weight changes with moisture. Roughly: 1 L is about 1 to 1.3 lb, 1 gallon about 4 to 5 lb, 2 gallons about 8 to 10 lb and 4 gallons about 15 to 20 lb."
+  "size_note": "Worm castings and compost are sold in litres and gallons, not by weight, because the weight changes with moisture. Roughly: 1 L is about 1 to 1.3 lb, 1 gallon about 4 to 5 lb, 2 gallons about 8 to 10 lb and 4 gallons about 15 to 20 lb.",
+  "cat": "soil"
  }
 ]
