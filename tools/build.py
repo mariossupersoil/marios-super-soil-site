@@ -71,7 +71,7 @@ def head(title, description, path, og_image="/img/og-image.jpg?v=3", jsonld=None
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=3">
 <link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/oswald-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=23">
+<link rel="stylesheet" href="/assets/style.css?v=24">
 {ld}</head>
 <body id="top">
 """
@@ -325,26 +325,35 @@ def build_home():
     </div>
   </section>
 """
-    # simple guide: one short list per product type
-    DESC = {"blends": "All-in-one mixes", "meals": "Single ingredients that feed plants", "minerals": "Calcium, minerals and pH", "soil": "Living soil builders"}
-    colhtml = {}
-    for k, l in CATS:
+    # simple guide: grouped by what the grower wants to achieve (a bag can appear under more than one goal)
+    GUIDE = [
+        ("All-in-one blends", "A balanced mix, ready to use", ["flower-power"]),
+        ("Nitrogen (N)", "For green, leafy growth", ["feather-meal", "crab-meal", "alfalfa-meal"]),
+        ("Phosphorus (P)", "For strong roots, blooms and fruit", ["bone-meal", "soft-rock-phosphate"]),
+        ("Potassium (K)", "For plant strength and fruit quality", ["kelp-meal", "alfalfa-meal"]),
+        ("Calcium, magnesium and trace minerals", "For soil structure, pH and plant health", ["oyster-shell-flour", "dolomite-lime", "gypsum", "basalt-rock-dust"]),
+        ("Living soil", "Live biology and organic matter", ["worm-castings", "compost-blend"]),
+    ]
+    byslug = {p["slug"]: p for p in PRODUCTS}
+    blocks = ""
+    for title, desc, slugs in GUIDE:
         lis = ""
-        for p in PRODUCTS:
-            if p.get("cat") != k:
+        for sl in slugs:
+            p = byslug.get(sl)
+            if not p:
                 continue
             rows = price_rows(p["slug"])
             fr = f'<span class="gp">From ${min(x[1] for x in rows):,.2f}</span>' if rows else ""
+            chip = "" if p.get("npk_label") else f'<span class="gk">{esc(npk_dash(p))}</span>'
             lis += (f'<li><a href="/products/{p["slug"]}/" style="--accent:{p["accent"]}"><span class="gd" aria-hidden="true"></span>'
-                    f'<span class="gn"><span class="nm">{name_html(p)}</span><span class="gu">{esc(p.get("use", ""))}</span></span>{fr}</a></li>')
+                    f'<span class="gn"><span class="nm">{name_html(p)} {chip}</span><span class="gu">{esc(p.get("use", ""))}</span></span>{fr}</a></li>')
         if lis:
-            colhtml[k] = f'<div class="gblock"><h3>{esc(l)}</h3><p class="gdesc">{esc(DESC.get(k, ""))}</p><ul>{lis}</ul></div>'
-    blocks = "".join('<div class="gcol">' + "".join(colhtml.get(k, "") for k in col) + '</div>' for col in (("blends", "meals"), ("minerals", "soil")))
+            blocks += f'<div class="gblock"><h3>{esc(title)}</h3><p class="gdesc">{esc(desc)}</p><ul>{lis}</ul></div>'
     out += f"""  <section id="deal" class="sec dealsec" hidden></section>
   <section id="products" class="sec">
     <div class="wrap">
-      <h2>Find the right bag</h2>
-      <p class="lede">Pick a type, tap a bag, and you will find the dose, the ingredients and the price on its page.</p>
+      <h2>What do you want to achieve?</h2>
+      <p class="lede">Pick the goal, then tap a bag to see the dose, ingredients and price. The numbers after a name are its nitrogen, phosphorus and potassium.</p>
       <div class="guide">{blocks}</div>
     </div>
   </section>
@@ -592,7 +601,7 @@ def build_calculator():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Soil amendment calculator", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=23">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=24">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
     out += header()
     body = (ROOT / "data/calculator-body.inc").read_text()
     out += f"""  <section class="sec"><div class="wrap">
@@ -619,7 +628,7 @@ def build_drmario():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Plant Dr. Mario", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=23">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=24">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Plant</b> <i>Dr. Mario</i></h1>
@@ -687,7 +696,7 @@ def build_order_complete():
 
 
 def build_admin():
-    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=23">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
+    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=24">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
     out = out.replace('<meta name="robots" content="noindex, nofollow">\n', '').replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"', 1) if 'noindex' not in out else out
     out += header()
     out += """  <section class="sec"><div class="wrap">

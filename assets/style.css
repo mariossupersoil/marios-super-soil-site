@@ -388,8 +388,9 @@ html{scroll-behavior:smooth}@media(prefers-reduced-motion:reduce){html{scroll-be
 .ringpanel .ringbar[hidden]{display:none}
 
 /* --- simple product guide --- */
-.guide{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 48px;margin-top:28px;align-items:start}
-.gcol{display:flex;flex-direction:column;gap:36px;min-width:0}
+.guide{columns:2;column-gap:56px;margin-top:28px}
+.gblock{break-inside:avoid;margin:0 0 36px}
+.gk{font:500 15px var(--text);letter-spacing:.08em;color:var(--muted);margin-left:6px;vertical-align:middle}
 .gblock h3{margin:0;font:600 22px var(--text);letter-spacing:.12em;text-transform:uppercase;color:var(--leaf)}
 .gdesc{margin:4px 0 10px;color:var(--muted);font-size:16px}
 .gblock ul{list-style:none;margin:0;padding:0;border-top:2px solid var(--line)}
@@ -400,4 +401,4 @@ html{scroll-behavior:smooth}@media(prefers-reduced-motion:reduce){html{scroll-be
 .gn .nm{font-size:22px;line-height:1.1}
 .gu{color:var(--muted);font-size:15px}
 .gp{font:600 16px var(--text);color:var(--leaf);white-space:nowrap}
-@media (max-width:820px){.guide{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:820px){.guide{columns:1}}
