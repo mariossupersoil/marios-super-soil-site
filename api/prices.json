@@ -2,18 +2,18 @@
  "currency": "CAD",
  "note": "Prices in Canadian dollars before tax and shipping, for example 24.99. null means no price yet.",
  "products": {
-  "bone-meal": {
-   "name": "Bone Meal 4-10-0",
-   "img": "/img/bone-front.webp",
+  "flower-power": {
+   "name": "Flower Power 2-6-4",
+   "img": "/img/flower-front.webp",
    "sizes": {
     "2lb": {
      "label": "2 lb (0.9 kg)",
-     "price": 11.49,
+     "price": 17.99,
      "weight_kg": 0.91
     },
     "5lb": {
      "label": "5 lb (2.3 kg)",
-     "price": 20.89,
+     "price": 32.98,
      "weight_kg": 2.27
     },
     "10lb": {
@@ -62,18 +62,18 @@
     }
    }
   },
-  "feather-meal": {
-   "name": "Feather Meal 11-0-0",
-   "img": "/img/feather-front.webp",
+  "bone-meal": {
+   "name": "Bone Meal 4-10-0",
+   "img": "/img/bone-front.webp",
    "sizes": {
     "2lb": {
      "label": "2 lb (0.9 kg)",
-     "price": 13.49,
+     "price": 11.49,
      "weight_kg": 0.91
     },
     "5lb": {
      "label": "5 lb (2.3 kg)",
-     "price": 24.99,
+     "price": 20.89,
      "weight_kg": 2.27
     },
     "10lb": {
@@ -152,18 +152,48 @@
     }
    }
   },
-  "dolomite-lime": {
-   "name": "Dolomite Lime",
-   "img": "/img/dolomite-front.webp",
+  "feather-meal": {
+   "name": "Feather Meal 11-0-0",
+   "img": "/img/feather-front.webp",
    "sizes": {
     "2lb": {
      "label": "2 lb (0.9 kg)",
-     "price": 10.49,
+     "price": 13.49,
      "weight_kg": 0.91
     },
     "5lb": {
      "label": "5 lb (2.3 kg)",
-     "price": 18.99,
+     "price": 24.99,
+     "weight_kg": 2.27
+    },
+    "10lb": {
+     "label": "10 lb (4.5 kg) = 2 x 5 lb bags",
+     "price": null,
+     "weight_kg": 4.54,
+     "pack_of": 2,
+     "pack_from": "5lb"
+    },
+    "20lb": {
+     "label": "20 lb (9.1 kg) = 4 x 5 lb bags",
+     "price": null,
+     "weight_kg": 9.07,
+     "pack_of": 4,
+     "pack_from": "5lb"
+    }
+   }
+  },
+  "soft-rock-phosphate": {
+   "name": "Soft Rock Phosphate 0-3-0",
+   "img": "/img/phosphate-front.webp",
+   "sizes": {
+    "2lb": {
+     "label": "2 lb (0.9 kg)",
+     "price": 11.99,
+     "weight_kg": 0.91
+    },
+    "5lb": {
+     "label": "5 lb (2.3 kg)",
+     "price": 21.99,
      "weight_kg": 2.27
     },
     "10lb": {
@@ -242,18 +272,18 @@
     }
    }
   },
-  "soft-rock-phosphate": {
-   "name": "Soft Rock Phosphate 0-3-0",
-   "img": "/img/phosphate-front.webp",
+  "dolomite-lime": {
+   "name": "Dolomite Lime",
+   "img": "/img/dolomite-front.webp",
    "sizes": {
     "2lb": {
      "label": "2 lb (0.9 kg)",
-     "price": 11.99,
+     "price": 10.49,
      "weight_kg": 0.91
     },
     "5lb": {
      "label": "5 lb (2.3 kg)",
-     "price": 21.99,
+     "price": 18.99,
      "weight_kg": 2.27
     },
     "10lb": {
@@ -284,36 +314,6 @@
     "5lb": {
      "label": "5 lb (2.3 kg)",
      "price": 21.99,
-     "weight_kg": 2.27
-    },
-    "10lb": {
-     "label": "10 lb (4.5 kg) = 2 x 5 lb bags",
-     "price": null,
-     "weight_kg": 4.54,
-     "pack_of": 2,
-     "pack_from": "5lb"
-    },
-    "20lb": {
-     "label": "20 lb (9.1 kg) = 4 x 5 lb bags",
-     "price": null,
-     "weight_kg": 9.07,
-     "pack_of": 4,
-     "pack_from": "5lb"
-    }
-   }
-  },
-  "flower-power": {
-   "name": "Flower Power 2-6-4",
-   "img": "/img/flower-front.webp",
-   "sizes": {
-    "2lb": {
-     "label": "2 lb (0.9 kg)",
-     "price": 17.99,
-     "weight_kg": 0.91
-    },
-    "5lb": {
-     "label": "5 lb (2.3 kg)",
-     "price": 32.98,
      "weight_kg": 2.27
     },
     "10lb": {
