@@ -1097,6 +1097,131 @@ def guides():
             ("Can I combine different meals?", "Yes. Many gardeners combine a nitrogen, a phosphorus and a potassium source. Follow each bag's dose and avoid overapplying."),
         ],
     })
+    G.append({
+        "slug": "vegetable-garden-ontario",
+        "title": "Ontario Vegetable Garden Amendments | Mario's Super Soil",
+        "desc": "A simple plan for feeding an organic vegetable garden in Ontario: what to add in spring, which amendment does what, and how much to use per bed.",
+        "h1": ("Organic amendments", "for Ontario vegetable gardens"),
+        "short": "A simple spring-to-summer plan for feeding an organic vegetable bed.",
+        "answer": "Test your soil first, then mix in organic matter (worm castings or compost), add a calcium source and a phosphorus source at planting, and top up with a nitrogen meal during the season. Follow the dose printed on each bag.",
+        "sections": [
+            ("Start with the soil you have",
+             "<p>Soil across Ontario ranges from heavy clay to sandy loam, and the right amendments depend on yours. A simple soil test (pH and basic nutrients) tells you whether to raise pH, add calcium or magnesium, or just add organic matter. Without a test, building the soil with organic matter is the safe first step.</p>"),
+            ("A simple plan for a vegetable bed",
+             "<ol>"
+             f"<li><strong>Build the soil.</strong> Mix {_pl('compost-blend')} (1 part compost to 4 parts soil) or {_pl('worm-castings')} into the bed.</li>"
+             f"<li><strong>Add calcium and fix pH if needed.</strong> {_pl('oyster-shell-flour')} (2.5 to 5 lb per 100 sq ft) gives slow calcium. {_pl('dolomite-lime')} raises pH and adds magnesium: about 5 lb per 100 sq ft raises pH from 5.5 to 6.5. Use one or the other based on your soil test, not both blindly.</li>"
+             f"<li><strong>Feed roots and fruit.</strong> Add {_pl('bone-meal')} (1 to 2 tablespoons per gallon of soil) or {_pl('soft-rock-phosphate')} at planting.</li>"
+             f"<li><strong>Feed leaves.</strong> For leafy crops, mix in {_pl('feather-meal')} or {_pl('alfalfa-meal')} and repeat as the bag directs.</li>"
+             f"<li><strong>Finish with minerals.</strong> {_pl('kelp-meal')} and {_pl('basalt-rock-dust')} add potassium and trace minerals.</li>"
+             "</ol>"
+             "<p>Prefer one bag? <a href=\"/products/flower-power/\">Flower Power 2-6-4</a> or Level Up 3-3-3 combine several of these. The <a href=\"/soil-calculator/\">calculator</a> works out amounts for your bed size.</p>"),
+            ("Heavy clay soil",
+             f"<p>{_pl('gypsum')} supplies calcium and sulfur and is known for helping loosen clay. Mix 1 to 2 tablespoons per gallon of soil in pots or follow the bag for beds. Adding compost every year also improves clay structure.</p>"),
+            ("Containers and raised beds",
+             "<p>In pots and raised beds, the doses are given per gallon of soil, so it is easy to scale. Mix the amendment into the soil before planting and water it in.</p>"),
+        ],
+        "faq": [
+            ("When should I add organic amendments to my garden?", "Mix them into the soil at planting in spring, and top up during the growing season as each bag directs."),
+            ("How do I raise soil pH organically?", "Dolomite lime raises pH and adds calcium and magnesium. About 5 lb per 100 sq ft raises pH from 5.5 to 6.5, according to the bag."),
+            ("What helps heavy clay soil?", "Gypsum and regular additions of compost or worm castings help improve clay soil."),
+            ("Do I need a soil test?", "It is recommended. A test shows your pH and helps you choose between lime, oyster shell flour and other minerals."),
+        ],
+    })
+    G.append({
+        "slug": "worm-castings-vs-compost",
+        "title": "Worm Castings vs Compost | Mario's Super Soil",
+        "desc": "How worm castings and compost differ, what each does for soil, how much to use, and when to use both. Canadian-made worm castings and compost blend.",
+        "h1": ("Worm castings", "vs compost"),
+        "short": "What each one does, how to use them, and why many gardeners use both.",
+        "answer": "Compost adds bulk organic matter that improves soil structure, while worm castings are a concentrated, biologically active amendment used in smaller amounts. Many gardeners use both.",
+        "sections": [
+            ("At a glance", _npk_table(["worm-castings", "compost-blend"])),
+            ("Worm castings",
+             f"<p>{_pl('worm-castings')} are the finished waste of earthworms, often called vermicast. They add live biology and small amounts of iron, calcium, magnesium, sulfur and other minerals. Mix them into potting soil, or use 1 to 2 cups around established plants and water thoroughly.</p>"),
+            ("Compost",
+             f"<p>{_pl('compost-blend')} is a balanced mix of decomposed organic materials that improves the physical, chemical and biological properties of soil. Mix 1 part compost with 4 parts soil, or spread it on beds and lawns. It can also be steeped as compost tea by aerating it in water for 24 to 48 hours.</p>"),
+            ("Which should I use?",
+             "<ul><li>Use <strong>compost</strong> in bulk to improve a bed's structure and water holding.</li>"
+             "<li>Use <strong>worm castings</strong> for a concentrated boost of living material in pots, seed starting mixes and around plants.</li>"
+             "<li>Use <strong>both</strong> with a nutrient amendment such as a <a href=\"/guides/bone-crab-feather-meal/\">meal</a> for a complete plan.</li></ul>"),
+        ],
+        "faq": [
+            ("Are worm castings the same as compost?", "No. Worm castings are earthworm waste. Compost is decomposed organic matter. Both improve soil, but castings are more concentrated."),
+            ("How much worm castings should I use?", "Mix into potting soil, or use 1 to 2 cups around established plants and water thoroughly."),
+            ("Can I use worm castings and compost together?", "Yes. Use compost to build the bed and castings as a concentrated boost."),
+            ("Does compost have an NPK number?", "Our compost blend is about 0.7-0.3-0.6. Its main value is organic matter and soil life, not NPK."),
+        ],
+    })
+    G.append({
+        "slug": "dolomite-lime-oyster-shell-gypsum",
+        "title": "Dolomite vs Oyster Shell Flour vs Gypsum | Mario's Super Soil",
+        "desc": "Compare three organic calcium sources: dolomite lime, oyster shell flour and gypsum. What each adds, how each affects pH, and how much to use.",
+        "h1": ("Dolomite lime, oyster shell", "and gypsum compared"),
+        "short": "Three calcium sources compared: which one raises pH and which one does not.",
+        "answer": "Dolomite lime raises pH and adds calcium and magnesium. Oyster shell flour gives slow calcium and helps keep pH steady. Gypsum adds calcium and sulfur with little effect on pH.",
+        "sections": [
+            ("At a glance",
+             "<div class=\"tblwrap\"><table class=\"gtable\"><thead><tr><th>Amendment</th><th>Calcium</th><th>Also provides</th><th>Effect on pH</th></tr></thead><tbody>"
+             f"<tr><td>{_pl('dolomite-lime')}</td><td>21%</td><td>Magnesium 12%</td><td>Raises pH</td></tr>"
+             f"<tr><td>{_pl('oyster-shell-flour')}</td><td>34%</td><td>96% calcium carbonate, micronutrients</td><td>Helps keep pH balanced</td></tr>"
+             f"<tr><td>{_pl('gypsum')}</td><td>22%</td><td>Sulfur 17%</td><td>Little effect</td></tr>"
+             "</tbody></table></div>"),
+            ("Dolomite lime",
+             f"<p>{_pl('dolomite-lime')} raises soil pH and adds calcium and magnesium. Use 1 to 2 tablespoons per gallon of soil. To raise pH from 5.5 to 6.5, use about 5 lb per 100 square feet.</p>"),
+            ("Oyster shell flour",
+             f"<p>{_pl('oyster-shell-flour')} is 96% calcium carbonate and breaks down gradually, giving lasting calcium. Use 1 to 2 tablespoons per gallon for new pots and 1 tablespoon for established plants, or 2.5 to 5 lb per 100 square feet in beds, mixed into the top 3 inches.</p>"),
+            ("Gypsum",
+             f"<p>{_pl('gypsum')} supplies calcium and sulfur with little effect on soil pH, so it suits soil that already has the right pH. It is also used to help loosen clay. Use 1 to 2 tablespoons per gallon of soil or coco.</p>"),
+            ("How to choose",
+             "<ul><li>Soil is acidic and you want to raise pH: <strong>dolomite lime</strong>.</li>"
+             "<li>You want steady calcium without a big pH swing: <strong>oyster shell flour</strong>.</li>"
+             "<li>pH is fine but you want calcium and sulfur, or you have heavy clay: <strong>gypsum</strong>.</li></ul>"
+             "<p>A soil test tells you which applies. See also our <a href=\"/guides/vegetable-garden-ontario/\">vegetable garden plan</a>.</p>"),
+        ],
+        "faq": [
+            ("Which amendment raises soil pH?", "Dolomite lime raises pH. Oyster shell flour helps keep pH balanced. Gypsum has little effect on pH."),
+            ("What is the difference between lime and gypsum?", "Lime raises pH. Gypsum adds calcium and sulfur without changing pH much."),
+            ("How much dolomite lime do I need?", "About 5 lb per 100 sq ft raises pH from 5.5 to 6.5, according to the bag. For pots use 1 to 2 tablespoons per gallon of soil."),
+            ("Can I use oyster shell flour in pots?", "Yes. Use 1 to 2 tablespoons per gallon of soil in new pots and 1 tablespoon for established plants."),
+        ],
+    })
+    G.append({
+        "slug": "potted-plants-containers",
+        "title": "Organic Amendments for Pots and Containers | Mario's Super Soil",
+        "desc": "How to feed potted plants and container gardens organically: which dry amendments to mix into potting soil, how much per gallon, and how often.",
+        "h1": ("Organic amendments", "for pots and containers"),
+        "short": "Per-gallon doses for feeding potted plants and container gardens.",
+        "answer": "Mix dry amendments into your potting soil before planting, using the per-gallon dose on the bag, usually 1 to 2 tablespoons per gallon, and add more only as each bag directs.",
+        "sections": [
+            ("Why dry amendments suit containers",
+             "<p>Pots hold a limited amount of soil, so the dose is given per gallon of soil. Dry amendments are mixed in once and break down slowly, which means less frequent feeding and a gentler result.</p>"),
+            ("Per-gallon doses",
+             "<div class=\"tblwrap\"><table class=\"gtable\"><thead><tr><th>Amendment</th><th>Dose per gallon of soil</th></tr></thead><tbody>"
+             f"<tr><td>{_pl('flower-power')}</td><td>1 tbsp (mature plants 2 tbsp, seedlings 1/2 tbsp)</td></tr>"
+             f"<tr><td>{_pl('bone-meal')}</td><td>1 to 2 tbsp</td></tr>"
+             f"<tr><td>{_pl('feather-meal')}</td><td>1 to 2 tbsp</td></tr>"
+             f"<tr><td>{_pl('kelp-meal')}</td><td>1 to 2 tbsp, monthly in the growing season</td></tr>"
+             f"<tr><td>{_pl('alfalfa-meal')}</td><td>2 tbsp</td></tr>"
+             f"<tr><td>{_pl('crab-meal')}</td><td>1 to 2 tsp</td></tr>"
+             f"<tr><td>{_pl('oyster-shell-flour')}</td><td>1 to 2 tbsp (new pots)</td></tr>"
+             f"<tr><td>{_pl('gypsum')}</td><td>1 to 2 tbsp</td></tr>"
+             f"<tr><td>{_pl('dolomite-lime')}</td><td>1 to 2 tbsp</td></tr>"
+             f"<tr><td>{_pl('soft-rock-phosphate')}</td><td>2 tbsp</td></tr>"
+             f"<tr><td>{_pl('basalt-rock-dust')}</td><td>1 tbsp</td></tr>"
+             "</tbody></table></div>"
+             "<p>Doses come from the bags. Start at the low end and do not stack several amendments without checking the calculator.</p>"),
+            ("A simple potting mix recipe",
+             f"<p>Mix {_pl('worm-castings')} into your potting soil, then add one nutrient amendment that matches your plant: a nitrogen meal for leafy plants, or bone meal or Flower Power for flowering and fruiting plants. Water it in well.</p>"
+             "<p>Use the <a href=\"/soil-calculator/\">soil amendment calculator</a> to get amounts for your pot size.</p>"),
+        ],
+        "faq": [
+            ("How much amendment do I put in a pot?", "Usually 1 to 2 tablespoons per gallon of soil. Check the bag for each product."),
+            ("How often should I feed potted plants?", "Mix once at planting, and top up as each bag directs. Kelp meal is applied monthly in the growing season."),
+            ("Can I use these indoors?", "Yes. They are used indoors and outdoors. Follow the directions on each bag."),
+            ("Can I plant in the empty bag?", "Yes. The pouches are recyclable and reusable."),
+        ],
+    })
     return G
 
 
