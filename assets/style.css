@@ -476,3 +476,7 @@ html{scroll-behavior:smooth}@media(prefers-reduced-motion:reduce){html{scroll-be
 .wrap.gpage{display:block;max-width:820px}
 .wrap.gpage h1{margin-bottom:18px}
 .wrap.gpage .lede{max-width:none}
+.perks li{transition:background .25s,border-color .25s,color .25s,transform .25s,box-shadow .25s;cursor:default}
+.perks li:hover,.perks li:focus-within{background:var(--leaf);border-color:var(--leaf);color:#0d140d;transform:translateY(-4px);box-shadow:0 10px 26px rgba(109,191,92,.28)}
+.perks li:hover strong,.perks li:hover{color:#0d140d}
+@media (prefers-reduced-motion:reduce){.perks li{transition:none}.perks li:hover{transform:none}}
