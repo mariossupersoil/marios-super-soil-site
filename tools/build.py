@@ -51,7 +51,7 @@ def head(title, description, path, og_image="/img/og-image.jpg?v=3", jsonld=None
     for obj in (jsonld or []):
         ld += '<script type="application/ld+json">' + json.dumps(obj, ensure_ascii=False) + "</script>\n"
     return f"""<!doctype html>
-<html lang="en">
+<html lang="en-CA">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -71,7 +71,7 @@ def head(title, description, path, og_image="/img/og-image.jpg?v=3", jsonld=None
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=3">
 <link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/oswald-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=31">
+<link rel="stylesheet" href="/assets/style.css?v=34">
 {ld}</head>
 <body id="top">
 """
@@ -89,6 +89,7 @@ def header():
       <a href="/#buy">Where to buy</a>
       <a href="/plant-drmario/">Plant Dr. Mario</a>
       <a href="/soil-calculator/">Calculator</a>
+      <a href="/guides/">Guides</a>
       <a href="/wholesale/">Wholesale</a>
       <a href="/#faq">FAQ</a>
       <a href="/#mission">About</a>
@@ -132,6 +133,7 @@ def footer():
     <p>Dust hazard. Wear an appropriate dust mask when handling.</p>
     <nav class="flinks" aria-label="More from Mario's Super Soil">
       <a href="#signup">Sign up for deals</a>
+      <a href="/guides/">Guides</a>
       <a href="/wholesale/">Wholesale</a>
       <a href="/shipping-returns/">Shipping &amp; returns</a>
 {GR_FOOT}      <a href="{esc(L['blog'])}" target="_blank" rel="noopener">Blog</a>
@@ -330,6 +332,12 @@ def org_ld():
         "@context": "https://schema.org", "@type": "Organization",
         "name": SITE["name"], "url": BASE + "/", "logo": abs_url("/img/logo.png?v=3"),
         "email": SITE["email"], "telephone": "+1-" + SITE["phone"],
+        "@id": BASE + "/#organization",
+        "description": "Canadian company in Mississauga, Ontario making organic dry soil amendments: meals, rock dusts, worm castings, compost and blends. Ships across Canada.",
+        "slogan": "Grow great plants. Skip the guesswork.",
+        "areaServed": {"@type": "Country", "name": "Canada"},
+        "knowsAbout": ["organic dry amendments", "organic soil amendments", "bone meal", "crab meal", "feather meal", "kelp meal", "alfalfa meal", "worm castings", "NPK", "organic gardening in Canada"],
+        "contactPoint": [{"@type": "ContactPoint", "contactType": "customer service", "telephone": "+1-" + SITE["phone"], "email": SITE["email"], "areaServed": "CA", "availableLanguage": ["English", "French"]}],
         "foundingDate": "2019",
         "address": {"@type": "PostalAddress", **({"streetAddress": a["street"]} if a.get("street", "").strip() else {}),
                     "addressLocality": a["city"], "addressRegion": a["region"], "addressCountry": a["country"]},
@@ -341,7 +349,9 @@ def org_ld():
 def build_home():
     H = SITE["home"]
     ld = [org_ld(),
-          {"@context": "https://schema.org", "@type": "WebSite", "name": SITE["name"], "url": BASE + "/"},
+          {"@context": "https://schema.org", "@type": "WebSite", "name": SITE["name"], "url": BASE + "/", "inLanguage": "en-CA", "publisher": {"@id": BASE + "/#organization"}},
+          {"@context": "https://schema.org", "@type": "ItemList", "name": "Organic dry amendments", "itemListElement": [
+              {"@type": "ListItem", "position": i + 1, "name": full_name(q), "url": abs_url(f"/products/{q['slug']}/")} for i, q in enumerate(PRODUCTS)]},
           {"@context": "https://schema.org", "@type": "FAQPage",
            "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in SITE["faq"]]}]
     out = head(H["title"], H["description"], "/", jsonld=ld)
@@ -498,6 +508,15 @@ def build_home():
     </div>
   </section>
 """
+    # guides
+    out += """  <section id="guides" class="sec">
+    <div class="wrap">
+      <h2>Learn before you grow</h2>
+      <p class="lede">Plain-language guides to organic dry amendments in Canada.</p>
+      <ul class="gl">""" + "".join(f'<li><a href="/guides/{g["slug"]}/"><strong>{esc(g["h1"][0])} {esc(g["h1"][1])}</strong></a><br>{esc(g["short"])}</li>' for g in guides()) + """</ul>
+    </div>
+  </section>
+"""
     # faq
     faq = "".join(f"<details><summary>{esc(q)}</summary><p>{esc(a)}</p></details>" for q, a in SITE["faq"])
     out += f"""  <section id="faq" class="sec">
@@ -631,6 +650,7 @@ def build_product(p):
   <section class="sec">
     <div class="wrap">
       <h2>More from Mario's Super Soil</h2>
+      <p>New to organic dry amendments? Read our <a href="/guides/organic-soil-amendments-canada/">Canadian guide</a> or <a href="/guides/npk-organic-gardening/">NPK explained</a>.</p>
       <ul class="picker five" aria-label="Other products">{more}</ul>
     </div>
   </section>
@@ -650,7 +670,7 @@ def build_calculator():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Soil amendment calculator", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=31">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=34">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
     out += header()
     body = (ROOT / "data/calculator-body.inc").read_text()
     out += f"""  <section class="sec"><div class="wrap">
@@ -677,7 +697,7 @@ def build_drmario():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Plant Dr. Mario", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=31">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=34">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Plant</b> <i>Dr. Mario</i></h1>
@@ -745,7 +765,7 @@ def build_order_complete():
 
 
 def build_admin():
-    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=31">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
+    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=34">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
     out = out.replace('<meta name="robots" content="noindex, nofollow">\n', '').replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"', 1) if 'noindex' not in out else out
     out += header()
     out += """  <section class="sec"><div class="wrap">
@@ -964,12 +984,228 @@ def build_404():
     return out
 
 
+# ---------------------------------------------------------------- guides (long-form, answer-first content for search and AI assistants)
+def _pl(slug):
+    p = next(q for q in PRODUCTS if q["slug"] == slug)
+    return f'<a href="/products/{slug}/">{esc(plain_name(p))}</a>'
+
+
+def _npk_table(slugs):
+    rows = ""
+    for s in slugs:
+        p = next(q for q in PRODUCTS if q["slug"] == s)
+        rows += f'<tr><td><a href="/products/{s}/">{esc(plain_name(p))}</a></td><td>{esc(npk_text(p))}</td><td>{esc(p["use"])}</td></tr>'
+    return '<div class="tblwrap"><table class="gtable"><thead><tr><th>Amendment</th><th>NPK</th><th>Best known for</th></tr></thead><tbody>' + rows + "</tbody></table></div>"
+
+
+def guides():
+    G = []
+    G.append({
+        "slug": "organic-soil-amendments-canada",
+        "title": "Organic Soil Amendments in Canada | Mario's Super Soil",
+        "desc": "What organic dry soil amendments are, how to choose between meals, rock dusts and castings, and how to use them. Made in Ontario, shipped across Canada.",
+        "h1": ("Organic soil", "amendments in Canada"),
+        "short": "A plain-language guide to organic dry amendments: what they are, how to pick one, and how to use them.",
+        "answer": "Organic dry amendments are natural, slow-acting ingredients (meals, rock dusts, castings and compost) that you mix into soil to feed plants and soil life over weeks and months. Mario's Super Soil makes them in Mississauga, Ontario, and ships across Canada.",
+        "sections": [
+            ("What are organic dry amendments?",
+             "<p>Organic dry amendments are natural materials, such as ground bone, crab shell, feathers, seaweed, alfalfa, crushed rock and worm castings, that you work into soil or potting mix. They do not dissolve straight into the soil water like a salt. Soil microbes break them down gradually, so plants are fed steadily over weeks or months.</p>"
+             "<p>Because they are dry and slow-acting, they are forgiving. They also feed the living soil, not only the plant.</p>"),
+            ("The four groups of amendments",
+             "<ul>"
+             f"<li><strong>Meals</strong> are nutrient sources: {_pl('bone-meal')}, {_pl('crab-meal')}, {_pl('feather-meal')}, {_pl('kelp-meal')} and {_pl('alfalfa-meal')}.</li>"
+             f"<li><strong>Rock dusts and minerals</strong> supply calcium, magnesium, sulfur, phosphorus and trace minerals: {_pl('soft-rock-phosphate')}, {_pl('gypsum')}, {_pl('oyster-shell-flour')}, {_pl('dolomite-lime')} and {_pl('basalt-rock-dust')}.</li>"
+             f"<li><strong>Castings and compost</strong> add live biology and organic matter: {_pl('worm-castings')} and {_pl('compost-blend')}.</li>"
+             f"<li><strong>Blends</strong> combine several ingredients in one bag: {_pl('flower-power')} (2-6-4) and Level Up (3-3-3).</li>"
+             "</ul>"),
+            ("How to choose by what you want to achieve",
+             "<ul>"
+             f"<li><strong>Leafy, green growth (nitrogen):</strong> {_pl('feather-meal')} (11-0-0) for a slow, strong source, {_pl('alfalfa-meal')} for a gentler boost, {_pl('crab-meal')} (4-3-0) for nitrogen plus calcium.</li>"
+             f"<li><strong>Roots, flowers and fruit (phosphorus):</strong> {_pl('bone-meal')} (4-10-0) or the slower {_pl('soft-rock-phosphate')}.</li>"
+             f"<li><strong>All-round plant strength (potassium):</strong> {_pl('kelp-meal')} (1-0-4) and {_pl('alfalfa-meal')}.</li>"
+             f"<li><strong>Calcium, magnesium and trace minerals:</strong> {_pl('oyster-shell-flour')}, {_pl('dolomite-lime')}, {_pl('gypsum')} and {_pl('basalt-rock-dust')}.</li>"
+             f"<li><strong>Living, healthy soil:</strong> {_pl('worm-castings')} and {_pl('compost-blend')}.</li>"
+             "</ul>"
+             "<p>Not sure? Try the free <a href=\"/soil-calculator/\">soil amendment calculator</a>, or send a photo of a struggling plant to <a href=\"/plant-drmario/\">Plant Dr. Mario</a>.</p>"),
+            ("How to use them",
+             "<p>Every bag prints the dose, usually in tablespoons per gallon of soil, so there is no guesswork. Mix the amendment into the soil, water it in, and start with the lower end of the range on the bag. Slow-acting meals can take a few weeks to show an effect, so avoid adding more too soon.</p>"
+             f"<p>For example, {_pl('bone-meal')} is used at 1 to 2 tablespoons per gallon of soil and releases its nutrients over about 4 months.</p>"),
+            ("Buying organic dry amendments in Canada",
+             "<p>Mario's Super Soil is a Canadian company based in Mississauga, Ontario. Bags come in 2 lb and 5 lb sizes, with directions in English and French, and orders ship across Canada. Orders of $120 or more include a free 2 lb bag of Level Up or Flower Power. See <a href=\"/shipping-returns/\">shipping and returns</a> for details, or find a <a href=\"/#buy\">local shop</a> that carries us.</p>"),
+        ],
+        "faq": [
+            ("What are organic dry amendments?", "Natural, slow-acting ingredients such as meals, rock dusts, worm castings and compost that you mix into soil. They feed plants and soil life gradually."),
+            ("Where can I buy organic soil amendments in Canada?", "Mario's Super Soil sells organic dry amendments online from Mississauga, Ontario, shipping across Canada, and through independent garden shops listed on the home page."),
+            ("How much should I use?", "Follow the dose printed on the bag, usually 1 to 2 tablespoons per gallon of soil, and start at the lower end."),
+            ("Can I use them indoors and outdoors?", "Yes. They are used in pots, raised beds, in-ground gardens and lawns. Follow the directions on each bag."),
+        ],
+    })
+    G.append({
+        "slug": "npk-organic-gardening",
+        "title": "NPK Explained for Organic Gardeners | Mario's Super Soil",
+        "desc": "What the three NPK numbers mean, how organic amendments differ, and which amendment supplies nitrogen, phosphorus or potassium. Includes a quick NPK chart.",
+        "h1": ("NPK explained", "for organic gardeners"),
+        "short": "What N-P-K means and which organic amendment supplies each nutrient.",
+        "answer": "NPK stands for nitrogen (N), phosphorus (P) and potassium (K), the three main nutrients plants use. The three numbers on a bag, such as 4-10-0 for bone meal, are the percentages of each by weight.",
+        "sections": [
+            ("What do the three numbers mean?",
+             "<p>The first number is nitrogen, the second is phosphorus and the third is potassium. Bone meal at 4-10-0 contains 4% nitrogen, 10% phosphorus and 0% potassium.</p>"
+             "<ul><li><strong>Nitrogen (N)</strong> drives leaf and stem growth and a deep green colour.</li>"
+             "<li><strong>Phosphorus (P)</strong> supports roots, flowers and fruit.</li>"
+             "<li><strong>Potassium (K)</strong> supports overall plant strength and water balance.</li></ul>"),
+            ("Why organic NPK numbers look lower",
+             "<p>Organic amendments release nutrients as soil life breaks them down, so the numbers are lower than in fast-dissolving products. They also carry calcium, magnesium, trace minerals and organic matter that the numbers do not show. Mineral amendments such as gypsum, dolomite lime, oyster shell flour and basalt rock dust show little or no NPK because their job is calcium, magnesium, sulfur and trace minerals.</p>"),
+            ("NPK chart for Mario's Super Soil amendments",
+             _npk_table(["feather-meal", "crab-meal", "alfalfa-meal", "bone-meal", "soft-rock-phosphate", "kelp-meal", "worm-castings", "compost-blend", "flower-power"]) +
+             "<p>Level Up is a 3-3-3 all-round blend. See the <a href=\"/#products\">full range</a> for every bag.</p>"),
+            ("Matching the amendment to the job",
+             f"<p>For leafy growth, use a nitrogen source like {_pl('feather-meal')} or {_pl('alfalfa-meal')}. For roots and blooms, choose {_pl('bone-meal')} or {_pl('soft-rock-phosphate')}. For overall strength, add {_pl('kelp-meal')}. Round it out with {_pl('worm-castings')} to feed soil life. The free <a href=\"/soil-calculator/\">calculator</a> works out amounts for your bed or pot.</p>"),
+        ],
+        "faq": [
+            ("What does NPK mean?", "Nitrogen, phosphorus and potassium. The numbers on a bag are the percentage of each by weight."),
+            ("Which organic amendment is highest in nitrogen?", "Feather meal at 11-0-0 is the highest nitrogen amendment we make."),
+            ("Which organic amendment is highest in phosphorus?", "Bone meal at 4-10-0 is the highest phosphorus amendment we make."),
+            ("Why do some amendments show 0-0-0?", "Mineral amendments such as gypsum, dolomite lime, oyster shell flour and basalt rock dust are used for calcium, magnesium, sulfur and trace minerals, not for NPK."),
+        ],
+    })
+    G.append({
+        "slug": "bone-crab-feather-meal",
+        "title": "Bone vs Crab vs Feather Meal | Mario's Super Soil",
+        "desc": "Compare bone meal, crab meal, feather meal, kelp meal and alfalfa meal: NPK, what each is best for, how much to use and how fast it works.",
+        "h1": ("Bone, crab, feather,", "kelp and alfalfa meal compared"),
+        "short": "How the five meal amendments differ and when to use each one.",
+        "answer": "Feather meal (11-0-0) is for nitrogen, bone meal (4-10-0) is for phosphorus, crab meal (4-3-0) adds nitrogen with calcium, kelp meal (1-0-4) adds potassium and ocean minerals, and alfalfa meal (3-0.5-3) is a gentle all-round boost.",
+        "sections": [
+            ("At a glance", _npk_table(["feather-meal", "bone-meal", "crab-meal", "kelp-meal", "alfalfa-meal"])),
+            ("Feather meal: strong, slow nitrogen",
+             f"<p>{_pl('feather-meal')} is 11-0-0, our richest nitrogen source, for lush leaves. Use 1 to 2 tablespoons per gallon of soil or coco and avoid overapplying.</p>"),
+            ("Bone meal: phosphorus for roots, blooms and fruit",
+             f"<p>{_pl('bone-meal')} is 4-10-0. Use 1 to 2 tablespoons per gallon of soil, mix in and water lightly. Its nutrients release over about 4 months.</p>"),
+            ("Crab meal: nitrogen plus calcium",
+             f"<p>{_pl('crab-meal')} is 4-3-0 and brings calcium from the shell. Use 1 to 2 teaspoons per gallon of soil, applied in spring and again every 2 to 3 months.</p>"),
+            ("Kelp meal: potassium and ocean minerals",
+             f"<p>{_pl('kelp-meal')} is 1-0-4 and supplies trace minerals from the sea. Mix 1 to 2 tablespoons per gallon of soil and apply monthly in the growing season.</p>"),
+            ("Alfalfa meal: a gentle growth boost",
+             f"<p>{_pl('alfalfa-meal')} is 3-0.5-3. Mix 2 tablespoons per gallon of soil and repeat in spring as needed.</p>"),
+            ("Which one should I start with?",
+             f"<p>If you want one bag for general use, a balanced blend like Level Up 3-3-3 or {_pl('flower-power')} 2-6-4 combines several of these. If you want to target a gap, pick the single meal that matches it. The <a href=\"/soil-calculator/\">calculator</a> can help you decide.</p>"),
+        ],
+        "faq": [
+            ("What is the difference between bone meal and crab meal?", "Bone meal (4-10-0) is mostly a phosphorus source. Crab meal (4-3-0) gives nitrogen with calcium from crab shell."),
+            ("Which meal has the most nitrogen?", "Feather meal, at 11-0-0."),
+            ("How long does bone meal last in soil?", "Our bone meal releases its nutrients over about 4 months."),
+            ("Can I combine different meals?", "Yes. Many gardeners combine a nitrogen, a phosphorus and a potassium source. Follow each bag's dose and avoid overapplying."),
+        ],
+    })
+    return G
+
+
+def build_guide(g, G):
+    path = f"/guides/{g['slug']}/"
+    faq = "".join(f"<details><summary>{esc(q)}</summary><p>{esc(a)}</p></details>" for q, a in g["faq"])
+    body = "".join(f"<h2>{esc(h)}</h2>{html}" for h, html in g["sections"])
+    others = "".join(f'<li><a href="/guides/{x["slug"]}/">{esc(x["h1"][0])} {esc(x["h1"][1])}</a></li>' for x in G if x["slug"] != g["slug"])
+    ld = [org_ld(),
+          {"@context": "https://schema.org", "@type": "Article", "headline": g["title"].split(" | ")[0], "description": g["desc"],
+           "mainEntityOfPage": abs_url(path), "inLanguage": "en-CA",
+           "datePublished": "2026-11-09", "dateModified": TODAY,
+           "author": {"@type": "Organization", "name": SITE["name"], "url": BASE + "/"},
+           "publisher": {"@type": "Organization", "name": SITE["name"], "url": BASE + "/", "logo": {"@type": "ImageObject", "url": abs_url("/img/logo.png?v=3")}},
+           "image": abs_url("/img/og-image.jpg?v=3")},
+          {"@context": "https://schema.org", "@type": "FAQPage",
+           "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in g["faq"]]},
+          {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+              {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
+              {"@type": "ListItem", "position": 2, "name": "Guides", "item": abs_url("/guides/")},
+              {"@type": "ListItem", "position": 3, "name": g["h1"][0] + " " + g["h1"][1], "item": abs_url(path)}]}]
+    out = head(g["title"], g["desc"], path, jsonld=ld) + header()
+    out += f"""  <section class="sec"><div class="wrap policy gpage">
+    <p class="crumbs"><a href="/">Home</a> / <a href="/guides/">Guides</a></p>
+    <h1 class="nm" style="font-size:clamp(34px,6vw,76px)"><b>{esc(g['h1'][0])}</b> <i>{esc(g['h1'][1])}</i></h1>
+    <p class="lede"><strong>Short answer:</strong> {esc(g['answer'])}</p>
+    {body}
+    <h2>Questions</h2>
+    <div class="faq">{faq}</div>
+    <h2>Keep reading</h2>
+    <ul>{others}<li><a href="/#products">Shop all organic dry amendments</a></li></ul>
+    <p class="small">Written by the team at {esc(SITE['name'])}, Mississauga, Ontario. Last updated {TODAY}.</p>
+  </div></section>
+"""
+    return out + footer()
+
+
+def build_guides_index(G):
+    path = "/guides/"
+    title = "Organic Gardening Guides | Mario's Super Soil"
+    desc = "Plain-language guides to organic dry amendments in Canada: NPK, choosing between meals, rock dusts and castings, and how much to use."
+    items = "".join(f'<li><a href="/guides/{g["slug"]}/"><strong>{esc(g["h1"][0])} {esc(g["h1"][1])}</strong></a><br>{esc(g["short"])}</li>' for g in G)
+    ld = [{"@context": "https://schema.org", "@type": "CollectionPage", "name": "Organic gardening guides", "url": abs_url(path),
+           "hasPart": [{"@type": "Article", "headline": g["title"].split(" | ")[0], "url": abs_url(f"/guides/{g['slug']}/")} for g in G]},
+          {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+              {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
+              {"@type": "ListItem", "position": 2, "name": "Guides", "item": abs_url(path)}]}]
+    out = head(title, desc, path, jsonld=ld) + header()
+    out += f"""  <section class="sec"><div class="wrap policy gpage">
+    <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Gardening</b> <i>guides</i></h1>
+    <p class="lede">Straight answers on organic dry amendments, from a Canadian company that makes them. Every guide links to the exact products and doses on our bags.</p>
+    <ul class="gl">{items}</ul>
+    <p>Also try the free <a href="/soil-calculator/">soil amendment calculator</a> and <a href="/plant-drmario/">Plant Dr. Mario</a> photo diagnosis.</p>
+  </div></section>
+"""
+    return out + footer()
+
+
+def llms_txt():
+    prods = "\n".join(f"- [{full_name(p)}]({abs_url('/products/' + p['slug'] + '/')}): {p['use']}. Sizes 2 lb and 5 lb." for p in PRODUCTS)
+    gl = "\n".join(f"- [{g['h1'][0]} {g['h1'][1]}]({abs_url('/guides/' + g['slug'] + '/')}): {g['short']}" for g in guides())
+    return f"""# {SITE['name']}
+
+> {SITE['name']} is a Canadian company in Mississauga, Ontario that makes organic dry soil amendments (meals, rock dusts, worm castings, compost and blends) for gardeners and growers. Orders ship across Canada. Wholesale is available to garden centres and stores.
+
+Key facts:
+- Location: {SITE['address']['city']}, {SITE['address']['region']}, Canada. Phone {SITE['phone']}. Email {SITE['email']}.
+- Products are organic dry amendments in 2 lb and 5 lb bags with directions in English and French; larger orders are packed as multiple 5 lb bags.
+- Ships within Canada only. Orders of $120 or more include a free 2 lb bag of Level Up 3-3-3 or Flower Power 2-6-4. 30 day returns on unused items.
+- Main blends: Level Up 3-3-3 and Flower Power 2-6-4. A Super Starter Pack is available in 2 lb and 5 lb sizes.
+
+## Products
+{prods}
+
+## Guides and tools
+{gl}
+- [Soil amendment calculator]({abs_url('/soil-calculator/')}): free tool that works out amounts by plant, bed or pot size.
+- [Plant Dr. Mario]({abs_url('/plant-drmario/')}): upload a plant photo for amendment suggestions.
+
+## Business
+- [Wholesale for stores]({abs_url('/wholesale/')})
+- [Shipping and returns]({abs_url('/shipping-returns/')})
+- [Privacy policy]({abs_url('/privacy/')})
+"""
+
+
+def llms_full_txt():
+    parts = [llms_txt(), "\n## Product details\n"]
+    for p in PRODUCTS:
+        parts.append(f"### {full_name(p)}\nURL: {abs_url('/products/' + p['slug'] + '/')}\nNPK: {npk_text(p)}\nBest for: {p['use']}\n" + " ".join(p["desc"]) + f"\nHow to use: {p['how_en']}\nSizes: " + "; ".join(p["sizes"]) + "\n")
+    parts.append("\n## FAQ\n")
+    for q, a in SITE["faq"]:
+        parts.append(f"Q: {q}\nA: {a}\n")
+    return "\n".join(parts)
+
+
+AI_BOTS = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "Claude-SearchBot", "Claude-User", "PerplexityBot", "Perplexity-User", "Google-Extended", "Applebot-Extended", "Bingbot", "Googlebot"]
+
+
 # ---------------------------------------------------------------- write
 def main():
     sync_prices()
     pages = {"index.html": build_home(), "404.html": build_404(), "soil-calculator/index.html": build_calculator(), "plant-drmario/index.html": build_drmario(), "cart/index.html": build_cart(), "order-complete/index.html": build_order_complete(), "admin/index.html": build_admin(), "wholesale/index.html": build_wholesale(), "shipping-returns/index.html": build_policy(), "privacy/index.html": build_privacy()}
     for p in PRODUCTS:
         pages[f"products/{p['slug']}/index.html"] = build_product(p)
+    G = guides()
+    pages["guides/index.html"] = build_guides_index(G)
+    for g in G:
+        pages[f"guides/{g['slug']}/index.html"] = build_guide(g, G)
 
     old = json.loads(HASH_FILE.read_text()) if HASH_FILE.exists() else {}
     new = {}
@@ -984,7 +1220,7 @@ def main():
 
     # sitemap (indexable pages only)
     urls = ""
-    for rel in ["index.html", "soil-calculator/index.html", "plant-drmario/index.html", "wholesale/index.html", "shipping-returns/index.html", "privacy/index.html"] + [f"products/{p['slug']}/index.html" for p in PRODUCTS]:
+    for rel in ["index.html", "soil-calculator/index.html", "plant-drmario/index.html", "wholesale/index.html", "shipping-returns/index.html", "privacy/index.html", "guides/index.html"] + [f"guides/{g['slug']}/index.html" for g in G] + [f"products/{p['slug']}/index.html" for p in PRODUCTS]:
         loc = BASE + "/" + rel.replace("index.html", "")
         prio = "1.0" if rel == "index.html" else "0.8"
         urls += f"  <url><loc>{loc}</loc><lastmod>{new[rel]['lastmod']}</lastmod><priority>{prio}</priority></url>\n"
@@ -994,7 +1230,10 @@ def main():
         robots = "User-agent: *\nDisallow: /\n"
     else:
         robots = f"User-agent: *\nAllow: /\nDisallow: /data/\nDisallow: /tools/\nDisallow: /admin/\nDisallow: /api/\nDisallow: /cart/\n\nSitemap: {BASE}/sitemap.xml\n"
+        robots += "\n# AI assistants and search engines are welcome to read and recommend this site.\n" + "".join(f"User-agent: {b}\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /cart/\n\n" for b in AI_BOTS)
     (ROOT / "robots.txt").write_text(robots)
+    (ROOT / "llms.txt").write_text(llms_txt())
+    (ROOT / "llms-full.txt").write_text(llms_full_txt())
     print(f"built {len(pages)} pages; staging={SITE['staging']}")
 
 
