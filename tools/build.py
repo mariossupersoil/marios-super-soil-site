@@ -71,7 +71,7 @@ def head(title, description, path, og_image="/img/og-image.jpg?v=3", jsonld=None
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=3">
 <link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/oswald-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=35">
+<link rel="stylesheet" href="/assets/style.css?v=36">
 {ld}</head>
 <body id="top">
 """
@@ -152,6 +152,7 @@ def footer():
 <script src="/assets/signup.js?v=1" defer></script>
 <script src="/assets/promo.js?v=2" defer></script>
 <script src="/assets/popup.js?v=4" defer></script>
+<script src="/assets/chat.js?v=1" defer></script>
 </body>
 </html>
 """
@@ -670,7 +671,7 @@ def build_calculator():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Soil amendment calculator", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=35">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=36">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
     out += header()
     body = (ROOT / "data/calculator-body.inc").read_text()
     out += f"""  <section class="sec"><div class="wrap">
@@ -697,7 +698,7 @@ def build_drmario():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Plant Dr. Mario", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=35">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=36">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Plant</b> <i>Dr. Mario</i></h1>
@@ -765,7 +766,7 @@ def build_order_complete():
 
 
 def build_admin():
-    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=35">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
+    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=36">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
     out = out.replace('<meta name="robots" content="noindex, nofollow">\n', '').replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"', 1) if 'noindex' not in out else out
     out += header()
     out += """  <section class="sec"><div class="wrap">
@@ -1322,6 +1323,27 @@ AI_BOTS = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "Claude-Searc
 
 
 # ---------------------------------------------------------------- write
+
+def chat_kb():
+    """Knowledge for the Ask Mario chat assistant (api/chat_kb.json). Only facts that already appear on the site."""
+    L, prods = [], []
+    for p in PRODUCTS:
+        pr = price_rows(p["slug"])
+        price = ("from $%.2f" % min(x[1] for x in pr)) if pr else ""
+        prods.append({"slug": p["slug"], "name": full_name(p), "url": f"/products/{p['slug']}/", "price": price})
+        L.append(f"[{p['slug']}] {full_name(p)} | NPK {npk_text(p)} | {p['use']}\n  About: " + " ".join(p["desc"]) + f"\n  How to use: {p['how_en']}\n  Sizes: " + "; ".join(p["sizes"]) + (f"\n  Prices (CAD, before tax and shipping): " + ", ".join(f"{a} ${b:.2f}" for a, b in pr) if pr else ""))
+    for b in SITE["blends"]:
+        slug = b["id"]
+        if any(q["slug"] == slug for q in PRODUCTS):
+            continue
+        name = (b["a"] + " " + b["b"]).strip()
+        prods.append({"slug": slug, "name": name, "url": "/#products", "price": ("from $%.2f" % b["from"]) if b.get("from") else ""})
+        rows = "; ".join(f"{k}: {v}" for k, v in b.get("rows", []))
+        L.append(f"[{slug}] {name} | blend | {b['tagline']} {b['text']}\n  {rows}" + (f"\n  Price: {b['price_label']}" if b.get("price_label") else (f"\n  Price: from ${b['from']:.2f} CAD" if b.get("from") else "")))
+    L.append("GOOD TO KNOW\n- We ship across Canada only, from Mississauga, Ontario. Shipping is a flat rate by order weight, shown in the cart before paying. Tax is worked out at checkout. Most orders arrive in 2 to 3 business days; allow 2 to 10.\n- Orders of $120 or more include a free 2 lb bag of Level Up 3-3-3 or Flower Power 2-6-4 (chosen in the cart).\n- Returns: within 30 days of receiving, unused and in original packaging; email us first; the customer pays return shipping. Damaged or wrong items: contact us with photos.\n- Bag sizes are 2 lb and 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of the 5 lb bags.\n- Directions are printed in English and French.\n- Stores and wholesale: stores can apply at /wholesale/. A list of shops that carry us is in the Where to buy section on the home page.\n- Tools: soil amendment calculator at /soil-calculator/, plant photo help at /plant-drmario/, guides at /guides/.\n- Contact: " + SITE["email"] + ", phone " + SITE["phone"] + ". Hours: " + "; ".join(f"{a} {b}" for a, b in SITE["hours"]) + " (Eastern time).")
+    L.append("FAQ\n" + "\n".join(f"Q: {q}\nA: {a}" for q, a in SITE["faq"]))
+    return {"products": prods, "text": "\n\n".join(L)}
+
 def main():
     sync_prices()
     pages = {"index.html": build_home(), "404.html": build_404(), "soil-calculator/index.html": build_calculator(), "plant-drmario/index.html": build_drmario(), "cart/index.html": build_cart(), "order-complete/index.html": build_order_complete(), "admin/index.html": build_admin(), "wholesale/index.html": build_wholesale(), "shipping-returns/index.html": build_policy(), "privacy/index.html": build_privacy()}
@@ -1342,6 +1364,7 @@ def main():
         lastmod = old.get(rel, {}).get("lastmod", TODAY) if old.get(rel, {}).get("hash") == h else TODAY
         new[rel] = {"hash": h, "lastmod": lastmod}
     HASH_FILE.write_text(json.dumps(new, indent=2, sort_keys=True) + "\n")
+    (ROOT / "api/chat_kb.json").write_text(json.dumps(chat_kb(), ensure_ascii=False, indent=1) + "\n")
 
     # sitemap (indexable pages only)
     urls = ""

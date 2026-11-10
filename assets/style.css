@@ -480,3 +480,32 @@ html{scroll-behavior:smooth}@media(prefers-reduced-motion:reduce){html{scroll-be
 .perks li:hover,.perks li:focus-within{background:var(--leaf);border-color:var(--leaf);color:#0d140d;transform:translateY(-4px);box-shadow:0 10px 26px rgba(109,191,92,.28)}
 .perks li:hover strong,.perks li:hover{color:#0d140d}
 @media (prefers-reduced-motion:reduce){.perks li{transition:none}.perks li:hover{transform:none}}
+/* Ask Mario chat */
+.chat{position:fixed;right:16px;bottom:16px;z-index:95;font-family:var(--text,inherit)}
+.chat-btn{display:flex;align-items:center;gap:10px;background:var(--leaf);color:#0d140d;border:0;border-radius:999px;padding:12px 20px 12px 14px;font:600 16px/1 var(--text,inherit);letter-spacing:.04em;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.45);transition:transform .2s,box-shadow .2s}
+.chat-btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(109,191,92,.35)}
+.chat-btn-ico{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#0d140d;color:var(--leaf);font-weight:700}
+.chat.is-open .chat-btn{display:none}
+.chat-panel{display:none;flex-direction:column;width:min(380px,calc(100vw - 32px));height:min(560px,calc(100dvh - 32px));background:var(--panel,#141414);border:1px solid var(--line);border-radius:18px;box-shadow:0 18px 50px rgba(0,0,0,.6);overflow:hidden}
+.chat.is-open .chat-panel{display:flex}
+.chat-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:var(--leaf);color:#0d140d;font-size:18px;letter-spacing:.04em}
+.chat-x{background:none;border:0;color:#0d140d;font-size:28px;line-height:1;cursor:pointer;padding:0 4px}
+.chat-log{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
+.cm{max-width:88%;padding:10px 13px;border-radius:14px;font-size:16px;line-height:1.4;overflow-wrap:anywhere}
+.cm-bot{align-self:flex-start;background:#1f1f1f;color:var(--ink)}
+.cm-me{align-self:flex-end;background:var(--leaf);color:#0d140d}
+.cm-wait{opacity:.6}
+.cm-prods{display:grid;gap:6px;margin-top:10px}
+.cm-prod{display:flex;justify-content:space-between;gap:10px;border:1px solid var(--leaf);border-radius:10px;padding:8px 10px;color:var(--ink);text-decoration:none;font-size:15px;transition:background .2s,color .2s}
+.cm-prod span{opacity:.75;white-space:nowrap}
+.cm-prod:hover,.cm-prod:focus-visible{background:var(--leaf);color:#0d140d}
+.cm-chips{display:flex;flex-wrap:wrap;gap:8px}
+.cm-chip{background:none;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:8px 12px;font:inherit;font-size:15px;cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+.cm-chip:hover{background:var(--leaf);border-color:var(--leaf);color:#0d140d}
+.chat-form{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line)}
+.chat-form input{flex:1;min-width:0;background:#0d0d0d;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:11px 12px;font:inherit;font-size:16px}
+.chat-send{background:var(--leaf);color:#0d140d;border:0;border-radius:10px;padding:0 16px;font:600 16px var(--text,inherit);cursor:pointer}
+.chat-send:disabled{opacity:.5;cursor:default}
+.chat-note{margin:0;padding:0 12px 10px;font-size:12px;opacity:.6;text-align:center}
+@media (max-width:520px){.chat{right:10px;bottom:10px}.chat.is-open{left:10px}.chat.is-open .chat-panel{width:100%}}
+@media (prefers-reduced-motion:reduce){.chat-btn,.cm-prod,.cm-chip{transition:none}.chat-log{scroll-behavior:auto}}

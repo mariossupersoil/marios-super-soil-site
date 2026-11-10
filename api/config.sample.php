@@ -7,6 +7,11 @@ return [
     'model' => 'claude-sonnet-5-5',
     'per_ip_per_day' => 12,
     'global_per_day' => 400,
+    // Ask Mario website chat (uses the same api_key). Optional: 'chat_model' => 'claude-haiku-5-5' costs less per chat.
+    'chat_per_ip_per_day' => 40,
+    'chat_per_ip_per_hour' => 20,
+    'chat_global_per_day' => 800,
+    // 'chat_enabled' => false,   // uncomment to switch the chat off instantly
 
     // Shop checkout (Stripe). Use an sk_test_ key first, then switch to sk_live_.
     // Shipping is by order weight (set in the admin page).
