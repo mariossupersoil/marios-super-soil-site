@@ -89,7 +89,7 @@
     input = el('input'); input.type = 'text'; input.maxLength = MAX; input.placeholder = 'Ask about growing or our products'; input.setAttribute('aria-label', 'Your question'); input.autocomplete = 'off';
     sendBtn = el('button', 'chat-send', 'Send'); sendBtn.type = 'submit';
     form.appendChild(input); form.appendChild(sendBtn);
-    var note = el('p', 'chat-note', 'AI assistant. It can make mistakes. For orders, email us.');
+    var note = el('p', 'chat-note', 'AI assistant. It can make mistakes. Questions it cannot answer may be sent to our team.');
     panel.appendChild(head); panel.appendChild(log); panel.appendChild(form); panel.appendChild(note);
     root.appendChild(panel); root.appendChild(launcher);
     document.body.appendChild(root);
