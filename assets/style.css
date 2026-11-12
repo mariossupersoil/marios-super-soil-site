@@ -518,3 +518,13 @@ html{scroll-behavior:smooth}@media(prefers-reduced-motion:reduce){html{scroll-be
 @media (min-width:760px){.kitbags{grid-template-columns:repeat(6,minmax(0,1fr))}.bcard.kit{flex-direction:row;flex-wrap:wrap;align-items:center}.bcard.kit>.bt:first-child{flex:1 1 100%}.kitbags{flex:1 1 100%}}
 @media (min-width:1000px){.bcard.kit{flex-direction:row;flex-wrap:wrap}.bcard.kit img{width:min(90px,100%)}}
 @media (prefers-reduced-motion:reduce){.kitbags a{transition:none}}
+/* blend cards: front and back mock-up */
+.bcard .pair{position:relative;display:block;flex:0 0 auto;width:min(300px,100%);aspect-ratio:1/.8;margin:0 0 6px}
+.bcard .pair img{position:absolute;top:0;width:58%;height:auto;filter:drop-shadow(0 14px 18px rgba(0,0,0,.55));transition:transform .35s ease}
+.bcard .pair .pf{left:0;z-index:2;transform:rotate(-3deg)}
+.bcard .pair .pb{left:38%;z-index:1;transform:rotate(5deg) scale(.96)}
+.bcard:hover .pair .pf,.bcard:focus-visible .pair .pf{transform:rotate(-5deg) translateY(-4px)}
+.bcard:hover .pair .pb,.bcard:focus-visible .pair .pb{transform:rotate(8deg) scale(.96) translateX(8px)}
+.bcard .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:760px){.bcards .bcard:not(.kit){flex-direction:column;align-items:flex-start}.bcard .pair{width:min(280px,100%)}}
+@media (prefers-reduced-motion:reduce){.bcard .pair img{transition:none}}
