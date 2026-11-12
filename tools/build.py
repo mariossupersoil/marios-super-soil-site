@@ -71,7 +71,7 @@ def head(title, description, path, og_image="/img/og-image.jpg?v=3", jsonld=None
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=3">
 <link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/oswald-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=44">
+<link rel="stylesheet" href="/assets/style.css?v=48">
 {ld}</head>
 <body id="top">
 """
@@ -195,6 +195,13 @@ def sync_prices():
             if m:  # packed as several 5 lb bags: price and stock come from the 5lb size
                 sizes[k]["pack_of"] = int(m.group(2)); sizes[k]["pack_from"] = "5lb"; sizes[k]["price"] = None
         prods[p["slug"]] = {"name": full_name(p), "img": f"/img/{p['f']}-front.webp", "sizes": sizes}
+    kit = next((b for b in SITE["blends"] if b["id"] == "starter-pack"), None)
+    if kit and kit.get("kit_sizes"):
+        ks = {}
+        for z in kit["kit_sizes"]:
+            o = oldp.get("super-starter-pack", {}).get("sizes", {}).get(z["key"], {})
+            ks[z["key"]] = {"label": z["label"], "price": o.get("price", z["price"]), "weight_kg": o.get("weight_kg", z["weight_kg"])}
+        prods["super-starter-pack"] = {"name": "Super Starter Pack", "img": "/img/starter-kit.webp", "sizes": ks}
     out = {"currency": "CAD", "note": "Prices in Canadian dollars before tax and shipping, for example 24.99. null means no price yet.", "products": prods}
     f.write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n")
 
@@ -267,13 +274,16 @@ def blend_cards():
         else:
             fr = (f'<span class="from">{esc(b["price_label"])}</span>' if b.get("price_label") else f'<span class="from">From ${b["from"]:,.2f}</span>' if b.get("from") else "")
             if b["id"] == "starter-pack":
+                kr = price_rows("super-starter-pack")
+                if kr:
+                    fr = '<span class="from">' + " · ".join(f"{l}: ${v:,.2f}" for l, v in kr) + "</span>"
                 bags = ""
                 for sl in ("level-up", "flower-power", "kelp-meal", "alfalfa-meal", "compost-blend", "worm-castings"):
                     q = next(x for x in PRODUCTS if x["slug"] == sl)
-                    bags += (f'<li><a href="/products/{sl}/"><img src="/img/{q["f"]}-front.webp" width="90" height="117" loading="lazy" alt="{esc(full_name(q))} bag">'
+                    bags += (f'<li style="--i:{len(bags.split("<li")) - 1}"><a href="/products/{sl}/"><img src="/img/{q["f"]}-front.webp" width="90" height="117" loading="lazy" alt="{esc(full_name(q))} bag">'
                              f'<span>{esc(full_name(q))}</span></a></li>')
                 cards += (f'<div class="bcard kit" style="--accent:{b["accent"]}"><span class="bt"><span class="nm"><b>{esc(b["a"])}</b> <i>{esc(b["b"])}</i></span>'
-                          f'<span class="bsub">{esc(b["tagline"])} Six bags in one kit:</span></span><ul class="kitbags">{bags}</ul>'
+                          f'<span class="bsub">{esc(b["tagline"])} Six bags in one kit:</span></span><div class="kitwrap kitwrap6"><span class="kbox kbb" aria-hidden="true"><span class="kb-back"></span></span><ul class="kitbags">{bags}</ul><span class="kbox kbf" aria-hidden="true"><span class="kb-lid l1"></span><span class="kb-lid l2"></span><span class="kb-front"><b>Super Starter</b> Pack</span></span></div>'
                           f'<span class="bt">{fr}<a class="btn" href="/products/super-starter-pack/">See the kit</a></span></div>')
             else:
                 cards += (f'<a class="bcard noimg" href="/#contact" style="--accent:{b["accent"]}"><span class="bt"><span class="nm"><b>{esc(b["a"])}</b> <i>{esc(b["b"])}</i></span>'
@@ -688,7 +698,7 @@ def build_calculator():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Soil amendment calculator", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=44">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=48">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
     out += header()
     body = (ROOT / "data/calculator-body.inc").read_text()
     out += f"""  <section class="sec"><div class="wrap">
@@ -715,7 +725,7 @@ def build_drmario():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Plant Dr. Mario", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=44">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=48">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Plant</b> <i>Dr. Mario</i></h1>
@@ -783,7 +793,7 @@ def build_order_complete():
 
 
 def build_admin():
-    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=44">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
+    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=48">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
     out = out.replace('<meta name="robots" content="noindex, nofollow">\n', '').replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"', 1) if 'noindex' not in out else out
     out += header()
     out += """  <section class="sec"><div class="wrap">
@@ -1012,22 +1022,24 @@ def build_kit_page():
     prods = [next(q for q in PRODUCTS if q["slug"] == k) for k in KIT_SLUGS]
     title = "Super Starter Pack: Organic Gardening Kit | Mario's Super Soil"
     meta = "The Super Starter Pack is a six-bag organic gardening kit: Level Up, Flower Power, Kelp Meal, Alfalfa Meal, Compost and Worm Castings. 2 lb and 5 lb kits."
-    lo = min(v for _, v in sp["kit_prices"]); hi = max(v for _, v in sp["kit_prices"])
+    kp = price_rows("super-starter-pack") or [(z["short"], z["price"]) for z in sp["kit_sizes"]]
+    lo = min(v for _, v in kp); hi = max(v for _, v in kp)
     ld = [org_ld(),
           {"@context": "https://schema.org", "@type": "Product", "name": "Super Starter Pack", "description": meta, "url": abs_url(KIT_PATH),
-           "image": [abs_url(f"/img/{q['f']}-front.webp") for q in prods],
+           "image": [abs_url("/img/starter-kit.webp")] + [abs_url(f"/img/{q['f']}-front.webp") for q in prods],
            "brand": {"@type": "Brand", "name": SITE["name"]}, "category": "Organic dry amendment kit",
            "countryOfOrigin": {"@type": "Country", "name": "Canada"},
-           "offers": {"@type": "AggregateOffer", "priceCurrency": "CAD", "lowPrice": f"{lo:.2f}", "highPrice": f"{hi:.2f}", "offerCount": len(sp["kit_prices"]), "url": abs_url(KIT_PATH)}},
+           "offers": {"@type": "AggregateOffer", "priceCurrency": "CAD", "lowPrice": f"{lo:.2f}", "highPrice": f"{hi:.2f}", "offerCount": len(kp), "url": abs_url(KIT_PATH)}},
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Products", "item": BASE + "/#products"},
               {"@type": "ListItem", "position": 3, "name": "Super Starter Pack", "item": abs_url(KIT_PATH)}]}]
-    bags = "".join(f'<li><a href="/products/{q["slug"]}/"><img src="/img/{q["f"]}-front.webp" width="170" height="220" alt="{esc(full_name(q))} bag"><span>{esc(full_name(q))}</span></a></li>' for q in prods)
+    bags = "".join(f'<li style="--i:{n};--c:{n % 3};--r:{n // 3}"><a href="/products/{q["slug"]}/"><img src="/img/{q["f"]}-front.webp" width="170" height="220" alt="{esc(full_name(q))} bag"><span>{esc(full_name(q))}</span></a></li>' for n, q in enumerate(prods))
     rows = "".join(
         f'<li><a href="/products/{q["slug"]}/"><img src="/img/{q["f"]}-front.webp" width="64" height="83" loading="lazy" alt=""><span class="kt"><strong>{name_html(q)}</strong>'
         f'<small>{esc(q["use"])}. {esc(q["when"])}</small></span></a></li>' for q in prods)
-    prices = "".join(f'<li><span>{esc(a)}</span><strong>${v:,.2f} CAD</strong></li>' for a, v in sp["kit_prices"])
+    prices = "".join(f'<li><span>{esc(z["label"])}</span><strong>${next((v for l, v in kp if l.replace(" kit", "") == z["key"].replace("lb", " lb")), z["price"]):,.2f} CAD</strong></li>' for z in sp["kit_sizes"])
+    size_opts = "".join(f'<option value="{z["key"]}">{esc(z["label"])}</option>' for z in sp["kit_sizes"])
     sub = "Super Starter Pack order"
     mail = f"mailto:{SITE['email']}?subject={sub.replace(' ', '%20')}&body=Hi%20Mario%2C%0A%0AI%20would%20like%20to%20order%20the%20Super%20Starter%20Pack.%0AKit%20size%20(2%20lb%20or%205%20lb)%3A%20%0AName%3A%20%0AShipping%20address%3A%20%0A"
     out = head(title, meta, KIT_PATH, og_image="/img/levelup-front.webp", jsonld=ld) + header()
@@ -1035,14 +1047,23 @@ def build_kit_page():
     <div class="wrap">
       <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/#products">Products</a> / <span aria-current="page">Super Starter Pack</span></nav>
       <div class="kithero">
-        <ul class="kitgrid">{bags}</ul>
+        <div class="kitwrap kitwrap3"><span class="kbox kbb" aria-hidden="true"><span class="kb-back"></span></span><ul class="kitgrid">{bags}</ul><span class="kbox kbf" aria-hidden="true"><span class="kb-lid l1"></span><span class="kb-lid l2"></span><span class="kb-front"><b>Super Starter</b> Pack</span></span></div>
         <div class="info">
           <h1 class="nm"><b>Super Starter</b> <i>Pack</i></h1>
           <span class="pq">Everything you need to have a successful grow</span>
           <ul class="kitprices">{prices}</ul>
+          <div class="shopbox" id="buy-box" data-slug="super-starter-pack">
+            <div class="buyrow">
+              <div><label for="buy-size">Kit size</label><select id="buy-size">{size_opts}</select></div>
+              <div><label for="buy-qty">Quantity</label><input id="buy-qty" type="number" min="1" max="20" value="1" inputmode="numeric"></div>
+            </div>
+            <p class="buyprice" id="buy-price" aria-live="polite">Choose a size</p>
+            <button class="btn solid" type="button" id="buy-add">Add to cart</button>
+            <p class="buymsg" id="buy-msg" role="status" aria-live="polite"></p>
+          </div>
+          <p class="ctas"><a class="btn" href="/#buy">Find a local shop</a></p>
           <p>A complete organic gardening kit for new gardeners. It brings together six of our organic dry amendments, so you can feed every stage of growth without choosing one product at a time. The bags are the same ones we sell on their own, with the dose printed on every bag.</p>
-          <p class="ctas"><a class="btn solid" href="{mail}">Order by email</a> <a class="btn" href="/#buy">Find a local shop</a></p>
-          <p class="store">Kit sizes: 2 lb and 5 lb. To order the kit, email us or call {esc(SITE['phone'])}, and we will confirm your order and shipping. Ships across Canada.</p>
+          <p class="store">Each kit has six bags: 6 x 2 lb in the 2 lb kit and 6 x 5 lb in the 5 lb kit. Ships across Canada.</p>
         </div>
       </div>
       <h2>What is in the kit</h2>
@@ -1444,7 +1465,7 @@ def search_index():
                       "k": " ".join([p["use"], npk_text(p), dict(CATS).get(p.get("cat"), ""), SEARCH_KW.get(p["slug"], ""), " ".join(p["ben"])])})
     sp = next((b for b in SITE["blends"] if b["id"] == "starter-pack"), None)
     if sp:
-        items.append({"t": "Super Starter Pack", "u": KIT_PATH, "i": "/img/levelup-front.webp", "d": sp.get("price_label", ""),
+        items.append({"t": "Super Starter Pack", "u": KIT_PATH, "i": "/img/levelup-front.webp", "d": " · ".join(f"{l} ${v:,.2f}" for l, v in price_rows("super-starter-pack")),
                       "k": "starter kit beginner gift bundle level up flower power kelp alfalfa compost worm castings"})
     for g in guides():
         items.append({"t": g["h1"][0] + " " + g["h1"][1], "u": f"/guides/{g['slug']}/", "g": "Guide", "d": g["short"], "k": g["title"]})

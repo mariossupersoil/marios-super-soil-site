@@ -141,15 +141,21 @@
       ],
       "from": 59.99,
       "price_label": "2 lb: $59.99 · 5 lb: $109.99",
-      "kit_prices": [
-        [
-          "2 lb kit",
-          59.99
-        ],
-        [
-          "5 lb kit",
-          109.99
-        ]
+      "kit_sizes": [
+        {
+          "key": "2lb",
+          "label": "2 lb kit (6 x 2 lb bags)",
+          "short": "2 lb kit",
+          "price": 59.99,
+          "weight_kg": 5.44
+        },
+        {
+          "key": "5lb",
+          "label": "5 lb kit (6 x 5 lb bags)",
+          "short": "5 lb kit",
+          "price": 109.99,
+          "weight_kg": 13.61
+        }
       ]
     }
   ],

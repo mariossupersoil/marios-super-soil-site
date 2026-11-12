@@ -443,6 +443,22 @@
      "weight_kg": 9.08
     }
    }
+  },
+  "super-starter-pack": {
+   "name": "Super Starter Pack",
+   "img": "/img/starter-kit.webp",
+   "sizes": {
+    "2lb": {
+     "label": "2 lb kit (6 x 2 lb bags)",
+     "price": 59.99,
+     "weight_kg": 5.44
+    },
+    "5lb": {
+     "label": "5 lb kit (6 x 5 lb bags)",
+     "price": 109.99,
+     "weight_kg": 13.61
+    }
+   }
   }
  }
 }

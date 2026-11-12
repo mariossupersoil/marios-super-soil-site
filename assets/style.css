@@ -564,3 +564,27 @@ header .brand{order:1}header .cartlink{order:3}header .btn.solid{order:4}header 
 .kitrows img{width:64px;height:auto;flex:0 0 auto}
 .kitrows .kt{display:flex;flex-direction:column;gap:4px}.kitrows .kt strong{font-size:22px}.kitrows small{color:var(--muted);font-size:15px}
 @media (prefers-reduced-motion:reduce){.kitgrid a,.kitrows a{transition:none}}
+/* Super Starter Pack: bags pack themselves into a box on hover */
+.kitwrap{position:relative;width:100%;perspective:900px}
+.kitwrap>ul{position:relative;z-index:1}
+.kb-front{line-height:1.25}
+.kitwrap li{transition:transform 1.1s cubic-bezier(.5,0,.2,1) calc(var(--i,0)*90ms)}
+.kitwrap li a span{transition:opacity .25s}
+.kbox.kbb{z-index:0}
+.kbox{position:absolute;left:50%;bottom:6px;width:min(170px,34%);aspect-ratio:1.35/1;transform:translate(-50%,40px) scale(.9);opacity:0;pointer-events:none;z-index:2;transition:transform .6s ease,opacity .45s ease}
+.kbox.kbb{z-index:0}
+.kb-back,.kb-front,.kb-lid{position:absolute;display:block}
+.kb-back{inset:0;background:#6b4a28;border-radius:6px}
+.kb-front{left:0;right:0;bottom:0;height:64%;background:linear-gradient(#c9985c,#a97a42);border-radius:4px 4px 8px 8px;z-index:3;display:grid;place-items:center;text-align:center;color:#2a1a08;font:600 clamp(9px,1.2vw,13px)/1.1 var(--text,sans-serif);letter-spacing:.06em;text-transform:uppercase;box-shadow:inset 0 -6px 12px rgba(0,0,0,.18)}
+.kb-front b{display:block;font-weight:700}
+.kb-lid{left:0;width:50%;height:34%;top:0;background:linear-gradient(#dba96a,#c58f52);z-index:4;transition:transform .5s ease 1.7s;backface-visibility:visible}
+.kb-lid.l1{transform-origin:0 100%;transform:rotate(-100deg);border-radius:4px 0 0 0}
+.kb-lid.l2{left:50%;transform-origin:100% 100%;transform:rotate(100deg);border-radius:0 4px 0 0}
+@media (hover:hover){
+ .bcard.kit:hover .kitwrap6 .kbox,.bcard.kit:focus-within .kitwrap6 .kbox,.kitwrap3:hover .kbox,.kitwrap3:focus-within .kbox{opacity:1;transform:translate(-50%,0) scale(1);transition-delay:0s}
+ .bcard.kit:hover .kitwrap6 .kb-lid,.bcard.kit:focus-within .kitwrap6 .kb-lid,.kitwrap3:hover .kb-lid,.kitwrap3:focus-within .kb-lid{transform:rotate(0)}
+ .bcard.kit:hover .kitwrap6 li,.bcard.kit:focus-within .kitwrap6 li{transform:translate(calc((2.5 - var(--i)) * 100%),-4%) scale(.4)}
+ .bcard.kit:hover .kitwrap6 li a span,.kitwrap3:hover li a span{opacity:0}
+ .kitwrap3:hover li,.kitwrap3:focus-within li{transform:translate(calc((1 - var(--c)) * 105%),calc(122% - var(--r) * 104%)) scale(.38)}
+}
+@media (prefers-reduced-motion:reduce){.kitwrap li,.kbox,.kb-lid{transition:none}}
