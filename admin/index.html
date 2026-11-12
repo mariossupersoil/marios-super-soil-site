@@ -28,6 +28,12 @@
 <header>
   <div class="wrap">
     <a class="brand" href="/"><img src="/img/logo.png?v=3" width="54" height="54" alt="Mario's Super Soil logo"><span>Mario's Super Soil</span></a>
+    <form class="hsearch" role="search" action="/#products" autocomplete="off">
+      <label class="sr" for="hs-q">Search products</label>
+      <input id="hs-q" type="search" placeholder="Search products, e.g. bone meal, calcium, tomatoes" maxlength="60" role="combobox" aria-expanded="false" aria-controls="hs-list" aria-autocomplete="list">
+      <button type="submit" aria-label="Search"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+      <ul id="hs-list" class="hs-list" role="listbox" hidden></ul>
+    </form>
     <nav aria-label="Main">
       <a href="/#products">Products</a>
       <a href="/#buy">Where to buy</a>
@@ -97,5 +103,6 @@
 <script src="/assets/promo.js?v=2" defer></script>
 <script src="/assets/popup.js?v=4" defer></script>
 <script src="/assets/chat.js?v=2" defer></script>
+<script src="/assets/search.js?v=1" defer></script>
 </body>
 </html>

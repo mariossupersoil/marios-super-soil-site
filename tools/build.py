@@ -71,7 +71,7 @@ def head(title, description, path, og_image="/img/og-image.jpg?v=3", jsonld=None
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=3">
 <link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/oswald-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=40">
+<link rel="stylesheet" href="/assets/style.css?v=42">
 {ld}</head>
 <body id="top">
 """
@@ -84,6 +84,12 @@ def header():
 <header>
   <div class="wrap">
     <a class="brand" href="/"><img src="/img/logo.png?v=3" width="54" height="54" alt="Mario's Super Soil logo"><span>Mario's Super Soil</span></a>
+    <form class="hsearch" role="search" action="/#products" autocomplete="off">
+      <label class="sr" for="hs-q">Search products</label>
+      <input id="hs-q" type="search" placeholder="Search products, e.g. bone meal, calcium, tomatoes" maxlength="60" role="combobox" aria-expanded="false" aria-controls="hs-list" aria-autocomplete="list">
+      <button type="submit" aria-label="Search"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+      <ul id="hs-list" class="hs-list" role="listbox" hidden></ul>
+    </form>
     <nav aria-label="Main">
       <a href="/#products">Products</a>
       <a href="/#buy">Where to buy</a>
@@ -153,6 +159,7 @@ def footer():
 <script src="/assets/promo.js?v=2" defer></script>
 <script src="/assets/popup.js?v=4" defer></script>
 <script src="/assets/chat.js?v=2" defer></script>
+<script src="/assets/search.js?v=1" defer></script>
 </body>
 </html>
 """
@@ -681,7 +688,7 @@ def build_calculator():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Soil amendment calculator", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=40">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=42">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
     out += header()
     body = (ROOT / "data/calculator-body.inc").read_text()
     out += f"""  <section class="sec"><div class="wrap">
@@ -708,7 +715,7 @@ def build_drmario():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Plant Dr. Mario", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=40">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=42">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Plant</b> <i>Dr. Mario</i></h1>
@@ -776,7 +783,7 @@ def build_order_complete():
 
 
 def build_admin():
-    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=40">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
+    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=42">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
     out = out.replace('<meta name="robots" content="noindex, nofollow">\n', '').replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"', 1) if 'noindex' not in out else out
     out += header()
     out += """  <section class="sec"><div class="wrap">
@@ -1334,6 +1341,46 @@ AI_BOTS = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "Claude-Searc
 
 # ---------------------------------------------------------------- write
 
+
+SEARCH_KW = {
+    "level-up": "all purpose balanced vegetables herbs flowers beginner blend",
+    "flower-power": "bloom flowers fruit phosphorus tomatoes peppers blend",
+    "crab-meal": "calcium chitin nitrogen shell",
+    "bone-meal": "phosphorus roots blooms fruit bulbs",
+    "kelp-meal": "potassium seaweed trace minerals",
+    "alfalfa-meal": "nitrogen potassium growth triacontanol",
+    "feather-meal": "nitrogen leaves green lawn",
+    "soft-rock-phosphate": "phosphorus colloidal slow release",
+    "gypsum": "clay calcium sulfur sulphur loosen soil",
+    "oyster-shell-flour": "calcium ph lime shell",
+    "dolomite-lime": "lime ph acid calcium magnesium raise",
+    "basalt-rock-dust": "minerals silica remineralize rock dust trace",
+    "worm-castings": "vermicast worm poop biology microbes seed starting",
+    "compost-blend": "organic matter soil improver tea topsoil",
+}
+
+
+def search_index():
+    items = []
+    for p in PRODUCTS:
+        rows = price_rows(p["slug"])
+        items.append({"t": full_name(p), "u": f"/products/{p['slug']}/", "i": f"/img/{p['f']}-front.webp",
+                      "d": p["use"] + (", from $%.2f" % min(x[1] for x in rows) if rows else ""),
+                      "k": " ".join([p["use"], npk_text(p), dict(CATS).get(p.get("cat"), ""), SEARCH_KW.get(p["slug"], ""), " ".join(p["ben"])])})
+    sp = next((b for b in SITE["blends"] if b["id"] == "starter-pack"), None)
+    if sp:
+        items.append({"t": "Super Starter Pack", "u": "/#products", "i": "/img/levelup-front.webp", "d": sp.get("price_label", ""),
+                      "k": "starter kit beginner gift bundle level up flower power kelp alfalfa compost worm castings"})
+    for g in guides():
+        items.append({"t": g["h1"][0] + " " + g["h1"][1], "u": f"/guides/{g['slug']}/", "g": "Guide", "d": g["short"], "k": g["title"]})
+    for t, u, d, k in [("Soil amendment calculator", "/soil-calculator/", "How much to use for your bed or pot", "calculator how much dose"),
+                       ("Plant Dr. Mario", "/plant-drmario/", "Upload a plant photo for help", "diagnose problem sick yellow leaves photo"),
+                       ("Wholesale for stores", "/wholesale/", "Stock Mario's Super Soil in your shop", "retail store garden centre bulk"),
+                       ("Shipping and returns", "/shipping-returns/", "Shipping rates, delivery times, returns", "delivery refund postage")]:
+        items.append({"t": t, "u": u, "g": "Page", "d": d, "k": k})
+    return items
+
+
 def chat_kb():
     """Knowledge for the Ask Mario chat assistant (api/chat_kb.json). Only facts that already appear on the site."""
     L, prods = [], []
@@ -1374,6 +1421,7 @@ def main():
         lastmod = old.get(rel, {}).get("lastmod", TODAY) if old.get(rel, {}).get("hash") == h else TODAY
         new[rel] = {"hash": h, "lastmod": lastmod}
     HASH_FILE.write_text(json.dumps(new, indent=2, sort_keys=True) + "\n")
+    (ROOT / "assets/search-index.json").write_text(json.dumps(search_index(), ensure_ascii=False, separators=(",", ":")))
     (ROOT / "api/chat_kb.json").write_text(json.dumps(chat_kb(), ensure_ascii=False, indent=1) + "\n")
 
     # sitemap (indexable pages only)

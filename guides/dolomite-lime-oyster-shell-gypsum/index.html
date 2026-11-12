@@ -20,7 +20,7 @@
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=3">
 <link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/oswald-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=40">
+<link rel="stylesheet" href="/assets/style.css?v=42">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "Mario's Super Soil", "url": "https://mariossupersoil.ca/", "logo": "https://mariossupersoil.ca/img/logo.png?v=3", "email": "mariossupersoil@mariossupersoil.com", "telephone": "+1-647-839-7645", "@id": "https://mariossupersoil.ca/#organization", "description": "Canadian company in Mississauga, Ontario making organic dry soil amendments: meals, rock dusts, worm castings, compost and blends. Ships across Canada.", "slogan": "Grow great plants. Skip the guesswork.", "areaServed": {"@type": "Country", "name": "Canada"}, "knowsAbout": ["organic dry amendments", "organic soil amendments", "bone meal", "crab meal", "feather meal", "kelp meal", "alfalfa meal", "worm castings", "NPK", "organic gardening in Canada"], "contactPoint": [{"@type": "ContactPoint", "contactType": "customer service", "telephone": "+1-647-839-7645", "email": "mariossupersoil@mariossupersoil.com", "areaServed": "CA", "availableLanguage": ["English", "French"]}], "foundingDate": "2019", "address": {"@type": "PostalAddress", "addressLocality": "Mississauga", "addressRegion": "ON", "addressCountry": "CA"}, "sameAs": ["https://www.instagram.com/mariossupersoil/", "https://www.facebook.com/mariossupersoil1", "https://x.com/mariossupersoil", "https://www.linkedin.com/company/marios-super-soil"]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Dolomite vs Oyster Shell Flour vs Gypsum", "description": "Compare three organic calcium sources: dolomite lime, oyster shell flour and gypsum. What each adds, how each affects pH, and how much to use.", "mainEntityOfPage": "https://mariossupersoil.ca/guides/dolomite-lime-oyster-shell-gypsum/", "inLanguage": "en-CA", "datePublished": "2026-11-09", "dateModified": "2026-11-11", "author": {"@type": "Organization", "name": "Mario's Super Soil", "url": "https://mariossupersoil.ca/"}, "publisher": {"@type": "Organization", "name": "Mario's Super Soil", "url": "https://mariossupersoil.ca/", "logo": {"@type": "ImageObject", "url": "https://mariossupersoil.ca/img/logo.png?v=3"}}, "image": "https://mariossupersoil.ca/img/og-image.jpg?v=3"}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Which amendment raises soil pH?", "acceptedAnswer": {"@type": "Answer", "text": "Dolomite lime raises pH. Oyster shell flour helps keep pH balanced. Gypsum has little effect on pH."}}, {"@type": "Question", "name": "What is the difference between lime and gypsum?", "acceptedAnswer": {"@type": "Answer", "text": "Lime raises pH. Gypsum adds calcium and sulfur without changing pH much."}}, {"@type": "Question", "name": "How much dolomite lime do I need?", "acceptedAnswer": {"@type": "Answer", "text": "About 5 lb per 100 sq ft raises pH from 5.5 to 6.5, according to the bag. For pots use 1 to 2 tablespoons per gallon of soil."}}, {"@type": "Question", "name": "Can I use oyster shell flour in pots?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Use 1 to 2 tablespoons per gallon of soil in new pots and 1 tablespoon for established plants."}}]}</script>
@@ -31,6 +31,12 @@
 <header>
   <div class="wrap">
     <a class="brand" href="/"><img src="/img/logo.png?v=3" width="54" height="54" alt="Mario's Super Soil logo"><span>Mario's Super Soil</span></a>
+    <form class="hsearch" role="search" action="/#products" autocomplete="off">
+      <label class="sr" for="hs-q">Search products</label>
+      <input id="hs-q" type="search" placeholder="Search products, e.g. bone meal, calcium, tomatoes" maxlength="60" role="combobox" aria-expanded="false" aria-controls="hs-list" aria-autocomplete="list">
+      <button type="submit" aria-label="Search"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+      <ul id="hs-list" class="hs-list" role="listbox" hidden></ul>
+    </form>
     <nav aria-label="Main">
       <a href="/#products">Products</a>
       <a href="/#buy">Where to buy</a>
@@ -98,5 +104,6 @@
 <script src="/assets/promo.js?v=2" defer></script>
 <script src="/assets/popup.js?v=4" defer></script>
 <script src="/assets/chat.js?v=2" defer></script>
+<script src="/assets/search.js?v=1" defer></script>
 </body>
 </html>
