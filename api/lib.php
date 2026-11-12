@@ -345,5 +345,8 @@ function send_shipped_email(array $o): bool {
     $body = 'Hi' . ($o['name'] !== '' ? ' ' . $o['name'] : '') . ",\n\nGood news: your Mario's Super Soil order #" . $o['number'] . " is on its way.\n\n" . implode("\n", $lines) . "\n\n"
         . ($o['tracking'] !== '' ? 'Carrier: ' . ($o['carrier'] ?: 'see tracking') . "\nTracking number: " . $o['tracking'] . "\n" . ($url ? 'Track it here: ' . $url . "\n" : '') . "\n" : '')
         . "Shipping within Canada usually takes 2 to 10 business days. If anything looks wrong when it arrives, just reply to this email.\n\nThank you for growing with us.\nMario's Super Soil\n";
+    // unsubscribe link (stops restock reminders and sale emails; this shipping notice is only sent once per order)
+    $tok = ''; foreach (store()['customers'] ?? [] as $c) { if (strtolower($c['email']) === strtolower((string)$o['email'])) { $tok = (string)$c['token']; break; } }
+    if ($tok !== '') $body .= "\nDon't want sale or restock emails from us? Unsubscribe any time: " . site_url() . '/api/unsubscribe.php?t=' . $tok . "\n";
     return send_mail($o['email'], "Your Mario's Super Soil order #" . $o['number'] . ' has shipped', $body, null, owner_email());
 }
