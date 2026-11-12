@@ -264,7 +264,7 @@ function renderCycleBlock(info){
 const PRODUCTS={
   // lbs100 = lbs per 100 sqft at standard 6-inch amendment depth (industry rates)
   // tbsp   = tablespoons per gallon of pot volume (container rate)
-  levelUp:    {name:'Level Up 3-3-3',       npk:'3-3-3',    url:'https://mariossupersoil.ca/level-up-organic-gardening',   tbsp:1.0,  lbs100:2.0},
+  levelUp:    {name:'Level Up 3-3-3',       npk:'3-3-3',    url:'https://mariossupersoil.ca/products/level-up/',   tbsp:1.0,  lbs100:2.0},
   flowerPower:{name:'Flower Power 2-6-4',   npk:'2-6-4',    url:'https://mariossupersoil.ca/flower-power-2-6-4',          tbsp:1.0,  lbs100:2.0},
   featherMeal:{name:'Feather Meal 11-0-0',  npk:'11-0-0',   url:'https://mariossupersoil.ca/sustainable-fertilizers',     tbsp:1.0,  lbs100:1.0},
   boneMeal:   {name:'Bone Meal 4-10-0',     npk:'4-10-0',   url:'https://mariossupersoil.ca/sustainable-fertilizers',     tbsp:1.0,  lbs100:2.0},

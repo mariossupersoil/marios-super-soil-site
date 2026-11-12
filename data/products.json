@@ -1,5 +1,61 @@
 [
  {
+  "slug": "level-up",
+  "f": "levelup",
+  "a": "Level",
+  "b": "Up",
+  "npk": [
+   3,
+   3,
+   3
+  ],
+  "accent": "#7fc46b",
+  "title": "Level Up 3-3-3 Organic Grow Blend | Mario's Super Soil",
+  "meta": "Level Up 3-3-3 organic grow blend for strong roots, lush foliage and vigorous growth in vegetables, flowers and herbs. Sizes: 2 to 20 lb.",
+  "desc": [
+   "Level Up 3-3-3 is a premium organic dry amendment that promotes strong roots, lush foliage, and vigorous growth with balanced nutrition for vegetables, flowers, and herbs.",
+   "Available in multiple sizes, its resealable bag keeps the blend fresh, making it a reliable choice for beginner and experienced gardeners seeking organic results.",
+   "Made from humic acid, alfalfa meal, kelp meal, crab meal, basalt rock dust, bone meal, blood meal, K-mag (langbeinite) and oyster shell flour."
+  ],
+  "ben": [
+   "Balanced 3-3-3 formula",
+   "Enriches soil & microbes",
+   "Mineral & calcium rich",
+   "Vibrant green foliage",
+   "Strong root & stem growth",
+   "Balances soil pH naturally"
+  ],
+  "micro": [
+   [
+    "Calcium (Ca)",
+    "Calcium (Ca)",
+    "11%"
+   ],
+   [
+    "Magnesium (Mg)",
+    "Magnésium (Mg)",
+    "2.3%"
+   ],
+   [
+    "Sulfur (S)",
+    "Soufre (S)",
+    "about 4%"
+   ]
+  ],
+  "how_en": "Use 1 tbsp per gallon of soil or coco. For mature plants, use 2 tbsp per gallon. Use 1/2 tbsp for seedlings.",
+  "how_fr": "Utiliser 1 c. à soupe par gallon de terre ou de coco. Pour les plantes matures, utiliser 2 c. à soupe par gallon. Utiliser 1/2 c. à soupe pour les semis.",
+  "when": "1 tbsp per gallon. Mature plants: 2 tbsp. Seedlings: 1/2 tbsp.",
+  "sizes": [
+   "2 lb (0.9 kg)",
+   "5 lb (2.3 kg)",
+   "10 lb (4.5 kg) = 2 x 5 lb bags",
+   "20 lb (9.1 kg) = 4 x 5 lb bags"
+  ],
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
+  "cat": "blends",
+  "use": "All-round balanced growth"
+ },
+ {
   "slug": "flower-power",
   "f": "flower",
   "a": "Flower",

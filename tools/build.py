@@ -379,7 +379,7 @@ def build_home():
 """
     # simple guide: grouped by what the grower wants to achieve (a bag can appear under more than one goal)
     GUIDE = [
-        ("All-in-one blends", "A balanced mix, ready to use", ["flower-power"]),
+        ("All-in-one blends", "A balanced mix, ready to use", ["level-up", "flower-power"]),
         ("Nitrogen (N)", "For green, leafy growth", ["feather-meal", "crab-meal", "alfalfa-meal"]),
         ("Phosphorus (P)", "For strong roots, blooms and fruit", ["bone-meal", "soft-rock-phosphate"]),
         ("Potassium (K)", "For plant strength and fruit quality", ["kelp-meal", "alfalfa-meal"]),
@@ -403,7 +403,7 @@ def build_home():
             blocks += f'<div class="gblock"><h3>{esc(title)}</h3><p class="gdesc">{esc(desc)}</p><ul>{lis}</ul></div>'
     sp = next((b for b in SITE["blends"] if b["id"] == "starter-pack"), None)
     if sp:
-        kit = [("Level Up 3-3-3", None), ("Flower Power 2-6-4", "flower-power"), ("Kelp Meal", "kelp-meal"), ("Alfalfa Meal", "alfalfa-meal"), ("Compost", "compost-blend"), ("Worm Castings", "worm-castings")]
+        kit = [("Level Up 3-3-3", "level-up"), ("Flower Power 2-6-4", "flower-power"), ("Kelp Meal", "kelp-meal"), ("Alfalfa Meal", "alfalfa-meal"), ("Compost", "compost-blend"), ("Worm Castings", "worm-castings")]
         items = "".join((f'<li><a href="/products/{sl}/">{esc(n)}</a></li>' if sl else f"<li>{esc(n)}</li>") for n, sl in kit)
         kitblock = (f'<div class="gblock"><h3>Starter kit</h3><p class="gdesc">Everything in one box, for new gardeners</p><ul>'
                     f'<li><a href="/#contact" style="--accent:{sp["accent"]}"><span class="gd" aria-hidden="true"></span><span class="gn"><span class="nm"><b>Super Starter</b> <i>Pack</i></span>'
