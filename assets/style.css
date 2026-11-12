@@ -588,3 +588,8 @@ header .brand{order:1}header .cartlink{order:3}header .btn.solid{order:4}header 
  .kitwrap3:hover li,.kitwrap3:focus-within li{transform:translate(calc((1 - var(--c)) * 105%),calc(122% - var(--r) * 104%)) scale(.38)}
 }
 @media (prefers-reduced-motion:reduce){.kitwrap li,.kbox,.kb-lid{transition:none}}
+.bcard.kit{position:relative}
+.bcard.kit .kitname{cursor:pointer;display:block;text-decoration:none;color:inherit}
+.bcard.kit .kitname::after{content:"";position:absolute;inset:0;z-index:0}
+.bcard.kit .kitname:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.bcard.kit .kitbags,.bcard.kit .btn,.bcard.kit .from{position:relative;z-index:4}
