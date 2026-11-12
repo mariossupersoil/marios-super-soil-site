@@ -397,7 +397,7 @@ def build_home():
     # simple guide: grouped by what the grower wants to achieve (a bag can appear under more than one goal)
     GUIDE = [
         ("All-in-one blends", "A balanced mix, ready to use", ["level-up", "flower-power"]),
-        ("Nitrogen (N)", "For green, leafy growth", ["feather-meal", "crab-meal", "alfalfa-meal"]),
+        ("Nitrogen (N)", "For green, leafy growth", ["blood-meal", "feather-meal", "crab-meal", "alfalfa-meal"]),
         ("Phosphorus (P)", "For strong roots, blooms and fruit", ["bone-meal", "soft-rock-phosphate"]),
         ("Potassium (K)", "For plant strength and fruit quality", ["kelp-meal", "alfalfa-meal"]),
         ("Calcium, magnesium and trace minerals", "For soil structure, pH and plant health", ["oyster-shell-flour", "dolomite-lime", "gypsum", "basalt-rock-dust"]),
@@ -1031,14 +1031,14 @@ def guides():
              "<p>Because they are dry and slow-acting, they are forgiving. They also feed the living soil, not only the plant.</p>"),
             ("The four groups of amendments",
              "<ul>"
-             f"<li><strong>Meals</strong> are nutrient sources: {_pl('bone-meal')}, {_pl('crab-meal')}, {_pl('feather-meal')}, {_pl('kelp-meal')} and {_pl('alfalfa-meal')}.</li>"
+             f"<li><strong>Meals</strong> are nutrient sources: {_pl('blood-meal')}, {_pl('bone-meal')}, {_pl('crab-meal')}, {_pl('feather-meal')}, {_pl('kelp-meal')} and {_pl('alfalfa-meal')}.</li>"
              f"<li><strong>Rock dusts and minerals</strong> supply calcium, magnesium, sulfur, phosphorus and trace minerals: {_pl('soft-rock-phosphate')}, {_pl('gypsum')}, {_pl('oyster-shell-flour')}, {_pl('dolomite-lime')} and {_pl('basalt-rock-dust')}.</li>"
              f"<li><strong>Castings and compost</strong> add live biology and organic matter: {_pl('worm-castings')} and {_pl('compost-blend')}.</li>"
              f"<li><strong>Blends</strong> combine several ingredients in one bag: {_pl('flower-power')} (2-6-4) and Level Up (3-3-3).</li>"
              "</ul>"),
             ("How to choose by what you want to achieve",
              "<ul>"
-             f"<li><strong>Leafy, green growth (nitrogen):</strong> {_pl('feather-meal')} (11-0-0) for a slow, strong source, {_pl('alfalfa-meal')} for a gentler boost, {_pl('crab-meal')} (4-3-0) for nitrogen plus calcium.</li>"
+             f"<li><strong>Leafy, green growth (nitrogen):</strong> {_pl('blood-meal')} (12-0-0) for fast results, {_pl('feather-meal')} (11-0-0) for a slow, strong source, {_pl('alfalfa-meal')} for a gentler boost, {_pl('crab-meal')} (4-3-0) for nitrogen plus calcium.</li>"
              f"<li><strong>Roots, flowers and fruit (phosphorus):</strong> {_pl('bone-meal')} (4-10-0) or the slower {_pl('soft-rock-phosphate')}.</li>"
              f"<li><strong>All-round plant strength (potassium):</strong> {_pl('kelp-meal')} (1-0-4) and {_pl('alfalfa-meal')}.</li>"
              f"<li><strong>Calcium, magnesium and trace minerals:</strong> {_pl('oyster-shell-flour')}, {_pl('dolomite-lime')}, {_pl('gypsum')} and {_pl('basalt-rock-dust')}.</li>"
@@ -1074,14 +1074,14 @@ def guides():
             ("Why organic NPK numbers look lower",
              "<p>Organic amendments release nutrients as soil life breaks them down, so the numbers are lower than in fast-dissolving products. They also carry calcium, magnesium, trace minerals and organic matter that the numbers do not show. Mineral amendments such as gypsum, dolomite lime, oyster shell flour and basalt rock dust show little or no NPK because their job is calcium, magnesium, sulfur and trace minerals.</p>"),
             ("NPK chart for Mario's Super Soil amendments",
-             _npk_table(["feather-meal", "crab-meal", "alfalfa-meal", "bone-meal", "soft-rock-phosphate", "kelp-meal", "worm-castings", "compost-blend", "flower-power"]) +
+             _npk_table(["blood-meal", "feather-meal", "crab-meal", "alfalfa-meal", "bone-meal", "soft-rock-phosphate", "kelp-meal", "worm-castings", "compost-blend", "flower-power"]) +
              "<p>Level Up is a 3-3-3 all-round blend. See the <a href=\"/#products\">full range</a> for every bag.</p>"),
             ("Matching the amendment to the job",
              f"<p>For leafy growth, use a nitrogen source like {_pl('feather-meal')} or {_pl('alfalfa-meal')}. For roots and blooms, choose {_pl('bone-meal')} or {_pl('soft-rock-phosphate')}. For overall strength, add {_pl('kelp-meal')}. Round it out with {_pl('worm-castings')} to feed soil life. The free <a href=\"/soil-calculator/\">calculator</a> works out amounts for your bed or pot.</p>"),
         ],
         "faq": [
             ("What does NPK mean?", "Nitrogen, phosphorus and potassium. The numbers on a bag are the percentage of each by weight."),
-            ("Which organic amendment is highest in nitrogen?", "Feather meal at 11-0-0 is the highest nitrogen amendment we make."),
+            ("Which organic amendment is highest in nitrogen?", "Blood meal at 12-0-0 is the highest nitrogen amendment we make, followed by feather meal at 11-0-0."),
             ("Which organic amendment is highest in phosphorus?", "Bone meal at 4-10-0 is the highest phosphorus amendment we make."),
             ("Why do some amendments show 0-0-0?", "Mineral amendments such as gypsum, dolomite lime, oyster shell flour and basalt rock dust are used for calcium, magnesium, sulfur and trace minerals, not for NPK."),
         ],
@@ -1092,11 +1092,13 @@ def guides():
         "desc": "Compare bone meal, crab meal, feather meal, kelp meal and alfalfa meal: NPK, what each is best for, how much to use and how fast it works.",
         "h1": ("Bone, crab, feather,", "kelp and alfalfa meal compared"),
         "short": "How the five meal amendments differ and when to use each one.",
-        "answer": "Feather meal (11-0-0) is for nitrogen, bone meal (4-10-0) is for phosphorus, crab meal (4-3-0) adds nitrogen with calcium, kelp meal (1-0-4) adds potassium and ocean minerals, and alfalfa meal (3-0.5-3) is a gentle all-round boost.",
+        "answer": "Blood meal (12-0-0) is fast nitrogen, feather meal (11-0-0) is slower nitrogen, bone meal (4-10-0) is for phosphorus, crab meal (4-3-0) adds nitrogen with calcium, kelp meal (1-0-4) adds potassium and ocean minerals, and alfalfa meal (3-0.5-3) is a gentle all-round boost.",
         "sections": [
-            ("At a glance", _npk_table(["feather-meal", "bone-meal", "crab-meal", "kelp-meal", "alfalfa-meal"])),
+            ("At a glance", _npk_table(["blood-meal", "feather-meal", "bone-meal", "crab-meal", "kelp-meal", "alfalfa-meal"])),
+            ("Blood meal: fast nitrogen",
+             f"<p>{_pl('blood-meal')} is 12-0-0 and is a fast-release nitrogen source that may take about a month to show results. Use 1 to 2 teaspoons per gallon of soil, in spring and again every 2 to 3 months. Yellow leaves may indicate a nitrogen deficiency.</p>"),
             ("Feather meal: strong, slow nitrogen",
-             f"<p>{_pl('feather-meal')} is 11-0-0, our richest nitrogen source, for lush leaves. Use 1 to 2 tablespoons per gallon of soil or coco and avoid overapplying.</p>"),
+             f"<p>{_pl('feather-meal')} is 11-0-0 and releases over 2 to 4 months, for lush leaves. Use 1 to 2 tablespoons per gallon of soil or coco and avoid overapplying.</p>"),
             ("Bone meal: phosphorus for roots, blooms and fruit",
              f"<p>{_pl('bone-meal')} is 4-10-0. Use 1 to 2 tablespoons per gallon of soil, mix in and water lightly. Its nutrients release over about 4 months.</p>"),
             ("Crab meal: nitrogen plus calcium",
@@ -1110,7 +1112,7 @@ def guides():
         ],
         "faq": [
             ("What is the difference between bone meal and crab meal?", "Bone meal (4-10-0) is mostly a phosphorus source. Crab meal (4-3-0) gives nitrogen with calcium from crab shell."),
-            ("Which meal has the most nitrogen?", "Feather meal, at 11-0-0."),
+            ("Which meal has the most nitrogen?", "Blood meal, at 12-0-0. Feather meal is next at 11-0-0 and releases more slowly."),
             ("How long does bone meal last in soil?", "Our bone meal releases its nutrients over about 4 months."),
             ("Can I combine different meals?", "Yes. Many gardeners combine a nitrogen, a phosphorus and a potassium source. Follow each bag's dose and avoid overapplying."),
         ],
@@ -1350,6 +1352,7 @@ SEARCH_KW = {
     "kelp-meal": "potassium seaweed trace minerals",
     "alfalfa-meal": "nitrogen potassium growth triacontanol",
     "feather-meal": "nitrogen leaves green lawn",
+    "blood-meal": "nitrogen fast yellow leaves deer rabbits repel bloodmeal",
     "soft-rock-phosphate": "phosphorus colloidal slow release",
     "gypsum": "clay calcium sulfur sulphur loosen soil",
     "oyster-shell-flour": "calcium ph lime shell",
@@ -1362,7 +1365,7 @@ SEARCH_KW = {
 
 # Things people search for that we do not sell: (search words, our similar products, note shown above them)
 SEARCH_ALT = [
-    (["blood meal", "bloodmeal", "nitrogen booster", "high nitrogen", "urea"], ["feather-meal", "level-up", "alfalfa-meal"], "high-nitrogen organic amendments"),
+    (["nitrogen booster", "high nitrogen", "urea"], ["blood-meal", "feather-meal", "alfalfa-meal"], "high-nitrogen organic amendments"),
     (["fish", "fish emulsion", "fish meal", "fish bone", "fish hydrolysate"], ["crab-meal", "bone-meal", "kelp-meal"], "seafood-based organic amendments"),
     (["bat guano", "guano", "rock phosphate", "high phosphorus", "bloom booster", "flower booster", "bloom"], ["flower-power", "bone-meal", "soft-rock-phosphate"], "phosphorus for roots and blooms"),
     (["azomite", "glacial rock dust", "greensand", "rock dust", "trace minerals", "remineralize"], ["basalt-rock-dust", "kelp-meal", "oyster-shell-flour"], "mineral and trace element sources"),

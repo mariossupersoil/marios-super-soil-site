@@ -162,6 +162,51 @@
   "use": "Root and pest protection, plus calcium"
  },
  {
+  "slug": "blood-meal",
+  "f": "blood",
+  "a": "Blood",
+  "b": "Meal",
+  "npk": [
+   12,
+   0,
+   0
+  ],
+  "accent": "#d9383a",
+  "title": "Blood Meal 12-0-0 Organic Nitrogen | Mario's Super Soil",
+  "meta": "Organic blood meal (12-0-0): fast-release nitrogen for lush green foliage and yellowing leaves. Use 1-2 tsp per gallon of soil. Sizes: 2 to 20 lb.",
+  "desc": [
+   "Blood meal is a dry powder made from animal blood byproducts and used as a high-nitrogen organic amendment.",
+   "With an NPK ratio of 12-0-0, it is nitrogen rich. This fast-release amendment may take a month to show results."
+  ],
+  "ben": [
+   "Fast nitrogen release",
+   "Lush green foliage",
+   "Fixes yellow leaves",
+   "Deters deer & rabbits",
+   "Enriches soil health",
+   "Feeds hungry plants"
+  ],
+  "micro": [
+   [
+    "Iron (Fe)",
+    "Fer (Fe)",
+    ""
+   ]
+  ],
+  "how_en": "Apply in spring and every 2–3 months. Use 1–2 teaspoons per gallon of soil. Yellow leaves may indicate nitrogen deficiency.",
+  "how_fr": "Appliquer au printemps et tous les 2 à 3 mois. Utiliser 1 à 2 cuillères à café par gallon de terre. Les feuilles jaunes peuvent indiquer une carence en azote.",
+  "when": "1–2 tsp per gallon of soil, in spring and every 2–3 months.",
+  "sizes": [
+   "2 lb (0.9 kg)",
+   "5 lb (2.3 kg)",
+   "10 lb (4.5 kg) = 2 x 5 lb bags",
+   "20 lb (9.1 kg) = 4 x 5 lb bags"
+  ],
+  "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
+  "cat": "meals",
+  "use": "Fast nitrogen for green growth"
+ },
+ {
   "slug": "bone-meal",
   "f": "bone",
   "a": "Bone",

@@ -92,6 +92,36 @@
     }
    }
   },
+  "blood-meal": {
+   "name": "Blood Meal 12-0-0",
+   "img": "/img/blood-front.webp",
+   "sizes": {
+    "2lb": {
+     "label": "2 lb (0.9 kg)",
+     "price": null,
+     "weight_kg": 0.91
+    },
+    "5lb": {
+     "label": "5 lb (2.3 kg)",
+     "price": 26.99,
+     "weight_kg": 2.27
+    },
+    "10lb": {
+     "label": "10 lb (4.5 kg) = 2 x 5 lb bags",
+     "price": null,
+     "weight_kg": 4.54,
+     "pack_of": 2,
+     "pack_from": "5lb"
+    },
+    "20lb": {
+     "label": "20 lb (9.1 kg) = 4 x 5 lb bags",
+     "price": null,
+     "weight_kg": 9.07,
+     "pack_of": 4,
+     "pack_from": "5lb"
+    }
+   }
+  },
   "bone-meal": {
    "name": "Bone Meal 4-10-0",
    "img": "/img/bone-front.webp",
