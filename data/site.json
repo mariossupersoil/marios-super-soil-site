@@ -140,7 +140,17 @@
         ]
       ],
       "from": 59.99,
-      "price_label": "2 lb: $59.99 · 5 lb: $109.99"
+      "price_label": "2 lb: $59.99 · 5 lb: $109.99",
+      "kit_prices": [
+        [
+          "2 lb kit",
+          59.99
+        ],
+        [
+          "5 lb kit",
+          109.99
+        ]
+      ]
     }
   ],
   "quotes": [

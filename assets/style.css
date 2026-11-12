@@ -548,3 +548,19 @@ header .brand{order:1}header .cartlink{order:3}header .btn.solid{order:4}header 
 @media (max-width:760px){.hsearch{flex:1 1 100%;max-width:none}}
 @media (prefers-reduced-motion:reduce){.hsearch input{transition:none}}
 .hs-note{padding:8px 10px 4px;font-size:13px;letter-spacing:.04em;opacity:.8;color:var(--leaf)}
+/* Super Starter Pack page */
+.kithero{display:grid;gap:28px 48px;grid-template-columns:minmax(0,1fr);align-items:start;margin-top:12px}
+@media (min-width:900px){.kithero{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}}
+.kitgrid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.kitgrid a{all:unset;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:14px;line-height:1.2;color:var(--ink);padding:8px;border-radius:12px;cursor:pointer;transition:background .2s,transform .2s}
+.kitgrid a:hover,.kitgrid a:focus-visible{background:rgba(255,255,255,.07);transform:translateY(-4px);outline:none}
+.kitgrid img{width:100%;max-width:170px;height:auto;filter:drop-shadow(0 12px 16px rgba(0,0,0,.5))}
+.kitprices{list-style:none;margin:14px 0;padding:0;display:grid;gap:8px}
+.kitprices li{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--accent);border-radius:12px;padding:12px 16px;font-size:20px}
+.kitprices strong{color:var(--accent)}
+.kitrows{list-style:none;margin:16px 0 28px;padding:0;display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.kitrows a{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:14px;width:100%;border:1px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;color:var(--ink);transition:border-color .2s,background .2s,transform .2s}
+.kitrows a:hover,.kitrows a:focus-visible{border-color:var(--leaf);background:rgba(109,191,92,.12);transform:translateY(-2px);outline:none}
+.kitrows img{width:64px;height:auto;flex:0 0 auto}
+.kitrows .kt{display:flex;flex-direction:column;gap:4px}.kitrows .kt strong{font-size:22px}.kitrows small{color:var(--muted);font-size:15px}
+@media (prefers-reduced-motion:reduce){.kitgrid a,.kitrows a{transition:none}}
