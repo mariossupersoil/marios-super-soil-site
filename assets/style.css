@@ -547,3 +547,4 @@ header .brand{order:1}header .cartlink{order:3}header .btn.solid{order:4}header 
 .hs-none{padding:12px;font-size:15px}.hs-none button{background:var(--leaf);color:#0d140d;border:0;border-radius:8px;padding:6px 12px;font:600 15px var(--text,inherit);cursor:pointer}
 @media (max-width:760px){.hsearch{flex:1 1 100%;max-width:none}}
 @media (prefers-reduced-motion:reduce){.hsearch input{transition:none}}
+.hs-note{padding:8px 10px 4px;font-size:13px;letter-spacing:.04em;opacity:.8;color:var(--leaf)}

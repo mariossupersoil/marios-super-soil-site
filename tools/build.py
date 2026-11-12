@@ -71,7 +71,7 @@ def head(title, description, path, og_image="/img/og-image.jpg?v=3", jsonld=None
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=3">
 <link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/oswald-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=42">
+<link rel="stylesheet" href="/assets/style.css?v=43">
 {ld}</head>
 <body id="top">
 """
@@ -159,7 +159,7 @@ def footer():
 <script src="/assets/promo.js?v=2" defer></script>
 <script src="/assets/popup.js?v=4" defer></script>
 <script src="/assets/chat.js?v=2" defer></script>
-<script src="/assets/search.js?v=1" defer></script>
+<script src="/assets/search.js?v=2" defer></script>
 </body>
 </html>
 """
@@ -688,7 +688,7 @@ def build_calculator():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Soil amendment calculator", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=42">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=43">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
     out += header()
     body = (ROOT / "data/calculator-body.inc").read_text()
     out += f"""  <section class="sec"><div class="wrap">
@@ -715,7 +715,7 @@ def build_drmario():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Plant Dr. Mario", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=42">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=43">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Plant</b> <i>Dr. Mario</i></h1>
@@ -783,7 +783,7 @@ def build_order_complete():
 
 
 def build_admin():
-    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=42">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
+    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=43">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
     out = out.replace('<meta name="robots" content="noindex, nofollow">\n', '').replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"', 1) if 'noindex' not in out else out
     out += header()
     out += """  <section class="sec"><div class="wrap">
@@ -1360,6 +1360,25 @@ SEARCH_KW = {
 }
 
 
+# Things people search for that we do not sell: (search words, our similar products, note shown above them)
+SEARCH_ALT = [
+    (["blood meal", "bloodmeal", "nitrogen booster", "high nitrogen", "urea"], ["feather-meal", "level-up", "alfalfa-meal"], "high-nitrogen organic amendments"),
+    (["fish", "fish emulsion", "fish meal", "fish bone", "fish hydrolysate"], ["crab-meal", "bone-meal", "kelp-meal"], "seafood-based organic amendments"),
+    (["bat guano", "guano", "rock phosphate", "high phosphorus", "bloom booster", "flower booster", "bloom"], ["flower-power", "bone-meal", "soft-rock-phosphate"], "phosphorus for roots and blooms"),
+    (["azomite", "glacial rock dust", "greensand", "rock dust", "trace minerals", "remineralize"], ["basalt-rock-dust", "kelp-meal", "oyster-shell-flour"], "mineral and trace element sources"),
+    (["lime", "garden lime", "agricultural lime", "calcium carbonate", "raise ph", "ph up", "sweet soil"], ["dolomite-lime", "oyster-shell-flour"], "calcium sources that help balance pH"),
+    (["epsom", "epsom salt", "magnesium sulfate", "magnesium", "langbeinite", "k-mag", "kmag"], ["dolomite-lime", "gypsum", "basalt-rock-dust"], "calcium, magnesium and sulfur sources"),
+    (["potash", "sulfate of potash", "potassium", "sul-po-mag"], ["kelp-meal", "alfalfa-meal", "level-up"], "potassium sources"),
+    (["manure", "cow manure", "chicken manure", "mushroom compost", "peat", "topsoil", "top soil", "soil conditioner", "humus"], ["compost-blend", "worm-castings"], "soil builders"),
+    (["miracle gro", "miracle-gro", "fertilizer", "fertiliser", "plant food", "all purpose", "20-20-20", "synthetic", "npk", "tomato food", "vegetable food"], ["level-up", "flower-power", "worm-castings"], "organic all-purpose options"),
+    (["seaweed", "seaweed extract", "sea kelp", "ocean"], ["kelp-meal"], "seaweed-based amendments"),
+    (["potting soil", "potting mix", "soil mix", "coco", "seed starting", "seedlings"], ["worm-castings", "compost-blend", "level-up"], "good to mix into your potting soil"),
+    (["lawn", "grass", "turf"], ["feather-meal", "level-up", "compost-blend"], "good for lawns"),
+    (["bugs", "pests", "aphids", "nematodes", "chitin", "fungus gnats"], ["crab-meal"], "crab meal contains chitin and supports root and pest resilience"),
+    (["epsom"], [], ""),
+]
+
+
 def search_index():
     items = []
     for p in PRODUCTS:
@@ -1378,7 +1397,8 @@ def search_index():
                        ("Wholesale for stores", "/wholesale/", "Stock Mario's Super Soil in your shop", "retail store garden centre bulk"),
                        ("Shipping and returns", "/shipping-returns/", "Shipping rates, delivery times, returns", "delivery refund postage")]:
         items.append({"t": t, "u": u, "g": "Page", "d": d, "k": k})
-    return items
+    alt = [{"w": w, "u": [f"/products/{x}/" for x in sl], "n": n} for w, sl, n in SEARCH_ALT if sl]
+    return {"items": items, "alt": alt, "pop": ["/products/level-up/", "/products/flower-power/", "/products/worm-castings/"]}
 
 
 def chat_kb():
