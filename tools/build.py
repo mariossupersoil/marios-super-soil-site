@@ -71,7 +71,7 @@ def head(title, description, path, og_image="/img/og-image.jpg?v=3", jsonld=None
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=3">
 <link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/oswald-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=51">
+<link rel="stylesheet" href="/assets/style.css?v=52">
 {ld}</head>
 <body id="top">
 """
@@ -283,7 +283,7 @@ def blend_cards():
                     bags += (f'<li style="--i:{len(bags.split("<li")) - 1}"><a href="/products/{sl}/"><img src="/img/{q["f"]}-front.webp" width="90" height="117" loading="lazy" alt="{esc(full_name(q))} bag">'
                              f'<span>{esc(full_name(q))}</span></a></li>')
                 cards += (f'<div class="bcard kit" style="--accent:{b["accent"]}"><span class="bt"><a class="nm kitname" href="/products/super-starter-pack/"><b>{esc(b["a"])}</b> <i>{esc(b["b"])}</i></a>'
-                          f'<span class="bsub">{esc(b["tagline"])} Six bags in one kit:</span></span><div class="kitwrap kitwrap6"><span class="kbox kbb" aria-hidden="true"><span class="kb-back"></span></span><ul class="kitbags">{bags}</ul><span class="kbox kbf" aria-hidden="true"><span class="kb-lid l1"></span><span class="kb-lid l2"></span><span class="kb-front"><b>Super Starter</b> Pack</span></span></div>'
+                          f'<span class="bsub">{esc(b["tagline"])} Six bags in one kit:</span></span><div class="kitwrap kitwrap6"><span class="kbox kbb" aria-hidden="true"><span class="kglow"></span><span class="kb-back"></span></span><ul class="kitbags">{bags}</ul><span class="kbox kbf" aria-hidden="true"><span class="kbeam"></span><span class="kb-lid l1"></span><span class="kb-lid l2"></span><span class="kb-front"><b>Super Starter</b> Pack</span></span></div>'
                           f'<span class="bt">{fr}<a class="btn" href="/products/super-starter-pack/">See the kit</a></span></div>')
             else:
                 cards += (f'<a class="bcard noimg" href="/#contact" style="--accent:{b["accent"]}"><span class="bt"><span class="nm"><b>{esc(b["a"])}</b> <i>{esc(b["b"])}</i></span>'
@@ -698,7 +698,7 @@ def build_calculator():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Soil amendment calculator", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=51">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=52">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
     out += header()
     body = (ROOT / "data/calculator-body.inc").read_text()
     out += f"""  <section class="sec"><div class="wrap">
@@ -725,7 +725,7 @@ def build_drmario():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Plant Dr. Mario", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=51">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=52">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Plant</b> <i>Dr. Mario</i></h1>
@@ -793,7 +793,7 @@ def build_order_complete():
 
 
 def build_admin():
-    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=51">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
+    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=52">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
     out = out.replace('<meta name="robots" content="noindex, nofollow">\n', '').replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"', 1) if 'noindex' not in out else out
     out += header()
     out += """  <section class="sec"><div class="wrap">
@@ -1047,7 +1047,7 @@ def build_kit_page():
     <div class="wrap">
       <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/#products">Products</a> / <span aria-current="page">Super Starter Pack</span></nav>
       <div class="kithero">
-        <div class="kitwrap kitwrap3"><span class="kbox kbb" aria-hidden="true"><span class="kb-back"></span></span><ul class="kitgrid">{bags}</ul><span class="kbox kbf" aria-hidden="true"><span class="kb-lid l1"></span><span class="kb-lid l2"></span><span class="kb-front"><b>Super Starter</b> Pack</span></span></div>
+        <div class="kitwrap kitwrap3"><span class="kbox kbb" aria-hidden="true"><span class="kglow"></span><span class="kb-back"></span></span><ul class="kitgrid">{bags}</ul><span class="kbox kbf" aria-hidden="true"><span class="kbeam"></span><span class="kb-lid l1"></span><span class="kb-lid l2"></span><span class="kb-front"><b>Super Starter</b> Pack</span></span></div>
         <div class="info">
           <h1 class="nm"><b>Super Starter</b> <i>Pack</i></h1>
           <span class="pq">Everything you need to have a successful grow</span>
