@@ -593,3 +593,9 @@ header .brand{order:1}header .cartlink{order:3}header .btn.solid{order:4}header 
 .bcard.kit .kitname::after{content:"";position:absolute;inset:0;z-index:0}
 .bcard.kit .kitname:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .bcard.kit .kitbags,.bcard.kit .btn,.bcard.kit .from{position:relative;z-index:4}
+/* blend cards: same glow as the other bags */
+.bcard .pair::before{content:"";position:absolute;inset:-8% -6% 4%;background:radial-gradient(closest-side,var(--accent),transparent);opacity:.28;transition:opacity .3s;z-index:0}
+.bcard:hover .pair::before,.bcard:focus-visible .pair::before{opacity:.8}
+.bcard .pair img{transition:transform .35s ease,filter .3s ease}
+.bcard:hover .pair img,.bcard:focus-visible .pair img{filter:drop-shadow(0 0 14px var(--accent)) drop-shadow(0 0 34px var(--accent))}
+@media (prefers-reduced-motion:reduce){.bcard .pair::before,.bcard .pair img{transition:none}}
