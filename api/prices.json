@@ -98,7 +98,7 @@
    "sizes": {
     "2lb": {
      "label": "2 lb (0.9 kg)",
-     "price": null,
+     "price": 14.99,
      "weight_kg": 0.91
     },
     "5lb": {
