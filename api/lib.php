@@ -65,10 +65,12 @@ function catalog(bool $admin = false): array {
                 $price = (is_numeric($bp) && $bp > 0) ? round((float)$bp * $pack, 2) : null;
             }
             $price = (is_numeric($price) && $price > 0) ? round((float)$price, 2) : null;
+            $soon = !empty($s['coming_soon']) || ($pack > 1 && $from !== '' && !empty($p['sizes'][$from]['coming_soon']));
             $avail = !in_array($k, $st['unavailable_sizes'][$slug] ?? [], true);
             if (!$admin && !$avail) continue;
             $sale = $price !== null ? best_sale($sales, $slug, $k, $price) : null;
-            $sizes[$k] = ['label' => $s['label'], 'price' => $price, 'sale_price' => $sale['price'] ?? null, 'sale_label' => $sale['label'] ?? '', 'sale_ends' => $sale['ends'] ?? '', 'weight_kg' => (float)($s['weight_kg'] ?? 0), 'available' => $avail, 'derived' => $pack > 1, 'stock' => ($pack > 1 && $from !== '') ? ((isset($st['stock'][$slug][$from]) && is_int($st['stock'][$slug][$from])) ? intdiv($st['stock'][$slug][$from], $pack) : null) : ((isset($st['stock'][$slug][$k]) && is_int($st['stock'][$slug][$k])) ? $st['stock'][$slug][$k] : null)];
+            if ($soon && !$admin) { $price = null; $sale = null; }   // coming soon: shown on the site but cannot be bought
+            $sizes[$k] = ['coming_soon' => $soon, 'label' => $s['label'], 'price' => $price, 'sale_price' => $sale['price'] ?? null, 'sale_label' => $sale['label'] ?? '', 'sale_ends' => $sale['ends'] ?? '', 'weight_kg' => (float)($s['weight_kg'] ?? 0), 'available' => $avail, 'derived' => $pack > 1, 'stock' => ($pack > 1 && $from !== '') ? ((isset($st['stock'][$slug][$from]) && is_int($st['stock'][$slug][$from])) ? intdiv($st['stock'][$slug][$from], $pack) : null) : ((isset($st['stock'][$slug][$k]) && is_int($st['stock'][$slug][$k])) ? $st['stock'][$slug][$k] : null)];
         }
         $out[$slug] = ['name' => $p['name'], 'img' => $p['img'], 'enabled' => !in_array($slug, $st['disabled_products'] ?? [], true), 'sizes' => $sizes];
     }
@@ -97,6 +99,7 @@ function price_cart(array $items, array $cat, string $giftChoice = ''): array {
         $slug = (string)($it['slug'] ?? ''); $key = (string)($it['size'] ?? ''); $qty = (int)($it['qty'] ?? 0);
         $p = $cat[$slug] ?? null; $s = $p['sizes'][$key] ?? null;
         if (!$p || !$s || !$p['enabled']) fail(400, 'An item in your cart is no longer available. Please refresh the page.');
+        if (!empty($s['coming_soon'])) fail(400, $p['name'] . ' (' . $s['label'] . ') is coming soon and cannot be ordered yet. Please remove it from your cart.');
         if ($s['price'] === null) fail(400, $p['name'] . ' (' . $s['label'] . ') does not have a price yet.');
         if ($qty < 1 || $qty > 20) fail(400, 'Quantity must be between 1 and 20.');
         if ($s['stock'] !== null && $s['stock'] <= 0) fail(400, $p['name'] . ' (' . $s['label'] . ') is out of stock.');

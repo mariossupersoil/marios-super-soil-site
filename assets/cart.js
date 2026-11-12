@@ -39,6 +39,7 @@
       if(P&&!P.enabled){pr.textContent='Currently unavailable';add.disabled=true;return;}
       var f=find(slug,sel.value), ok=f&&valid(f.s.price)&&!soldout(f.s);
       pr.textContent='';
+      if(f&&f.s.coming_soon){pr.textContent='Coming soon';add.disabled=true;msg.textContent='';return;}
       qty.max=(f&&f.s.left)?f.s.left:20;
       if(f&&valid(f.s.price)&&soldout(f.s)){pr.textContent='Out of stock';add.disabled=true;msg.textContent='';return;}
       if(ok&&onSale(f.s)){
@@ -54,6 +55,7 @@
       Array.prototype.slice.call(sel.options).forEach(function(o){
         var s=P&&P.sizes&&P.sizes[o.value];
         if(!s){o.remove();return;}
+        if(s.coming_soon){o.textContent=s.label+' — Coming soon';return;}
         if(valid(s.price)&&s.soldout){o.textContent=s.label+' — Out of stock';return;}
         if(valid(s.price))o.textContent=s.label+' — '+(onSale(s)?money(s.sale_price)+' (was '+money(s.price)+')':money(s.price));
       });
@@ -80,7 +82,8 @@
       var m=lowest(P); if(m!==null) f.textContent='From '+money(m);
     });
     var pf=$('price-from'); if(pf){var P=PRICES[pf.getAttribute('data-slug')]; if(P){
-      var m=lowest(P), parts=[]; Object.keys(P.sizes).forEach(function(k){var s=P.sizes[k];if(valid(s.price)&&!s.soldout){var v=(s.sale_price!=null&&s.sale_price<s.price)?s.sale_price:s.price;parts.push(s.label.split(' (')[0]+' '+money(v));}});
+      var m=lowest(P), parts=[], soon=[]; Object.keys(P.sizes).forEach(function(k){var s=P.sizes[k];if(valid(s.price)&&!s.soldout){var v=(s.sale_price!=null&&s.sale_price<s.price)?s.sale_price:s.price;parts.push(s.label.split(' (')[0]+' '+money(v));}else if(s.coming_soon){soon.push(s.label.split(' (')[0].replace(' kit',''));}});
+      if(soon.length)parts.push(soon.join(' \u00b7 ')+': coming soon');
       if(m!==null){pf.textContent='';var st=el('strong',null,'From '+money(m)+' CAD');pf.appendChild(st);pf.appendChild(document.createTextNode(' '));pf.appendChild(el('span',null,parts.join(' \u00b7 ')));}
     }}
   }).catch(function(){});
@@ -117,7 +120,7 @@
       if(onSale(f.s)) mid.appendChild(el('span','cartsale','On sale: was '+money(f.s.price)+' each'));
       if(soldout(f.s)){missing=true;mid.appendChild(el('span','cartwarn','Out of stock. Remove this item to check out.'));}
       else if(f.s.left&&i.qty>f.s.left){missing=true;mid.appendChild(el('span','cartwarn','Only '+f.s.left+' left. Lower the quantity to check out.'));}
-      if(!valid(pr)){missing=true;mid.appendChild(el('span','cartwarn','No price yet. Remove this item to check out.'));}
+      if(!valid(pr)){missing=true;mid.appendChild(el('span','cartwarn',(f&&f.s.coming_soon)?'Coming soon. Remove this item to check out.':'No price yet. Remove this item to check out.'));}
       li.appendChild(mid);
       var q=el('div','cartqty'), lab=el('label',null,'Qty'); lab.className='sr'; lab.htmlFor='q'+idx;
       var inp=el('input'); inp.type='number'; inp.min=1; inp.max=20; inp.value=i.qty; inp.id='q'+idx; inp.setAttribute('inputmode','numeric');

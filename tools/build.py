@@ -153,7 +153,7 @@ def footer():
 <script src="/assets/room.js?v=1" defer></script>
 <script src="/assets/guide.js?v=1" defer></script>
 <script src="/assets/rail.js?v=1" defer></script>
-<script src="/assets/cart.js?v=7" defer></script>
+<script src="/assets/cart.js?v=8" defer></script>
 <script src="/assets/social.js?v=1" defer></script>
 <script src="/assets/signup.js?v=1" defer></script>
 <script src="/assets/promo.js?v=2" defer></script>
@@ -191,6 +191,7 @@ def sync_prices():
             k = size_key(lab)
             o = oldp.get(p["slug"], {}).get("sizes", {}).get(k, {})
             sizes[k] = {"label": lab, "price": o.get("price"), "weight_kg": o.get("weight_kg", default_kg(lab))}
+            if o.get("coming_soon"): sizes[k]["coming_soon"] = True
             m = re.match(r"(\d+) lb \(.*= (\d+) x 5 lb", lab)
             if m:  # packed as several 5 lb bags: price and stock come from the 5lb size
                 sizes[k]["pack_of"] = int(m.group(2)); sizes[k]["pack_from"] = "5lb"; sizes[k]["price"] = None
@@ -201,6 +202,7 @@ def sync_prices():
         for z in kit["kit_sizes"]:
             o = oldp.get("super-starter-pack", {}).get("sizes", {}).get(z["key"], {})
             ks[z["key"]] = {"label": z["label"], "price": o.get("price", z["price"]), "weight_kg": o.get("weight_kg", z["weight_kg"])}
+            if o.get("coming_soon"): ks[z["key"]]["coming_soon"] = True
         prods["super-starter-pack"] = {"name": "Super Starter Pack", "img": "/img/starter-kit.webp", "sizes": ks}
     out = {"currency": "CAD", "note": "Prices in Canadian dollars before tax and shipping, for example 24.99. null means no price yet.", "products": prods}
     f.write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n")
@@ -217,6 +219,8 @@ def price_rows(slug):
     sizes = _PRICES.get(slug, {}).get("sizes", {})
     out = []
     for k, z in sizes.items():
+        if z.get("coming_soon") or sizes.get(z.get("pack_from"), {}).get("coming_soon"):
+            continue
         pr = z.get("price")
         if z.get("pack_of") and z.get("pack_from"):
             base = sizes.get(z["pack_from"], {}).get("price")
@@ -226,12 +230,39 @@ def price_rows(slug):
     return out
 
 
+def soon_labels(slug):
+    """Short labels of sizes marked coming_soon in api/prices.json, e.g. ['5 lb', '10 lb', '20 lb'] (a 2 lb bag stays on sale)."""
+    global _PRICES
+    price_rows(slug)
+    sizes = _PRICES.get(slug, {}).get("sizes", {})
+    return [z["label"].split(" (")[0].replace(" kit", "") for z in sizes.values() if z.get("coming_soon") or sizes.get(z.get("pack_from"), {}).get("coming_soon")]
+
+
+def any_soon():
+    price_rows("level-up")
+    return any(z.get("coming_soon") for p in _PRICES.values() for z in p["sizes"].values())
+
+
+def kit_label(sp):
+    rows = price_rows("super-starter-pack")
+    if not rows: return sp.get("price_label") or "From $%.2f" % sp["from"]
+    return " · ".join([f"{l.replace(' kit','')}: ${v:,.2f}" for l, v in rows] + [f"{l}: coming soon" for l in soon_labels("super-starter-pack")])
+
+
+def soon_note(slug):
+    s = soon_labels(slug)
+    return f'<span class="soon">{esc(" · ".join(s))}: coming soon</span>' if s else ""
+
+
 def price_line(p):
     rows = price_rows(p["slug"])
+    soon = soon_labels(p["slug"])
     if not rows:
-        return f'<p class="pricefrom" id="price-from" data-slug="{p["slug"]}"><span>Price coming soon</span></p>'
+        txt = " · ".join(soon) + ": coming soon" if soon else "Price coming soon"
+        return f'<p class="pricefrom" id="price-from" data-slug="{p["slug"]}"><span>{esc(txt)}</span></p>'
     low = min(x[1] for x in rows)
     each = " · ".join(f"{esc(l)} ${v:,.2f}" for l, v in rows)
+    if soon: each += " · " + " · ".join(soon) + ": coming soon"
     return (f'<p class="pricefrom" id="price-from" data-slug="{p["slug"]}"><strong>From ${low:,.2f} CAD</strong> '
             f'<span>{each}</span></p>')
 
@@ -276,7 +307,7 @@ def blend_cards():
             if b["id"] == "starter-pack":
                 kr = price_rows("super-starter-pack")
                 if kr:
-                    fr = '<span class="from">' + " · ".join(f"{l}: ${v:,.2f}" for l, v in kr) + "</span>"
+                    fr = '<span class="from">' + " · ".join([f"{l}: ${v:,.2f}" for l, v in kr] + [f"{l} kit: coming soon" for l in soon_labels("super-starter-pack")]) + "</span>"
                 bags = ""
                 for sl in ("level-up", "flower-power", "kelp-meal", "alfalfa-meal", "compost-blend", "worm-castings"):
                     q = next(x for x in PRODUCTS if x["slug"] == sl)
@@ -434,7 +465,7 @@ def build_home():
         items = "".join((f'<li><a href="/products/{sl}/">{esc(n)}</a></li>' if sl else f"<li>{esc(n)}</li>") for n, sl in kit)
         kitblock = (f'<div class="gblock"><h3>Starter kit</h3><p class="gdesc">Everything in one box, for new gardeners</p><ul>'
                     f'<li><a href="/products/super-starter-pack/" style="--accent:{sp["accent"]}"><span class="gd" aria-hidden="true"></span><span class="gn"><span class="nm"><b>Super Starter</b> <i>Pack</i></span>'
-                    f'<span class="gu">{esc(sp["tagline"])} Kit sizes: 2 lb and 5 lb.</span></span><span class="gp">{esc(sp.get("price_label") or "From $%.2f" % sp["from"])}</span></a></li>'
+                    f'<span class="gu">{esc(sp["tagline"])} Kit sizes: 2 lb{" now, 5 lb coming soon" if soon_labels("super-starter-pack") else " and 5 lb"}.</span></span><span class="gp">{esc(kit_label(sp))}</span></a></li>'
                     f'<li class="kitin"><span class="gu">What comes in the kit</span><ul class="kitlist">{items}</ul></li></ul></div>')
         i = blocks.index('<div class="gblock"><h3>Nitrogen')
         blocks = blocks[:i] + kitblock + blocks[i:]
@@ -1022,7 +1053,7 @@ def build_kit_page():
     prods = [next(q for q in PRODUCTS if q["slug"] == k) for k in KIT_SLUGS]
     title = "Super Starter Pack: Organic Gardening Kit | Mario's Super Soil"
     meta = "The Super Starter Pack is a six-bag organic gardening kit: Level Up, Flower Power, Kelp Meal, Alfalfa Meal, Compost and Worm Castings. 2 lb and 5 lb kits."
-    kp = price_rows("super-starter-pack") or [(z["short"], z["price"]) for z in sp["kit_sizes"]]
+    kp = price_rows("super-starter-pack") or [(z["short"], z["price"]) for z in sp["kit_sizes"] if z["short"].replace(" kit", "") not in soon_labels("super-starter-pack")] or [(sp["kit_sizes"][0]["short"], sp["kit_sizes"][0]["price"])]
     lo = min(v for _, v in kp); hi = max(v for _, v in kp)
     ld = [org_ld(),
           {"@context": "https://schema.org", "@type": "Product", "name": "Super Starter Pack", "description": meta, "url": abs_url(KIT_PATH),
@@ -1038,7 +1069,9 @@ def build_kit_page():
     rows = "".join(
         f'<li><a href="/products/{q["slug"]}/"><img src="/img/{q["f"]}-front.webp" width="64" height="83" loading="lazy" alt=""><span class="kt"><strong>{name_html(q)}</strong>'
         f'<small>{esc(q["use"])}. {esc(q["when"])}</small></span></a></li>' for q in prods)
-    prices = "".join(f'<li><span>{esc(z["label"])}</span><strong>${next((v for l, v in kp if l.replace(" kit", "") == z["key"].replace("lb", " lb")), z["price"]):,.2f} CAD</strong></li>' for z in sp["kit_sizes"])
+    soon_k = soon_labels("super-starter-pack")
+    prices = "".join((f'<li><span>{esc(z["label"])}</span><strong>Coming soon</strong></li>' if z["key"].replace("lb", " lb") in soon_k else
+                      f'<li><span>{esc(z["label"])}</span><strong>${next((v for l, v in kp if l.replace(" kit", "") == z["key"].replace("lb", " lb")), z["price"]):,.2f} CAD</strong></li>') for z in sp["kit_sizes"])
     size_opts = "".join(f'<option value="{z["key"]}">{esc(z["label"])}</option>' for z in sp["kit_sizes"])
     sub = "Super Starter Pack order"
     mail = f"mailto:{SITE['email']}?subject={sub.replace(' ', '%20')}&body=Hi%20Mario%2C%0A%0AI%20would%20like%20to%20order%20the%20Super%20Starter%20Pack.%0AKit%20size%20(2%20lb%20or%205%20lb)%3A%20%0AName%3A%20%0AShipping%20address%3A%20%0A"
@@ -1375,7 +1408,7 @@ def build_guides_index(G):
 
 
 def llms_txt():
-    prods = "\n".join(f"- [{full_name(p)}]({abs_url('/products/' + p['slug'] + '/')}): {p['use']}. Sizes 2 lb and 5 lb." for p in PRODUCTS)
+    prods = "\n".join(f"- [{full_name(p)}]({abs_url('/products/' + p['slug'] + '/')}): {p['use']}. " + ("Sizes: 2 lb now, 5 lb coming soon." if soon_labels(p['slug']) else "Sizes 2 lb and 5 lb.") for p in PRODUCTS)
     gl = "\n".join(f"- [{g['h1'][0]} {g['h1'][1]}]({abs_url('/guides/' + g['slug'] + '/')}): {g['short']}" for g in guides())
     return f"""# {SITE['name']}
 
@@ -1383,9 +1416,9 @@ def llms_txt():
 
 Key facts:
 - Location: {SITE['address']['city']}, {SITE['address']['region']}, Canada. Phone {SITE['phone']}. Email {SITE['email']}.
-- Products are organic dry amendments in 2 lb and 5 lb bags with directions in English and French; larger orders are packed as multiple 5 lb bags.
+- Products are organic dry amendments with directions in English and French. The 2 lb bag is available now; 5 lb bags (and 10 and 20 lb packs) are coming soon.
 - Ships within Canada only. Orders of $120 or more include a free 2 lb bag of Level Up 3-3-3 or Flower Power 2-6-4. 30 day returns on unused items.
-- Main blends: Level Up 3-3-3 and Flower Power 2-6-4. A Super Starter Pack is available in 2 lb and 5 lb sizes.
+- Main blends: Level Up 3-3-3 and Flower Power 2-6-4. The 2 lb Super Starter Pack is available now; the 5 lb kit is coming soon.
 
 ## Products
 {prods}
@@ -1493,8 +1526,8 @@ def chat_kb():
         name = (b["a"] + " " + b["b"]).strip()
         prods.append({"slug": slug, "name": name, "url": KIT_PATH if slug == "starter-pack" else "/#products", "price": ("from $%.2f" % b["from"]) if b.get("from") else ""})
         rows = "; ".join(f"{k}: {v}" for k, v in b.get("rows", []))
-        L.append(f"[{slug}] {name} | blend | {b['tagline']} {b['text']}\n  {rows}" + (f"\n  Price: {b['price_label']}" if b.get("price_label") else (f"\n  Price: from ${b['from']:.2f} CAD" if b.get("from") else "")))
-    L.append("GOOD TO KNOW\n- We ship across Canada only, from Mississauga, Ontario. Shipping is a flat rate by order weight, shown in the cart before paying. Tax is worked out at checkout. Most orders arrive in 2 to 3 business days; allow 2 to 10.\n- Orders of $120 or more include a free 2 lb bag of Level Up 3-3-3 or Flower Power 2-6-4 (chosen in the cart).\n- Returns: within 30 days of receiving, unused and in original packaging; email us first; the customer pays return shipping. Damaged or wrong items: contact us with photos.\n- Bag sizes are 2 lb and 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of the 5 lb bags.\n- Directions are printed in English and French.\n- Stores and wholesale: stores can apply at /wholesale/. A list of shops that carry us is in the Where to buy section on the home page.\n- Tools: soil amendment calculator at /soil-calculator/, plant photo help at /plant-drmario/, guides at /guides/.\n- Contact: " + SITE["email"] + ", phone " + SITE["phone"] + ". Hours: " + "; ".join(f"{a} {b}" for a, b in SITE["hours"]) + " (Eastern time).")
+        L.append(f"[{slug}] {name} | blend | {b['tagline']} {b['text']}\n  {rows}" + (f"\n  Price: {kit_label(b)}" if b.get("price_label") else (f"\n  Price: from ${b['from']:.2f} CAD" if b.get("from") else "")))
+    L.append("GOOD TO KNOW\n- We ship across Canada only, from Mississauga, Ontario. Shipping is a flat rate by order weight, shown in the cart before paying. Tax is worked out at checkout. Most orders arrive in 2 to 3 business days; allow 2 to 10.\n- Orders of $120 or more include a free 2 lb bag of Level Up 3-3-3 or Flower Power 2-6-4 (chosen in the cart).\n- Returns: within 30 days of receiving, unused and in original packaging; email us first; the customer pays return shipping. Damaged or wrong items: contact us with photos.\n- Bag sizes: 2 lb is available now. The 5 lb bags, the 10 lb and 20 lb packs (2 or 4 of the 5 lb bags) and the 5 lb Super Starter Pack are COMING SOON and cannot be ordered yet.\n- Directions are printed in English and French.\n- Stores and wholesale: stores can apply at /wholesale/. A list of shops that carry us is in the Where to buy section on the home page.\n- Tools: soil amendment calculator at /soil-calculator/, plant photo help at /plant-drmario/, guides at /guides/.\n- Contact: " + SITE["email"] + ", phone " + SITE["phone"] + ". Hours: " + "; ".join(f"{a} {b}" for a, b in SITE["hours"]) + " (Eastern time).")
     L.append("FAQ\n" + "\n".join(f"Q: {q}\nA: {a}" for q, a in SITE["faq"]))
     return {"products": prods, "text": "\n\n".join(L)}
 
