@@ -37,6 +37,8 @@ if ($newToken !== null) {
         . "Happy growing,\nMario's Super Soil\n" . $addr . "\nReply to this email any time. We read every one.\n\n"
         . "Unsubscribe any time: " . $u . '/api/unsubscribe.php?t=' . $newToken . "\n";
     if (!send_mail($email, "Welcome to Mario's Super Soil", $body, null, owner_email())) error_log('welcome email failed');
+    // Tell the owner about the new sign-up (never blocks the signup).
+    @send_mail(owner_email(), 'New email subscriber: ' . $email, "Someone just joined your email list.\n\nEmail: " . $email . "\nDate: " . today_toronto() . "\n\nThey have been sent the welcome email.\n");
 }
 // Also pass the address to the owner's email-bot list (an n8n webhook), if one is set in config.php. Never blocks or breaks the signup.
 $c = cfg();
