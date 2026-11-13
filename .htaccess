@@ -3,6 +3,17 @@ Options -Indexes
 RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteCond %{HTTP_HOST} ^www\.mariossupersoil\.ca$ [NC]
+RewriteRule ^ https://mariossupersoil.ca%{REQUEST_URI} [R=301,L]
+# Old site URLs -> new pages (301 keeps Google rankings and old links working)
+RewriteRule ^products/?$ /#products [R=301,NE,L]
+RewriteRule ^worm-castings/?$ /products/worm-castings/ [R=301,L]
+RewriteRule ^kelp-meal/?$ /products/kelp-meal/ [R=301,L]
+RewriteRule ^level-up-organic-gardening/?$ /products/level-up/ [R=301,L]
+RewriteRule ^flower-power-2-6-4/?$ /products/flower-power/ [R=301,L]
+RewriteRule ^sustainable-fertilizers/?$ /guides/organic-soil-amendments-canada/ [R=301,L]
+RewriteRule ^super-starter-pack/?$ /products/super-starter-pack/ [R=301,L]
+RewriteRule ^marios-super-soil/?$ / [R=301,L]
 RewriteRule ^(data|tools|\.git)(/|$) - [R=404,L]
 ErrorDocument 404 /404.html
 <IfModule mod_headers.c>
