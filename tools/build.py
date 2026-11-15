@@ -267,6 +267,13 @@ def price_line(p):
             f'<span>{each}</span></p>')
 
 
+def soon_band():
+    c = SITE.get("coming_soon")
+    if not c: return ""
+    return (f'<div class="soonband"><span class="soonlbl">{esc(c["label"])}</span><h3>{esc(c["title"])}</h3>'
+            f'<p>{esc(c["text"])}</p><a class="btn" href="#contact">Ask about a product</a></div>')
+
+
 def sizes_text(p):
     return " · ".join(p["sizes"])
 
@@ -475,6 +482,7 @@ def build_home():
       <h2>What do you want to achieve?</h2>
       <p class="lede">Pick the goal, then tap a bag to see the dose, ingredients and price. The numbers after a name are its nitrogen, phosphorus and potassium.</p>
       <div class="guide">{blocks}</div>
+      {soon_band()}
     </div>
   </section>
 """

@@ -614,3 +614,9 @@ header .brand{order:1}header .cartlink{order:3}header .btn.solid{order:4}header 
  .bcard.kit:hover .kitwrap6 .kbf,.bcard.kit:focus-within .kitwrap6 .kbf,.kitwrap3:hover .kbf,.kitwrap3:focus-within .kbf{animation:kseal .3s ease 1.4s}
 }
 @media (prefers-reduced-motion:reduce){.kglow,.kbeam,.kbf{animation:none!important}}
+
+.soonband{margin:36px 0 0;padding:26px 28px;border:2px dashed var(--accent,#d8c98b);background:linear-gradient(135deg,rgba(127,196,107,.10),rgba(216,201,139,.06));display:grid;gap:8px;justify-items:start}
+.soonband .soonlbl{font:600 13px var(--text);letter-spacing:.2em;text-transform:uppercase;color:var(--leaf,#7fc46b)}
+.soonband h3{margin:0;font:400 clamp(26px,4vw,40px)/1.05 var(--display);text-transform:uppercase}
+.soonband p{margin:0;max-width:62ch;color:var(--muted)}
+.soonband .btn{margin-top:6px}
