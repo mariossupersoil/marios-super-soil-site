@@ -620,3 +620,8 @@ header .brand{order:1}header .cartlink{order:3}header .btn.solid{order:4}header 
 .soonband h3{margin:0;font:400 clamp(26px,4vw,40px)/1.05 var(--display);text-transform:uppercase}
 .soonband p{margin:0;max-width:62ch;color:var(--muted)}
 .soonband .btn{margin-top:6px}
+
+.ptable{width:100%;border-collapse:collapse;margin:20px 0}
+.ptable th,.ptable td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.ptable th{font:600 13px var(--text);letter-spacing:.14em;text-transform:uppercase;color:var(--accent,#d8c98b)}
+.ptable a{text-decoration:underline}

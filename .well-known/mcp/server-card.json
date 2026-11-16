@@ -1,0 +1,41 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/mcp-server-card/v1.json",
+  "version": "1.0",
+  "protocolVersion": "2025-06-18",
+  "name": "marios-super-soil",
+  "title": "Mario's Super Soil",
+  "description": "Read-only product, price and contact information for Mario's Super Soil, a Canadian maker of organic dry soil amendments.",
+  "serverInfo": {
+    "name": "marios-super-soil",
+    "title": "Mario's Super Soil",
+    "version": "1.0.0"
+  },
+  "documentationUrl": "https://mariossupersoil.ca/llms.txt",
+  "transport": {
+    "type": "streamable-http",
+    "endpoint": "https://mariossupersoil.ca/api/mcp.php"
+  },
+  "endpoint": "https://mariossupersoil.ca/api/mcp.php",
+  "capabilities": {
+    "tools": {
+      "listChanged": false
+    }
+  },
+  "tools": [
+    {
+      "name": "search_products",
+      "description": "Search products by need or name"
+    },
+    {
+      "name": "get_prices",
+      "description": "List prices in CAD by size"
+    },
+    {
+      "name": "get_store_info",
+      "description": "Contact details, hours and shipping area"
+    }
+  ],
+  "authentication": {
+    "required": false
+  }
+}

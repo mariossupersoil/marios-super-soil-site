@@ -142,6 +142,7 @@ def footer():
       <a href="/guides/">Guides</a>
       <a href="/wholesale/">Wholesale</a>
       <a href="/contact/">Contact</a>
+      <a href="/prices/">Prices</a>
       <a href="/shipping-returns/">Shipping &amp; returns</a>
 {GR_FOOT}      <a href="{esc(L['blog'])}" target="_blank" rel="noopener">Blog</a>
       <a href="/shipping-returns/">Refund policy</a>
@@ -888,6 +889,35 @@ def build_contact():
     return out
 
 
+def build_prices():
+    title = "Prices | Organic Soil Amendments in CAD | Mario's Super Soil"
+    desc = "Current prices in Canadian dollars for every Mario's Super Soil organic dry amendment, by bag size. Tax and shipping are shown at checkout."
+    path = "/prices/"
+    rows = ""
+    for k, l in CATS:
+        for p in PRODUCTS:
+            if p.get("cat") != k: continue
+            pr = price_rows(p["slug"]); soon = soon_labels(p["slug"])
+            cells = " &middot; ".join([f"{esc(a)}: <strong>${v:,.2f}</strong>" for a, v in pr] + [f"{esc(s)}: coming soon" for s in soon]) or "Price coming soon"
+            rows += f'<tr><td><a href="/products/{p["slug"]}/">{esc(full_name(p))}</a></td><td>{esc(l)}</td><td>{cells}</td></tr>\n'
+    ld = [{"@context": "https://schema.org", "@type": "ItemList", "name": "Mario's Super Soil prices (CAD)", "itemListElement": [
+              {"@type": "ListItem", "position": i + 1, "name": full_name(q), "url": abs_url(f"/products/{q['slug']}/"), "item": item_ld(q)} for i, q in enumerate(PRODUCTS)]},
+          {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+              {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
+              {"@type": "ListItem", "position": 2, "name": "Prices", "item": abs_url(path)}]}]
+    out = head(title, desc, path, jsonld=ld) + header()
+    out += f"""  <section class="sec"><div class="wrap policy">
+    <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Prices</b> <i>(CAD)</i></h1>
+    <p>All prices are in Canadian dollars. Tax and shipping are worked out at checkout. Bigger sizes and more products are coming soon.</p>
+    <div style="overflow-x:auto"><table class="ptable"><thead><tr><th>Product</th><th>Type</th><th>Price by size</th></tr></thead><tbody>
+{rows}</tbody></table></div>
+    <p><a class="btn solid" href="/#products">Shop online</a></p>
+    </div></section>
+"""
+    out += footer()
+    return out
+
+
 def build_privacy():
     title = "Privacy Policy | Mario's Super Soil"
     desc = "How Mario's Super Soil collects, uses and protects your personal information when you shop, sign up for emails, use Plant Dr. Mario or apply for wholesale."
@@ -1571,7 +1601,7 @@ def chat_kb():
 
 def main():
     sync_prices()
-    pages = {"index.html": build_home(), "404.html": build_404(), "soil-calculator/index.html": build_calculator(), "plant-drmario/index.html": build_drmario(), "cart/index.html": build_cart(), "order-complete/index.html": build_order_complete(), "admin/index.html": build_admin(), "wholesale/index.html": build_wholesale(), "shipping-returns/index.html": build_policy(), "privacy/index.html": build_privacy(), "contact/index.html": build_contact()}
+    pages = {"index.html": build_home(), "404.html": build_404(), "soil-calculator/index.html": build_calculator(), "plant-drmario/index.html": build_drmario(), "cart/index.html": build_cart(), "order-complete/index.html": build_order_complete(), "admin/index.html": build_admin(), "wholesale/index.html": build_wholesale(), "shipping-returns/index.html": build_policy(), "privacy/index.html": build_privacy(), "contact/index.html": build_contact(), "prices/index.html": build_prices()}
     for p in PRODUCTS:
         pages[f"products/{p['slug']}/index.html"] = build_product(p)
     G = guides()
@@ -1595,7 +1625,7 @@ def main():
 
     # sitemap (indexable pages only)
     urls = ""
-    for rel in ["index.html", "soil-calculator/index.html", "plant-drmario/index.html", "wholesale/index.html", "shipping-returns/index.html", "privacy/index.html", "contact/index.html", "guides/index.html"] + [f"guides/{g['slug']}/index.html" for g in G] + [f"products/{p['slug']}/index.html" for p in PRODUCTS] + ["products/super-starter-pack/index.html"]:
+    for rel in ["index.html", "soil-calculator/index.html", "plant-drmario/index.html", "wholesale/index.html", "shipping-returns/index.html", "privacy/index.html", "contact/index.html", "prices/index.html", "guides/index.html"] + [f"guides/{g['slug']}/index.html" for g in G] + [f"products/{p['slug']}/index.html" for p in PRODUCTS] + ["products/super-starter-pack/index.html"]:
         loc = BASE + "/" + rel.replace("index.html", "")
         prio = "1.0" if rel == "index.html" else "0.8"
         urls += f"  <url><loc>{loc}</loc><lastmod>{new[rel]['lastmod']}</lastmod><priority>{prio}</priority></url>\n"
@@ -1609,6 +1639,15 @@ def main():
     (ROOT / "robots.txt").write_text(robots)
     (ROOT / "llms.txt").write_text(llms_txt())
     (ROOT / "home.md").write_text(llms_txt())
+    card = {"$schema": "https://static.modelcontextprotocol.io/schemas/mcp-server-card/v1.json", "version": "1.0", "protocolVersion": "2025-06-18",
+            "name": "marios-super-soil", "title": SITE["name"], "description": "Read-only product, price and contact information for Mario's Super Soil, a Canadian maker of organic dry soil amendments.",
+            "serverInfo": {"name": "marios-super-soil", "title": SITE["name"], "version": "1.0.0"}, "documentationUrl": BASE + "/llms.txt",
+            "transport": {"type": "streamable-http", "endpoint": BASE + "/api/mcp.php"}, "endpoint": BASE + "/api/mcp.php",
+            "capabilities": {"tools": {"listChanged": False}},
+            "tools": [{"name": "search_products", "description": "Search products by need or name"}, {"name": "get_prices", "description": "List prices in CAD by size"}, {"name": "get_store_info", "description": "Contact details, hours and shipping area"}],
+            "authentication": {"required": False}}
+    (ROOT / ".well-known/mcp").mkdir(parents=True, exist_ok=True)
+    (ROOT / ".well-known/mcp/server-card.json").write_text(json.dumps(card, indent=2) + "\n")
     (ROOT / "llms-full.txt").write_text(llms_full_txt())
     print(f"built {len(pages)} pages; staging={SITE['staging']}")
 
