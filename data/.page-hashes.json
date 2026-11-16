@@ -1,138 +1,142 @@
 {
   "404.html": {
-    "hash": "82e8c6db1a6598b9854237434c560d383ea04e38",
-    "lastmod": "2026-11-12"
+    "hash": "365814eb0d43bc4d76e326994ae6387cd78610bb",
+    "lastmod": "2026-11-15"
   },
   "admin/index.html": {
-    "hash": "b7cbc12ce9e8062573c4d8753edc2b49afaa3d67",
-    "lastmod": "2026-11-12"
+    "hash": "4875a4d535af75098371f88b735c52ef45a067d5",
+    "lastmod": "2026-11-15"
   },
   "cart/index.html": {
-    "hash": "2dbf2f0f91029eae30f593512e27fa0a4200e402",
-    "lastmod": "2026-11-12"
+    "hash": "3909c0d155d9cc78417e4ef30e6aea05138152b8",
+    "lastmod": "2026-11-15"
+  },
+  "contact/index.html": {
+    "hash": "6400b8190cc4d8d55722d96b523ea8345364bcd3",
+    "lastmod": "2026-11-15"
   },
   "guides/bone-crab-feather-meal/index.html": {
-    "hash": "f613ce538a2aace143a16a6d91a4fed0af226f38",
+    "hash": "3d02012c4f188daf9659cf3982c00894b69381b3",
     "lastmod": "2026-11-15"
   },
   "guides/dolomite-lime-oyster-shell-gypsum/index.html": {
-    "hash": "0d69725b68399726d618860df536e27e69b26e3a",
+    "hash": "471b96578dfd6ba36f7885ac03a7a08b3a5cea07",
     "lastmod": "2026-11-15"
   },
   "guides/index.html": {
-    "hash": "cbbb1a219f27cacd208d74cb21afd90fea7d1d8d",
-    "lastmod": "2026-11-13"
+    "hash": "99daad1f1d5d3c32c0d4d7d4b9c986663a1f2288",
+    "lastmod": "2026-11-15"
   },
   "guides/npk-organic-gardening/index.html": {
-    "hash": "0885f1c1c5cc40d139fd79c93830f3f269684687",
+    "hash": "d29787a3fcb4d800094794782dd1185c3d2e6e8e",
     "lastmod": "2026-11-15"
   },
   "guides/organic-soil-amendments-canada/index.html": {
-    "hash": "a9c1abf89c55bfa22f6645f2bc2a603ef899bb21",
+    "hash": "2aadfd0e7f5f3f336008502d0febe30976108db5",
     "lastmod": "2026-11-15"
   },
   "guides/potted-plants-containers/index.html": {
-    "hash": "fb703695b9c7576827c74d2eeca1d885dfc95957",
+    "hash": "e2c47bf3e82ff1195115e43a26dab2ad47f19788",
     "lastmod": "2026-11-15"
   },
   "guides/vegetable-garden-ontario/index.html": {
-    "hash": "508a56fb5586936c9d6d46a2acfe67be30ab6864",
+    "hash": "53b005e970c2028b70bad7610861323e49473cfa",
     "lastmod": "2026-11-15"
   },
   "guides/worm-castings-vs-compost/index.html": {
-    "hash": "e18046a95342607f4ad1d463689cbb2694e524b4",
+    "hash": "f0bc82460a6ba9793d7443f1acb7ff5ec5636765",
     "lastmod": "2026-11-15"
   },
   "index.html": {
-    "hash": "398dc5a6921b193e695ccc5247b78b90ff351529",
+    "hash": "581eeb3de2b8b2c0d420bf60a2403a67e8623c99",
     "lastmod": "2026-11-15"
   },
   "order-complete/index.html": {
-    "hash": "5c7b87c89601f31e4b8287f3b4758348e5bc826d",
-    "lastmod": "2026-11-12"
+    "hash": "b339cd95258d58ac9723504d34d4ddcac7596879",
+    "lastmod": "2026-11-15"
   },
   "plant-drmario/index.html": {
-    "hash": "46761ec01f61d7abc403c0d4ed2810df1a58d125",
-    "lastmod": "2026-11-13"
+    "hash": "71f4ed03febbec288a7a98b1e99be66323e91538",
+    "lastmod": "2026-11-15"
   },
   "privacy/index.html": {
-    "hash": "6d1f43b9f1c2969a3379512dbd9729966f76cf1d",
-    "lastmod": "2026-11-13"
+    "hash": "02fd06d62546e111666da69fc2b11e7cc99b227b",
+    "lastmod": "2026-11-15"
   },
   "products/alfalfa-meal/index.html": {
-    "hash": "2318741598e56d932666129f8d2e24489d4ae9bd",
-    "lastmod": "2026-11-13"
+    "hash": "029ef9da49854d1d057dbd891ab2795d1234f466",
+    "lastmod": "2026-11-15"
   },
   "products/basalt-rock-dust/index.html": {
-    "hash": "603a1b5b97712bf566f0d394936f16f73aa16e28",
-    "lastmod": "2026-11-13"
+    "hash": "ccd94ced7f5bd949c7968d91a8f273054c96b28c",
+    "lastmod": "2026-11-15"
   },
   "products/blood-meal/index.html": {
-    "hash": "2118847de2de1a18b8ef47cb183f7c4579181629",
-    "lastmod": "2026-11-13"
+    "hash": "3f75fcc96b49ed0feb3a63f183e587addf52ca12",
+    "lastmod": "2026-11-15"
   },
   "products/bone-meal/index.html": {
-    "hash": "34a01ca79170d096546e4efd93b1d056c7c798b6",
-    "lastmod": "2026-11-13"
+    "hash": "b497b7dc038947055c56b3ea88b002d71fd80fbf",
+    "lastmod": "2026-11-15"
   },
   "products/compost-blend/index.html": {
-    "hash": "a36b675b0f11e2ae391710bcd9cc24075a5e05c5",
-    "lastmod": "2026-11-13"
+    "hash": "520860a19caea0ca77c2f00556a036bffb2651a1",
+    "lastmod": "2026-11-15"
   },
   "products/crab-meal/index.html": {
-    "hash": "f409125e016f0a861671d046e26e013db383d35f",
-    "lastmod": "2026-11-13"
+    "hash": "498d10a6310d868faa41a316ed3f99eec39b9e44",
+    "lastmod": "2026-11-15"
   },
   "products/dolomite-lime/index.html": {
-    "hash": "2e4791548dfd085753a3d549c2a1321b4276ae9d",
-    "lastmod": "2026-11-13"
+    "hash": "c87671f622d231206d0c214390a7c1fbc52b1209",
+    "lastmod": "2026-11-15"
   },
   "products/feather-meal/index.html": {
-    "hash": "f285e3a3fe2f20ad82bb4197f9fb16e7607afb13",
-    "lastmod": "2026-11-13"
+    "hash": "af128677809d09d118b1cea198564486dea09d38",
+    "lastmod": "2026-11-15"
   },
   "products/flower-power/index.html": {
-    "hash": "f340fa3deec8bde052073c8878a8d302c036784b",
-    "lastmod": "2026-11-13"
+    "hash": "524b0d8908f4434b69419baad35037c97f9a9ddd",
+    "lastmod": "2026-11-15"
   },
   "products/gypsum/index.html": {
-    "hash": "72e7c460c9337804392e770a508a5702fba9a000",
-    "lastmod": "2026-11-13"
+    "hash": "e0f49bec4946b0dcd0380cb409184b15074ea00e",
+    "lastmod": "2026-11-15"
   },
   "products/kelp-meal/index.html": {
-    "hash": "cdddde16bea7665c41004f1309fa3b4c6f605ca3",
-    "lastmod": "2026-11-13"
+    "hash": "77f3940eb93a285a58b25c516959ea9cf6b5812d",
+    "lastmod": "2026-11-15"
   },
   "products/level-up/index.html": {
-    "hash": "a0f4dc950c9afdc3eb9785d416de02d11992fc1a",
-    "lastmod": "2026-11-13"
+    "hash": "88654385ebcfc461701d0a269486e06adcfdc8ea",
+    "lastmod": "2026-11-15"
   },
   "products/oyster-shell-flour/index.html": {
-    "hash": "f9dca2b09d70487308726f86130021c1f6006ad5",
-    "lastmod": "2026-11-13"
+    "hash": "5a4502cf1e011a4d7c58b1998c650a6dc693d59c",
+    "lastmod": "2026-11-15"
   },
   "products/soft-rock-phosphate/index.html": {
-    "hash": "bd2807a90d0f3222f523a4eee44a40ff2964aa09",
-    "lastmod": "2026-11-13"
+    "hash": "c9daac3b2b09ac385d08e63c642eea69e7b19f7d",
+    "lastmod": "2026-11-15"
   },
   "products/super-starter-pack/index.html": {
-    "hash": "f0d0673ff9d7e87ab2d2e336d894c66238d8ccca",
-    "lastmod": "2026-11-13"
+    "hash": "f194d54a955ebf25601ea055d6b971b6ec88e67f",
+    "lastmod": "2026-11-15"
   },
   "products/worm-castings/index.html": {
-    "hash": "2d26f49f8d4c8a09b965e980878ae99f89bf6d47",
-    "lastmod": "2026-11-13"
+    "hash": "b8aaef7a4e1a70cb6c3c7eb04b28a4cb4056ed89",
+    "lastmod": "2026-11-15"
   },
   "shipping-returns/index.html": {
-    "hash": "4d9d202f062af93a7c7a7cfebeec88f8680c74fb",
-    "lastmod": "2026-11-13"
+    "hash": "5288c72b381fea9d056763bd76e69efa44b37b96",
+    "lastmod": "2026-11-15"
   },
   "soil-calculator/index.html": {
-    "hash": "026866452ed8ea5ed5081d3422a272d1932e0722",
-    "lastmod": "2026-11-13"
+    "hash": "d440a5cd31fdaf48691dcb7eacb59f8e69014859",
+    "lastmod": "2026-11-15"
   },
   "wholesale/index.html": {
-    "hash": "54e90136dbc7fb267e9da420f156c615581031cf",
-    "lastmod": "2026-11-13"
+    "hash": "84f43fbedf4275efd2c44c6f2c36b43c05cd29cf",
+    "lastmod": "2026-11-15"
   }
 }

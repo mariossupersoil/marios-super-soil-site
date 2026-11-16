@@ -14,6 +14,19 @@ RewriteRule ^flower-power-2-6-4/?$ /products/flower-power/ [R=301,L]
 RewriteRule ^sustainable-fertilizers/?$ /guides/organic-soil-amendments-canada/ [R=301,L]
 RewriteRule ^super-starter-pack/?$ /products/super-starter-pack/ [R=301,L]
 RewriteRule ^marios-super-soil/?$ / [R=301,L]
+# Agent-friendly: Markdown for the homepage when a client asks for it, plus Link headers
+<IfModule mod_mime.c>
+AddType text/markdown .md
+</IfModule>
+RewriteCond %{HTTP_ACCEPT} text/markdown [NC]
+RewriteRule ^$ /home.md [L]
+<IfModule mod_setenvif.c>
+SetEnvIf Request_URI "^/$" IS_HOME=1
+</IfModule>
+<IfModule mod_headers.c>
+Header always set Link "</llms.txt>; rel=\"describedby\"; type=\"text/plain\", </home.md>; rel=\"alternate\"; type=\"text/markdown\", </sitemap.xml>; rel=\"sitemap\"" env=IS_HOME
+Header always append Vary "Accept" env=IS_HOME
+</IfModule>
 RewriteRule ^(data|tools|\.git)(/|$) - [R=404,L]
 ErrorDocument 404 /404.html
 <IfModule mod_headers.c>

@@ -141,6 +141,7 @@ def footer():
       <a href="#signup">Sign up for deals</a>
       <a href="/guides/">Guides</a>
       <a href="/wholesale/">Wholesale</a>
+      <a href="/contact/">Contact</a>
       <a href="/shipping-returns/">Shipping &amp; returns</a>
 {GR_FOOT}      <a href="{esc(L['blog'])}" target="_blank" rel="noopener">Blog</a>
       <a href="/shipping-returns/">Refund policy</a>
@@ -149,6 +150,7 @@ def footer():
   </div>
 </footer>
 <script src="/assets/app.js" defer></script>
+<script src="/assets/webmcp.js" defer></script>
 <script src="/assets/ring.js?v=8" defer></script>
 <script src="/assets/room.js?v=1" defer></script>
 <script src="/assets/guide.js?v=1" defer></script>
@@ -412,12 +414,20 @@ def org_ld():
 
 
 # ---------------------------------------------------------------- home
+def item_ld(q):
+    rows = price_rows(q["slug"])
+    it = {"@type": "Product", "name": full_name(q), "url": abs_url(f"/products/{q['slug']}/"), "brand": {"@type": "Brand", "name": SITE["name"]}}
+    if rows:
+        it["offers"] = {"@type": "AggregateOffer", "priceCurrency": "CAD", "lowPrice": f"{min(x[1] for x in rows):.2f}", "highPrice": f"{max(x[1] for x in rows):.2f}", "offerCount": len(rows), "availability": "https://schema.org/InStock"}
+    return it
+
+
 def build_home():
     H = SITE["home"]
     ld = [org_ld(),
           {"@context": "https://schema.org", "@type": "WebSite", "name": SITE["name"], "url": BASE + "/", "inLanguage": "en-CA", "publisher": {"@id": BASE + "/#organization"}},
           {"@context": "https://schema.org", "@type": "ItemList", "name": "Organic dry amendments", "itemListElement": [
-              {"@type": "ListItem", "position": i + 1, "name": full_name(q), "url": abs_url(f"/products/{q['slug']}/")} for i, q in enumerate(PRODUCTS)]},
+              {"@type": "ListItem", "position": i + 1, "name": full_name(q), "url": abs_url(f"/products/{q['slug']}/"), "item": item_ld(q)} for i, q in enumerate(PRODUCTS)]},
           {"@context": "https://schema.org", "@type": "FAQPage",
            "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in SITE["faq"]]}]
     out = head(H["title"], H["description"], "/", jsonld=ld)
@@ -857,6 +867,25 @@ def contact_block():
     a = SITE["address"]
     hrs = "".join(f"<li>{esc(d)}: {esc(h)}</li>" for d, h in SITE["hours"])
     return f"""<p>Email <a href="mailto:{esc(SITE['email'])}">{esc(SITE['email'])}</a> or call <a href="tel:{esc(SITE['phone'].replace('-', ''))}">{esc(SITE['phone'])}</a>.</p><ul>{hrs}</ul>"""
+
+
+def build_contact():
+    title = "Contact Mario's Super Soil | Mississauga, Ontario"
+    desc = "Contact Mario's Super Soil in Mississauga, Ontario. Phone, email, hours and social links for questions about organic soil amendments, orders and wholesale."
+    path = "/contact/"
+    ld = [{"@context": "https://schema.org", "@type": "ContactPage", "name": "Contact Mario's Super Soil", "url": abs_url(path), "mainEntity": {"@id": BASE + "/#organization"}},
+          {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+              {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
+              {"@type": "ListItem", "position": 2, "name": "Contact", "item": abs_url(path)}]}]
+    out = head(title, desc, path, jsonld=ld) + header()
+    out += f"""  <section class="sec"><div class="wrap policy">
+    <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Contact</b> <i>us</i></h1>
+    <p>Questions about which product to use, an order, or wholesale? Call or email and we will help.</p>
+    {contact_block()}
+    </div></section>
+"""
+    out += footer()
+    return out
 
 
 def build_privacy():
@@ -1542,7 +1571,7 @@ def chat_kb():
 
 def main():
     sync_prices()
-    pages = {"index.html": build_home(), "404.html": build_404(), "soil-calculator/index.html": build_calculator(), "plant-drmario/index.html": build_drmario(), "cart/index.html": build_cart(), "order-complete/index.html": build_order_complete(), "admin/index.html": build_admin(), "wholesale/index.html": build_wholesale(), "shipping-returns/index.html": build_policy(), "privacy/index.html": build_privacy()}
+    pages = {"index.html": build_home(), "404.html": build_404(), "soil-calculator/index.html": build_calculator(), "plant-drmario/index.html": build_drmario(), "cart/index.html": build_cart(), "order-complete/index.html": build_order_complete(), "admin/index.html": build_admin(), "wholesale/index.html": build_wholesale(), "shipping-returns/index.html": build_policy(), "privacy/index.html": build_privacy(), "contact/index.html": build_contact()}
     for p in PRODUCTS:
         pages[f"products/{p['slug']}/index.html"] = build_product(p)
     G = guides()
@@ -1566,7 +1595,7 @@ def main():
 
     # sitemap (indexable pages only)
     urls = ""
-    for rel in ["index.html", "soil-calculator/index.html", "plant-drmario/index.html", "wholesale/index.html", "shipping-returns/index.html", "privacy/index.html", "guides/index.html"] + [f"guides/{g['slug']}/index.html" for g in G] + [f"products/{p['slug']}/index.html" for p in PRODUCTS] + ["products/super-starter-pack/index.html"]:
+    for rel in ["index.html", "soil-calculator/index.html", "plant-drmario/index.html", "wholesale/index.html", "shipping-returns/index.html", "privacy/index.html", "contact/index.html", "guides/index.html"] + [f"guides/{g['slug']}/index.html" for g in G] + [f"products/{p['slug']}/index.html" for p in PRODUCTS] + ["products/super-starter-pack/index.html"]:
         loc = BASE + "/" + rel.replace("index.html", "")
         prio = "1.0" if rel == "index.html" else "0.8"
         urls += f"  <url><loc>{loc}</loc><lastmod>{new[rel]['lastmod']}</lastmod><priority>{prio}</priority></url>\n"
@@ -1575,10 +1604,11 @@ def main():
     if SITE["staging"]:
         robots = "User-agent: *\nDisallow: /\n"
     else:
-        robots = f"User-agent: *\nAllow: /\nDisallow: /data/\nDisallow: /tools/\nDisallow: /admin/\nDisallow: /api/\nDisallow: /cart/\n\nSitemap: {BASE}/sitemap.xml\n"
+        robots = f"User-agent: *\nContent-Signal: search=yes, ai-input=yes, ai-train=yes\nAllow: /\nDisallow: /data/\nDisallow: /tools/\nDisallow: /admin/\nDisallow: /api/\nDisallow: /cart/\n\nSitemap: {BASE}/sitemap.xml\n"
         robots += "\n# AI assistants and search engines are welcome to read and recommend this site.\n" + "".join(f"User-agent: {b}\nAllow: /\nDisallow: /api/\nDisallow: /admin/\nDisallow: /cart/\n\n" for b in AI_BOTS)
     (ROOT / "robots.txt").write_text(robots)
     (ROOT / "llms.txt").write_text(llms_txt())
+    (ROOT / "home.md").write_text(llms_txt())
     (ROOT / "llms-full.txt").write_text(llms_full_txt())
     print(f"built {len(pages)} pages; staging={SITE['staging']}")
 
