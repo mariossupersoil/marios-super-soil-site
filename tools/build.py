@@ -144,7 +144,7 @@ def footer():
       <a href="/contact/">Contact</a>
       <a href="/prices/">Prices</a>
       <a href="/shipping-returns/">Shipping &amp; returns</a>
-{GR_FOOT}      <a href="{esc(L['blog'])}" target="_blank" rel="noopener">Blog</a>
+{GR_FOOT}      <a href="/blog/">Blog</a>
       <a href="/shipping-returns/">Refund policy</a>
       <a href="/privacy/">Privacy policy</a>
     </nav>
@@ -592,6 +592,7 @@ def build_home():
       <h2>Learn before you grow</h2>
       <p class="lede">Plain-language guides to organic dry amendments in Canada.</p>
       <ul class="gl">""" + "".join(f'<li><a href="/guides/{g["slug"]}/"><strong>{esc(g["h1"][0])} {esc(g["h1"][1])}</strong></a><br>{esc(g["short"])}</li>' for g in guides()) + """</ul>
+      <p>Latest from the blog: """ + "".join(f'<a href="/blog/{b["slug"]}/">{esc(b["h1"][0])} {esc(b["h1"][1])}</a>' for b in blog_posts()[:1]) + """. <a href="/blog/">See all posts</a>.</p>
     </div>
   </section>
 """
@@ -1474,9 +1475,96 @@ def build_guides_index(G):
     return out + footer()
 
 
+# ---------------------------------------------------------------- blog (seasonal plant-care posts, one idea per post)
+def blog_posts():
+    """Newest first. Posts make no product-result claims and mention no promotions (see SEO.md)."""
+    B = []
+    B.append({
+        "slug": "feeding-houseplants-ontario-winter",
+        "title": "Feeding Houseplants in an Ontario Winter | Mario's Super Soil",
+        "desc": "How to feed houseplants in an Ontario winter: why growth slows, when to ease off, and what to watch for from December to March.",
+        "h1": ("Feeding houseplants", "in an Ontario winter"),
+        "date": "2026-11-17",
+        "short": "Why growth slows in winter, when to ease off feeding, and what to watch for from December to March.",
+        "intro": "If your houseplants look a little sleepy since the clocks changed, that is normal. Ontario days are short from November to February, and most indoor plants respond by growing slowly or not at all.",
+        "sections": [
+            ("Why winter changes feeding",
+             "<p>Plants use nutrients to build new leaves and roots. With less daylight and cooler windowsills, many houseplants make little new growth, so they use less of what is in the pot. Feeding at the same rate as summer can leave unused nutrients sitting in the soil.</p>"),
+            ("A simple winter routine",
+             "<ul>"
+             "<li><strong>Check for new growth first.</strong> New leaves or roots mean the plant is still active and can be fed lightly. No growth usually means pause.</li>"
+             "<li><strong>Go lighter, not heavier.</strong> Many growers cut back a lot, or skip feeding until late winter. Follow the directions on whatever you use.</li>"
+             "<li><strong>Water less often.</strong> Let the top of the soil dry to the depth your plant prefers before watering. Cold, wet soil is a common winter problem.</li>"
+             "<li><strong>Move plants off cold glass.</strong> Windowsills in an Ontario January can be much colder than the room.</li>"
+             "<li><strong>Keep plants away from heating vents.</strong> Dry, hot air stresses leaves.</li>"
+             "<li><strong>Do not feed a struggling plant.</strong> If a plant is stressed, wilting or pest-affected, fix the cause first.</li>"
+             "</ul>"),
+            ("Planning ahead",
+             "<p>As days lengthen in late February and March, watch for new growth and begin feeding again at a normal rate. Dry organic amendments release nutrients gradually, so go by the directions and your plant's pot size. Our <a href=\"/soil-calculator/\">soil calculator</a> works out amounts by pot size, and our <a href=\"/guides/\">gardening guides</a> cover more, including <a href=\"/guides/potted-plants-containers/\">organic amendments for pots and containers</a>.</p>"),
+            ("Coming up",
+             "<p>Next we look at caring for Christmas and Advent plants such as poinsettias and amaryllis, then a New Year plant reset.</p>"),
+        ],
+    })
+    return B
+
+
+def build_blog_post(b, B):
+    path = f"/blog/{b['slug']}/"
+    body = "".join(f"<h2>{esc(h)}</h2>{html}" for h, html in b["sections"])
+    ld = [org_ld(),
+          {"@context": "https://schema.org", "@type": "BlogPosting", "headline": b["title"].split(" | ")[0], "description": b["desc"],
+           "mainEntityOfPage": abs_url(path), "inLanguage": "en-CA",
+           "datePublished": b["date"], "dateModified": b["date"],
+           "author": {"@type": "Organization", "name": SITE["name"], "url": BASE + "/"},
+           "publisher": {"@type": "Organization", "name": SITE["name"], "url": BASE + "/", "logo": {"@type": "ImageObject", "url": abs_url("/img/logo.png?v=3")}},
+           "image": abs_url("/img/og-image.jpg?v=3")},
+          {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+              {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
+              {"@type": "ListItem", "position": 2, "name": "Blog", "item": abs_url("/blog/")},
+              {"@type": "ListItem", "position": 3, "name": b["h1"][0] + " " + b["h1"][1], "item": abs_url(path)}]}]
+    others = "".join(f'<li><a href="/blog/{x["slug"]}/">{esc(x["h1"][0])} {esc(x["h1"][1])}</a></li>' for x in B if x["slug"] != b["slug"])
+    more = f"<li><a href=\"/guides/\">Gardening guides</a></li><li><a href=\"/soil-calculator/\">Soil amendment calculator</a></li>"
+    out = head(b["title"], b["desc"], path, jsonld=ld) + header()
+    out += f"""  <section class="sec"><div class="wrap policy gpage">
+    <p class="crumbs"><a href="/">Home</a> / <a href="/blog/">Blog</a></p>
+    <h1 class="nm" style="font-size:clamp(34px,6vw,76px)"><b>{esc(b['h1'][0])}</b> <i>{esc(b['h1'][1])}</i></h1>
+    <p class="small">Published {esc(b['date'])}</p>
+    <p class="lede">{esc(b['intro'])}</p>
+    {body}
+    <p><a href="/#products">Shop organic amendments</a> or <a href="/#buy">find a local store</a>.</p>
+    <h2>Keep reading</h2>
+    <ul>{others}{more}</ul>
+    <p class="small">Written by the team at {esc(SITE['name'])}, Mississauga, Ontario.</p>
+  </div></section>
+"""
+    return out + footer()
+
+
+def build_blog_index(B):
+    path = "/blog/"
+    title = "Blog: Plant Care and Soil Tips | Mario's Super Soil"
+    desc = "Seasonal plant care and organic soil tips from Mario's Super Soil, a Canadian maker of organic dry amendments in Mississauga, Ontario."
+    items = "".join(f'<li><a href="/blog/{b["slug"]}/"><strong>{esc(b["h1"][0])} {esc(b["h1"][1])}</strong></a><br><span class="small">{esc(b["date"])}</span> {esc(b["short"])}</li>' for b in B)
+    ld = [{"@context": "https://schema.org", "@type": "Blog", "name": "Mario's Super Soil blog", "url": abs_url(path),
+           "blogPost": [{"@type": "BlogPosting", "headline": b["title"].split(" | ")[0], "url": abs_url(f"/blog/{b['slug']}/"), "datePublished": b["date"]} for b in B]},
+          {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+              {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
+              {"@type": "ListItem", "position": 2, "name": "Blog", "item": abs_url(path)}]}]
+    out = head(title, desc, path, jsonld=ld) + header()
+    out += f"""  <section class="sec"><div class="wrap policy gpage">
+    <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Plant care</b> <i>blog</i></h1>
+    <p class="lede">Seasonal plant care and soil tips from a Canadian company that makes organic dry amendments.</p>
+    <ul class="gl">{items}</ul>
+    <p>Looking for in-depth answers? See our <a href="/guides/">gardening guides</a>, the free <a href="/soil-calculator/">soil amendment calculator</a> and <a href="/plant-drmario/">Plant Dr. Mario</a> photo diagnosis.</p>
+  </div></section>
+"""
+    return out + footer()
+
+
 def llms_txt():
     prods = "\n".join(f"- [{full_name(p)}]({abs_url('/products/' + p['slug'] + '/')}): {p['use']}. " + ("Sizes: 2 lb now, 5 lb coming soon." if soon_labels(p['slug']) else "Sizes 2 lb and 5 lb.") for p in PRODUCTS)
     gl = "\n".join(f"- [{g['h1'][0]} {g['h1'][1]}]({abs_url('/guides/' + g['slug'] + '/')}): {g['short']}" for g in guides())
+    bl = "\n".join(f"- [{b['h1'][0]} {b['h1'][1]}]({abs_url('/blog/' + b['slug'] + '/')}): {b['short']}" for b in blog_posts())
     return f"""# {SITE['name']}
 
 > {SITE['name']} is a Canadian company in Mississauga, Ontario that makes organic dry soil amendments (meals, rock dusts, worm castings, compost and blends) for gardeners and growers. Orders ship across Canada. Wholesale is available to garden centres and stores.
@@ -1492,6 +1580,7 @@ Key facts:
 
 ## Guides and tools
 {gl}
+{bl}
 - [Soil amendment calculator]({abs_url('/soil-calculator/')}): free tool that works out amounts by plant, bed or pot size.
 - [Plant Dr. Mario]({abs_url('/plant-drmario/')}): upload a plant photo for amendment suggestions.
 
@@ -1569,6 +1658,8 @@ def search_index():
                       "k": "starter kit beginner gift bundle level up flower power kelp alfalfa compost worm castings"})
     for g in guides():
         items.append({"t": g["h1"][0] + " " + g["h1"][1], "u": f"/guides/{g['slug']}/", "g": "Guide", "d": g["short"], "k": g["title"]})
+    for b in blog_posts():
+        items.append({"t": b["h1"][0] + " " + b["h1"][1], "u": f"/blog/{b['slug']}/", "g": "Blog", "d": b["short"], "k": b["title"]})
     for t, u, d, k in [("Soil amendment calculator", "/soil-calculator/", "How much to use for your bed or pot", "calculator how much dose"),
                        ("Plant Dr. Mario", "/plant-drmario/", "Upload a plant photo for help", "diagnose problem sick yellow leaves photo"),
                        ("Wholesale for stores", "/wholesale/", "Stock Mario's Super Soil in your shop", "retail store garden centre bulk"),
@@ -1609,6 +1700,10 @@ def main():
     pages["guides/index.html"] = build_guides_index(G)
     for g in G:
         pages[f"guides/{g['slug']}/index.html"] = build_guide(g, G)
+    B = blog_posts()
+    pages["blog/index.html"] = build_blog_index(B)
+    for b in B:
+        pages[f"blog/{b['slug']}/index.html"] = build_blog_post(b, B)
 
     old = json.loads(HASH_FILE.read_text()) if HASH_FILE.exists() else {}
     new = {}
@@ -1625,7 +1720,7 @@ def main():
 
     # sitemap (indexable pages only)
     urls = ""
-    for rel in ["index.html", "soil-calculator/index.html", "plant-drmario/index.html", "wholesale/index.html", "shipping-returns/index.html", "privacy/index.html", "contact/index.html", "prices/index.html", "guides/index.html"] + [f"guides/{g['slug']}/index.html" for g in G] + [f"products/{p['slug']}/index.html" for p in PRODUCTS] + ["products/super-starter-pack/index.html"]:
+    for rel in ["index.html", "soil-calculator/index.html", "plant-drmario/index.html", "wholesale/index.html", "shipping-returns/index.html", "privacy/index.html", "contact/index.html", "prices/index.html", "guides/index.html"] + [f"guides/{g['slug']}/index.html" for g in G] + ["blog/index.html"] + [f"blog/{b['slug']}/index.html" for b in B] + [f"products/{p['slug']}/index.html" for p in PRODUCTS] + ["products/super-starter-pack/index.html"]:
         loc = BASE + "/" + rel.replace("index.html", "")
         prio = "1.0" if rel == "index.html" else "0.8"
         urls += f"  <url><loc>{loc}</loc><lastmod>{new[rel]['lastmod']}</lastmod><priority>{prio}</priority></url>\n"
