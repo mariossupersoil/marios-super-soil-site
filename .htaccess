@@ -14,6 +14,7 @@ RewriteRule ^flower-power-2-6-4/?$ /products/flower-power/ [R=301,L]
 RewriteRule ^sustainable-fertilizers/?$ /guides/organic-soil-amendments-canada/ [R=301,L]
 RewriteRule ^super-starter-pack/?$ /products/super-starter-pack/ [R=301,L]
 RewriteRule ^marios-super-soil/?$ / [R=301,L]
+RewriteRule ^super-soil-blogs/?$ /blog/ [R=301,L]
 # Agent-friendly: Markdown for the homepage when a client asks for it, plus Link headers
 <IfModule mod_mime.c>
 AddType text/markdown .md
