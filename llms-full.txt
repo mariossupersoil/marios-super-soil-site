@@ -33,6 +33,7 @@ Key facts:
 - [Worm castings vs compost](https://mariossupersoil.ca/guides/worm-castings-vs-compost/): What each one does, how to use them, and why many gardeners use both.
 - [Dolomite lime, oyster shell and gypsum compared](https://mariossupersoil.ca/guides/dolomite-lime-oyster-shell-gypsum/): Three calcium sources compared: which one raises pH and which one does not.
 - [Organic amendments for pots and containers](https://mariossupersoil.ca/guides/potted-plants-containers/): Per-gallon doses for feeding potted plants and container gardens.
+- [Feeding houseplants in an Ontario winter](https://mariossupersoil.ca/blog/feeding-houseplants-ontario-winter/): Why growth slows in winter, when to ease off feeding, and what to watch for from December to March.
 - [Soil amendment calculator](https://mariossupersoil.ca/soil-calculator/): free tool that works out amounts by plant, bed or pot size.
 - [Plant Dr. Mario](https://mariossupersoil.ca/plant-drmario/): upload a plant photo for amendment suggestions.
 
