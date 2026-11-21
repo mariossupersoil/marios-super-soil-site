@@ -724,7 +724,7 @@ def build_product(p):
       <p class="rv-msg" id="rv-msg" role="status"></p>
     </div>
   </section>
-  <script src="/assets/reviews.js?v=1" defer></script>
+  <script src="/assets/reviews.js?v=2" defer></script>
   <section class="sec">
     <div class="wrap">
       <h2>More from Mario's Super Soil</h2>
