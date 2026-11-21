@@ -9,6 +9,10 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'GET') {
         if ($r['slug'] !== $slug || ($r['status'] ?? '') !== 'approved') continue;
         $out[] = ['name' => $r['name'], 'rating' => (int)$r['rating'], 'title' => $r['title'] ?? '', 'text' => $r['text'], 'date' => $r['date']];
     }
+    foreach ((jread(__DIR__ . '/../data/imported-reviews.json')['reviews'] ?? []) as $r) {
+        if (!in_array($slug, $r['slugs'] ?? [], true)) continue;
+        $out[] = ['name' => $r['name'], 'rating' => (int)$r['rating'], 'title' => $r['title'] ?? '', 'text' => $r['text'], 'date' => $r['date']];
+    }
     usort($out, fn($a, $b) => strcmp($b['date'], $a['date']));
     header('Cache-Control: no-cache'); out_json(['reviews' => array_slice($out, 0, 50)]);
 }

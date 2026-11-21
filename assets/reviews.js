@@ -4,7 +4,7 @@
   var slug=sec.getAttribute('data-slug'), $=function(id){return document.getElementById(id);};
   function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}
   function stars(n){return '★★★★★'.slice(0,n)+'☆☆☆☆☆'.slice(0,5-n);}
-  function fmt(d){var p=d.split('-');return new Date(+p[0],+p[1]-1,+p[2]).toLocaleDateString('en-CA',{year:'numeric',month:'long',day:'numeric'});}
+  function fmt(d){var p=d.split('-');if(p.length<3){return p.length===2?new Date(+p[0],+p[1]-1,1).toLocaleDateString('en-CA',{year:'numeric',month:'long'}):p[0];}return new Date(+p[0],+p[1]-1,+p[2]).toLocaleDateString('en-CA',{year:'numeric',month:'long',day:'numeric'});}
   fetch('/api/reviews.php?slug='+encodeURIComponent(slug),{cache:'no-cache'}).then(function(r){return r.json();}).then(function(j){
     var list=$('rv-list'), sum=$('rv-summary'), rs=j.reviews||[];
     if(!rs.length){sum.textContent='No reviews yet. Be the first to share how it worked in your garden.';return;}
