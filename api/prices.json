@@ -527,6 +527,22 @@
     }
    }
   },
+  "fish-compost": {
+   "name": "Fish Compost 1.5-1-1",
+   "img": "/img/fish-front.webp",
+   "sizes": {
+    "1l": {
+     "label": "1 L",
+     "price": 6.99,
+     "weight_kg": 0.6
+    },
+    "1gallon": {
+     "label": "1 gallon",
+     "price": 12.99,
+     "weight_kg": 2.27
+    }
+   }
+  },
   "super-starter-pack": {
    "name": "Super Starter Pack",
    "img": "/img/starter-kit.webp",

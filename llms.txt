@@ -28,6 +28,7 @@ Key facts:
 - [Humic Acid](https://mariossupersoil.ca/products/humic-acid/): Organic carbon that helps nutrients reach roots. Sizes 2 lb and 5 lb.
 - [Malted Barley Flour 1.5-0.4-0.5](https://mariossupersoil.ca/products/malted-barley-flour/): Natural enzymes that feed soil biology. Sizes 2 lb and 5 lb.
 - [Biochar Charged](https://mariossupersoil.ca/products/biochar/): Carbon that holds water and nutrients. Sizes 2 lb and 5 lb.
+- [Fish Compost 1.5-1-1](https://mariossupersoil.ca/products/fish-compost/): Fish-based organic matter for soil mixes and teas. Sizes 2 lb and 5 lb.
 
 ## Guides and tools
 - [Organic soil amendments in Canada](https://mariossupersoil.ca/guides/organic-soil-amendments-canada/): A plain-language guide to organic dry amendments: what they are, how to pick one, and how to use them.
