@@ -483,6 +483,50 @@
     }
    }
   },
+  "glacial-rock-dust": {
+   "name": "Glacial Rock Dust",
+   "img": "/img/glacial-front.webp",
+   "sizes": {
+    "2lb": {
+     "label": "2 lb (0.9 kg)",
+     "price": 10.49,
+     "weight_kg": 0.91
+    }
+   }
+  },
+  "humic-acid": {
+   "name": "Humic Acid",
+   "img": "/img/humic-front.webp",
+   "sizes": {
+    "2lb": {
+     "label": "2 lb (0.9 kg)",
+     "price": 11.99,
+     "weight_kg": 0.91
+    }
+   }
+  },
+  "malted-barley-flour": {
+   "name": "Malted Barley Flour 1.5-0.4-0.5",
+   "img": "/img/barley-front.webp",
+   "sizes": {
+    "2lb": {
+     "label": "2 lb (0.9 kg)",
+     "price": 21.99,
+     "weight_kg": 0.91
+    }
+   }
+  },
+  "biochar": {
+   "name": "Biochar Charged",
+   "img": "/img/biochar-front.webp",
+   "sizes": {
+    "2lb": {
+     "label": "2 lb (0.9 kg)",
+     "price": 19.99,
+     "weight_kg": 0.91
+    }
+   }
+  },
   "super-starter-pack": {
    "name": "Super Starter Pack",
    "img": "/img/starter-kit.webp",
