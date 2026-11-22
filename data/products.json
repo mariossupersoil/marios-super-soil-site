@@ -78,7 +78,7 @@
    "Rich in phosphorus",
    "Mineral rich formula",
    "Stronger stems & roots",
-   "Natural plant immunity",
+   "Supports healthy plant growth",
    "Balances soil pH naturally"
   ],
   "micro": [
@@ -129,9 +129,9 @@
    "The NPK ratio of crab meal is 4-3-0, with a high concentration of nitrogen, phosphorus, and magnesium, and it is particularly rich in chitin."
   ],
   "ben": [
-   "Chitin-rich pest shield",
-   "Fights root rot & blight",
-   "High calcium (prevents rot)",
+   "Chitin-rich shell material",
+   "Made from crab & lobster shells",
+   "High calcium for veg & flowers",
    "Slow-release nitrogen (4-3-0)",
    "Supercharges soil microbes",
    "Essential for tomatoes & veg"
@@ -159,7 +159,7 @@
   ],
   "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
   "cat": "meals",
-  "use": "Root and pest protection, plus calcium"
+  "use": "Chitin and calcium for veggie beds"
  },
  {
   "slug": "blood-meal",
@@ -182,7 +182,7 @@
    "Fast nitrogen release",
    "Lush green foliage",
    "Fixes yellow leaves",
-   "Deters deer & rabbits",
+   "Easy-to-apply dry powder",
    "Enriches soil health",
    "Feeds hungry plants"
   ],
@@ -485,7 +485,7 @@
   "npk_label": "Soil amendment",
   "macro_note": true,
   "title": "Gypsum Calcium & Sulfur Soil Amendment | Mario's Super Soil",
-  "meta": "Gypsum with calcium and sulfur to loosen heavy clay, improve drainage and prevent blossom end rot without changing pH. 2 to 20 lb.",
+  "meta": "Gypsum with calcium and sulfur to loosen heavy clay, improve drainage and supply calcium without changing pH. 2 to 20 lb.",
   "desc": [
    "Gypsum is a natural mineral rich in calcium and sulfur, helping improve water absorption, reduce soil erosion, and support plant growth.",
    "It has little effect on soil pH but helps roots grow by reducing aluminum toxicity, especially in acidic soils, promoting healthier development."
@@ -494,7 +494,7 @@
    "Loosens heavy clay soil",
    "Bio calcium without pH change",
    "Rich in elemental sulfur",
-   "Prevents blossom end rot",
+   "Calcium for tomatoes & peppers",
    "Improves drainage & aeration",
    "Ideal for soil, lawns & beds"
   ],
@@ -545,7 +545,7 @@
   "ben": [
    "Ultra-fine bio-calcium",
    "Long-term pH buffer",
-   "Prevents blossom end rot",
+   "Calcium for tomatoes & peppers",
    "Strengthens cell walls",
    "Feeds soil biology",
    "Ideal for living soil & peat"
@@ -592,7 +592,7 @@
   "ben": [
    "Natural soil pH sweetener",
    "Rich in bio calcium & Mg",
-   "Prevents blossom end rot",
+   "Calcium for tomatoes & peppers",
    "Drives green chlorophyll",
    "Buffers soil acidification",
    "Ideal for soil, peat & beds"
@@ -714,7 +714,7 @@
   "ben": [
    "Packed with live microbes",
    "Improves water retention",
-   "Natural disease resistance",
+   "Feeds soil life",
    "100% safe, never burns",
    "Activates dry amendments",
    "Ideal for soil, coco & teas"
@@ -784,7 +784,7 @@
   "ben": [
    "Enriched organic matter",
    "Improves water retention",
-   "Natural disease resistance",
+   "Feeds soil life",
    "Builds healthy humus",
    "100% natural & synthetic-free",
    "Ideal for soil, beds & teas"
@@ -833,7 +833,7 @@
    "Recharges tired soil",
    "Boosts cation exchange (CEC)",
    "Feeds living soil biology",
-   "Enhances plant resilience",
+   "Slow-release trace minerals",
    "Ideal for soil, beds & worms"
   ],
   "micro": [

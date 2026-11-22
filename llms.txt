@@ -11,7 +11,7 @@ Key facts:
 ## Products
 - [Level Up 3-3-3](https://mariossupersoil.ca/products/level-up/): All-round balanced growth. Sizes: 2 lb now, 5 lb coming soon.
 - [Flower Power 2-6-4](https://mariossupersoil.ca/products/flower-power/): For blooms and bigger yields. Sizes: 2 lb now, 5 lb coming soon.
-- [Crab Meal 4-3-0](https://mariossupersoil.ca/products/crab-meal/): Root and pest protection, plus calcium. Sizes: 2 lb now, 5 lb coming soon.
+- [Crab Meal 4-3-0](https://mariossupersoil.ca/products/crab-meal/): Chitin and calcium for veggie beds. Sizes: 2 lb now, 5 lb coming soon.
 - [Blood Meal 12-0-0](https://mariossupersoil.ca/products/blood-meal/): Fast nitrogen for green growth. Sizes: 2 lb now, 5 lb coming soon.
 - [Bone Meal 4-10-0](https://mariossupersoil.ca/products/bone-meal/): Phosphorus for roots, blooms and fruit. Sizes: 2 lb now, 5 lb coming soon.
 - [Kelp Meal 1-0-4](https://mariossupersoil.ca/products/kelp-meal/): Ocean minerals for stress and root growth. Sizes: 2 lb now, 5 lb coming soon.

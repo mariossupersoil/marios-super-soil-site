@@ -1615,7 +1615,7 @@ SEARCH_KW = {
     "kelp-meal": "potassium seaweed trace minerals",
     "alfalfa-meal": "nitrogen potassium growth triacontanol",
     "feather-meal": "nitrogen leaves green lawn",
-    "blood-meal": "nitrogen fast yellow leaves deer rabbits repel bloodmeal",
+    "blood-meal": "nitrogen fast yellow leaves bloodmeal",
     "soft-rock-phosphate": "phosphorus colloidal slow release",
     "gypsum": "clay calcium sulfur sulphur loosen soil",
     "oyster-shell-flour": "calcium ph lime shell",
@@ -1640,7 +1640,7 @@ SEARCH_ALT = [
     (["seaweed", "seaweed extract", "sea kelp", "ocean"], ["kelp-meal"], "seaweed-based amendments"),
     (["potting soil", "potting mix", "soil mix", "coco", "seed starting", "seedlings"], ["worm-castings", "compost-blend", "level-up"], "good to mix into your potting soil"),
     (["lawn", "grass", "turf"], ["feather-meal", "level-up", "compost-blend"], "good for lawns"),
-    (["bugs", "pests", "aphids", "nematodes", "chitin", "fungus gnats"], ["crab-meal"], "crab meal contains chitin and supports root and pest resilience"),
+    (["chitin", "crab", "shellfish"], ["crab-meal"], "crab meal is a chitin-rich source of calcium and nitrogen"),
     (["epsom"], [], ""),
 ]
 
