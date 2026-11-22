@@ -24,6 +24,10 @@ Key facts:
 - [Basalt Rock Dust](https://mariossupersoil.ca/products/basalt-rock-dust/): Trace minerals and silica for strong stems. Sizes: 2 lb now, 5 lb coming soon.
 - [Worm Castings 1.5-2.5-1.3](https://mariossupersoil.ca/products/worm-castings/): Live biology for any soil. Sizes 2 lb and 5 lb.
 - [Compost Blend 0.7-0.3-0.6](https://mariossupersoil.ca/products/compost-blend/): Organic matter that builds humus. Sizes 2 lb and 5 lb.
+- [Glacial Rock Dust](https://mariossupersoil.ca/products/glacial-rock-dust/): Trace minerals and silica from glacial rock. Sizes 2 lb and 5 lb.
+- [Humic Acid](https://mariossupersoil.ca/products/humic-acid/): Organic carbon that helps nutrients reach roots. Sizes 2 lb and 5 lb.
+- [Malted Barley Flour 1.5-0.4-0.5](https://mariossupersoil.ca/products/malted-barley-flour/): Natural enzymes that feed soil biology. Sizes 2 lb and 5 lb.
+- [Biochar Charged](https://mariossupersoil.ca/products/biochar/): Carbon that holds water and nutrients. Sizes 2 lb and 5 lb.
 
 ## Guides and tools
 - [Organic soil amendments in Canada](https://mariossupersoil.ca/guides/organic-soil-amendments-canada/): A plain-language guide to organic dry amendments: what they are, how to pick one, and how to use them.

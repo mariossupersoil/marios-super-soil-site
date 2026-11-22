@@ -808,5 +808,199 @@
   "size_note": "Worm castings and compost are sold in litres and gallons, not by weight, because the weight changes with moisture. Roughly: 1 L is about 1 to 1.3 lb, 1 gallon about 4 to 5 lb, 2 gallons about 8 to 10 lb and 4 gallons about 15 to 20 lb.",
   "cat": "soil",
   "use": "Organic matter that builds humus"
+ },
+ {
+  "slug": "glacial-rock-dust",
+  "f": "glacial",
+  "a": "Glacial",
+  "b": "Rock Dust",
+  "npk": [
+   0,
+   0,
+   0
+  ],
+  "accent": "#c9a77c",
+  "npk_label": "Soil amendment",
+  "macro_note": true,
+  "title": "Glacial Rock Dust Mineral Soil Amendment | Mario's Super Soil",
+  "meta": "Glacial rock dust, a natural mineral amendment with silicon and trace minerals for garden soil, compost and worm beds. 2 lb bag. Made in Ontario.",
+  "desc": [
+   "Glacial rock dust is a natural mineral amendment formed by glacial action over thousands of years, containing diverse trace minerals.",
+   "It gradually releases essential nutrients, supporting strong roots and healthier growth in trees, lawns, roses, vegetables, and garden soil throughout growing seasons."
+  ],
+  "ben": [
+   "Glacial trace minerals",
+   "Recharges tired soil",
+   "Boosts cation exchange (CEC)",
+   "Feeds living soil biology",
+   "Enhances plant resilience",
+   "Ideal for soil, beds & worms"
+  ],
+  "micro": [
+   [
+    "Silicon (Si)",
+    "Silicium (Si)",
+    "35%"
+   ],
+   [
+    "Calcium (Ca)",
+    "Calcium (Ca)",
+    "2%"
+   ],
+   [
+    "Magnesium (Mg)",
+    "Magnésium (Mg)",
+    "1.5%"
+   ],
+   [
+    "Potassium (K)",
+    "Potassium (K)",
+    "0.5%"
+   ],
+   [
+    "Iron (Fe)",
+    "Fer (Fe)",
+    "2%"
+   ]
+  ],
+  "how_en": "Mix 8 tbsp per gallon of soil for transplanting. Apply 4 tbsp per gallon for top dressing, monthly or as needed. For composting, mix directly into the compost.",
+  "how_fr": "Mélanger 8 c. à soupe par gallon de terre pour la transplantation. Appliquer 4 c. à soupe par gallon en surface, une fois par mois ou au besoin. Pour le compostage, mélanger directement au compost.",
+  "when": "8 tbsp per gallon to transplant. 4 tbsp per gallon to top dress, monthly.",
+  "sizes": [
+   "2 lb (0.9 kg)"
+  ],
+  "size_note": "Sold in 2 lb (0.9 kg) bags for now. Larger sizes are coming.",
+  "cat": "minerals",
+  "use": "Trace minerals and silica from glacial rock"
+ },
+ {
+  "slug": "humic-acid",
+  "f": "humic",
+  "a": "Humic",
+  "b": "Acid",
+  "npk": [
+   0,
+   0,
+   0
+  ],
+  "accent": "#b3a58c",
+  "npk_label": "Soil amendment",
+  "macro_note": true,
+  "title": "Humic Acid Organic Carbon Soil Amendment | Mario's Super Soil",
+  "meta": "Humic acid, a high-purity organic carbon soil amendment that supports nutrient availability and soil microbes in gardens, lawns and pots. 2 lb bag.",
+  "desc": [
+   "Humic acid is a natural substance formed from decomposed plant and animal matter, commonly found in soils and water systems.",
+   "It improves soil quality, enhances fertilizer effectiveness, and promotes beneficial microbial activity, supporting nutrient availability and healthier plant growth."
+  ],
+  "ben": [
+   "High-purity organic carbon",
+   "Boosts cation exchange (CEC)",
+   "Chelates & unlocks nutrients",
+   "Drives root system growth",
+   "Fuels living soil biology",
+   "Improves moisture retention"
+  ],
+  "micro": [
+   [
+    "Trace minerals",
+    "Minéraux traces",
+    "Contains"
+   ]
+  ],
+  "how_en": "Apply 1–2 lb per 100 sq. ft. of garden or 3–10 lb per 1,000 sq. ft. of lawn. For potted plants, mix 2 tbsp per cubic foot of soil or add 2 tsp per gallon of water every 6–8 weeks.",
+  "how_fr": "Appliquer 1 à 2 lb par 100 pi² de jardin ou 3 à 10 lb par 1 000 pi² de pelouse. Pour les plantes en pot, mélanger 2 c. à soupe par pied cube de terre ou ajouter 2 c. à thé par gallon d’eau toutes les 6 à 8 semaines.",
+  "when": "Garden: 1 to 2 lb per 100 sq. ft. Pots: 2 tbsp per cubic foot.",
+  "sizes": [
+   "2 lb (0.9 kg)"
+  ],
+  "size_note": "Sold in 2 lb (0.9 kg) bags for now. Larger sizes are coming.",
+  "cat": "minerals",
+  "use": "Organic carbon that helps nutrients reach roots"
+ },
+ {
+  "slug": "malted-barley-flour",
+  "f": "barley",
+  "a": "Malted Barley",
+  "b": "Flour",
+  "npk": [
+   1.5,
+   0.4,
+   0.5
+  ],
+  "accent": "#c0524a",
+  "title": "Malted Barley Flour Organic Amendment | Mario's Super Soil",
+  "meta": "Malted barley flour (1.5-0.4-0.5), a high-diastatic 2-row malt with natural enzymes for soil mixes, potting and teas. 2 lb bag. Made in Ontario.",
+  "desc": [
+   "Malted barley flour is made from germinated barley that is dried, hulled, ground, and sifted into a fine powder.",
+   "It contains 98% plant-derived starch, protein, and natural enzymes that support microbial activity, nutrient availability, and healthy plant growth."
+  ],
+  "ben": [
+   "Natural enzyme powerhouse",
+   "Accelerates soil biology",
+   "Unlocks bound nutrients",
+   "High-diastatic 2-row malt",
+   "Gentle & non-burning",
+   "Ideal for soil beds & teas"
+  ],
+  "micro": [
+   [
+    "Enzymes",
+    "Enzymes",
+    "Active"
+   ]
+  ],
+  "how_en": "Use 1 tsp when planting cuttings and 1 tbsp around roots when potting. For root drenching, mix 1 tbsp in 1 litre of water and aerate for 3–5 hours.",
+  "how_fr": "Utiliser 1 c. à thé pour les boutures et 1 c. à soupe autour des racines lors du rempotage. Pour l’arrosage des racines, mélanger 1 c. à soupe dans 1 litre d’eau et aérer pendant 3 à 5 heures.",
+  "when": "1 tsp for cuttings. 1 tbsp around roots when potting.",
+  "sizes": [
+   "2 lb (0.9 kg)"
+  ],
+  "size_note": "Sold in 2 lb (0.9 kg) bags for now. Larger sizes are coming.",
+  "cat": "meals",
+  "use": "Natural enzymes that feed soil biology"
+ },
+ {
+  "slug": "biochar",
+  "f": "biochar",
+  "a": "Biochar",
+  "b": "Charged",
+  "npk": [
+   0,
+   0,
+   0
+  ],
+  "accent": "#8a93b0",
+  "npk_label": "Soil amendment",
+  "macro_note": true,
+  "title": "Biochar Charged Soil Amendment | Mario's Super Soil",
+  "meta": "Pre-charged biochar, a lightweight carbon-rich soil amendment that holds moisture and nutrients in garden beds, pots and potting mixes. 2 lb bag.",
+  "desc": [
+   "Biochar is a lightweight, porous, carbon-rich material containing essential minerals that help improve soil structure and overall health.",
+   "It improves soil fertility, retains moisture, supports beneficial microbes, and holds essential nutrients while helping raise soil pH for healthier plant growth."
+  ],
+  "ben": [
+   "Pre-charged & ready to use",
+   "Permanent microbe housing",
+   "Boosts cation exchange (CEC)",
+   "Supercharges water retention",
+   "Permanent soil carbon",
+   "Ideal for beds, pots & mixes"
+  ],
+  "micro": [
+   [
+    "Charging material",
+    "Matériau de charge",
+    "Varies"
+   ]
+  ],
+  "how_en": "For transplanting, add 1–2 handfuls to the planting hole. For garden beds, apply 1 L per m² and mix into the top 4–6 inches of soil. For potting mix, combine 1 cup per 10 cups of soil. For composting, add at a 1:10 ratio.",
+  "how_fr": "Pour la transplantation, ajouter 1 à 2 poignées dans le trou. Pour les plates-bandes, appliquer 1 L par m² et mélanger aux 10 à 15 premiers cm de sol. Pour le terreau, mélanger 1 tasse pour 10 tasses de terre. Pour le compost, ajouter selon un ratio de 1:10.",
+  "when": "1 to 2 handfuls per planting hole. Potting mix: 1 cup per 10 cups.",
+  "sizes": [
+   "2 lb (0.9 kg)"
+  ],
+  "size_note": "Sold in 2 lb (0.9 kg) bags for now. Larger sizes are coming.",
+  "cat": "soil",
+  "use": "Carbon that holds water and nutrients"
  }
 ]
