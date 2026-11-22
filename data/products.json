@@ -1002,5 +1002,63 @@
   "size_note": "Sold in 2 lb (0.9 kg) bags for now. Larger sizes are coming.",
   "cat": "soil",
   "use": "Carbon that holds water and nutrients"
+ },
+ {
+  "slug": "fish-compost",
+  "f": "fish",
+  "a": "Fish",
+  "b": "Compost",
+  "npk": [
+   1.5,
+   1,
+   1
+  ],
+  "accent": "#7f9cc4",
+  "title": "Fish Compost 1.5-1-1 Organic Soil Amendment | Mario's Super Soil",
+  "meta": "Fish compost (1.5-1-1) made from freshwater fish farm materials blended with natural sawdust. Gentle, non-burning, for soil mixes and teas. 1 L or 1 gallon.",
+  "desc": [
+   "Fish compost is made from freshwater fish farm materials sourced from North Channel waters and blended with natural sawdust.",
+   "Rich in natural nitrogen, it improves soil fertility, supports healthy plant growth, and provides valuable nutrients through its fish-based organic composition."
+  ],
+  "ben": [
+   "Nutrient-dense marine matter",
+   "Teeming with living biology",
+   "High humic & carbon content",
+   "Gentle, non-burning formula",
+   "Boosts moisture & aeration",
+   "Ideal for soil mixes & teas"
+  ],
+  "micro": [
+   [
+    "Calcium (Ca)",
+    "Calcium (Ca)",
+    "Present"
+   ],
+   [
+    "Magnesium (Mg)",
+    "Magnésium (Mg)",
+    "Present"
+   ],
+   [
+    "Sulfur (S)",
+    "Soufre (S)",
+    "Present"
+   ],
+   [
+    "Trace minerals",
+    "Minéraux traces",
+    "Present"
+   ]
+  ],
+  "how_en": "Mix 1 tbsp per gallon of water for every 25 sq. ft. of annuals and vegetables, or 2 tbsp for perennials and shrubs. Apply 1–3 inches of compost and mix into the top 3–4 inches of soil. Leave ¼ inch around plant stems.",
+  "how_fr": "Mélanger 1 c. à soupe par gallon d’eau pour 25 pi² de plantes annuelles et de légumes, ou 2 c. à soupe pour les plantes vivaces et les arbustes. Appliquer 2.5 à 7.5 cm de compost et incorporer aux 7.5 à 10 cm supérieurs du sol. Laisser 0.6 cm autour des tiges.",
+  "when": "1 tbsp per gallon of water per 25 sq. ft. Or mix 1 to 3 inches into the top soil.",
+  "sizes": [
+   "1 L",
+   "1 gallon"
+  ],
+  "size_note": "Sold in litres and gallons, not by weight, because the weight changes with moisture. Roughly: 1 L is about 1 to 1.3 lb and 1 gallon is about 4 to 5 lb.",
+  "cat": "soil",
+  "use": "Fish-based organic matter for soil mixes and teas"
  }
 ]
