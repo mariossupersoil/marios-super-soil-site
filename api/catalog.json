@@ -140,13 +140,6 @@
   "use": "improves moisture and nutrient retention, aeration"
  },
  {
-  "key": "karanja",
-  "name": "Karanja Cake",
-  "npk": "pest/fert",
-  "url": "https://mariossupersoil.ca/sustainable-fertilizers",
-  "use": "natural pest and fungal suppression plus nitrogen"
- },
- {
   "key": "compost",
   "name": "Compost Blend",
   "npk": "organic",
