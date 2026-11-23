@@ -20,7 +20,7 @@ function err($id, $code, $msg) { echo json_encode(['jsonrpc' => '2.0', 'id' => $
 function text($o) { return ['content' => [['type' => 'text', 'text' => json_encode($o, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)]]]; }
 
 $tools = [
-  ['name' => 'search_products', 'description' => "Search Mario's Super Soil organic dry soil amendments by need or name (e.g. bloom, nitrogen, clay soil, tomatoes). Returns names, links and a starting price in CAD.",
+  ['name' => 'search_products', 'description' => "Search Mario's Super Soil natural dry soil amendments by need or name (e.g. bloom, nitrogen, clay soil, tomatoes). Returns names, links and a starting price in CAD.",
    'inputSchema' => ['type' => 'object', 'properties' => ['query' => ['type' => 'string', 'description' => 'What the grower needs or a product name']], 'required' => ['query']], 'annotations' => ['readOnlyHint' => true]],
   ['name' => 'get_prices', 'description' => 'Current list prices in CAD by bag size for every product, and which sizes are coming soon. Tax and shipping are added at checkout.',
    'inputSchema' => ['type' => 'object', 'properties' => new stdClass()], 'annotations' => ['readOnlyHint' => true]],
@@ -35,7 +35,7 @@ foreach ($batch as $r) {
     ob_start();
     if ($method === 'initialize') {
         ok($id, ['protocolVersion' => '2025-06-18', 'capabilities' => ['tools' => ['listChanged' => false]], 'serverInfo' => ['name' => 'marios-super-soil', 'title' => "Mario's Super Soil", 'version' => '1.0.0'],
-                 'instructions' => "Read-only catalog for Mario's Super Soil, a Canadian maker of organic dry soil amendments. Ships across Canada."]);
+                 'instructions' => "Read-only catalog for Mario's Super Soil, a Canadian maker of natural dry soil amendments. Ships across Canada."]);
     } elseif ($method === 'ping') { ok($id, new stdClass());
     } elseif ($method === 'tools/list') { ok($id, ['tools' => $tools]);
     } elseif ($method === 'tools/call') {

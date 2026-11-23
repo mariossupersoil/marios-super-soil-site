@@ -140,25 +140,18 @@
   "use": "improves moisture and nutrient retention, aeration"
  },
  {
-  "key": "karanja",
-  "name": "Karanja Cake",
-  "npk": "pest/fert",
-  "url": "https://mariossupersoil.ca/sustainable-fertilizers",
-  "use": "natural pest and fungal suppression plus nitrogen"
- },
- {
   "key": "compost",
   "name": "Compost Blend",
-  "npk": "organic",
+  "npk": "natural",
   "url": "https://mariossupersoil.ca/sustainable-fertilizers",
   "use": "organic matter, soil structure, biology"
  },
  {
   "key": "fishCompost",
   "name": "Fish Compost",
-  "npk": "organic/N",
+  "npk": "natural/N",
   "url": "https://mariossupersoil.ca/sustainable-fertilizers",
-  "use": "organic nitrogen and biology"
+  "use": "natural nitrogen and biology"
  },
  {
   "key": "yucca",

@@ -27,7 +27,7 @@
   }
 
   function greet() {
-    bubble('bot', "Hi, I'm Mario's assistant. Ask me about growing, soil, or which of our organic dry amendments fits your plants.");
+    bubble('bot', "Hi, I'm Mario's assistant. Ask me about growing, soil, or which of our natural dry amendments fits your plants.");
     var chips = el('div', 'cm-chips');
     ['Which product do I need?', 'How much should I use?', 'Do you ship to my province?'].forEach(function (q) {
       var c = el('button', 'cm-chip', q); c.type = 'button';

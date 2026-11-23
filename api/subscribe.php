@@ -24,7 +24,7 @@ if ($newToken !== null) {
     $promo = active_promo();
     $g = settings()['gift'];
     $body = "Welcome to Mario's Super Soil!\n\n"
-        . "Thanks for joining. We make organic dry soil amendments in Mississauga, Ontario, and ship across Canada. Here is how to get started.\n\n"
+        . "Thanks for joining. We make natural dry soil amendments in Mississauga, Ontario, and ship across Canada. Here is how to get started.\n\n"
         . ($promo ? "RIGHT NOW: " . $promo['title'] . ": " . $promo['text'] . ". Use code " . $promo['code'] . " at checkout.\n\n" : '')
         . "NEW TO GROWING?\nThe Super Starter Pack has six of our bags in one kit, so you can feed your plants from seed to harvest:\n" . $u . "/products/super-starter-pack/\n\n"
         . "THE QUICK VERSION\n"

@@ -45,10 +45,10 @@
     "privacy": "https://mariossupersoil.ca/privacy-policy"
   },
   "home": {
-    "title": "Organic Dry Amendments Canada | Mario's Super Soil",
-    "description": "Canadian-made organic dry amendments from Mississauga, Ontario: bone, crab, feather, kelp and alfalfa meal, worm castings, rock dusts, blends. Ships across Canada.",
+    "title": "Natural Dry Amendments Canada | Mario's Super Soil",
+    "description": "Canadian-made natural dry amendments from Mississauga, Ontario: bone, crab, feather, kelp and alfalfa meal, worm castings, rock dusts, blends. Ships across Canada.",
     "h1": "Level up<br>your grow",
-    "lede": "Grow great plants. Skip the guesswork. Organic dry amendments from Mississauga, Ontario, with the dose printed on every bag."
+    "lede": "Grow great plants. Skip the guesswork. Natural dry amendments from Mississauga, Ontario, with the dose printed on every bag."
   },
   "stores": [
     {
@@ -75,7 +75,7 @@
       "b": "3-3-3",
       "accent": "#7fc46b",
       "tagline": "A balanced blend for all-purpose growth.",
-      "text": "All-purpose organic dry amendment for vegetables, flowers and herbs. It supports root development, leafy growth and blooming, and comes in a resealable bag.",
+      "text": "All-purpose natural dry amendment for vegetables, flowers and herbs. It supports root development, leafy growth and blooming, and comes in a resealable bag.",
       "rows": [
         [
           "Ingredients",
@@ -98,7 +98,7 @@
       "b": "2-6-4",
       "accent": "#e68fb7",
       "tagline": "Ideal for blooming plants and high-yield flowers.",
-      "text": "Premium organic dry amendment for flowering plants, indoors and outdoors. It supports strong root systems and abundant flower production, and comes in a resealable bag.",
+      "text": "Premium natural dry amendment for flowering plants, indoors and outdoors. It supports strong root systems and abundant flower production, and comes in a resealable bag.",
       "rows": [
         [
           "Ingredients",
@@ -120,7 +120,7 @@
       "b": "Pack",
       "accent": "#d8c98b",
       "tagline": "Everything you need to have a successful grow.",
-      "text": "A comprehensive organic gardening kit for new gardeners.",
+      "text": "A comprehensive natural gardening kit for new gardeners.",
       "rows": [
         [
           "In the kit",
@@ -191,8 +191,8 @@
       "Low usage rates: Level Up 3-3-3 and Flower Power 2-6-4 use 1 tablespoon per gallon of soil, so a bag goes a long way. The bags are recyclable and reusable, and everything is made locally in Mississauga, Ontario."
     ],
     [
-      "Are your products organic?",
-      "Yes. All products are made from organic ingredients to improve soil health and plant growth, with no synthetic chemicals."
+      "Are your products natural?",
+      "Yes. All products are made from natural ingredients to improve soil health and plant growth, with no synthetic chemicals."
     ],
     [
       "Can beginners use them?",
@@ -235,7 +235,7 @@
   "coming_soon": {
     "label": "More on the way",
     "title": "More products coming soon",
-    "text": "Every product from our original shop is being added to this site. Bigger sizes, Karanja cake, humic acid and the rest of the range are coming soon. We're aiming to have them listed by the end of the week. Check back, or sign up for emails to hear first.",
-    "chat": "COMING SOON: Bigger bag sizes (5, 10 and 20 lb), Karanja cake, humic acid and every other product from the original shop will be listed on this site soon. Mario is aiming for the end of this week (week of Nov 15, 2026) but that is a goal, not a promise. There is no firm date or price yet; do not guess either. Suggest signing up for emails or asking Mario directly."
+    "text": "Every product from our original shop is being added to this site. Bigger sizes and more of the range are coming soon. We're aiming to have them listed by the end of the week. Check back, or sign up for emails to hear first.",
+    "chat": "COMING SOON: Bigger bag sizes (5, 10 and 20 lb) and more products from the original shop will be listed on this site soon. Mario is aiming for the end of this week (week of Nov 15, 2026) but that is a goal, not a promise. There is no firm date or price yet; do not guess either. Suggest signing up for emails or asking Mario directly."
   }
 }
