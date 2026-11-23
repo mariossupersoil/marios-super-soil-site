@@ -1,10 +1,10 @@
 # Mario's Super Soil
 
-> Mario's Super Soil is a Canadian company in Mississauga, Ontario that makes organic dry soil amendments (meals, rock dusts, worm castings, compost and blends) for gardeners and growers. Orders ship across Canada. Wholesale is available to garden centres and stores.
+> Mario's Super Soil is a Canadian company in Mississauga, Ontario that makes natural dry soil amendments (meals, rock dusts, worm castings, compost and blends) for gardeners and growers. Orders ship across Canada. Wholesale is available to garden centres and stores.
 
 Key facts:
 - Location: Mississauga, ON, Canada. Phone 647-839-7645. Email mariossupersoil@mariossupersoil.com.
-- Products are organic dry amendments with directions in English and French. The 2 lb bag is available now; 5 lb bags (and 10 and 20 lb packs) are coming soon.
+- Products are natural dry amendments with directions in English and French. The 2 lb bag is available now; 5 lb bags (and 10 and 20 lb packs) are coming soon.
 - Ships within Canada only. Orders of $120 or more include a free 2 lb bag of Level Up 3-3-3 or Flower Power 2-6-4. 30 day returns on unused items.
 - Main blends: Level Up 3-3-3 and Flower Power 2-6-4. The 2 lb Super Starter Pack is available now; the 5 lb kit is coming soon.
 
@@ -31,13 +31,13 @@ Key facts:
 - [Fish Compost 1.5-1-1](https://mariossupersoil.ca/products/fish-compost/): Fish-based organic matter for soil mixes and teas. Sizes 2 lb and 5 lb.
 
 ## Guides and tools
-- [Organic soil amendments in Canada](https://mariossupersoil.ca/guides/organic-soil-amendments-canada/): A plain-language guide to organic dry amendments: what they are, how to pick one, and how to use them.
-- [NPK explained for organic gardeners](https://mariossupersoil.ca/guides/npk-organic-gardening/): What N-P-K means and which organic amendment supplies each nutrient.
+- [Natural soil amendments in Canada](https://mariossupersoil.ca/guides/organic-soil-amendments-canada/): A plain-language guide to natural dry amendments: what they are, how to pick one, and how to use them.
+- [NPK explained for natural gardeners](https://mariossupersoil.ca/guides/npk-organic-gardening/): What N-P-K means and which natural amendment supplies each nutrient.
 - [Bone, crab, feather, kelp and alfalfa meal compared](https://mariossupersoil.ca/guides/bone-crab-feather-meal/): How the five meal amendments differ and when to use each one.
-- [Organic amendments for Ontario vegetable gardens](https://mariossupersoil.ca/guides/vegetable-garden-ontario/): A simple spring-to-summer plan for feeding an organic vegetable bed.
+- [Natural amendments for Ontario vegetable gardens](https://mariossupersoil.ca/guides/vegetable-garden-ontario/): A simple spring-to-summer plan for feeding a natural vegetable bed.
 - [Worm castings vs compost](https://mariossupersoil.ca/guides/worm-castings-vs-compost/): What each one does, how to use them, and why many gardeners use both.
 - [Dolomite lime, oyster shell and gypsum compared](https://mariossupersoil.ca/guides/dolomite-lime-oyster-shell-gypsum/): Three calcium sources compared: which one raises pH and which one does not.
-- [Organic amendments for pots and containers](https://mariossupersoil.ca/guides/potted-plants-containers/): Per-gallon doses for feeding potted plants and container gardens.
+- [Natural amendments for pots and containers](https://mariossupersoil.ca/guides/potted-plants-containers/): Per-gallon doses for feeding potted plants and container gardens.
 - [Feeding houseplants in an Ontario winter](https://mariossupersoil.ca/blog/feeding-houseplants-ontario-winter/): Why growth slows in winter, when to ease off feeding, and what to watch for from December to March.
 - [Soil amendment calculator](https://mariossupersoil.ca/soil-calculator/): free tool that works out amounts by plant, bed or pot size.
 - [Plant Dr. Mario](https://mariossupersoil.ca/plant-drmario/): upload a plant photo for amendment suggestions.

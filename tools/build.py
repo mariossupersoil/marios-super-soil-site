@@ -310,7 +310,7 @@ def blend_cards():
         if prod:
             rows = price_rows(prod["slug"])
             fr = f'<span class="from">From ${min(x[1] for x in rows):,.2f}</span>' if rows else ""
-            cards += (f'<a class="bcard" href="/products/{prod["slug"]}/" style="--accent:{b["accent"]}"><span class="pair" aria-hidden="true"><img class="pb" src="/img/{prod["f"]}-back.webp" width="170" height="220" alt=""><img class="pf" src="/img/{prod["f"]}-front.webp" width="170" height="220" alt=""></span><span class="sr">{esc(full_name(prod))} organic dry amendment pouch, front and back</span>'
+            cards += (f'<a class="bcard" href="/products/{prod["slug"]}/" style="--accent:{b["accent"]}"><span class="pair" aria-hidden="true"><img class="pb" src="/img/{prod["f"]}-back.webp" width="170" height="220" alt=""><img class="pf" src="/img/{prod["f"]}-front.webp" width="170" height="220" alt=""></span><span class="sr">{esc(full_name(prod))} natural dry amendment pouch, front and back</span>'
                       f'<span class="bt"><span class="nm"><b>{esc(b["a"])}</b> <i>{esc(b["b"])}</i></span><span class="bsub">{esc(b["tagline"])}</span>{fr}<span class="btn solid">See the bag</span></span></a>')
         else:
             fr = (f'<span class="from">{esc(b["price_label"])}</span>' if b.get("price_label") else f'<span class="from">From ${b["from"]:,.2f}</span>' if b.get("from") else "")
@@ -389,7 +389,7 @@ def ring_html():
 def picker_item(p, eager=False):
     load = "" if eager else ' loading="lazy"'
     return (f'<li><a class="pick" data-slug="{p["slug"]}" href="/products/{p["slug"]}/" style="--accent:{p["accent"]}">'
-            f'<img src="/img/{p["f"]}-front.webp" width="170" height="250"{load} alt="{esc(full_name(p))} organic dry amendment stand-up pouch">'
+            f'<img src="/img/{p["f"]}-front.webp" width="170" height="250"{load} alt="{esc(full_name(p))} natural dry amendment stand-up pouch">'
             f'<span class="nm">{name_html(p)}</span><span class="npk">{esc(npk_text(p))}</span>'
             + (f'<span class="from">From ${min(x[1] for x in price_rows(p["slug"])):,.2f}</span>' if price_rows(p["slug"]) else '')
             + '</a></li>')
@@ -402,10 +402,10 @@ def org_ld():
         "name": SITE["name"], "url": BASE + "/", "logo": abs_url("/img/logo.png?v=3"),
         "email": SITE["email"], "telephone": "+1-" + SITE["phone"],
         "@id": BASE + "/#organization",
-        "description": "Canadian company in Mississauga, Ontario making organic dry soil amendments: meals, rock dusts, worm castings, compost and blends. Ships across Canada.",
+        "description": "Canadian company in Mississauga, Ontario making natural dry soil amendments: meals, rock dusts, worm castings, compost and blends. Ships across Canada.",
         "slogan": "Grow great plants. Skip the guesswork.",
         "areaServed": {"@type": "Country", "name": "Canada"},
-        "knowsAbout": ["organic dry amendments", "organic soil amendments", "bone meal", "crab meal", "feather meal", "kelp meal", "alfalfa meal", "worm castings", "NPK", "organic gardening in Canada"],
+        "knowsAbout": ["natural dry amendments", "natural soil amendments", "bone meal", "crab meal", "feather meal", "kelp meal", "alfalfa meal", "worm castings", "NPK", "natural gardening in Canada"],
         "contactPoint": [{"@type": "ContactPoint", "contactType": "customer service", "telephone": "+1-" + SITE["phone"], "email": SITE["email"], "areaServed": "CA", "availableLanguage": ["English", "French"]}],
         "foundingDate": "2019",
         "address": {"@type": "PostalAddress", **({"streetAddress": a["street"]} if a.get("street", "").strip() else {}),
@@ -427,7 +427,7 @@ def build_home():
     H = SITE["home"]
     ld = [org_ld(),
           {"@context": "https://schema.org", "@type": "WebSite", "name": SITE["name"], "url": BASE + "/", "inLanguage": "en-CA", "publisher": {"@id": BASE + "/#organization"}},
-          {"@context": "https://schema.org", "@type": "ItemList", "name": "Organic dry amendments", "itemListElement": [
+          {"@context": "https://schema.org", "@type": "ItemList", "name": "Natural dry amendments", "itemListElement": [
               {"@type": "ListItem", "position": i + 1, "name": full_name(q), "url": abs_url(f"/products/{q['slug']}/"), "item": item_ld(q)} for i, q in enumerate(PRODUCTS)]},
           {"@context": "https://schema.org", "@type": "FAQPage",
            "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in SITE["faq"]]}]
@@ -558,8 +558,8 @@ def build_home():
       <div class="mission">
         <h2>Our story</h2>
         <div>
-          <p>Mario's Super Soil started in 2019 as a basement operation in Mississauga, Ontario. We began by experimenting with synthetic nutrients for growing cannabis, then moved to organic gardening because it fit our values better.</p>
-          <p>We found that high costs and limited availability kept organic dry amendments out of reach for many growers, so we set out to make them accessible, affordable and effective. We also want to encourage younger people to take up gardening as a life skill.</p>
+          <p>Mario's Super Soil started in 2019 as a basement operation in Mississauga, Ontario. We began by experimenting with synthetic nutrients for growing cannabis, then moved to natural gardening because it fit our values better.</p>
+          <p>We found that high costs and limited availability kept natural dry amendments out of reach for many growers, so we set out to make them accessible, affordable and effective. We also want to encourage younger people to take up gardening as a life skill.</p>
           <p>We believe nature provides the best path to plant health, helping gardeners of all levels cultivate a vibrant, sustainable future, one garden at a time.</p>
           <ul class="pledges">
             <li>100% natural, no synthetic chemicals</li>
@@ -590,7 +590,7 @@ def build_home():
     out += """  <section id="guides" class="sec">
     <div class="wrap">
       <h2>Learn before you grow</h2>
-      <p class="lede">Plain-language guides to organic dry amendments in Canada.</p>
+      <p class="lede">Plain-language guides to natural dry amendments in Canada.</p>
       <ul class="gl">""" + "".join(f'<li><a href="/guides/{g["slug"]}/"><strong>{esc(g["h1"][0])} {esc(g["h1"][1])}</strong></a><br>{esc(g["short"])}</li>' for g in guides()) + """</ul>
       <p>Latest from the blog: """ + "".join(f'<a href="/blog/{b["slug"]}/">{esc(b["h1"][0])} {esc(b["h1"][1])}</a>' for b in blog_posts()[:1]) + """. <a href="/blog/">See all posts</a>.</p>
     </div>
@@ -646,7 +646,7 @@ def build_product(p):
           {"@context": "https://schema.org", "@type": "Product", **({"offers": offers} if offers else {}),
            "name": full_name(p), "description": p["meta"], "url": abs_url(path),
            "image": [abs_url(f"/img/{p['f']}-front.webp"), abs_url(f"/img/{p['f']}-back.webp")],
-           "brand": {"@type": "Brand", "name": SITE["name"]}, "category": "Organic dry amendment",
+           "brand": {"@type": "Brand", "name": SITE["name"]}, "category": "Natural dry amendment",
            "size": ", ".join(p["sizes"]),
            "countryOfOrigin": {"@type": "Country", "name": "Canada"}},
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
@@ -675,7 +675,7 @@ def build_product(p):
       <div class="viewer">
         <div class="stage">
           <div class="glow"><div class="pair">
-            <img src="/img/{p['f']}-front.webp" width="380" height="560" alt="{esc(full_name(p))} organic dry amendment stand-up pouch, front">
+            <img src="/img/{p['f']}-front.webp" width="380" height="560" alt="{esc(full_name(p))} natural dry amendment stand-up pouch, front">
             <img src="/img/{p['f']}-back.webp" width="380" height="560" loading="lazy" alt="Back of the {esc(plain_name(p))} pouch with ingredients and directions">
           </div></div>
         </div>
@@ -729,7 +729,7 @@ def build_product(p):
   <section class="sec">
     <div class="wrap">
       <h2>More from Mario's Super Soil</h2>
-      <p>New to organic dry amendments? Read our <a href="/guides/organic-soil-amendments-canada/">Canadian guide</a> or <a href="/guides/npk-organic-gardening/">NPK explained</a>.</p>
+      <p>New to natural dry amendments? Read our <a href="/guides/organic-soil-amendments-canada/">Canadian guide</a> or <a href="/guides/npk-organic-gardening/">NPK explained</a>.</p>
       <ul class="picker five" aria-label="Other products">{more}</ul>
     </div>
   </section>
@@ -739,8 +739,8 @@ def build_product(p):
 
 
 def build_calculator():
-    title = "Organic Amendment Calculator for Gardens | Mario's Super Soil"
-    desc = "Free organic amendment calculator. Pick your plant, bed size or pot size and growing zone to get amounts of Mario's Super Soil amendments to use."
+    title = "Natural Amendment Calculator for Gardens | Mario's Super Soil"
+    desc = "Free natural amendment calculator. Pick your plant, bed size or pot size and growing zone to get amounts of Mario's Super Soil amendments to use."
     path = "/soil-calculator/"
     ld = [{"@context": "https://schema.org", "@type": "WebApplication", "name": "Soil Amendment Calculator",
            "url": abs_url(path), "description": desc, "applicationCategory": "LifestyleApplication",
@@ -754,7 +754,7 @@ def build_calculator():
     body = (ROOT / "data/calculator-body.inc").read_text()
     out += f"""  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Soil amendment</b> <i>calculator</i></h1>
-    <p class="lede" style="margin-bottom:32px">Tell us what you are growing, the size of your bed or pot and where you are in Canada. The calculator shows how much of each Mario's Super Soil organic amendment to use, with a planting and feeding calendar for your zone.</p>
+    <p class="lede" style="margin-bottom:32px">Tell us what you are growing, the size of your bed or pot and where you are in Canada. The calculator shows how much of each Mario's Super Soil natural amendment to use, with a planting and feeding calendar for your zone.</p>
     <div class="calc-panel">
 {body}    </div>
     <p class="lede" style="margin-top:28px">Amounts are a guide based on the label rates. Read the bag for full directions. Worm castings and compost are sold in litres and gallons, not by weight, because the weight changes with moisture (4 gallons is about 15 to 20 lb). Every product is also on the <a href="/#products">products list</a>.</p>
@@ -767,7 +767,7 @@ def build_calculator():
 
 def build_drmario():
     title = "Plant Dr. Mario: Free Plant Problem Diagnosis from a Photo"
-    desc = "Upload a photo of your plant and get a free AI diagnosis of yellow leaves, spots and other problems, with organic amendments that may help."
+    desc = "Upload a photo of your plant and get a free AI diagnosis of yellow leaves, spots and other problems, with natural amendments that may help."
     path = "/plant-drmario/"
     ld = [{"@context": "https://schema.org", "@type": "WebApplication", "name": "Plant Dr. Mario",
            "url": abs_url(path), "description": desc, "applicationCategory": "LifestyleApplication",
@@ -780,7 +780,7 @@ def build_drmario():
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Plant</b> <i>Dr. Mario</i></h1>
-    <p class="lede" style="margin-bottom:32px">Yellow leaves? Spots? Drooping? Take a photo of your plant and Dr. Mario will tell you what is most likely wrong and which Mario's Super Soil organic amendments may help. Free, and it works on phones and computers.</p>
+    <p class="lede" style="margin-bottom:32px">Yellow leaves? Spots? Drooping? Take a photo of your plant and Dr. Mario will tell you what is most likely wrong and which Mario's Super Soil natural amendments may help. Free, and it works on phones and computers.</p>
     <div class="dm" id="dm"><div class="dm-card">
       <div id="dm-form">
         <div class="dm-drop" id="dm-drop">
@@ -873,7 +873,7 @@ def contact_block():
 
 def build_contact():
     title = "Contact Mario's Super Soil | Mississauga, Ontario"
-    desc = "Contact Mario's Super Soil in Mississauga, Ontario. Phone, email, hours and social links for questions about organic soil amendments, orders and wholesale."
+    desc = "Contact Mario's Super Soil in Mississauga, Ontario. Phone, email, hours and social links for questions about natural soil amendments, orders and wholesale."
     path = "/contact/"
     ld = [{"@context": "https://schema.org", "@type": "ContactPage", "name": "Contact Mario's Super Soil", "url": abs_url(path), "mainEntity": {"@id": BASE + "/#organization"}},
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
@@ -891,8 +891,8 @@ def build_contact():
 
 
 def build_prices():
-    title = "Prices | Organic Soil Amendments in CAD | Mario's Super Soil"
-    desc = "Current prices in Canadian dollars for every Mario's Super Soil organic dry amendment, by bag size. Tax and shipping are shown at checkout."
+    title = "Prices | Natural Soil Amendments in CAD | Mario's Super Soil"
+    desc = "Current prices in Canadian dollars for every Mario's Super Soil natural dry amendment, by bag size. Tax and shipping are shown at checkout."
     path = "/prices/"
     rows = ""
     for k, l in CATS:
@@ -1061,8 +1061,8 @@ def build_policy():
 
 
 def build_wholesale():
-    title = "Wholesale Organic Dry Amendments for Stores | Mario's Super Soil"
-    desc = "Stock Mario's Super Soil organic dry amendments in your garden centre or store. Volume pricing from a Canadian maker. Apply online."
+    title = "Wholesale Natural Dry Amendments for Stores | Mario's Super Soil"
+    desc = "Stock Mario's Super Soil natural dry amendments in your garden centre or store. Volume pricing from a Canadian maker. Apply online."
     path = "/wholesale/"
     ld = [{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
@@ -1070,7 +1070,7 @@ def build_wholesale():
     out = head(title, desc, path, jsonld=ld) + header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Wholesale</b> <i>for stores</i></h1>
-    <p class="lede">Run a garden centre, hydroponics shop, feed store or independent retailer? Mario's Super Soil makes organic dry amendments in Mississauga, Ontario, and we would like to hear from you.</p>
+    <p class="lede">Run a garden centre, hydroponics shop, feed store or independent retailer? Mario's Super Soil makes natural dry amendments in Mississauga, Ontario, and we would like to hear from you.</p>
     <ul class="perks">
       <li><strong>Canadian made</strong><br>Canadian made.</li>
       <li><strong>Volume pricing</strong><br>Wholesale pricing that improves as your order size grows, with minimum order quantities per tier.</li>
@@ -1119,14 +1119,14 @@ KIT_PATH = "/products/super-starter-pack/"
 def build_kit_page():
     sp = next(b for b in SITE["blends"] if b["id"] == "starter-pack")
     prods = [next(q for q in PRODUCTS if q["slug"] == k) for k in KIT_SLUGS]
-    title = "Super Starter Pack: Organic Gardening Kit | Mario's Super Soil"
-    meta = "The Super Starter Pack is a six-bag organic gardening kit: Level Up, Flower Power, Kelp Meal, Alfalfa Meal, Compost and Worm Castings. 2 lb and 5 lb kits."
+    title = "Super Starter Pack: Natural Gardening Kit | Mario's Super Soil"
+    meta = "The Super Starter Pack is a six-bag natural gardening kit: Level Up, Flower Power, Kelp Meal, Alfalfa Meal, Compost and Worm Castings. 2 lb and 5 lb kits."
     kp = price_rows("super-starter-pack") or [(z["short"], z["price"]) for z in sp["kit_sizes"] if z["short"].replace(" kit", "") not in soon_labels("super-starter-pack")] or [(sp["kit_sizes"][0]["short"], sp["kit_sizes"][0]["price"])]
     lo = min(v for _, v in kp); hi = max(v for _, v in kp)
     ld = [org_ld(),
           {"@context": "https://schema.org", "@type": "Product", "name": "Super Starter Pack", "description": meta, "url": abs_url(KIT_PATH),
            "image": [abs_url("/img/starter-kit.webp")] + [abs_url(f"/img/{q['f']}-front.webp") for q in prods],
-           "brand": {"@type": "Brand", "name": SITE["name"]}, "category": "Organic dry amendment kit",
+           "brand": {"@type": "Brand", "name": SITE["name"]}, "category": "Natural dry amendment kit",
            "countryOfOrigin": {"@type": "Country", "name": "Canada"},
            "offers": {"@type": "AggregateOffer", "priceCurrency": "CAD", "lowPrice": f"{lo:.2f}", "highPrice": f"{hi:.2f}", "offerCount": len(kp), "url": abs_url(KIT_PATH)}},
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
@@ -1163,7 +1163,7 @@ def build_kit_page():
             <p class="buymsg" id="buy-msg" role="status" aria-live="polite"></p>
           </div>
           <p class="ctas"><a class="btn" href="/#buy">Find a local shop</a></p>
-          <p>A complete organic gardening kit for new gardeners. It brings together six of our organic dry amendments, so you can feed every stage of growth without choosing one product at a time. The bags are the same ones we sell on their own, with the dose printed on every bag.</p>
+          <p>A complete natural gardening kit for new gardeners. It brings together six of our natural dry amendments, so you can feed every stage of growth without choosing one product at a time. The bags are the same ones we sell on their own, with the dose printed on every bag.</p>
           <p class="store">Each kit has six bags: 6 x 2 lb in the 2 lb kit and 6 x 5 lb in the 5 lb kit. Ships across Canada.</p>
         </div>
       </div>
@@ -1171,7 +1171,7 @@ def build_kit_page():
       <ul class="kitrows">{rows}</ul>
       <h2>Who it is for</h2>
       <p>New gardeners who want one box that covers the basics: an all-round blend (Level Up 3-3-3), a bloom blend (Flower Power 2-6-4), potassium and trace minerals from Kelp Meal, a gentle growth boost from Alfalfa Meal, and living soil from Compost and Worm Castings.</p>
-      <p>Not sure how much to use? Try the free <a href="/soil-calculator/">soil amendment calculator</a>, or read <a href="/guides/organic-soil-amendments-canada/">our Canadian guide to organic soil amendments</a>.</p>
+      <p>Not sure how much to use? Try the free <a href="/soil-calculator/">soil amendment calculator</a>, or read <a href="/guides/organic-soil-amendments-canada/">our Canadian guide to natural soil amendments</a>.</p>
     </div>
   </section>
 """
@@ -1195,14 +1195,14 @@ def guides():
     G = []
     G.append({
         "slug": "organic-soil-amendments-canada",
-        "title": "Organic Soil Amendments in Canada | Mario's Super Soil",
-        "desc": "What organic dry soil amendments are, how to choose between meals, rock dusts and castings, and how to use them. Made in Ontario, shipped across Canada.",
-        "h1": ("Organic soil", "amendments in Canada"),
-        "short": "A plain-language guide to organic dry amendments: what they are, how to pick one, and how to use them.",
-        "answer": "Organic dry amendments are natural, slow-acting ingredients (meals, rock dusts, castings and compost) that you mix into soil to feed plants and soil life over weeks and months. Mario's Super Soil makes them in Mississauga, Ontario, and ships across Canada.",
+        "title": "Natural Soil Amendments in Canada | Mario's Super Soil",
+        "desc": "What natural dry soil amendments are, how to choose between meals, rock dusts and castings, and how to use them. Made in Ontario, shipped across Canada.",
+        "h1": ("Natural soil", "amendments in Canada"),
+        "short": "A plain-language guide to natural dry amendments: what they are, how to pick one, and how to use them.",
+        "answer": "Natural dry amendments are natural, slow-acting ingredients (meals, rock dusts, castings and compost) that you mix into soil to feed plants and soil life over weeks and months. Mario's Super Soil makes them in Mississauga, Ontario, and ships across Canada.",
         "sections": [
-            ("What are organic dry amendments?",
-             "<p>Organic dry amendments are natural materials, such as ground bone, crab shell, feathers, seaweed, alfalfa, crushed rock and worm castings, that you work into soil or potting mix. They do not dissolve straight into the soil water like a salt. Soil microbes break them down gradually, so plants are fed steadily over weeks or months.</p>"
+            ("What are natural dry amendments?",
+             "<p>Natural dry amendments are natural materials, such as ground bone, crab shell, feathers, seaweed, alfalfa, crushed rock and worm castings, that you work into soil or potting mix. They do not dissolve straight into the soil water like a salt. Soil microbes break them down gradually, so plants are fed steadily over weeks or months.</p>"
              "<p>Because they are dry and slow-acting, they are forgiving. They also feed the living soil, not only the plant.</p>"),
             ("The four groups of amendments",
              "<ul>"
@@ -1223,22 +1223,22 @@ def guides():
             ("How to use them",
              "<p>Every bag prints the dose, usually in tablespoons per gallon of soil, so there is no guesswork. Mix the amendment into the soil, water it in, and start with the lower end of the range on the bag. Slow-acting meals can take a few weeks to show an effect, so avoid adding more too soon.</p>"
              f"<p>For example, {_pl('bone-meal')} is used at 1 to 2 tablespoons per gallon of soil and releases its nutrients over about 4 months.</p>"),
-            ("Buying organic dry amendments in Canada",
+            ("Buying natural dry amendments in Canada",
              "<p>Mario's Super Soil is a Canadian company based in Mississauga, Ontario. Bags come in 2 lb and 5 lb sizes, with directions in English and French, and orders ship across Canada. Orders of $120 or more include a free 2 lb bag of Level Up or Flower Power. See <a href=\"/shipping-returns/\">shipping and returns</a> for details, or find a <a href=\"/#buy\">local shop</a> that carries us.</p>"),
         ],
         "faq": [
-            ("What are organic dry amendments?", "Natural, slow-acting ingredients such as meals, rock dusts, worm castings and compost that you mix into soil. They feed plants and soil life gradually."),
-            ("Where can I buy organic soil amendments in Canada?", "Mario's Super Soil sells organic dry amendments online from Mississauga, Ontario, shipping across Canada, and through independent garden shops listed on the home page."),
+            ("What are natural dry amendments?", "Natural, slow-acting ingredients such as meals, rock dusts, worm castings and compost that you mix into soil. They feed plants and soil life gradually."),
+            ("Where can I buy natural soil amendments in Canada?", "Mario's Super Soil sells natural dry amendments online from Mississauga, Ontario, shipping across Canada, and through independent garden shops listed on the home page."),
             ("How much should I use?", "Follow the dose printed on the bag, usually 1 to 2 tablespoons per gallon of soil, and start at the lower end."),
             ("Can I use them indoors and outdoors?", "Yes. They are used in pots, raised beds, in-ground gardens and lawns. Follow the directions on each bag."),
         ],
     })
     G.append({
         "slug": "npk-organic-gardening",
-        "title": "NPK Explained for Organic Gardeners | Mario's Super Soil",
-        "desc": "What the three NPK numbers mean, how organic amendments differ, and which amendment supplies nitrogen, phosphorus or potassium. Includes a quick NPK chart.",
-        "h1": ("NPK explained", "for organic gardeners"),
-        "short": "What N-P-K means and which organic amendment supplies each nutrient.",
+        "title": "NPK Explained for Natural Gardeners | Mario's Super Soil",
+        "desc": "What the three NPK numbers mean, how natural amendments differ, and which amendment supplies nitrogen, phosphorus or potassium. Includes a quick NPK chart.",
+        "h1": ("NPK explained", "for natural gardeners"),
+        "short": "What N-P-K means and which natural amendment supplies each nutrient.",
         "answer": "NPK stands for nitrogen (N), phosphorus (P) and potassium (K), the three main nutrients plants use. The three numbers on a bag, such as 4-10-0 for bone meal, are the percentages of each by weight.",
         "sections": [
             ("What do the three numbers mean?",
@@ -1246,8 +1246,8 @@ def guides():
              "<ul><li><strong>Nitrogen (N)</strong> drives leaf and stem growth and a deep green colour.</li>"
              "<li><strong>Phosphorus (P)</strong> supports roots, flowers and fruit.</li>"
              "<li><strong>Potassium (K)</strong> supports overall plant strength and water balance.</li></ul>"),
-            ("Why organic NPK numbers look lower",
-             "<p>Organic amendments release nutrients as soil life breaks them down, so the numbers are lower than in fast-dissolving products. They also carry calcium, magnesium, trace minerals and organic matter that the numbers do not show. Mineral amendments such as gypsum, dolomite lime, oyster shell flour and basalt rock dust show little or no NPK because their job is calcium, magnesium, sulfur and trace minerals.</p>"),
+            ("Why natural NPK numbers look lower",
+             "<p>Natural amendments release nutrients as soil life breaks them down, so the numbers are lower than in fast-dissolving products. They also carry calcium, magnesium, trace minerals and organic matter that the numbers do not show. Mineral amendments such as gypsum, dolomite lime, oyster shell flour and basalt rock dust show little or no NPK because their job is calcium, magnesium, sulfur and trace minerals.</p>"),
             ("NPK chart for Mario's Super Soil amendments",
              _npk_table(["blood-meal", "feather-meal", "crab-meal", "alfalfa-meal", "bone-meal", "soft-rock-phosphate", "kelp-meal", "worm-castings", "compost-blend", "flower-power"]) +
              "<p>Level Up is a 3-3-3 all-round blend. See the <a href=\"/#products\">full range</a> for every bag.</p>"),
@@ -1256,8 +1256,8 @@ def guides():
         ],
         "faq": [
             ("What does NPK mean?", "Nitrogen, phosphorus and potassium. The numbers on a bag are the percentage of each by weight."),
-            ("Which organic amendment is highest in nitrogen?", "Blood meal at 12-0-0 is the highest nitrogen amendment we make, followed by feather meal at 11-0-0."),
-            ("Which organic amendment is highest in phosphorus?", "Bone meal at 4-10-0 is the highest phosphorus amendment we make."),
+            ("Which natural amendment is highest in nitrogen?", "Blood meal at 12-0-0 is the highest nitrogen amendment we make, followed by feather meal at 11-0-0."),
+            ("Which natural amendment is highest in phosphorus?", "Bone meal at 4-10-0 is the highest phosphorus amendment we make."),
             ("Why do some amendments show 0-0-0?", "Mineral amendments such as gypsum, dolomite lime, oyster shell flour and basalt rock dust are used for calcium, magnesium, sulfur and trace minerals, not for NPK."),
         ],
     })
@@ -1295,9 +1295,9 @@ def guides():
     G.append({
         "slug": "vegetable-garden-ontario",
         "title": "Ontario Vegetable Garden Amendments | Mario's Super Soil",
-        "desc": "A simple plan for feeding an organic vegetable garden in Ontario: what to add in spring, which amendment does what, and how much to use per bed.",
-        "h1": ("Organic amendments", "for Ontario vegetable gardens"),
-        "short": "A simple spring-to-summer plan for feeding an organic vegetable bed.",
+        "desc": "A simple plan for feeding a natural vegetable garden in Ontario: what to add in spring, which amendment does what, and how much to use per bed.",
+        "h1": ("Natural amendments", "for Ontario vegetable gardens"),
+        "short": "A simple spring-to-summer plan for feeding a natural vegetable bed.",
         "answer": "Test your soil first, then mix in organic matter (worm castings or compost), add a calcium source and a phosphorus source at planting, and top up with a nitrogen meal during the season. Follow the dose printed on each bag.",
         "sections": [
             ("Start with the soil you have",
@@ -1317,8 +1317,8 @@ def guides():
              "<p>In pots and raised beds, the doses are given per gallon of soil, so it is easy to scale. Mix the amendment into the soil before planting and water it in.</p>"),
         ],
         "faq": [
-            ("When should I add organic amendments to my garden?", "Mix them into the soil at planting in spring, and top up during the growing season as each bag directs."),
-            ("How do I raise soil pH organically?", "Dolomite lime raises pH and adds calcium and magnesium. About 5 lb per 100 sq ft raises pH from 5.5 to 6.5, according to the bag."),
+            ("When should I add natural amendments to my garden?", "Mix them into the soil at planting in spring, and top up during the growing season as each bag directs."),
+            ("How do I raise soil pH naturally?", "Dolomite lime raises pH and adds calcium and magnesium. About 5 lb per 100 sq ft raises pH from 5.5 to 6.5, according to the bag."),
             ("What helps heavy clay soil?", "Gypsum and regular additions of compost or worm castings help improve clay soil."),
             ("Do I need a soil test?", "It is recommended. A test shows your pH and helps you choose between lime, oyster shell flour and other minerals."),
         ],
@@ -1351,7 +1351,7 @@ def guides():
     G.append({
         "slug": "dolomite-lime-oyster-shell-gypsum",
         "title": "Dolomite vs Oyster Shell Flour vs Gypsum | Mario's Super Soil",
-        "desc": "Compare three organic calcium sources: dolomite lime, oyster shell flour and gypsum. What each adds, how each affects pH, and how much to use.",
+        "desc": "Compare three natural calcium sources: dolomite lime, oyster shell flour and gypsum. What each adds, how each affects pH, and how much to use.",
         "h1": ("Dolomite lime, oyster shell", "and gypsum compared"),
         "short": "Three calcium sources compared: which one raises pH and which one does not.",
         "answer": "Dolomite lime raises pH and adds calcium and magnesium. Oyster shell flour gives slow calcium and helps keep pH steady. Gypsum adds calcium and sulfur with little effect on pH.",
@@ -1383,9 +1383,9 @@ def guides():
     })
     G.append({
         "slug": "potted-plants-containers",
-        "title": "Organic Amendments for Pots and Containers | Mario's Super Soil",
-        "desc": "How to feed potted plants and container gardens organically: which dry amendments to mix into potting soil, how much per gallon, and how often.",
-        "h1": ("Organic amendments", "for pots and containers"),
+        "title": "Natural Amendments for Pots and Containers | Mario's Super Soil",
+        "desc": "How to feed potted plants and container gardens naturally: which dry amendments to mix into potting soil, how much per gallon, and how often.",
+        "h1": ("Natural amendments", "for pots and containers"),
         "short": "Per-gallon doses for feeding potted plants and container gardens.",
         "answer": "Mix dry amendments into your potting soil before planting, using the per-gallon dose on the bag, usually 1 to 2 tablespoons per gallon, and add more only as each bag directs.",
         "sections": [
@@ -1447,7 +1447,7 @@ def build_guide(g, G):
     <h2>Questions</h2>
     <div class="faq">{faq}</div>
     <h2>Keep reading</h2>
-    <ul>{others}<li><a href="/#products">Shop all organic dry amendments</a></li></ul>
+    <ul>{others}<li><a href="/#products">Shop all natural dry amendments</a></li></ul>
     <p class="small">Written by the team at {esc(SITE['name'])}, Mississauga, Ontario. Last updated {TODAY}.</p>
   </div></section>
 """
@@ -1456,10 +1456,10 @@ def build_guide(g, G):
 
 def build_guides_index(G):
     path = "/guides/"
-    title = "Organic Gardening Guides | Mario's Super Soil"
-    desc = "Plain-language guides to organic dry amendments in Canada: NPK, choosing between meals, rock dusts and castings, and how much to use."
+    title = "Natural Gardening Guides | Mario's Super Soil"
+    desc = "Plain-language guides to natural dry amendments in Canada: NPK, choosing between meals, rock dusts and castings, and how much to use."
     items = "".join(f'<li><a href="/guides/{g["slug"]}/"><strong>{esc(g["h1"][0])} {esc(g["h1"][1])}</strong></a><br>{esc(g["short"])}</li>' for g in G)
-    ld = [{"@context": "https://schema.org", "@type": "CollectionPage", "name": "Organic gardening guides", "url": abs_url(path),
+    ld = [{"@context": "https://schema.org", "@type": "CollectionPage", "name": "Natural gardening guides", "url": abs_url(path),
            "hasPart": [{"@type": "Article", "headline": g["title"].split(" | ")[0], "url": abs_url(f"/guides/{g['slug']}/")} for g in G]},
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
@@ -1467,7 +1467,7 @@ def build_guides_index(G):
     out = head(title, desc, path, jsonld=ld) + header()
     out += f"""  <section class="sec"><div class="wrap policy gpage">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Gardening</b> <i>guides</i></h1>
-    <p class="lede">Straight answers on organic dry amendments, from a Canadian company that makes them. Every guide links to the exact products and doses on our bags.</p>
+    <p class="lede">Straight answers on natural dry amendments, from a Canadian company that makes them. Every guide links to the exact products and doses on our bags.</p>
     <ul class="gl">{items}</ul>
     <p>Also try the free <a href="/soil-calculator/">soil amendment calculator</a> and <a href="/plant-drmario/">Plant Dr. Mario</a> photo diagnosis.</p>
   </div></section>
@@ -1500,7 +1500,7 @@ def blog_posts():
              "<li><strong>Do not feed a struggling plant.</strong> If a plant is stressed, wilting or pest-affected, fix the cause first.</li>"
              "</ul>"),
             ("Planning ahead",
-             "<p>As days lengthen in late February and March, watch for new growth and begin feeding again at a normal rate. Dry organic amendments release nutrients gradually, so go by the directions and your plant's pot size. Our <a href=\"/soil-calculator/\">soil calculator</a> works out amounts by pot size, and our <a href=\"/guides/\">gardening guides</a> cover more, including <a href=\"/guides/potted-plants-containers/\">organic amendments for pots and containers</a>.</p>"),
+             "<p>As days lengthen in late February and March, watch for new growth and begin feeding again at a normal rate. Dry natural amendments release nutrients gradually, so go by the directions and your plant's pot size. Our <a href=\"/soil-calculator/\">soil calculator</a> works out amounts by pot size, and our <a href=\"/guides/\">gardening guides</a> cover more, including <a href=\"/guides/potted-plants-containers/\">natural amendments for pots and containers</a>.</p>"),
             ("Coming up",
              "<p>Next we look at caring for Christmas and Advent plants such as poinsettias and amaryllis, then a New Year plant reset.</p>"),
         ],
@@ -1531,7 +1531,7 @@ def build_blog_post(b, B):
     <p class="small">Published {esc(b['date'])}</p>
     <p class="lede">{esc(b['intro'])}</p>
     {body}
-    <p><a href="/#products">Shop organic amendments</a> or <a href="/#buy">find a local store</a>.</p>
+    <p><a href="/#products">Shop natural amendments</a> or <a href="/#buy">find a local store</a>.</p>
     <h2>Keep reading</h2>
     <ul>{others}{more}</ul>
     <p class="small">Written by the team at {esc(SITE['name'])}, Mississauga, Ontario.</p>
@@ -1543,7 +1543,7 @@ def build_blog_post(b, B):
 def build_blog_index(B):
     path = "/blog/"
     title = "Blog: Plant Care and Soil Tips | Mario's Super Soil"
-    desc = "Seasonal plant care and organic soil tips from Mario's Super Soil, a Canadian maker of organic dry amendments in Mississauga, Ontario."
+    desc = "Seasonal plant care and natural soil tips from Mario's Super Soil, a Canadian maker of natural dry amendments in Mississauga, Ontario."
     items = "".join(f'<li><a href="/blog/{b["slug"]}/"><strong>{esc(b["h1"][0])} {esc(b["h1"][1])}</strong></a><br><span class="small">{esc(b["date"])}</span> {esc(b["short"])}</li>' for b in B)
     ld = [{"@context": "https://schema.org", "@type": "Blog", "name": "Mario's Super Soil blog", "url": abs_url(path),
            "blogPost": [{"@type": "BlogPosting", "headline": b["title"].split(" | ")[0], "url": abs_url(f"/blog/{b['slug']}/"), "datePublished": b["date"]} for b in B]},
@@ -1553,7 +1553,7 @@ def build_blog_index(B):
     out = head(title, desc, path, jsonld=ld) + header()
     out += f"""  <section class="sec"><div class="wrap policy gpage">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Plant care</b> <i>blog</i></h1>
-    <p class="lede">Seasonal plant care and soil tips from a Canadian company that makes organic dry amendments.</p>
+    <p class="lede">Seasonal plant care and soil tips from a Canadian company that makes natural dry amendments.</p>
     <ul class="gl">{items}</ul>
     <p>Looking for in-depth answers? See our <a href="/guides/">gardening guides</a>, the free <a href="/soil-calculator/">soil amendment calculator</a> and <a href="/plant-drmario/">Plant Dr. Mario</a> photo diagnosis.</p>
   </div></section>
@@ -1567,11 +1567,11 @@ def llms_txt():
     bl = "\n".join(f"- [{b['h1'][0]} {b['h1'][1]}]({abs_url('/blog/' + b['slug'] + '/')}): {b['short']}" for b in blog_posts())
     return f"""# {SITE['name']}
 
-> {SITE['name']} is a Canadian company in Mississauga, Ontario that makes organic dry soil amendments (meals, rock dusts, worm castings, compost and blends) for gardeners and growers. Orders ship across Canada. Wholesale is available to garden centres and stores.
+> {SITE['name']} is a Canadian company in Mississauga, Ontario that makes natural dry soil amendments (meals, rock dusts, worm castings, compost and blends) for gardeners and growers. Orders ship across Canada. Wholesale is available to garden centres and stores.
 
 Key facts:
 - Location: {SITE['address']['city']}, {SITE['address']['region']}, Canada. Phone {SITE['phone']}. Email {SITE['email']}.
-- Products are organic dry amendments with directions in English and French. The 2 lb bag is available now; 5 lb bags (and 10 and 20 lb packs) are coming soon.
+- Products are natural dry amendments with directions in English and French. The 2 lb bag is available now; 5 lb bags (and 10 and 20 lb packs) are coming soon.
 - Ships within Canada only. Orders of $120 or more include a free 2 lb bag of Level Up 3-3-3 or Flower Power 2-6-4. 30 day returns on unused items.
 - Main blends: Level Up 3-3-3 and Flower Power 2-6-4. The 2 lb Super Starter Pack is available now; the 5 lb kit is coming soon.
 
@@ -1628,15 +1628,15 @@ SEARCH_KW = {
 
 # Things people search for that we do not sell: (search words, our similar products, note shown above them)
 SEARCH_ALT = [
-    (["nitrogen booster", "high nitrogen", "urea"], ["blood-meal", "feather-meal", "alfalfa-meal"], "high-nitrogen organic amendments"),
-    (["fish", "fish emulsion", "fish meal", "fish bone", "fish hydrolysate"], ["crab-meal", "bone-meal", "kelp-meal"], "seafood-based organic amendments"),
+    (["nitrogen booster", "high nitrogen", "urea"], ["blood-meal", "feather-meal", "alfalfa-meal"], "high-nitrogen natural amendments"),
+    (["fish", "fish emulsion", "fish meal", "fish bone", "fish hydrolysate"], ["crab-meal", "bone-meal", "kelp-meal"], "seafood-based natural amendments"),
     (["bat guano", "guano", "rock phosphate", "high phosphorus", "bloom booster", "flower booster", "bloom"], ["flower-power", "bone-meal", "soft-rock-phosphate"], "phosphorus for roots and blooms"),
     (["azomite", "glacial rock dust", "greensand", "rock dust", "trace minerals", "remineralize"], ["basalt-rock-dust", "kelp-meal", "oyster-shell-flour"], "mineral and trace element sources"),
     (["lime", "garden lime", "agricultural lime", "calcium carbonate", "raise ph", "ph up", "sweet soil"], ["dolomite-lime", "oyster-shell-flour"], "calcium sources that help balance pH"),
     (["epsom", "epsom salt", "magnesium sulfate", "magnesium", "langbeinite", "k-mag", "kmag"], ["dolomite-lime", "gypsum", "basalt-rock-dust"], "calcium, magnesium and sulfur sources"),
     (["potash", "sulfate of potash", "potassium", "sul-po-mag"], ["kelp-meal", "alfalfa-meal", "level-up"], "potassium sources"),
     (["manure", "cow manure", "chicken manure", "mushroom compost", "peat", "topsoil", "top soil", "soil conditioner", "humus"], ["compost-blend", "worm-castings"], "soil builders"),
-    (["miracle gro", "miracle-gro", "fertilizer", "fertiliser", "plant food", "all purpose", "20-20-20", "synthetic", "npk", "tomato food", "vegetable food"], ["level-up", "flower-power", "worm-castings"], "organic all-purpose options"),
+    (["miracle gro", "miracle-gro", "fertilizer", "fertiliser", "plant food", "all purpose", "20-20-20", "synthetic", "npk", "tomato food", "vegetable food"], ["level-up", "flower-power", "worm-castings"], "natural all-purpose options"),
     (["seaweed", "seaweed extract", "sea kelp", "ocean"], ["kelp-meal"], "seaweed-based amendments"),
     (["potting soil", "potting mix", "soil mix", "coco", "seed starting", "seedlings"], ["worm-castings", "compost-blend", "level-up"], "good to mix into your potting soil"),
     (["lawn", "grass", "turf"], ["feather-meal", "level-up", "compost-blend"], "good for lawns"),
@@ -1735,7 +1735,7 @@ def main():
     (ROOT / "llms.txt").write_text(llms_txt())
     (ROOT / "home.md").write_text(llms_txt())
     card = {"$schema": "https://static.modelcontextprotocol.io/schemas/mcp-server-card/v1.json", "version": "1.0", "protocolVersion": "2025-06-18",
-            "name": "marios-super-soil", "title": SITE["name"], "description": "Read-only product, price and contact information for Mario's Super Soil, a Canadian maker of organic dry soil amendments.",
+            "name": "marios-super-soil", "title": SITE["name"], "description": "Read-only product, price and contact information for Mario's Super Soil, a Canadian maker of natural dry soil amendments.",
             "serverInfo": {"name": "marios-super-soil", "title": SITE["name"], "version": "1.0.0"}, "documentationUrl": BASE + "/llms.txt",
             "transport": {"type": "streamable-http", "endpoint": BASE + "/api/mcp.php"}, "endpoint": BASE + "/api/mcp.php",
             "capabilities": {"tools": {"listChanged": False}},
