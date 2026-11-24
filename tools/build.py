@@ -71,7 +71,7 @@ def head(title, description, path, og_image="/img/og-image.jpg?v=3", jsonld=None
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=3">
 <link rel="preload" href="/assets/fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/oswald-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/style.css?v=54">
+<link rel="stylesheet" href="/assets/style.css?v=55">
 {ld}</head>
 <body id="top">
 """
@@ -556,10 +556,13 @@ def build_home():
         g = '<span class="rv-g">Google review</span>' if "Google review" in c else '<span class="rv-g">Customer</span>'
         who = esc(c.replace(", Google review", ""))
         stars = (f'<span class="rv-stars" role="img" aria-label="{r} out of 5 stars">' + "\u2605" * r + "</span>") if r else ""
-        return f'<li><figure class="rv-card">{g}<blockquote><p>{esc(q)}</p></blockquote>{stars}<figcaption>{who}</figcaption></figure></li>'
+        body = f'<blockquote><p>{esc(q)}</p></blockquote>' if q else ""
+        return f'<li><figure class="rv-card{" rv-bare" if not q else ""}">{g}{body}{stars}<figcaption>{who}</figcaption></figure></li>'
     _rv_set = "".join(_rv_card(*x) for x in SITE["quotes"])
+    _gr = SITE.get("google_reviews")
+    _rv_sum = (f'<p class="rv-sum"><span class="rv-stars" aria-hidden="true">\u2605\u2605\u2605\u2605\u2605</span> {esc(str(_gr["rating"]))} out of 5 from {_gr["count"]} Google reviews</p>' if _gr else "")
     quotes = (f'<div class="rail rvrail" id="rvrail">'
-              f'<div class="railbar"><h3 class="rv-h">What customers say</h3>'
+              f'<div class="railbar"><div><h3 class="rv-h">What customers say</h3>{_rv_sum}</div>'
               f'<div class="railbtns"><a class="btn rv-gbtn" href="https://g.page/r/CecEG2eLNfmfEAE/review" target="_blank" rel="noopener">Review us on Google</a>'
               f'<button type="button" class="rbtn" data-dir="-1" aria-label="Scroll reviews left">&#8592;</button><button type="button" class="rbtn" data-dir="1" aria-label="Scroll reviews right">&#8594;</button></div></div>'
               f'<div class="railtrack rvtrack" tabindex="0" aria-label="Customer reviews. Scroll sideways to see more."><ul class="rvrow">{_rv_set}</ul></div>'
@@ -761,7 +764,7 @@ def build_calculator():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Soil amendment calculator", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=54">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=55">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/calculator.css">')
     out += header()
     body = (ROOT / "data/calculator-body.inc").read_text()
     out += f"""  <section class="sec"><div class="wrap">
@@ -788,7 +791,7 @@ def build_drmario():
           {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
               {"@type": "ListItem", "position": 1, "name": "Home", "item": BASE + "/"},
               {"@type": "ListItem", "position": 2, "name": "Plant Dr. Mario", "item": abs_url(path)}]}]
-    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=54">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
+    out = head(title, desc, path, jsonld=ld).replace('<link rel="stylesheet" href="/assets/style.css?v=55">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/drmario.css?v=1">')
     out += header()
     out += """  <section class="sec"><div class="wrap">
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Plant</b> <i>Dr. Mario</i></h1>
@@ -856,7 +859,7 @@ def build_order_complete():
 
 
 def build_admin():
-    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=54">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
+    out = head("Owner admin | Mario's Super Soil", "Owner admin page.", "/admin/", noindex=True).replace('<link rel="stylesheet" href="/assets/style.css?v=55">', '<link rel="stylesheet" href="/assets/style.css?v=18">\n<link rel="stylesheet" href="/assets/owner.css?v=1">')
     out = out.replace('<meta name="robots" content="noindex, nofollow">\n', '').replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"', 1) if 'noindex' not in out else out
     out += header()
     out += """  <section class="sec"><div class="wrap">

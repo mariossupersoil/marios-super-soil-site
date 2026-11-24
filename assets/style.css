@@ -169,9 +169,13 @@ footer p{margin:0;max-width:80ch}
 .rv-card{margin:0;width:100%;display:flex;flex-direction:column;gap:10px;padding:16px 18px 14px;background:#1a1a1c;border:1px solid var(--leaf);border-radius:6px}
 .rv-g{align-self:flex-start;font-weight:600;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--bg);background:var(--leaf);padding:3px 9px;border-radius:99px}
 .rv-card blockquote{border:0;padding:0;margin:0;flex:1}
-.rv-card blockquote p{margin:0;font-size:16px;line-height:1.45}
+.rv-card blockquote p{margin:0;font-size:16px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:7;-webkit-box-orient:vertical;overflow:hidden}
 .rv-stars{color:#fbbc04;font-size:20px;line-height:1;letter-spacing:.1em}
 .rv-card figcaption{color:var(--leaf);font-weight:600;font-size:16px;letter-spacing:.06em}
+.rv-sum{margin:6px 0 0;font-size:16px;color:var(--muted)}
+.rv-sum .rv-stars{font-size:18px;margin-right:4px}
+.rv-bare{justify-content:center;gap:8px}
+.rvrow li:has(.rv-bare){align-self:center}
 .rv-gbtn{font-size:14px;padding:8px 14px}
 .faq{max-width:860px;margin-top:24px}
 .faq details{border-bottom:1px solid var(--line);padding:18px 0}
