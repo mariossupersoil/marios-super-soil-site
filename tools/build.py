@@ -556,13 +556,15 @@ def build_home():
         g = '<span class="rv-g">Google review</span>' if "Google review" in c else '<span class="rv-g">Customer</span>'
         who = esc(c.replace(", Google review", ""))
         stars = (f'<span class="rv-stars" role="img" aria-label="{r} out of 5 stars">' + "\u2605" * r + "</span>") if r else ""
-        return f'<figure class="rv-card">{g}<blockquote><p>{esc(q)}</p></blockquote>{stars}<figcaption>{who}</figcaption></figure>'
+        return f'<li><figure class="rv-card">{g}<blockquote><p>{esc(q)}</p></blockquote>{stars}<figcaption>{who}</figcaption></figure></li>'
     _rv_set = "".join(_rv_card(*x) for x in SITE["quotes"])
-    _rv_dup = _rv_set.replace('<figure class="rv-card">', '<figure class="rv-card" aria-hidden="true">')
-    quotes = (f'<h3 class="rv-h">What customers say</h3>'
-              f'<div class="rv-marq" role="region" aria-label="Customer reviews" tabindex="0">'
-              f'<div class="rv-track"><div class="rv-set">{_rv_set}</div><div class="rv-set">{_rv_dup}</div></div></div>'
-              f'<p class="rv-cta"><a class="btn" href="https://g.page/r/CecEG2eLNfmfEAE/review" target="_blank" rel="noopener">Review us on Google</a></p>')
+    quotes = (f'<div class="rail rvrail" id="rvrail">'
+              f'<div class="railbar"><h3 class="rv-h">What customers say</h3>'
+              f'<div class="railbtns"><a class="btn rv-gbtn" href="https://g.page/r/CecEG2eLNfmfEAE/review" target="_blank" rel="noopener">Review us on Google</a>'
+              f'<button type="button" class="rbtn" data-dir="-1" aria-label="Scroll reviews left">&#8592;</button><button type="button" class="rbtn" data-dir="1" aria-label="Scroll reviews right">&#8594;</button></div></div>'
+              f'<div class="railtrack rvtrack" tabindex="0" aria-label="Customer reviews. Scroll sideways to see more."><ul class="rvrow">{_rv_set}</ul></div>'
+              f'<p class="railhint">Moves on its own. Hover or touch to stop it, or swipe.</p></div>'
+              f'<script src="/assets/quotes.js?v=1" defer></script>')
     out += f"""  <section id="mission" class="sec">
     <div class="wrap">
       <div class="mission">
