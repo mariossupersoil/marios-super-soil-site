@@ -161,7 +161,27 @@ footer p{margin:0;max-width:80ch}
 .stores li{display:grid;gap:2px;padding:16px 0;border-top:1px solid var(--line)}
 .stores strong{font:500 20px var(--text);letter-spacing:.03em}
 .stores span,.stores a{color:var(--muted);font-size:17px}
-.quotes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 48px;margin-top:56px}
+.rv-wrap{margin-top:64px}
+.rv-h{font:400 clamp(28px,3.6vw,44px)/1 var(--display);text-transform:uppercase;margin:0 0 24px}
+.rv-marq{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.rv-marq:focus-visible{outline:3px solid var(--leaf);outline-offset:4px}
+.rv-track{display:flex;width:max-content;animation:rv-scroll 110s linear infinite}
+.rv-marq:hover .rv-track,.rv-marq:focus-within .rv-track,.rv-marq:focus .rv-track{animation-play-state:paused}
+.rv-set{display:flex;gap:24px;padding-right:24px}
+.rv-card{margin:0;flex:0 0 clamp(290px,30vw,400px);display:flex;flex-direction:column;gap:14px;padding:26px 26px 22px;background:#1a1a1c;border:1px solid var(--leaf);border-radius:6px;box-shadow:0 0 0 1px rgba(127,196,107,.15),0 14px 34px rgba(0,0,0,.5)}
+.rv-g{align-self:flex-start;font-weight:600;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--bg);background:var(--leaf);padding:4px 10px;border-radius:99px}
+.rv-card blockquote{border:0;padding:0;margin:0;flex:1}
+.rv-card blockquote p{margin:0;font-size:19px;line-height:1.5}
+.rv-stars{color:#fbbc04;font-size:26px;line-height:1;letter-spacing:.12em}
+.rv-card figcaption{color:var(--leaf);font-weight:600;font-size:18px;letter-spacing:.06em}
+.rv-cta{margin:28px 0 0}
+@keyframes rv-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){
+  .rv-marq{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
+  .rv-track{animation:none}
+  .rv-card[aria-hidden=true]{display:none}
+  .rv-set{padding-right:0}
+}
 blockquote{margin:0;padding-top:16px;border-top:1px solid var(--line)}
 blockquote p{margin:0 0 12px;font-size:19px}
 blockquote cite{font-style:normal;color:var(--leaf);font-weight:500;letter-spacing:.06em}
@@ -183,7 +203,7 @@ blockquote cite{font-style:normal;color:var(--leaf);font-weight:500;letter-spaci
 .contact .site{line-height:1.7}
 
 @media (max-width:900px){
-  .hero-top,.viewer,.mission,.blend,.buy,.cgrid,.quotes{grid-template-columns:minmax(0,1fr)}
+  .hero-top,.viewer,.mission,.blend,.buy,.cgrid{grid-template-columns:minmax(0,1fr)}
   .stage{position:static}
   .picker{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:6px;padding-bottom:4px}
   .picker li{flex:0 0 38%;scroll-snap-align:start}
