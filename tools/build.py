@@ -552,11 +552,12 @@ def build_home():
   </section>
 """
     # about
-    def _rv_card(q, c):
+    def _rv_card(q, c, r=None):
         g = '<span class="rv-g">Google review</span>' if "Google review" in c else '<span class="rv-g">Customer</span>'
         who = esc(c.replace(", Google review", ""))
-        return f'<figure class="rv-card">{g}<blockquote><p>{esc(q)}</p></blockquote><figcaption>{who}</figcaption></figure>'
-    _rv_set = "".join(_rv_card(q, c) for q, c in SITE["quotes"])
+        stars = (f'<span class="rv-stars" role="img" aria-label="{r} out of 5 stars">' + "\u2605" * r + "</span>") if r else ""
+        return f'<figure class="rv-card">{g}<blockquote><p>{esc(q)}</p></blockquote>{stars}<figcaption>{who}</figcaption></figure>'
+    _rv_set = "".join(_rv_card(*x) for x in SITE["quotes"])
     _rv_dup = _rv_set.replace('<figure class="rv-card">', '<figure class="rv-card" aria-hidden="true">')
     quotes = (f'<h3 class="rv-h">What customers say</h3>'
               f'<div class="rv-marq" role="region" aria-label="Customer reviews" tabindex="0">'

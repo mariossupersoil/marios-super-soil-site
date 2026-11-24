@@ -172,6 +172,7 @@ footer p{margin:0;max-width:80ch}
 .rv-g{align-self:flex-start;font-weight:600;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--bg);background:var(--leaf);padding:4px 10px;border-radius:99px}
 .rv-card blockquote{border:0;padding:0;margin:0;flex:1}
 .rv-card blockquote p{margin:0;font-size:19px;line-height:1.5}
+.rv-stars{color:#fbbc04;font-size:26px;line-height:1;letter-spacing:.12em}
 .rv-card figcaption{color:var(--leaf);font-weight:600;font-size:18px;letter-spacing:.06em}
 .rv-cta{margin:28px 0 0}
 @keyframes rv-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
