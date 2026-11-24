@@ -552,7 +552,16 @@ def build_home():
   </section>
 """
     # about
-    quotes = "".join(f'<blockquote><p>{esc(q)}</p><cite>{esc(c)}</cite></blockquote>' for q, c in SITE["quotes"])
+    def _rv_card(q, c):
+        g = '<span class="rv-g">Google review</span>' if "Google review" in c else '<span class="rv-g">Customer</span>'
+        who = esc(c.replace(", Google review", ""))
+        return f'<figure class="rv-card">{g}<blockquote><p>{esc(q)}</p></blockquote><figcaption>{who}</figcaption></figure>'
+    _rv_set = "".join(_rv_card(q, c) for q, c in SITE["quotes"])
+    _rv_dup = _rv_set.replace('<figure class="rv-card">', '<figure class="rv-card" aria-hidden="true">')
+    quotes = (f'<h3 class="rv-h">What customers say</h3>'
+              f'<div class="rv-marq" role="region" aria-label="Customer reviews" tabindex="0">'
+              f'<div class="rv-track"><div class="rv-set">{_rv_set}</div><div class="rv-set">{_rv_dup}</div></div></div>'
+              f'<p class="rv-cta"><a class="btn" href="https://g.page/r/CecEG2eLNfmfEAE/review" target="_blank" rel="noopener">Review us on Google</a></p>')
     out += f"""  <section id="mission" class="sec">
     <div class="wrap">
       <div class="mission">
@@ -569,7 +578,7 @@ def build_home():
           </ul>
         </div>
       </div>
-      <div class="quotes">{quotes}</div>
+      <div class="rv-wrap">{quotes}</div>
     </div>
   </section>
 """
