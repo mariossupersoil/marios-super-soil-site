@@ -153,6 +153,21 @@ function stripe_call(string $method, string $path, array $params = []): array {
 }
 
 /** A paid Stripe session: count the discount code use and take the items off stock, once per session. */
+/** Pass a paid order to the owner's n8n "New order" webhook so the Orders sheet (review and reorder bots) stays in step. Never blocks or breaks an order. */
+function forward_order_to_n8n(array $o): void {
+    $c = cfg();
+    if (empty($c['n8n_order_url']) || !function_exists('curl_init')) return;
+    $names = []; $qty = 0;
+    foreach (($o['items'] ?? []) as $i) { $names[(string)$i['name']] = true; $qty += (int)$i['qty']; }
+    $ch = curl_init((string)$c['n8n_order_url']);
+    curl_setopt_array($ch, [CURLOPT_POST => true, CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 5, CURLOPT_CONNECTTIMEOUT => 3,
+        CURLOPT_HTTPHEADER => ['Content-Type: application/json', 'X-Site-Secret: ' . (string)($c['n8n_secret'] ?? '')],
+        CURLOPT_POSTFIELDS => json_encode(['orderId' => (string)($o['id'] ?? ''), 'date' => (string)($o['date'] ?? ''), 'name' => (string)($o['name'] ?? ''),
+            'email' => (string)($o['email'] ?? ''), 'product' => implode(', ', array_keys($names)), 'qty' => $qty])]);
+    $r = curl_exec($ch); $code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE); curl_close($ch);
+    if ($r === false || $code >= 300) error_log("n8n order forward failed: HTTP $code");
+}
+
 function record_paid_session(array $s): void {
     if (($s['payment_status'] ?? '') !== 'paid' || empty($s['id'])) return;
     $sid = (string)$s['id']; $md = is_array($s['metadata'] ?? null) ? $s['metadata'] : [];
@@ -210,6 +225,7 @@ function record_paid_session(array $s): void {
         }
         return $st;
     });
+    if ($new && $orderRec['email'] !== '') { try { forward_order_to_n8n($orderRec); } catch (Throwable $e) { error_log('n8n order forward error'); } }
     if ($new) {   // tell the owner about the order, including which free gift was picked
         $body = "New paid order" . ($cd['name'] ?? '' ? ' from ' . clean_line((string)$cd['name'], 60) : '') . ".\n\n" . implode("\n", $lines) . "\n"
             . ($gift ? "\nFREE GIFT TO PACK: " . $gname . "\n" : '') . "\nCustomer email: " . ($cd['email'] ?? '') . "\nStripe order: " . $sid . "\nSee the full order and send the shipping update here: " . site_url() . "/admin/ (Orders section).\n";

@@ -26,6 +26,8 @@ return [
     // Brevo (free 300/day): smtp_host smtp-relay.brevo.com, smtp_port 587, smtp_user = your Brevo SMTP login, smtp_pass = SMTP key, and smtp_from = your verified sender address.
     // Optional: also send every new email sign-up to your n8n email-bot list. Use the production webhook URL from the n8n "New subscriber" workflow and the same secret you typed into that workflow.
     // 'n8n_subscribe_url' => 'https://n8n.srv1111261.hstgr.cloud/webhook/new-subscriber', 'n8n_secret' => 'MAKE-UP-A-LONG-RANDOM-SECRET',
+    // Optional: send every paid order to the n8n "New order" workflow so the Orders sheet fills itself (review request and reorder bots). Uses the same n8n_secret as above.
+    // 'n8n_order_url' => 'https://n8n.srv1111261.hstgr.cloud/webhook/new-order',
     // Optional: when someone unsubscribes on the website, also mark them Unsubscribed in the bot's Google Sheet (the Thursday bot's unsubscribe webhook).
     // 'n8n_unsubscribe_url' => 'https://n8n.srv1111261.hstgr.cloud/webhook/unsubscribe',
     'mail_from' => 'orders@mariossupersoil.ca',   // an address on your own domain sends best
