@@ -145,7 +145,7 @@
     var sel=el('select'); [['todo','To ship'],['shipped','Shipped'],['all','All orders']].forEach(function(o){var op=el('option',null,o[1]);op.value=o[0];sel.appendChild(op);});
     var sb=inp('text','',{placeholder:'Name, email or order number'});
     bar.appendChild(field('Show',sel)); bar.appendChild(field('Search',sb)); card.appendChild(bar);
-    var CARR=['Canada Post','Purolator','UPS','FedEx','DHL','Other'];
+    var CARR=['Canada Post','Purolator','Canpar','UPS','FedEx','DHL','Other'];
     function money(n){return '$'+Number(n||0).toFixed(2);}
     function addr(a){a=a||{};var l=[a.line1,a.line2,[a.city,a.state].filter(Boolean).join(', '),a.postal_code,a.country].filter(Boolean);return l;}
     function refresh(){return call('state').then(function(j){S.orders=j.orders||[];draw();});}
