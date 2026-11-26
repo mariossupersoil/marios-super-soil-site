@@ -346,6 +346,7 @@ function tracking_url(string $carrier, string $num): string {
     switch (strtolower($carrier)) {
         case 'canada post': return "https://www.canadapost-postescanada.ca/track-reperage/en#/search?searchFor=$n";
         case 'purolator': return "https://www.purolator.com/en/shipping/tracker?pin=$n";
+        case 'canpar': return "https://www.canpar.com/en/tracking/track.htm?barcode=$n";
         case 'ups': return "https://www.ups.com/track?tracknum=$n";
         case 'fedex': return "https://www.fedex.com/fedextrack/?trknbr=$n";
         case 'dhl': return "https://www.dhl.com/ca-en/home/tracking.html?tracking-id=$n";

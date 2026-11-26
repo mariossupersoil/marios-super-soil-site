@@ -970,7 +970,7 @@ def build_privacy():
     <p>We share information only with the services that help us run the shop, and only what they need:</p>
     <ul>
       <li>Stripe, to take payments.</li>
-      <li>Shipping carriers such as Canada Post, Purolator or UPS, who receive your name, address and phone number so they can deliver your order.</li>
+      <li>Shipping carriers such as Canada Post, Purolator, Canpar or UPS, who receive your name, address and phone number so they can deliver your order.</li>
       <li>Our website hosting company (Hostinger), which stores the site and our order records.</li>
       <li>Our email provider (Google), which sends and receives our emails.</li>
       <li>The AI service that analyses plant photos for Plant Dr. Mario (Anthropic), which receives only the photos and notes you send.</li>
