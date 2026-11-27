@@ -248,7 +248,7 @@ function settings(): array {
     return $d;
 }
 function site_url(): string { return rtrim((string)(cfg()['site_url'] ?? 'https://mariossupersoil.ca'), '/'); }
-function owner_email(): string { return (string)(cfg()['owner_email'] ?? 'mariossupersoil@mariossupersoil.com'); }
+function owner_email(): string { return (string)(cfg()['owner_email'] ?? 'mariossupersoil@mariossupersoil.ca'); }
 
 /** Allow at most $max hits per $window seconds for this key (per visitor). Returns false when over the limit. */
 function rate_ok(string $name, int $max, int $window = 3600): bool {
