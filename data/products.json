@@ -126,7 +126,7 @@
   "meta": "Natural crab meal (4-3-0) made from crab and lobster shells. Chitin-rich, high in calcium, with slow-release nitrogen for veggies. Sizes: 2 to 20 lb.",
   "desc": [
    "Crab meal is a natural dry amendment made from crab & lobster shells, providing nutrients that support healthy soil & flower and vegetable growth.",
-   "The NPK ratio of crab meal is 4-3-0, with a high concentration of nitrogen, phosphorus, and magnesium, and it is particularly rich in chitin."
+   "The NPK ratio of crab meal is 4-3-0, with a high concentration of nitrogen, and phosphorus, and it is particularly rich in chitin."
   ],
   "ben": [
    "Chitin-rich shell material",
@@ -159,7 +159,11 @@
   ],
   "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
   "cat": "meals",
-  "use": "Chitin and calcium for veggie beds"
+  "use": "Chitin and calcium for veggie beds",
+  "warn": [
+   "Contains crustaceans (shellfish).",
+   "Contient des crustacés."
+  ]
  },
  {
   "slug": "blood-meal",
@@ -204,7 +208,11 @@
   ],
   "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
   "cat": "meals",
-  "use": "Fast nitrogen for green growth"
+  "use": "Fast nitrogen for green growth",
+  "warn": [
+   "Do not ingest. Wash hands after use. Keep away from pets.",
+   "Ne pas ingérer. Se laver les mains après usage. Garder hors de portée des animaux de compagnie."
+  ]
  },
  {
   "slug": "bone-meal",
@@ -218,10 +226,10 @@
   ],
   "accent": "#d8c98b",
   "title": "Bone Meal 4-10-0 Natural Dry Amendment | Mario's Super Soil",
-  "meta": "Natural bone meal amendment (4-10-0) with high phosphorus for strong roots, bigger blooms and fruit. Sizes: 2 to 20 lb. Made in Mississauga, Ontario.",
+  "meta": "Natural bone meal amendment (4-10-0) with high phosphorus for strong roots, bigger blooms and fruit. Sizes: 2 to 20 lb. Packaged in Mississauga, Ontario.",
   "desc": [
    "Bone meal is a natural dry amendment made from ground animal bones, rich in phosphorus to support strong roots & healthy plant growth.",
-   "It also provides calcium, iron, magnesium, and zinc, helping promote healthy stems, leaves, flowers, seeds and fruit production."
+   "It also provides calcium, helping promote healthy stems, leaves, flowers, seeds and fruit production."
   ],
   "ben": [
    "Rich in bio calcium",
@@ -249,7 +257,15 @@
   ],
   "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
   "cat": "meals",
-  "use": "Phosphorus for roots, blooms and fruit"
+  "use": "Phosphorus for roots, blooms and fruit",
+  "derived": [
+   "bone meal",
+   "farine d’os"
+  ],
+  "warn": [
+   "Do not feed to cattle, sheep, deer or other ruminants. Do not use on pasture. Do not ingest. Wash hands after use.",
+   "Ne pas donner aux bovins, aux ovins, aux cerfs ni aux autres ruminants. Ne pas utiliser sur les pâturages. Ne pas ingérer. Se laver les mains après usage."
+  ]
  },
  {
   "slug": "kelp-meal",
@@ -346,7 +362,7 @@
   "ben": [
    "Triacontanol growth hormone",
    "Fast natural nitrogen (3-0.5-3)",
-   "Rich in Ca, Mg & trace minerals",
+   "Rich in Ca & Mg",
    "Feeds earthworms & microbes",
    "Conditions & loosens soil",
    "Ideal for soil, beds & teas"
@@ -424,7 +440,11 @@
   ],
   "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
   "cat": "meals",
-  "use": "Slow nitrogen for lush leaves"
+  "use": "Slow nitrogen for lush leaves",
+  "warn": [
+   "Do not ingest. Wash hands after use. Keep away from pets.",
+   "Ne pas ingérer. Se laver les mains après usage. Garder hors de portée des animaux de compagnie."
+  ]
  },
  {
   "slug": "soft-rock-phosphate",
@@ -441,7 +461,7 @@
   "meta": "Soft rock phosphate (0-3-0) with slow-release phosphorus, calcium and trace minerals for roots, blooms and fruit. Sizes: 2 to 20 lb.",
   "desc": [
    "Soft rock phosphate is a natural mineral amendment derived from fossilized marine organisms formed millions of years ago.",
-   "It provides slow-release phosphorus, silicon, boron, and trace minerals, improving soil fertility and retaining calcium around plant roots for healthier growth."
+   "It provides slow-release phosphorus, improving soil fertility and retaining calcium around plant roots for healthier growth."
   ],
   "ben": [
    "Colloidal soft phosphorus",
@@ -539,7 +559,7 @@
   "title": "Oyster Shell Flour Calcium Amendment | Mario's Super Soil",
   "meta": "Ultra-fine oyster shell flour, 96% calcium carbonate, a slow-release calcium source and long-term pH buffer. Sizes: 2 to 20 lb.",
   "desc": [
-   "Oyster shell flour contains 96% calcium carbonate and micronutrients, providing slow-release nutrition while helping maintain balanced soil pH levels.",
+   "Oyster shell flour contains 96% calcium carbonate, providing slow-release nutrition while helping maintain balanced soil pH levels.",
    "Its gradual breakdown provides lasting calcium, reducing the risk of nutrient lockout and supporting consistent nutrient availability for healthier plant growth."
   ],
   "ben": [
@@ -568,7 +588,11 @@
   ],
   "size_note": "Our largest bag is 5 lb. 10 lb and 20 lb orders are packed as 2 or 4 of our 5 lb bags, at the same price per pound as the 5 lb bag.",
   "cat": "minerals",
-  "use": "Slow calcium and a steady pH"
+  "use": "Slow calcium and a steady pH",
+  "warn": [
+   "Contains shellfish (molluscs).",
+   "Contient des mollusques."
+  ]
  },
  {
   "slug": "dolomite-lime",
@@ -584,7 +608,7 @@
   "npk_label": "Soil amendment",
   "macro_note": true,
   "title": "Dolomite Lime Soil Amendment | Mario's Super Soil",
-  "meta": "Dolomite lime with calcium and magnesium to balance soil pH and reduce acidity. Sizes: 2 to 20 lb. Made in Mississauga, Ontario.",
+  "meta": "Dolomite lime with calcium and magnesium to balance soil pH and reduce acidity. Sizes: 2 to 20 lb. Packaged in Mississauga, Ontario.",
   "desc": [
    "Dolomite lime is a natural mineral amendment containing calcium and magnesium, essential nutrients that support healthy soil and plant growth.",
    "Rich in calcium and magnesium carbonates, it helps balance soil pH, reduce acidity, and improve nutrient availability for healthier plants and gardens."
@@ -636,7 +660,7 @@
   "npk_label": "Soil amendment",
   "macro_note": true,
   "title": "Basalt Rock Dust Volcanic Remineralizer | Mario's Super Soil",
-  "meta": "Basalt rock dust, a silica-rich volcanic remineralizer for soil mixes and compost with 50+ trace minerals. Sizes: 2 to 20 lb. Made in Ontario.",
+  "meta": "Basalt rock dust, a silica-rich volcanic remineralizer for soil mixes and compost with 50+ trace minerals. Sizes: 2 to 20 lb. Packaged in Mississauga, Ontario.",
   "desc": [
    "Basalt rock dust is a natural soil amendment made from finely ground volcanic rock, commonly found around the world.",
    "It breaks down easily in soil, releasing essential minerals that help replenish nutrients, improve soil health, and support stronger plant growth."
@@ -823,7 +847,7 @@
   "npk_label": "Soil amendment",
   "macro_note": true,
   "title": "Glacial Rock Dust Mineral Soil Amendment | Mario's Super Soil",
-  "meta": "Glacial rock dust, a natural mineral amendment with silicon and trace minerals for garden soil, compost and worm beds. 2 lb bag. Made in Ontario.",
+  "meta": "Glacial rock dust, a natural mineral amendment with silicon and trace minerals for garden soil, compost and worm beds. 2 lb bag. Packaged in Mississauga, Ontario.",
   "desc": [
    "Glacial rock dust is a natural mineral amendment formed by glacial action over thousands of years, containing diverse trace minerals.",
    "It gradually releases essential nutrients, supporting strong roots and healthier growth in trees, lawns, roses, vegetables, and garden soil throughout growing seasons."
@@ -929,7 +953,7 @@
   ],
   "accent": "#c0524a",
   "title": "Malted Barley Flour Natural Amendment | Mario's Super Soil",
-  "meta": "Malted barley flour (1.5-0.4-0.5), a high-diastatic 2-row malt with natural enzymes for soil mixes, potting and teas. 2 lb bag. Made in Ontario.",
+  "meta": "Malted barley flour (1.5-0.4-0.5), a high-diastatic 2-row malt with natural enzymes for soil mixes, potting and teas. 2 lb bag. Packaged in Mississauga, Ontario.",
   "desc": [
    "Malted barley flour is made from germinated barley that is dried, hulled, ground, and sifted into a fine powder.",
    "It contains 98% plant-derived starch, protein, and natural enzymes that support microbial activity, nutrient availability, and healthy plant growth."
@@ -957,7 +981,11 @@
   ],
   "size_note": "Sold in 2 lb (0.9 kg) bags for now. Larger sizes are coming.",
   "cat": "meals",
-  "use": "Natural enzymes that feed soil biology"
+  "use": "Natural enzymes that feed soil biology",
+  "warn": [
+   "Contains barley (gluten).",
+   "Contient de l’orge (gluten)."
+  ]
  },
  {
   "slug": "biochar",
