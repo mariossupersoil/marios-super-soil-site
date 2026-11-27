@@ -657,7 +657,7 @@ def _num_value(v):
     return v if re.match(r"^\d", v) else ""
 
 def analysis_html(p):
-    """Guaranteed analysis (minimum): full nutrient names, no 0% lines, no un-numbered nutrients."""
+    """Typical analysis (switch heading to Guaranteed Analysis (minimum) once lab results are in): full nutrient names, no 0% lines, no un-numbered nutrients."""
     n, ph, k = p["npk"]
     rows = []
     def row(en, fr, val, sub=False):
@@ -736,7 +736,7 @@ def build_product(p):
           <div class="desc">{desc}</div>
           <ul class="benefits">{ben}</ul>
           <div class="facts">
-            <div><h2>Guaranteed Analysis (minimum) <small lang="fr">Analyse garantie (minimum)</small></h2><dl>{ing}</dl>{derived_html}</div>
+            <div><h2>Typical Analysis <small lang="fr">Analyse typique</small></h2><dl>{ing}</dl>{derived_html}</div>
             <div><h2>How to use <small lang="fr">Comment utiliser</small></h2><p>{esc(p['how_en'])}</p><p lang="fr">{esc(p['how_fr'])}</p></div>
           </div>
           {warn_html}<p class="store">Store in a cool, dry place, away from moisture.</p>
