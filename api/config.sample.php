@@ -20,7 +20,7 @@ return [
     'automatic_tax' => true,   // needs Stripe Tax turned on in your Stripe dashboard
 
     // Email (reminders, wholesale and review alerts, weekly backup)
-    'owner_email' => 'mariossupersoil@mariossupersoil.ca',
+    'owner_email' => 'mario@mariossupersoil.ca',
     // Best way to send: a real mailbox. Hostinger: Emails > create a mailbox, then use these (host smtp.hostinger.com, port 465).
     // 'smtp_host' => 'smtp.hostinger.com', 'smtp_port' => 465, 'smtp_user' => 'orders@yourdomain.ca', 'smtp_pass' => 'MAILBOX-PASSWORD',
     // Brevo (free 300/day): smtp_host smtp-relay.brevo.com, smtp_port 587, smtp_user = your Brevo SMTP login, smtp_pass = SMTP key, and smtp_from = your verified sender address.

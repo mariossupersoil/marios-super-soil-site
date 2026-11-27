@@ -3,7 +3,7 @@
 > Mario's Super Soil is a Canadian company in Mississauga, Ontario that makes natural dry soil amendments (meals, rock dusts, worm castings, compost and blends) for gardeners and growers. Orders ship across Canada. Wholesale is available to garden centres and stores.
 
 Key facts:
-- Location: Mississauga, ON, Canada. Phone 647-839-7645. Email mariossupersoil@mariossupersoil.ca.
+- Location: Mississauga, ON, Canada. Phone 647-839-7645. Email mario@mariossupersoil.ca.
 - Products are natural dry amendments with directions in English and French. The 2 lb bag is available now; 5 lb bags (and 10 and 20 lb packs) are coming soon.
 - Ships within Canada only. Orders of $120 or more include a free 2 lb bag of Level Up 3-3-3 or Flower Power 2-6-4. 30 day returns on unused items.
 - Main blends: Level Up 3-3-3 and Flower Power 2-6-4. The 2 lb Super Starter Pack is available now; the 5 lb kit is coming soon.
