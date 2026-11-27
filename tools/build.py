@@ -439,7 +439,7 @@ def build_home():
       <div class="hero-top">
         <div>
           <h1>{H['h1']}</h1>
-          <span class="tag">Premium quality, made in Canada</span>
+          <span class="tag">Premium quality, packaged in Mississauga, Ontario</span>
         </div>
         <div>
           <p class="lede">{esc(H['lede'])}</p>
@@ -579,7 +579,7 @@ def build_home():
           <ul class="pledges">
             <li>100% natural, no synthetic chemicals</li>
             <li>Low usage rates: 1 tablespoon per gallon for Level Up and Flower Power</li>
-            <li>Fully recyclable, reusable bags</li>
+            <li>Reusable bags</li>
             <li>Used by home gardeners and commercial farmers</li>
           </ul>
         </div>
@@ -651,6 +651,47 @@ def build_home():
 
 
 # ---------------------------------------------------------------- product page
+def _num_value(v):
+    """Keep only analysis values that are real numbers; 'about 4%' is shown as a minimum, '4%'."""
+    v = re.sub(r"^about\s+", "", str(v).strip(), flags=re.I)
+    return v if re.match(r"^\d", v) else ""
+
+def analysis_html(p):
+    """Guaranteed analysis (minimum): full nutrient names, no 0% lines, no un-numbered nutrients."""
+    n, ph, k = p["npk"]
+    rows = []
+    def row(en, fr, val, sub=False):
+        rows.append(f'<dt>{esc(en)} <small lang="fr">{esc(fr)}</small></dt><dd>{esc(val)}</dd>')
+    if not p.get("macro_note"):
+        if n: row("Total Nitrogen (N)", "Azote total (N)", f"{n}%")
+        if ph: row("Available Phosphoric Acid (P\u2082O\u2085)", "Acide phosphorique assimilable (P\u2082O\u2085)", f"{ph}%")
+        if k: row("Soluble Potash (K\u2082O)", "Potasse soluble (K\u2082O)", f"{k}%")
+    micro = [(en, fr, _num_value(val)) for en, fr, val in p["micro"]]
+    micro = [m for m in micro if m[2]]
+    names = {"Calcium (Ca)": "Calcium (Ca)", "Magnesium (Mg)": "Magnesium (Mg)", "Sulfur (S)": "Sulphur (S)"}
+    for key in ("Calcium (Ca)", "Magnesium (Mg)", "Sulfur (S)"):
+        for en, fr, val in micro:
+            if en == key: row(names[key], fr, val)
+    micro = [m for m in micro if m[0] not in names]
+    minerals = [m for m in micro if m[0] in ("Silicon (Si)", "Potassium (K)")]
+    trace = [m for m in micro if m not in minerals]
+    if trace:
+        rows.append('<dt class="sub">Micronutrients <small lang="fr">Micronutriments</small></dt><dd class="sub"></dd>')
+        for en, fr, val in trace: row(en, fr, val)
+    if minerals:
+        rows.append('<dt class="sub">Other minerals <small lang="fr">Autres min\u00e9raux</small></dt><dd class="sub"></dd>')
+        for en, fr, val in minerals: row(en, fr, val)
+    if not rows:
+        rows.append('<dt>No nutrient guarantee <small lang="fr">Aucune garantie d\u2019\u00e9l\u00e9ments nutritifs</small></dt><dd></dd>')
+    derived = ""
+    if p.get("derived"):
+        derived = f'<p class="store">Derived from: {esc(p["derived"][0])} <small lang="fr">D\u00e9riv\u00e9 de : {esc(p["derived"][1])}</small></p>'
+    warn = ""
+    if p.get("warn"):
+        warn = f'<p class="store"><strong>Warning:</strong> {esc(p["warn"][0])}</p><p class="store" lang="fr"><strong>Avertissement :</strong> {esc(p["warn"][1])}</p>'
+    return "".join(rows), derived, warn
+
+
 def build_product(p):
     path = f"/products/{p['slug']}/"
     others = [q for q in PRODUCTS if q["slug"] != p["slug"]]
@@ -674,15 +715,7 @@ def build_product(p):
     ben = "".join(f'<li><img src="/img/ic-{p["f"]}-{i + 1}.webp" alt="" width="60" height="60" loading="lazy"><span>{esc(t)}</span></li>'
                   for i, t in enumerate(p["ben"]))
     desc = "".join(f"<p>{esc(d)}</p>" for d in p["desc"])
-    n, ph, k = p["npk"]
-    ing = ('<dt>Nitrogen, phosphorus, potassium <small lang="fr">Azote, phosphore, potassium</small></dt><dd>Negligible <small lang="fr">Négligeable</small></dd>'
-           if p.get("macro_note") else
-           f'<dt>Nitrogen (N) <small lang="fr">Azote (N)</small></dt><dd>{n}%</dd>'
-           f'<dt>Phosphorus (P) <small lang="fr">Phosphore (P)</small></dt><dd>{ph}%</dd>'
-           f'<dt>Potassium (K) <small lang="fr">Potassium (K)</small></dt><dd>{k}%</dd>')
-    ing += (f'<dt class="sub">Micronutrients <small lang="fr">Micronutriments</small></dt><dd class="sub"></dd>')
-    for en, fr, val in p["micro"]:
-        ing += f'<dt>{esc(en)}{"" if en == fr else f" <small lang=fr>{esc(fr)}</small>"}</dt><dd>{esc(val)}</dd>'
+    ing, derived_html, warn_html = analysis_html(p)
     more = "".join(picker_item(q) for q in others)
     out += f"""  <section class="pdp" style="--accent:{p['accent']}">
     <div class="wrap">
@@ -703,10 +736,10 @@ def build_product(p):
           <div class="desc">{desc}</div>
           <ul class="benefits">{ben}</ul>
           <div class="facts">
-            <div><h2>Ingredients <small lang="fr">Ingrédients</small></h2><dl>{ing}</dl></div>
+            <div><h2>Guaranteed Analysis (minimum) <small lang="fr">Analyse garantie (minimum)</small></h2><dl>{ing}</dl>{derived_html}</div>
             <div><h2>How to use <small lang="fr">Comment utiliser</small></h2><p>{esc(p['how_en'])}</p><p lang="fr">{esc(p['how_fr'])}</p></div>
           </div>
-          <p class="store">Store in a cool, dry place, away from moisture.</p>
+          {warn_html}<p class="store">Store in a cool, dry place, away from moisture.</p>
           <div class="shopbox" id="buy-box" data-slug="{esc(p['slug'])}">
             <div class="buyrow">
               <div><label for="buy-size">Size</label><select id="buy-size">{size_opts}</select></div>
@@ -1087,7 +1120,7 @@ def build_wholesale():
     <h1 class="nm" style="font-size:clamp(40px,7vw,88px)"><b>Wholesale</b> <i>for stores</i></h1>
     <p class="lede">Run a garden centre, hydroponics shop, feed store or independent retailer? Mario's Super Soil makes natural dry amendments in Mississauga, Ontario, and we would like to hear from you.</p>
     <ul class="perks">
-      <li><strong>Canadian made</strong><br>Canadian made.</li>
+      <li><strong>Packaged in Ontario</strong><br>Packaged in Mississauga, Ontario.</li>
       <li><strong>Volume pricing</strong><br>Wholesale pricing that improves as your order size grows, with minimum order quantities per tier.</li>
       <li><strong>Direct from the maker</strong><br>Order straight from us in Mississauga, Ontario, and talk to a real person.</li>
       <li><strong>Retail-ready bags</strong><br>Stand-up pouches with clear directions in English and French, in 2 lb and 5 lb sizes. Bulk sacks are available on request.</li>
@@ -1211,7 +1244,7 @@ def guides():
     G.append({
         "slug": "organic-soil-amendments-canada",
         "title": "Natural Soil Amendments in Canada | Mario's Super Soil",
-        "desc": "What natural dry soil amendments are, how to choose between meals, rock dusts and castings, and how to use them. Made in Ontario, shipped across Canada.",
+        "desc": "What natural dry soil amendments are, how to choose between meals, rock dusts and castings, and how to use them. Packaged in Ontario, shipped across Canada.",
         "h1": ("Natural soil", "amendments in Canada"),
         "short": "A plain-language guide to natural dry amendments: what they are, how to pick one, and how to use them.",
         "answer": "Natural dry amendments are natural, slow-acting ingredients (meals, rock dusts, castings and compost) that you mix into soil to feed plants and soil life over weeks and months. Mario's Super Soil makes them in Mississauga, Ontario, and ships across Canada.",
@@ -1341,7 +1374,7 @@ def guides():
     G.append({
         "slug": "worm-castings-vs-compost",
         "title": "Worm Castings vs Compost | Mario's Super Soil",
-        "desc": "How worm castings and compost differ, what each does for soil, how much to use, and when to use both. Canadian-made worm castings and compost blend.",
+        "desc": "How worm castings and compost differ, what each does for soil, how much to use, and when to use both. Packaged in Mississauga, Ontario.",
         "h1": ("Worm castings", "vs compost"),
         "short": "What each one does, how to use them, and why many gardeners use both.",
         "answer": "Compost adds bulk organic matter that improves soil structure, while worm castings are a concentrated, biologically active amendment used in smaller amounts. Many gardeners use both.",
@@ -1374,7 +1407,7 @@ def guides():
             ("At a glance",
              "<div class=\"tblwrap\"><table class=\"gtable\"><thead><tr><th>Amendment</th><th>Calcium</th><th>Also provides</th><th>Effect on pH</th></tr></thead><tbody>"
              f"<tr><td>{_pl('dolomite-lime')}</td><td>21%</td><td>Magnesium 12%</td><td>Raises pH</td></tr>"
-             f"<tr><td>{_pl('oyster-shell-flour')}</td><td>34%</td><td>96% calcium carbonate, micronutrients</td><td>Helps keep pH balanced</td></tr>"
+             f"<tr><td>{_pl('oyster-shell-flour')}</td><td>34%</td><td>96% calcium carbonate</td><td>Helps keep pH balanced</td></tr>"
              f"<tr><td>{_pl('gypsum')}</td><td>22%</td><td>Sulfur 17%</td><td>Little effect</td></tr>"
              "</tbody></table></div>"),
             ("Dolomite lime",
@@ -1429,7 +1462,7 @@ def guides():
             ("How much amendment do I put in a pot?", "Usually 1 to 2 tablespoons per gallon of soil. Check the bag for each product."),
             ("How often should I feed potted plants?", "Mix once at planting, and top up as each bag directs. Kelp meal is applied monthly in the growing season."),
             ("Can I use these indoors?", "Yes. They are used indoors and outdoors. Follow the directions on each bag."),
-            ("Can I plant in the empty bag?", "Yes. The pouches are recyclable and reusable."),
+            ("Can I plant in the empty bag?", "Yes. The pouches are reusable."),
         ],
     })
     return G

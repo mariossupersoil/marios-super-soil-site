@@ -497,7 +497,7 @@ function calc(){
     ${plant.recommended.map(e=>makeCard(e.p,e.why,gal,sqft,np,depthMult)).join('')}
     <div class="tier-header tier-optional">Optional — for serious growers</div>
     ${plant.optional.map(e=>makeCard(e.p,e.why,gal,sqft,np,depthMult)).join('')}
-    <div class="tip"><strong>Pro tip:</strong> ${plant.tip} All Mario's products are 100% natural and Canadian-made. Any extra stores well for your next top dress.</div>
+    <div class="tip"><strong>Pro tip:</strong> ${plant.tip} All Mario's products are 100% natural and packaged in Mississauga, Ontario. Any extra stores well for your next top dress.</div>
     <div class="upgrade-card">
       <div class="upgrade-top">
         <div class="upgrade-left"><h3>Super Starter Pack — the complete kit</h3><p>Get the 5 most essential amendments in one bundle at the best value price.</p></div>
