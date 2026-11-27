@@ -874,7 +874,7 @@ def build_admin():
       <p id="own-msg" style="color:#ffb4a8;margin:10px 0 0;font:16px sans-serif"></p>
     </form></div>
   </div></section>
-<script src="/assets/owner-app.js?v=5" defer></script>
+<script src="/assets/owner-app.js?v=6" defer></script>
 """
     out += footer()
     return out
